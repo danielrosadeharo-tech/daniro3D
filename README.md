@@ -42,6 +42,7 @@ Sin estas variables la web funciona igual que antes: pedidos por WhatsApp y sin 
 
 - Firebase Console → Authentication → Método de acceso: activa **Correo/contraseña** y **Google**.
 - Authentication → Configuración → **Dominios autorizados**: añade el dominio de Vercel (`tu-proyecto.vercel.app`) y tu dominio propio.
+- Google Cloud Console → APIs y servicios → Credenciales → cliente OAuth «Web client (auto created by Google Service)» → **URI de redirección autorizados**: añade `https://<tu-dominio>/__/auth/handler` por cada dominio (Vercel y propio). La web hace el acceso con Google desde su propio dominio (`vercel.json` reenvía `/__/auth/` a Firebase) para que los navegadores no bloqueen la sesión.
 
 ### 4. Hacerte administrador
 

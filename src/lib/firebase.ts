@@ -5,9 +5,14 @@ import { getAuth, getRedirectResult, signInWithPopup, signInWithRedirect, Google
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
+// En la web publicada, el acceso con Google pasa por /__/auth/ del propio dominio (vercel.json lo reenvía a
+// firebaseapp.com). Así el navegador no lo trata como de otro sitio y no bloquea la sesión al volver de Google.
+// Requiere añadir https://<dominio>/__/auth/handler a los URI de redirección del cliente OAuth en Google Cloud.
+const enLocal = typeof location === 'undefined' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+
 const config = {
   apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
-  authDomain: import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN,
+  authDomain: enLocal ? import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN : location.host,
   projectId: import.meta.env.PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
