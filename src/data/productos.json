@@ -337,6 +337,73 @@
     "fechaAlta": "2025-04-15"
   },
   {
+    "slug": "marc-marquez-ducati",
+    "nombre": "Marc Márquez · Ducati MotoGP",
+    "categoria": "legos",
+    "etiquetas": [
+      "motogp",
+      "pilotos",
+      "ducati",
+      "93"
+    ],
+    "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
+    "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 35
+    },
+    "variantes": [
+      {
+        "nombre": "30 cm",
+        "precio": 35
+      },
+      {
+        "nombre": "15 cm",
+        "precio": 20
+      }
+    ],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Figura de Marc Márquez con el mono de Ducati, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Figura de Marc Márquez con la visera levantada"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Detalle del casco de Márquez con los logos de Ducati y Shoei"
+      },
+      {
+        "archivo": "04.jpg",
+        "alt": "Cara de la figura de Márquez bajo la visera"
+      },
+      {
+        "archivo": "05.jpg",
+        "alt": "Casco de Márquez por detrás con el 93"
+      },
+      {
+        "archivo": "06.jpg",
+        "alt": "Casco de Márquez visto desde arriba con la araña"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Rojo"
+    ],
+    "dimensiones": "30 cm de alto (también en 15 cm)",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-09"
+  },
+  {
     "slug": "m-antoine-intermarche",
     "nombre": "M. Antoine · Intermarché",
     "categoria": "legos",
