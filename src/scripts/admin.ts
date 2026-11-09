@@ -1,9 +1,9 @@
 // Panel de administración: pedidos, encargos, productos y publicación.
 // Todo lo protege firestore.rules: solo los UID que estén en la colección "admins" pueden leer y escribir aquí.
-import { onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, writeBatch, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { firebaseActivo, auth, db, storage, mensajeError } from '../lib/firebase';
+import { firebaseActivo, auth, db, storage, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
 import { textoFecha, esc } from '../lib/estados';
 import { referencia } from '../lib/pedido/guardar';
 
@@ -35,8 +35,10 @@ function iniciar() {
     try { await signInWithEmailAndPassword(auth(), String(fd.get('email')), String(fd.get('pass'))); }
     catch (err) { $('[data-login-error]').textContent = mensajeError(err); }
   });
+  prepararGoogle().then((m) => { if (m) $('[data-login-error]').textContent = m; });
   $('[data-google]').addEventListener('click', async () => {
-    try { await signInWithPopup(auth(), new GoogleAuthProvider()); } catch (err) { $('[data-login-error]').textContent = mensajeError(err); }
+    $('[data-login-error]').textContent = '';
+    try { await entrarConGoogle(); } catch (err) { $('[data-login-error]').textContent = mensajeError(err); }
   });
   $('[data-salir]').addEventListener('click', () => signOut(auth()));
   $('[data-copiar-uid]').addEventListener('click', () => navigator.clipboard?.writeText($('[data-uid]').textContent ?? ''));

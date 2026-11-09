@@ -103,9 +103,9 @@ import Icon from '../components/Icon.astro';
 </style>
 
 <script>
-  import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, signOut } from 'firebase/auth';
+  import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from 'firebase/auth';
   import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-  import { firebaseActivo, auth, db, mensajeError } from '../lib/firebase';
+  import { firebaseActivo, auth, db, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
   import { textoEstado, textoFecha, esc } from '../lib/estados';
   import { referencia } from '../lib/pedido/guardar';
 
@@ -147,9 +147,10 @@ import Icon from '../components/Icon.astro';
       } catch (err) { error.textContent = mensajeError(err); }
       finally { enviar.disabled = false; }
     });
+    prepararGoogle().then((m) => { if (m) error.textContent = m; });
     $('[data-google]').addEventListener('click', async () => {
       error.textContent = '';
-      try { await signInWithPopup(auth(), new GoogleAuthProvider()); } catch (err) { error.textContent = mensajeError(err); }
+      try { await entrarConGoogle(); } catch (err) { error.textContent = mensajeError(err); }
     });
     $('[data-olvido]').addEventListener('click', async () => {
       error.textContent = ''; info.textContent = '';

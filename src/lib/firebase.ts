@@ -1,7 +1,7 @@
 // Conexión con Firebase (solo en el navegador). La configuración llega de las variables PUBLIC_FIREBASE_*.
 // Si faltan, la web sigue funcionando como antes (pedidos por WhatsApp) y `firebaseActivo` es false.
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
+import { getAuth, getRedirectResult, signInWithPopup, signInWithRedirect, GoogleAuthProvider, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
@@ -25,6 +25,31 @@ export const auth = (): Auth => getAuth(laApp());
 export const db = (): Firestore => getFirestore(laApp());
 export const storage = (): FirebaseStorage => getStorage(laApp());
 
+/**
+ * Llamar al cargar la página. Firebase necesita un iframe de Google antes de abrir la ventana de acceso;
+ * si lo carga en el clic tarda tanto que el navegador deja de verlo como un clic y bloquea la ventana.
+ * Esto lo precarga y, de paso, recoge el resultado si se entró redirigiendo a Google.
+ * Devuelve el mensaje de error de ese acceso, o null.
+ */
+export const prepararGoogle = (): Promise<string | null> =>
+  getRedirectResult(auth()).then(() => null, (e) => mensajeError(e) || null);
+
+/** Abre la ventana de Google; si el navegador la bloquea, entra redirigiendo la página a Google. */
+export async function entrarConGoogle(): Promise<void> {
+  const proveedor = new GoogleAuthProvider();
+  proveedor.setCustomParameters({ prompt: 'select_account' });
+  try {
+    await signInWithPopup(auth(), proveedor);
+  } catch (e) {
+    const code = (e as { code?: string })?.code;
+    if (code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment') {
+      await signInWithRedirect(auth(), proveedor);
+      return;
+    }
+    throw e;
+  }
+}
+
 /** Firestore reintenta en silencio si no llega al servidor: esto corta la espera y lanza un error. */
 export function conLimite<T>(p: Promise<T>, ms = 10000): Promise<T> {
   return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(Object.assign(new Error('tiempo'), { code: 'tiempo' })), ms))]);
@@ -42,6 +67,9 @@ export function mensajeError(e: unknown): string {
     'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
     'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos y vuelve a probar.',
     'auth/popup-closed-by-user': 'Se cerró la ventana de Google antes de terminar.',
+    'auth/cancelled-popup-request': '',
+    'auth/popup-blocked': 'Tu navegador ha bloqueado la ventana de Google. Permite las ventanas emergentes para esta web y vuelve a probar.',
+    'auth/web-storage-unsupported': 'Tu navegador bloquea el almacenamiento que necesita el acceso con Google. Prueba a entrar con email.',
     'auth/operation-not-allowed': 'Este método de acceso no está activado en Firebase Authentication.',
     'auth/unauthorized-domain': 'Este dominio no está autorizado en Firebase Authentication (Configuración → Dominios autorizados).',
     'auth/api-key-not-valid.-please-pass-a-valid-api-key.': 'La configuración de Firebase no es válida (revisa PUBLIC_FIREBASE_API_KEY).',
