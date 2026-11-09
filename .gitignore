@@ -1,0 +1,19 @@
+# Dependencias y builds
+node_modules/
+dist/
+.astro/
+.vercel/
+
+# Herramientas locales
+.taste-skill/
+.claude/
+
+# Variables de entorno (las de verdad van en Vercel)
+.env
+.env.*
+!.env.example
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
