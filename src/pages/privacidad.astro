@@ -2,11 +2,13 @@
 import Legal from '../layouts/Legal.astro';
 import { sitio } from '../lib/catalogo';
 // BORRADOR: completa los datos del titular en src/data/sitio.json → "titular" y revísalo antes de publicar.
-const t = sitio.titular;
+// Los campos vacíos o que aún dicen "[COMPLETAR…]" no se muestran.
+const relleno = (v?: string | null) => (v && !v.trim().startsWith('[') ? v.trim() : null);
+const t = { nombre: relleno(sitio.titular.nombre), nif: relleno(sitio.titular.nif), domicilio: relleno(sitio.titular.domicilio) };
 ---
 <Legal title="Privacidad y aviso legal" description={`Aviso legal y política de privacidad de ${sitio.marca}.`} ruta="/privacidad">
   <h2>Quién es el responsable</h2>
-  <p>Esta web es de {t.nombre}, con NIF {t.nif}, en {t.domicilio}. Contacto: WhatsApp {sitio.telefonoVisible}{sitio.email && <> o {sitio.email}</>}.</p>
+  <p>Esta web es de {t.nombre ?? sitio.marca}{t.nif && `, con NIF ${t.nif}`}{t.domicilio && `, en ${t.domicilio}`}. Contacto: WhatsApp {sitio.telefonoVisible}{sitio.email && <> o {sitio.email}</>}.</p>
   <h2>Qué datos usamos y para qué</h2>
   <ul>
     <li>Cuando nos mandas un pedido o un encargo, usamos tu nombre, tu teléfono o email y lo que nos cuentas para responderte, preparar el pedido y enviarlo.</li>
