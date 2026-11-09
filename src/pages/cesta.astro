@@ -84,7 +84,10 @@ const metodos = metodosDisponibles();
 
 <script>
   import { cesta, htmlLineas, conectarLista, euros } from '../scripts/cesta';
-  import { metodos } from '../lib/pedido';
+  import { metodos, type Pedido } from '../lib/pedido';
+  import { firebaseActivo, auth } from '../lib/firebase';
+  import { guardarPedido, referencia } from '../lib/pedido/guardar';
+  import { onAuthStateChanged } from 'firebase/auth';
   const root = document.querySelector<HTMLElement>('[data-checkout]')!;
   const ul = root.querySelector<HTMLElement>('[data-lineas]')!;
   const form = root.querySelector<HTMLFormElement>('[data-form-pedido]')!;
@@ -100,6 +103,14 @@ const metodos = metodosDisponibles();
   }
   pintar();
   document.addEventListener('cesta:cambio', pintar);
+
+  // Si el cliente ha iniciado sesión, rellenamos su nombre y email
+  if (firebaseActivo) onAuthStateChanged(auth(), (u) => {
+    if (!u) return;
+    const n = form.querySelector<HTMLInputElement>('#c-nombre')!, m = form.querySelector<HTMLInputElement>('#c-email')!;
+    if (!n.value && u.displayName) n.value = u.displayName;
+    if (!m.value && u.email) m.value = u.email;
+  });
 
   const err = (campo: string, msg: string) => {
     const f = form.querySelector<HTMLElement>(`[data-campo="${campo}"]`)!;
@@ -125,10 +136,28 @@ const metodos = metodosDisponibles();
       total: cesta.total(),
       hayConsultas: cesta.hayConsultas(),
     };
-    const r = await metodo.enviar(pedido);
+    const btn = form.querySelector<HTMLButtonElement>('[data-enviar]')!;
     const ok = form.querySelector<HTMLElement>('[data-ok]')!;
+    // 1) Se guarda en Firestore (si está configurado) para que aparezca en el panel y en "Mi cuenta"
+    let guardado = false;
+    if (firebaseActivo) {
+      btn.disabled = true; btn.textContent = 'Enviando…';
+      try {
+        const id = await guardarPedido(pedido, metodo.id);
+        if (id) { (pedido as Pedido).referencia = referencia(id); guardado = true; }
+      } catch (e) {
+        console.warn('No se pudo guardar el pedido en Firestore', e); // seguimos por WhatsApp igualmente
+      } finally { btn.disabled = false; btn.textContent = 'Enviar pedido'; }
+    }
+    // 2) Y se manda por WhatsApp o email, como siempre
+    const r = await metodo.enviar(pedido);
     ok.hidden = false;
-    ok.textContent = r.mensaje + ' Tu cesta se queda guardada hasta que la vacíes.';
+    if (guardado) {
+      ok.textContent = `Pedido ${(pedido as Pedido).referencia} recibido. ${r.mensaje}`;
+      cesta.vaciar();
+    } else {
+      ok.textContent = r.mensaje + ' Tu cesta se queda guardada hasta que la vacíes.';
+    }
     if (r.redirigirA) {
       if (r.redirigirA.startsWith('mailto:')) location.href = r.redirigirA;
       else {

@@ -9,7 +9,8 @@ import { migasLd } from '../lib/seo';
 const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Encargos a medida', url: '/encargos' }];
 const tarjeta = foto(producto('tarjetas-nfc-qr')!, 0);
 const estanteria = foto(producto('estanteria-stranger-things')!, 1);
-const conServicio = Boolean(sitio.formularioEncargos);
+// Con Firebase configurado (variables PUBLIC_FIREBASE_*) el encargo se guarda en Firestore; si no, va por WhatsApp
+const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env.PUBLIC_FIREBASE_API_KEY && import.meta.env.PUBLIC_FIREBASE_PROJECT_ID);
 ---
 <Base title="Encargos de impresión 3D a medida" description="Cuéntanos tu idea o mándanos un archivo STL o una foto: piezas a medida, repuestos, regalos y tarjetas NFC impresas en 3D. Te damos precio sin compromiso." activo="/encargos" jsonLd={migasLd(migas)}>
   <div class="wrap page-head">
@@ -105,6 +106,8 @@ const conServicio = Boolean(sitio.formularioEncargos);
 
 <script>
   import sitio from '../data/sitio.json';
+  import { firebaseActivo, mensajeError } from '../lib/firebase';
+  import { guardarEncargo, referencia } from '../lib/pedido/guardar';
   const form = document.querySelector<HTMLFormElement>('[data-encargo]')!;
   const file = form.querySelector<HTMLInputElement>('[data-file]')!;
   const MAX = 10 * 1024 * 1024;
@@ -140,6 +143,26 @@ const conServicio = Boolean(sitio.formularioEncargos);
 
     const ok = form.querySelector<HTMLElement>('[data-ok]')!;
     const btn = form.querySelector<HTMLButtonElement>('[data-enviar]')!;
+
+    if (firebaseActivo) {
+      // Se guarda en Firestore (y el archivo en Storage); te llega al panel /admin
+      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = f ? 'Subiendo archivo…' : 'Enviando…';
+      try {
+        const r = await guardarEncargo({ descripcion: desc, medidas: String(fd.get('medidas') ?? '').trim(), nombre, contacto, archivo: f ?? null });
+        const ref = referencia(r!.id);
+        form.reset(); file.dispatchEvent(new Event('change'));
+        ok.hidden = false; ok.style.color = '';
+        ok.textContent = `Encargo ${ref} recibido. Te contestamos con precio y plazo en cuanto lo veamos.`;
+        if (f && !r!.archivoSubido) {
+          const wa = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(`¡Hola! Os mando el archivo del encargo ${ref}.`)}`;
+          ok.innerHTML += ` No se pudo subir el archivo: <a href="${wa}" target="_blank" rel="noopener">mándanoslo por WhatsApp</a> con la referencia ${ref}.`;
+        }
+      } catch (e2) {
+        ok.hidden = false; ok.style.color = 'var(--danger)';
+        ok.textContent = `No se ha podido enviar: ${mensajeError(e2)} Prueba otra vez o escríbenos por WhatsApp.`;
+      } finally { btn.disabled = false; btn.innerHTML = txt; }
+      return;
+    }
 
     if (sitio.formularioEncargos) {
       // Servicio de formularios (p. ej. Formspree) configurado en src/data/sitio.json

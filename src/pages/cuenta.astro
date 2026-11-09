@@ -1,0 +1,204 @@
+---
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Mi cuenta" description="Entra en tu cuenta para ver tus pedidos y encargos." activo="/cuenta" noindex>
+  <div class="wrap page-head">
+    <Migas items={[{ nombre: 'Inicio', url: '/' }, { nombre: 'Mi cuenta' }]} />
+    <h1 data-titulo>Mi cuenta</h1>
+  </div>
+
+  <div class="wrap cuenta" data-cuenta>
+    <p class="aviso" data-sin-firebase hidden>Las cuentas todavía no están activadas en esta web.</p>
+    <p class="aviso" data-cargando>Cargando…</p>
+
+    <!-- Sin sesión -->
+    <section class="acceso" data-acceso hidden aria-labelledby="acceso-h">
+      <h2 id="acceso-h" class="sr-only">Entrar o crear cuenta</h2>
+      <div class="acceso__tabs" role="tablist" aria-label="Acceso">
+        <button type="button" role="tab" aria-selected="true" data-modo="entrar">Entrar</button>
+        <button type="button" role="tab" aria-selected="false" data-modo="registro">Crear cuenta</button>
+      </div>
+      <form class="acceso__form" data-form-acceso novalidate>
+        <div class="field" data-solo-registro hidden>
+          <label for="a-nombre">Nombre</label>
+          <input class="input" id="a-nombre" name="nombre" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="a-email">Email</label>
+          <input class="input" id="a-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="a-pass">Contraseña</label>
+          <input class="input" id="a-pass" name="pass" type="password" autocomplete="current-password" minlength="6" required />
+          <p class="hint" data-solo-registro hidden>Mínimo 6 caracteres.</p>
+        </div>
+        <p class="error" role="alert" data-error></p>
+        <p class="ok" role="status" data-info></p>
+        <button class="btn btn--block" type="submit" data-enviar>Entrar</button>
+        <button class="link olvido" type="button" data-olvido>He olvidado mi contraseña</button>
+        <div class="o" aria-hidden="true"><span>o</span></div>
+        <button class="btn btn--secondary btn--block" type="button" data-google>
+          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          Continuar con Google
+        </button>
+      </form>
+      <p class="nota">No hace falta cuenta para pedir. Con cuenta ves el estado de tus pedidos y encargos.</p>
+    </section>
+
+    <!-- Con sesión -->
+    <section class="panel" data-panel hidden aria-labelledby="panel-h">
+      <div class="panel__head">
+        <div>
+          <h2 id="panel-h" data-hola>Hola</h2>
+          <p class="nota" data-email></p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--secondary" href="/admin" data-enlace-admin hidden>Panel de administración</a>
+          <button class="btn btn--secondary" type="button" data-salir><Icon name="salir" />Cerrar sesión</button>
+        </div>
+      </div>
+
+      <h3>Mis pedidos</h3>
+      <ul class="lista" data-pedidos></ul>
+      <p class="vacio-txt" data-sin-pedidos hidden>Todavía no tienes pedidos. Los que hagas con la sesión iniciada aparecerán aquí. <a href="/catalogo">Ver el catálogo</a></p>
+
+      <h3>Mis encargos</h3>
+      <ul class="lista" data-encargos></ul>
+      <p class="vacio-txt" data-sin-encargos hidden>No tienes encargos a medida. <a href="/encargos">Pedir uno</a></p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .cuenta { padding-bottom: var(--s-9); }
+  .aviso { color: var(--muted); }
+  .acceso { max-width: 440px; display: grid; gap: var(--s-4); }
+  .acceso__tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: var(--r-pill); background: var(--surface); }
+  .acceso__tabs button { min-height: 44px; border: 0; border-radius: var(--r-pill); background: none; font-weight: 560; color: var(--muted); }
+  .acceso__tabs button[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow-1); }
+  .acceso__form { display: grid; gap: var(--s-4); padding: var(--s-5); border-radius: var(--r-lg); background: var(--card); }
+  .error { color: var(--danger); font-weight: 500; font-size: var(--t-small); }
+  .error:empty, .ok:empty { display: none; }
+  .ok { color: var(--accent); font-weight: 560; font-size: var(--t-small); }
+  .olvido { justify-self: center; border: 0; background-color: transparent; font-size: var(--t-small); min-height: 44px; }
+  .o { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s-3); color: var(--muted); font-size: var(--t-small); }
+  .o::before, .o::after { content: ""; height: 1px; background: var(--line); }
+  .nota { font-size: var(--t-small); color: var(--muted); }
+
+  .panel { display: grid; gap: var(--s-5); }
+  .panel__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--s-4); padding-bottom: var(--s-5); border-bottom: 1px solid var(--line); }
+  .panel__head h2 { font-size: 2rem; }
+  .panel h3 { font-size: 1.5rem; margin-top: var(--s-5); }
+  .lista { list-style: none; padding: 0; display: grid; gap: var(--s-3); }
+  .lista > :global(li) { display: grid; gap: var(--s-2); padding: var(--s-4) var(--s-5); border-radius: var(--r-md); background: var(--card); }
+  .lista :global(.fila) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-4); align-items: baseline; }
+  .lista :global(.ref) { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .lista :global(.meta) { color: var(--muted); font-size: var(--t-small); }
+  .lista :global(.estado) { display: inline-block; padding: 2px 10px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent); font-size: 0.8125rem; font-weight: 600; }
+  .lista :global(.estado[data-e="cancelado"]) { background: #f1d9d3; color: var(--danger); }
+  .lista :global(ul) { padding-left: 1.1em; font-size: 0.9375rem; }
+  .vacio-txt { color: var(--muted); }
+</style>
+
+<script>
+  import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, signOut } from 'firebase/auth';
+  import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+  import { firebaseActivo, auth, db, mensajeError } from '../lib/firebase';
+  import { textoEstado, textoFecha, esc } from '../lib/estados';
+  import { referencia } from '../lib/pedido/guardar';
+
+  const root = document.querySelector<HTMLElement>('[data-cuenta]')!;
+  const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+  const eur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+  if (!firebaseActivo) {
+    $('[data-cargando]').hidden = true;
+    $('[data-sin-firebase]').hidden = false;
+  } else {
+    let modo: 'entrar' | 'registro' = 'entrar';
+    const form = $<HTMLFormElement>('[data-form-acceso]');
+    const error = $('[data-error]'), info = $('[data-info]'), enviar = $<HTMLButtonElement>('[data-enviar]');
+    const setModo = (m: typeof modo) => {
+      modo = m;
+      root.querySelectorAll<HTMLButtonElement>('[data-modo]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.modo === m)));
+      root.querySelectorAll<HTMLElement>('[data-solo-registro]').forEach((el) => (el.hidden = m !== 'registro'));
+      $<HTMLInputElement>('#a-pass').autocomplete = m === 'registro' ? 'new-password' : 'current-password';
+      enviar.textContent = m === 'registro' ? 'Crear cuenta' : 'Entrar';
+      error.textContent = ''; info.textContent = '';
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-modo]').forEach((b) => b.addEventListener('click', () => setModo(b.dataset.modo as typeof modo)));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      error.textContent = ''; info.textContent = '';
+      const fd = new FormData(form);
+      const email = String(fd.get('email') ?? '').trim(), pass = String(fd.get('pass') ?? ''), nombre = String(fd.get('nombre') ?? '').trim();
+      if (!email || !pass) { error.textContent = 'Escribe tu email y tu contraseña.'; return; }
+      enviar.disabled = true;
+      try {
+        if (modo === 'registro') {
+          const c = await createUserWithEmailAndPassword(auth(), email, pass);
+          if (nombre) await updateProfile(c.user, { displayName: nombre });
+        } else {
+          await signInWithEmailAndPassword(auth(), email, pass);
+        }
+      } catch (err) { error.textContent = mensajeError(err); }
+      finally { enviar.disabled = false; }
+    });
+    $('[data-google]').addEventListener('click', async () => {
+      error.textContent = '';
+      try { await signInWithPopup(auth(), new GoogleAuthProvider()); } catch (err) { error.textContent = mensajeError(err); }
+    });
+    $('[data-olvido]').addEventListener('click', async () => {
+      error.textContent = ''; info.textContent = '';
+      const email = $<HTMLInputElement>('#a-email').value.trim();
+      if (!email) { error.textContent = 'Escribe primero tu email y vuelve a pulsar.'; $<HTMLInputElement>('#a-email').focus(); return; }
+      try { await sendPasswordResetEmail(auth(), email); info.textContent = 'Te hemos mandado un email para cambiar la contraseña.'; }
+      catch (err) { error.textContent = mensajeError(err); }
+    });
+    $('[data-salir]').addEventListener('click', () => signOut(auth()));
+
+    const porFecha = (a: { creado?: { toMillis?: () => number } }, b: typeof a) => (b.creado?.toMillis?.() ?? Infinity) - (a.creado?.toMillis?.() ?? Infinity);
+
+    async function cargar(uid: string) {
+      // Sin orderBy para no necesitar índices compuestos: se ordena aquí
+      const [ps, es] = await Promise.all([
+        getDocs(query(collection(db(), 'pedidos'), where('uid', '==', uid))),
+        getDocs(query(collection(db(), 'encargos'), where('uid', '==', uid))),
+      ]);
+      const pedidos = ps.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha);
+      const encargos = es.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha);
+      $('[data-pedidos]').innerHTML = pedidos.map((p) => `
+        <li>
+          <div class="fila"><span class="ref">Pedido ${esc(referencia(p.id))}</span><span class="estado" data-e="${esc(p.estado)}">${esc(textoEstado(p.estado))}</span></div>
+          <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${p.hayConsultas ? `${eur.format(p.total)} + piezas a consultar` : eur.format(p.total)}</span></div>
+          <ul>${(p.lineas ?? []).map((l: any) => `<li>${esc(l.nombre)} × ${esc(l.cantidad)}${l.opciones && Object.keys(l.opciones).length ? ` · ${esc(Object.values(l.opciones).join(' · '))}` : ''}</li>`).join('')}</ul>
+        </li>`).join('');
+      $('[data-sin-pedidos]').hidden = pedidos.length > 0;
+      $('[data-encargos]').innerHTML = encargos.map((x) => `
+        <li>
+          <div class="fila"><span class="ref">Encargo ${esc(referencia(x.id))}</span><span class="estado" data-e="${esc(x.estado)}">${esc(textoEstado(x.estado))}</span></div>
+          <div class="meta">${esc(textoFecha(x.creado))}${x.archivo ? ` · archivo: ${esc(x.archivo.nombre)}` : ''}</div>
+          <p>${esc(x.descripcion)}</p>
+          ${x.respuesta ? `<p><strong>Nuestra respuesta:</strong> ${esc(x.respuesta)}</p>` : ''}
+        </li>`).join('');
+      $('[data-sin-encargos]').hidden = encargos.length > 0;
+    }
+
+    onAuthStateChanged(auth(), async (u) => {
+      $('[data-cargando]').hidden = true;
+      $('[data-acceso]').hidden = Boolean(u);
+      $('[data-panel]').hidden = !u;
+      if (!u) return;
+      $('[data-hola]').textContent = `Hola${u.displayName ? `, ${u.displayName.split(' ')[0]}` : ''}`;
+      $('[data-email]').textContent = u.email ?? '';
+      try {
+        const esAdmin = (await getDoc(doc(db(), 'admins', u.uid))).exists();
+        $('[data-enlace-admin]').hidden = !esAdmin;
+      } catch { /* no es admin */ }
+      try { await cargar(u.uid); } catch (err) { $('[data-pedidos]').innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`; }
+    });
+  }
+</script>

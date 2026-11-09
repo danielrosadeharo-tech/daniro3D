@@ -5,7 +5,7 @@ export const euros = (n: number) => eur.format(n);
 
 /** Texto plano del pedido, igual para WhatsApp y para email. */
 export function textoPedido(p: Pedido, origen: string): string {
-  const l: string[] = ['¡Hola! Quiero hacer este pedido:', ''];
+  const l: string[] = [p.referencia ? `¡Hola! Quiero hacer este pedido (ref. ${p.referencia}):` : '¡Hola! Quiero hacer este pedido:', ''];
   p.lineas.forEach((x, i) => {
     const ops = Object.entries(x.opciones).map(([k, v]) => `${k}: ${v}`).join(' · ');
     const precio = x.precio == null ? 'precio a consultar' : `${euros(x.precio * x.cantidad)}`;

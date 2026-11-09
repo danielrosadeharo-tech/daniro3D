@@ -1,16 +1,71 @@
 # Daniro 3D · catálogo web
 
-Web estática hecha con [Astro](https://astro.build). Sin servidor ni base de datos: todo sale de tres archivos JSON.
+Web estática hecha con [Astro](https://astro.build), publicada en **Vercel**, con **Firebase** para pedidos,
+encargos, cuentas de clientes y el panel de administración (`/admin`).
 
 ## Arrancar
 
 ```bash
 npm install
 npm run dev       # http://localhost:4321
-npm run build     # genera la web final en dist/
+npm run build     # descarga productos de Firestore (si hay) y genera la web en dist/
 ```
 
-Para publicarla, sube la carpeta `dist/` a Netlify, Cloudflare Pages o GitHub Pages (los tres son gratis).
+## Firebase + Vercel: puesta en marcha
+
+### 1. Variables de entorno (Vercel → Project → Settings → Environment Variables)
+
+Los valores están en Firebase Console → ⚙ Configuración del proyecto → *Tus apps* → app web → `firebaseConfig`.
+
+| Variable | Valor de `firebaseConfig` |
+|---|---|
+| `PUBLIC_FIREBASE_API_KEY` | `apiKey` |
+| `PUBLIC_FIREBASE_AUTH_DOMAIN` | `authDomain` |
+| `PUBLIC_FIREBASE_PROJECT_ID` | `projectId` |
+| `PUBLIC_FIREBASE_STORAGE_BUCKET` | `storageBucket` |
+| `PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | `messagingSenderId` |
+| `PUBLIC_FIREBASE_APP_ID` | `appId` |
+
+Márcalas para Production, Preview y Development. Son públicas por diseño (van al navegador): los datos los protegen
+las reglas. Para probar en local, copia `.env.example` como `.env` y rellénalo (`.env` no se sube a GitHub).
+Sin estas variables la web funciona igual que antes: pedidos por WhatsApp y sin cuentas.
+
+### 2. Reglas
+
+- **Firestore:** pega el contenido de `firestore.rules` en Firebase Console → Firestore → Reglas → Publicar.
+- **Storage:** activa Storage (Build → Storage) y pega `storage.rules` en Storage → Reglas. Cuando la consola
+  pregunte si Storage puede leer Firestore (para comprobar quién es admin), acepta.
+- O con la CLI: `npx firebase-tools login`, `npx firebase-tools use <tu-project-id>` y
+  `npx firebase-tools deploy --only firestore:rules,storage`.
+
+### 3. Authentication
+
+- Firebase Console → Authentication → Método de acceso: activa **Correo/contraseña** y **Google**.
+- Authentication → Configuración → **Dominios autorizados**: añade el dominio de Vercel (`tu-proyecto.vercel.app`) y tu dominio propio.
+
+### 4. Hacerte administrador
+
+1. Crea tu cuenta en `/cuenta` (o entra en `/admin`): te enseña tu **UID**.
+2. Firestore → Iniciar colección `admins` → ID del documento = tu UID (el documento puede ir vacío).
+3. Recarga `/admin`.
+
+### 5. Primer uso del panel
+
+1. `/admin` → **Productos** → *Importar el catálogo actual* (copia `productos.json` a Firestore).
+2. Vercel → Settings → Git → **Deploy Hooks** → crea uno para `main` y pégalo en `/admin` → **Publicar** → Configurar.
+3. A partir de ahí: editas o creas productos (con fotos) en el panel y pulsas **Publicar ahora**. Vercel vuelve a
+   generar la web en 1–3 minutos con los datos de Firestore.
+
+### Qué guarda Firestore
+
+| Colección | Qué es | Quién lee | Quién escribe |
+|---|---|---|---|
+| `productos` | Catálogo (también los Funkos hechos, con `ejemplo: true`) | Todos | Admins |
+| `categorias` | Opcional: si existe, sustituye a `categorias.json` | Todos | Admins |
+| `pedidos` | Pedidos de la cesta (además van por WhatsApp) | Su cliente y admins | Cualquiera crea; admins cambian el estado |
+| `encargos` | Encargos a medida (el archivo va a Storage `encargos/`) | Su cliente y admins | Cualquiera crea; admins responden |
+| `admins` | UIDs con acceso al panel | Cada uno el suyo | Solo desde la consola |
+| `ajustes` | URL del Deploy Hook | Admins | Admins |
 
 ## Dónde se cambia cada cosa
 

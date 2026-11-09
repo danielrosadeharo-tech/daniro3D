@@ -24,6 +24,8 @@ export interface Pedido {
   /** Suma de las líneas con precio; las "a consultar" se confirman aparte. */
   total: number;
   hayConsultas: boolean;
+  /** Referencia del pedido guardado en Firestore (si lo está). */
+  referencia?: string;
 }
 
 export interface ResultadoPedido {

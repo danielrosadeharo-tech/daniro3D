@@ -70,6 +70,7 @@ const año = new Date().getFullYear();
         </ul>
       </nav>
       <div class="nav__actions">
+        <a class="icon-btn" href="/cuenta" aria-label="Mi cuenta" aria-current={activo === '/cuenta' ? 'page' : undefined}><Icon name="persona" /></a>
         <a class="icon-btn" href="/cesta" data-abrir-cesta aria-label="Cesta, 0 piezas">
           <Icon name="cesta" />
           <span class="badge" data-badge hidden>0</span>

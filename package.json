@@ -5,13 +5,15 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/sincronizar-firestore.mjs && astro build",
+    "build:local": "astro build",
     "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/figtree": "^5.3.0",
-    "astro": "^7.4.7"
+    "astro": "^7.4.7",
+    "firebase": "^13.2.0"
   }
 }

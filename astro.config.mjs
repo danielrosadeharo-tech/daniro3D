@@ -7,7 +7,8 @@ export default defineConfig({
   site: sitio.dominio,
   trailingSlash: 'never',
   build: { format: 'file' },
-  integrations: [sitemap()],
+  // Las páginas privadas (cesta, cuenta, panel) no van al sitemap
+  integrations: [sitemap({ filter: (url) => !/\/(admin|cuenta|cesta)(\/|$|\.)/.test(url) })],
   image: { layout: 'constrained' },
   devToolbar: { enabled: false },
   vite: { server: { watch: { ignored: ['**/.taste-skill/**', '**/dist/**'] } } },

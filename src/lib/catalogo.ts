@@ -49,7 +49,8 @@ export interface Categoria {
 }
 
 export const sitio = sitioJson;
-const todos = productosJson as Producto[];
+/** Todo lo que hay en productos.json (a la venta + ejemplos). */
+export const todos = productosJson as Producto[];
 /** Lo que se vende (sale en el catálogo, filtros y cesta). */
 export const productos = todos.filter((p) => !p.ejemplo);
 /** Encargos ya entregados que se enseñan como ejemplo (galería de Funkos hechos). */
