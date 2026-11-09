@@ -133,7 +133,7 @@ pon su URL en `"formularioEncargos"` de `sitio.json`.
 
 ## Pendiente de revisar antes de publicar
 
-- `sitio.json`: dominio definitivo (ahora `daniro3d.es` de ejemplo; cámbialo también en `public/robots.txt`), email y datos del titular (`[COMPLETAR]`).
+- `sitio.json`: dominio (ahora `daniro3-d.vercel.app`; cámbialo cuando tengas dominio propio, el robots.txt y el sitemap lo toman de ahí), email y datos del titular (`[COMPLETAR]`).
 - `productos.json`: `materiales` está a "PLA" en todo por defecto; `tiempoFabricacion` y casi todas las `dimensiones` están vacías (la ficha oculta las filas vacías).
 - Precios a consultar en: Verstappen 15 cm, M. Antoine, Funko Venom, llaveros, estantería Stranger Things, lagarto, tarjetas NFC.
 - Envíos, devoluciones y privacidad son borradores: revisa plazos, costes y zonas reales.

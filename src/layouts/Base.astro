@@ -19,7 +19,9 @@ interface Props {
   activo?: string;
 }
 const { title, description, image, jsonLd, noindex = false, activo } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// Con build.format 'file' la ruta llega como /index.html o /catalogo.html; Vercel la sirve sin extensión (cleanUrls).
+const rutaLimpia = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '') || '/';
+const canonical = new URL(rutaLimpia, Astro.site);
 const og = await getImage({ src: image ?? fotoAmbiente('coleccion-pilotos.jpg'), width: 1200, format: 'jpg' });
 const ogUrl = new URL(og.src, Astro.site);
 const tituloCompleto = title.includes(sitio.marca) ? title : `${title} · ${sitio.marca}`;
