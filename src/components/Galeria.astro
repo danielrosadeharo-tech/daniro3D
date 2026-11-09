@@ -1,0 +1,186 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import type { ImageMetadata } from 'astro';
+interface Props { fotos: { src: ImageMetadata; alt: string }[]; nombre: string }
+const { fotos, nombre } = Astro.props;
+const grandes = await Promise.all(fotos.map((f) => getImage({ src: f.src, width: f.src.width, format: 'webp', quality: 88 })));
+const varias = fotos.length > 1;
+---
+<div class="gal" data-galeria>
+  <div class="gal__stage">
+    <ul class="gal__track" data-track aria-label={`Fotos de ${nombre}`}>
+      {fotos.map((f, i) => (
+        <li class="gal__slide" id={`foto-${i + 1}`}>
+          <button type="button" class="gal__zoom" data-zoom={i} aria-label={`Ampliar foto ${i + 1} de ${fotos.length}: ${f.alt}`}>
+            <Picture
+              src={f.src}
+              alt={f.alt}
+              formats={['avif', 'webp']}
+              widths={[390, 560, 750]}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+            />
+          </button>
+        </li>
+      ))}
+    </ul>
+    {varias && (
+      <>
+        <button type="button" class="gal__nav gal__nav--prev icon-btn" data-prev aria-label="Foto anterior"><Icon name="izq" /></button>
+        <button type="button" class="gal__nav gal__nav--next icon-btn" data-next aria-label="Foto siguiente"><Icon name="der" /></button>
+        <p class="gal__pos" aria-hidden="true"><span data-pos>1</span> / {fotos.length}</p>
+      </>
+    )}
+    <span class="gal__hint" aria-hidden="true"><Icon name="zoom" size={18} />Toca para ampliar</span>
+  </div>
+  {varias && (
+    <ul class="gal__thumbs" aria-label="Elegir foto">
+      {fotos.map((f, i) => (
+        <li>
+          <button type="button" data-ir={i} aria-label={`Ver foto ${i + 1}: ${f.alt}`} aria-current={i === 0 ? 'true' : undefined}>
+            <Picture src={f.src} alt="" formats={['webp']} widths={[96, 160]} sizes="80px" loading="lazy" />
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <dialog class="zoom" data-zoom-dlg aria-label={`Foto ampliada de ${nombre}`}>
+    <div class="zoom__bar">
+      <p class="zoom__pos" aria-live="polite"><span data-zpos>1</span> / {fotos.length}</p>
+      <button type="button" class="icon-btn" data-zcerrar aria-label="Cerrar"><Icon name="cerrar" /></button>
+    </div>
+    <div class="zoom__view" data-zview>
+      <img data-zimg src={grandes[0].src} alt={fotos[0].alt} width={fotos[0].src.width} height={fotos[0].src.height} />
+    </div>
+    {varias && (
+      <>
+        <button type="button" class="zoom__nav zoom__nav--prev icon-btn" data-zprev aria-label="Foto anterior"><Icon name="izq" /></button>
+        <button type="button" class="zoom__nav zoom__nav--next icon-btn" data-znext aria-label="Foto siguiente"><Icon name="der" /></button>
+      </>
+    )}
+    <p class="zoom__help">Pulsa la foto para acercar · mueve para recorrerla</p>
+    <script type="application/json" data-zdata set:html={JSON.stringify(grandes.map((g, i) => ({ src: g.src, alt: fotos[i].alt, w: fotos[i].src.width, h: fotos[i].src.height })))} />
+  </dialog>
+</div>
+
+<style>
+  .gal { display: grid; gap: var(--s-3); min-width: 0; }
+  .gal__stage { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .gal__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; list-style: none; padding: 0; overscroll-behavior-x: contain; }
+  .gal__track::-webkit-scrollbar { display: none; }
+  .gal__slide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+  .gal__zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; aspect-ratio: 3 / 4; }
+  .gal__zoom :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .gal__zoom:focus-visible { outline-offset: -4px; border-radius: var(--r-lg); }
+  .gal__nav { position: absolute; top: 50%; translate: 0 -50%; background: rgb(247 243 236 / 0.92); box-shadow: var(--shadow-1); display: none; }
+  .gal__nav--prev { left: 12px; } .gal__nav--next { right: 12px; }
+  .gal__nav:disabled { opacity: 0; pointer-events: none; }
+  @media (hover: hover) and (pointer: fine) { .gal__nav { display: inline-grid; } .gal__nav:hover { background: var(--card); } }
+  .gal__pos, .gal__hint {
+    position: absolute; bottom: 12px; padding: 4px 12px; border-radius: var(--r-pill); background: rgb(34 38 31 / 0.88); color: #fff;
+    font-size: 0.8125rem; font-weight: 500; font-variant-numeric: tabular-nums; pointer-events: none;
+  }
+  .gal__pos { right: 12px; }
+  .gal__hint { left: 12px; display: inline-flex; align-items: center; gap: 6px; }
+  .gal__thumbs { display: flex; gap: var(--s-2); list-style: none; padding: 2px; overflow-x: auto; scrollbar-width: thin; }
+  .gal__thumbs button { width: 64px; aspect-ratio: 3 / 4; padding: 0; border: 0; border-radius: var(--r-sm); overflow: hidden; background: var(--surface); opacity: 0.6; outline: 2px solid transparent; outline-offset: 2px; transition: opacity 160ms ease, outline-color 160ms ease; }
+  .gal__thumbs button[aria-current="true"] { opacity: 1; outline-color: var(--ink); }
+  .gal__thumbs button:focus-visible { outline-color: var(--accent); opacity: 1; }
+  .gal__thumbs :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  @media (hover: hover) and (pointer: fine) { .gal__thumbs button:hover { opacity: 1; } }
+  @media (min-width: 768px) { .gal__thumbs button { width: 76px; } }
+
+  .zoom { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #151713; color: #f2eee6; overflow: hidden;
+    opacity: 0; transition: opacity 200ms ease, overlay 200ms allow-discrete, display 200ms allow-discrete; }
+  .zoom[open] { opacity: 1; }
+  @starting-style { .zoom[open] { opacity: 0; } }
+  .zoom::backdrop { background: #151713; }
+  .zoom__bar { position: absolute; inset: 0 0 auto 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 8px 8px 8px 20px; }
+  .zoom__bar .icon-btn { color: #f2eee6; background: rgb(255 255 255 / 0.08); }
+  .zoom__pos { font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+  .zoom__view { position: absolute; inset: 64px 0 48px; display: grid; place-items: center; overflow: hidden; }
+  .zoom__view img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; cursor: zoom-in; transition: transform 300ms var(--ease-out); user-select: none; -webkit-user-drag: none; }
+  .zoom__view[data-zoomed] img { cursor: zoom-out; transform: scale(2.2); transition: transform 300ms var(--ease-out), transform-origin 0ms; touch-action: none; }
+  .zoom__nav { position: absolute; top: 50%; translate: 0 -50%; z-index: 2; color: #f2eee6; background: rgb(255 255 255 / 0.1); }
+  .zoom__nav--prev { left: 12px; } .zoom__nav--next { right: 12px; }
+  .zoom__help { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; font-size: 0.8125rem; color: #b4b0a6; }
+  .zoom :focus-visible { outline-color: #8cc0a8; }
+  @media (hover: hover) and (pointer: fine) { .zoom__nav:hover, .zoom__bar .icon-btn:hover { background: rgb(255 255 255 / 0.18); } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-galeria]').forEach((g) => {
+    const track = g.querySelector<HTMLElement>('[data-track]')!;
+    const slides = [...track.children] as HTMLElement[];
+    const thumbs = [...g.querySelectorAll<HTMLButtonElement>('[data-ir]')];
+    const pos = g.querySelector('[data-pos]');
+    const prev = g.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = g.querySelector<HTMLButtonElement>('[data-next]');
+    let actual = 0;
+
+    const ir = (i: number, suave = true) => {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: slides[i].offsetLeft, behavior: suave && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto' });
+    };
+    const marcar = (i: number) => {
+      actual = i;
+      thumbs.forEach((t, n) => t.setAttribute('aria-current', String(n === i)));
+      if (pos) pos.textContent = String(i + 1);
+      if (prev) prev.disabled = i === 0;
+      if (next) next.disabled = i === slides.length - 1;
+      thumbs[i]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    };
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) marcar(slides.indexOf(e.target as HTMLElement)); }), { root: track, threshold: 0.6 });
+    slides.forEach((s) => io.observe(s));
+    thumbs.forEach((t, i) => t.addEventListener('click', () => ir(i)));
+    prev?.addEventListener('click', () => ir(actual - 1));
+    next?.addEventListener('click', () => ir(actual + 1));
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); ir(actual + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); ir(actual - 1); }
+    });
+    marcar(0);
+
+    // ---- Zoom ----
+    const dlg = g.querySelector<HTMLDialogElement>('[data-zoom-dlg]')!;
+    const view = dlg.querySelector<HTMLElement>('[data-zview]')!;
+    const img = dlg.querySelector<HTMLImageElement>('[data-zimg]')!;
+    const zpos = dlg.querySelector('[data-zpos]')!;
+    const datos: { src: string; alt: string; w: number; h: number }[] = JSON.parse(dlg.querySelector('[data-zdata]')!.textContent!);
+    let z = 0;
+    const mostrar = (i: number) => {
+      z = (i + datos.length) % datos.length;
+      const d = datos[z];
+      view.removeAttribute('data-zoomed');
+      img.src = d.src; img.alt = d.alt; img.width = d.w; img.height = d.h;
+      zpos.textContent = String(z + 1);
+    };
+    g.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach((b) => b.addEventListener('click', () => {
+      mostrar(Number(b.dataset.zoom)); dlg.showModal(); document.documentElement.style.overflow = 'hidden';
+    }));
+    // El punto de acercamiento se calcula sobre la caja SIN transformar de la foto (offsetLeft/Top dentro de la vista).
+    const origenEn = (e: { clientX: number; clientY: number }) => {
+      const v = view.getBoundingClientRect();
+      const x = ((e.clientX - v.left - img.offsetLeft) / img.offsetWidth) * 100;
+      const y = ((e.clientY - v.top - img.offsetTop) / img.offsetHeight) * 100;
+      img.style.transformOrigin = `${Math.max(0, Math.min(100, x))}% ${Math.max(0, Math.min(100, y))}%`;
+    };
+    img.addEventListener('click', (e) => {
+      if (view.hasAttribute('data-zoomed')) { view.removeAttribute('data-zoomed'); return; }
+      origenEn(e); view.setAttribute('data-zoomed', '');
+    });
+    // Al acercar, la foto se recorre siguiendo el puntero (o el dedo).
+    view.addEventListener('pointermove', (e) => { if (view.hasAttribute('data-zoomed')) origenEn(e); });
+    dlg.querySelector('[data-zcerrar]')!.addEventListener('click', () => dlg.close());
+    dlg.querySelector('[data-zprev]')?.addEventListener('click', () => mostrar(z - 1));
+    dlg.querySelector('[data-znext]')?.addEventListener('click', () => mostrar(z + 1));
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') mostrar(z + 1);
+      if (e.key === 'ArrowLeft') mostrar(z - 1);
+    });
+    dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; ir(z, false); g.querySelector<HTMLButtonElement>(`[data-zoom="${z}"]`)?.focus({ preventScroll: true }); });
+  });
+</script>

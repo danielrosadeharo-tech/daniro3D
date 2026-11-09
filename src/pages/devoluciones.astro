@@ -1,0 +1,14 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { sitio } from '../lib/catalogo';
+// BORRADOR basado en la Ley General para la Defensa de los Consumidores y Usuarios. Revísalo antes de publicar.
+---
+<Legal title="Devoluciones" description={`Política de devoluciones de ${sitio.marca}: derecho de desistimiento, piezas personalizadas y garantía.`} ruta="/devoluciones">
+  <p class="lead">Queremos que te guste lo que recibes. Si no es así, esto es lo que puedes hacer.</p>
+  <h2>Piezas del catálogo sin personalizar</h2>
+  <p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones. Escríbenos por WhatsApp o email, mándanos la pieza en buen estado y te devolvemos el importe en un máximo de 14 días desde que la recibimos. Los gastos de la devolución corren de tu cuenta.</p>
+  <h2>Piezas personalizadas o hechas a medida</h2>
+  <p>Los Funkos personalizados, los posavasos y llaveros con tu mascota o tu texto, y cualquier encargo a medida se fabrican según tus indicaciones, así que no tienen derecho de desistimiento (artículo 103 de la Ley General para la Defensa de los Consumidores y Usuarios). Por eso te enseñamos el diseño y te confirmamos los detalles antes de imprimir.</p>
+  <h2>Garantía</h2>
+  <p>Si la pieza llega rota o con un defecto de fabricación, la reponemos o te devolvemos el dinero, también si es personalizada. Escríbenos con una foto.</p>
+</Legal>

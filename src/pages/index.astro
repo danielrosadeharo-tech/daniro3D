@@ -1,0 +1,249 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Icon from '../components/Icon.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { productos, categorias, producto, foto, fotoAmbiente, desdeCategoria, deCategoria, euros, urlCategoria, enlaceWhatsApp, sitio } from '../lib/catalogo';
+
+// Las piezas del hero no se repiten en "Lo que más se pide"
+const enHero = ['perruno-17', 'rayquaza-escultura', 'estanteria-stranger-things'];
+const destacados = productos
+  .filter((p) => !enHero.includes(p.slug))
+  .toSorted((a, b) => Number(b.destacado) - Number(a.destacado) || b.fechaAlta.localeCompare(a.fechaAlta))
+  .slice(0, 8);
+const pilotos = fotoAmbiente('coleccion-pilotos.jpg');
+const perruno = foto(producto('perruno-17')!, 0);
+const rayquaza = foto(producto('rayquaza-escultura')!, 0);
+const funkoDetalle = foto(producto('perruno-17')!, 3);
+const posavasos = foto(producto('posavasos-mascotas')!, 0);
+const boda = foto(producto('boda-27')!, 0);
+const estanteria = foto(producto('estanteria-stranger-things')!, 0);
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: sitio.marca,
+  url: sitio.dominio,
+  sameAs: [sitio.wallapop, sitio.vinted],
+  contactPoint: { '@type': 'ContactPoint', telephone: `+${sitio.whatsapp}`, contactType: 'customer service', availableLanguage: 'es' },
+};
+---
+<Base
+  title={`${sitio.marca} · Funkos personalizados, figuras y regalos impresos en 3D`}
+  description="Funkos personalizados con su caja desde 55 €, figuras de pilotos de 30 cm, posavasos de tu mascota, llaveros y trofeos impresos en 3D bajo pedido. Pide por WhatsApp."
+  image={pilotos}
+  jsonLd={orgLd}
+>
+  <!-- taste · kind product · palette clay-pine · type bricolage · hero split con collage (las fotos son verticales de 750 px: no aguantan un hero a sangre) · moment pinned-chapters · close-word · footer-columns · buttons pill · mark arc -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero__grid">
+      <div class="hero__text" data-enter>
+        <h1 id="hero-h">Funkos, figuras y regalos impresos en 3D</h1>
+        <p class="lead">Funkos con tu cara y su caja desde 55 €, pilotos de Fórmula 1 de 30 cm, posavasos de tu mascota y trofeos. Todo se hace bajo pedido.</p>
+        <div class="btn-row">
+          <a class="btn" href="/catalogo">Ver el catálogo</a>
+          <a class="btn btn--secondary" href="/funkos">Crear mi Funko</a>
+        </div>
+      </div>
+      <div class="hero__collage">
+        <figure class="hero__a"><Picture src={pilotos} alt="Tres figuras de bloques de pilotos de Fórmula 1: Alonso con Renault, Senna y Alonso con Aston Martin" formats={['avif', 'webp']} widths={[390, 560, 750]} sizes="(min-width: 1024px) 28vw, 60vw" loading="eager" fetchpriority="high" /></figure>
+        <figure class="hero__b"><Picture src={perruno.src} alt={perruno.alt} formats={['avif', 'webp']} widths={[240, 400]} sizes="(min-width: 1024px) 18vw, 38vw" loading="eager" /></figure>
+        <figure class="hero__c"><Picture src={rayquaza.src} alt={rayquaza.alt} formats={['avif', 'webp']} widths={[240, 400]} sizes="(min-width: 1024px) 18vw, 38vw" loading="eager" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cats" aria-labelledby="cats-h">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <h2 id="cats-h">Compra por categoría</h2>
+        <a class="link" href="/catalogo">Todo el catálogo <Icon name="flecha" /></a>
+      </div>
+      <ul class="cats__grid">
+        {categorias.map((c, i) => {
+          const pf = producto(c.portada);
+          const f = pf ? foto(pf) : null;
+          const desde = c.enlace ? null : desdeCategoria(c.slug);
+          const n = c.enlace ? null : deCategoria(c.slug).length;
+          return (
+            <li class:list={['cat-tile', { 'cat-tile--grande': i < 3 }]}>
+              {f && <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
+              <div class="cat-tile__txt">
+                <h3><a href={urlCategoria(c)}>{c.nombre}</a></h3>
+                <p class="num">{c.enlace ? 'Tu idea, con precio' : `${n} piezas${desde != null ? ` · desde ${euros(desde)}` : ''}`}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="dest-h">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <h2 id="dest-h">Lo que más se pide</h2>
+        <a class="link" href="/catalogo">Ver las {productos.length} piezas <Icon name="flecha" /></a>
+      </div>
+      <ul class="grid-productos grid-productos--4">
+        {destacados.map((p) => <li><ProductCard p={p} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="funko-h">
+    <div class="wrap band__grid">
+      <div class="band__text">
+        <h2 id="funko-h">Tu Funko, con su caja, desde 55 €</h2>
+        <p class="band__lead">Lo hacemos a partir de tus fotos: la persona, su ropa, su mascota y el texto de la caja. El precio sale de lo que metas dentro.</p>
+        <dl class="tarifa">
+          <div><dt>Caja a medida + 1 Funko normal</dt><dd class="num">55 €</dd></div>
+          <div><dt>Cada Funko pequeño más (mascota, niño, objeto)</dt><dd class="num">+20 €</dd></div>
+          <div><dt>Un segundo Funko normal</dt><dd class="num">+30 €</dd></div>
+        </dl>
+        <p class="band__nota">Caben 1 normal + 3 pequeños, o 2 normales + 1 pequeño.</p>
+        <div class="btn-row">
+          <a class="btn btn--light" href="/funkos">Calcular el precio de mi Funko</a>
+          <a class="btn btn--ghost-light" href="/funkos#encargos">Ver Funkos hechos</a>
+        </div>
+      </div>
+      <figure class="band__media"><Picture src={boda.src} alt={boda.alt} formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 1024px) 40vw, 92vw" loading="lazy" /></figure>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona" style="--h: 2" data-moment="pinned-chapters" aria-labelledby="como-h">
+    <div class="wrap mo-pc__grid">
+      <div class="mo-pc__text">
+        <h2 id="como-h">Así se pide una pieza</h2>
+        <ol class="mo-pc__steps">
+          <li class="mo-pc__step">
+            <h3>Elige</h3>
+            <p>Busca en el catálogo o trae tu idea. Cada ficha enseña la pieza real desde varios ángulos, con su precio.</p>
+            <figure class="mo-pc__visual"><Picture src={pilotos} alt="Las tres figuras de pilotos juntas" formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>Personaliza</h3>
+            <p>Nombre, mascota, tamaño, el texto de la caja. Escríbelo en la ficha y mándanos las fotos por WhatsApp.</p>
+            <figure class="mo-pc__visual"><Picture src={posavasos.src} alt={posavasos.alt} formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>Recibe</h3>
+            <p>Te confirmamos precio, envío y plazo antes de empezar. Se imprime bajo pedido y te llega a casa.</p>
+            <figure class="mo-pc__visual"><Picture src={funkoDetalle.src} alt={funkoDetalle.alt} formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
+          </li>
+        </ol>
+      </div>
+      <div class="mo-pc__visuals"></div>
+    </div>
+  </section>
+
+  <section class="section cierre" aria-labelledby="cierre-h">
+    <div class="wrap cierre__grid">
+      <div class="cierre__text">
+        <h2 id="cierre-h" class="cierre__word">¿Tienes una idea?</h2>
+        <p class="lead">Una estantería de tu serie, la tarjeta de tu negocio con NFC, una pieza rota que ya no venden. Cuéntanos qué necesitas, con un archivo STL o una foto, y te damos precio.</p>
+        <div class="btn-row">
+          <a class="btn" href="/encargos">Pedir un encargo a medida</a>
+          <a class="btn btn--secondary" href={enlaceWhatsApp('¡Hola! Tengo una idea para un encargo a medida.')} target="_blank" rel="noopener"><WhatsAppIcon />Contarlo por WhatsApp</a>
+        </div>
+      </div>
+      <figure class="cierre__media"><Picture src={estanteria.src} alt={estanteria.alt} formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 1024px) 34vw, 92vw" loading="lazy" /></figure>
+    </div>
+  </section>
+
+  <Fragment slot="head">
+    <script is:inline>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+    <link rel="modulepreload" href="/kit/moments/moments.js" />
+    <link rel="modulepreload" href="/kit/moments/lib.js" />
+    <script is:inline type="module" src="/kit/moments/moments.js"></script>
+  </Fragment>
+</Base>
+
+<style>
+  /* ---- Hero ---- */
+  .hero { padding-block: var(--s-6) var(--s-8); }
+  .hero__grid { display: grid; gap: var(--s-7); align-items: center; }
+  .hero__text { display: grid; gap: var(--s-5); justify-items: start; }
+  .hero h1 { max-width: 12ch; }
+  .hero__collage { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--s-3); aspect-ratio: 5 / 4.6; }
+  .hero__collage figure { border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+  .hero__collage :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero__a { grid-row: 1 / span 2; }
+  .hero__a :global(img) { object-position: 50% 55%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__collage figure { animation: aparecer 900ms var(--ease-out) both; }
+    .hero__b { animation-delay: 120ms !important; } .hero__c { animation-delay: 220ms !important; }
+  }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(18px) scale(0.98); } }
+  @media (min-width: 1024px) {
+    .hero { padding-block: var(--s-7) var(--s-9); min-height: calc(100svh - var(--nav-h)); display: grid; align-items: center; }
+    .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--s-8); }
+  }
+
+  /* ---- Categorías ---- */
+  .cats__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
+  .cat-tile { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 5; isolation: isolate; }
+  .cat-tile--grande { grid-column: span 2; aspect-ratio: 16 / 10; }
+  .cat-tile :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); z-index: -1; }
+  .cat-tile::after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(rgb(20 22 18 / 0), rgb(20 22 18 / 0.55) 45%, rgb(20 22 18 / 0.86)); z-index: -1; pointer-events: none; }
+  .cat-tile__txt { text-shadow: 0 1px 12px rgb(0 0 0 / 0.35); }
+  .cat-tile__txt { position: absolute; inset: auto 0 0 0; padding: var(--s-4); color: #fff; display: grid; gap: 2px; }
+  .cat-tile h3 { font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem); }
+  .cat-tile h3 a { text-decoration: none; }
+  .cat-tile h3 a::after { content: ""; position: absolute; inset: 0; }
+  .cat-tile p { font-size: var(--t-small); font-weight: 500; color: rgb(255 255 255 / 0.88); }
+  .cat-tile:has(a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .cat-tile a:focus-visible { outline-color: #fff; }
+  @media (hover: hover) and (pointer: fine) { .cat-tile:hover :global(img) { transform: scale(1.03); } }
+  @media (min-width: 768px) {
+    /* 3 grandes arriba + 4 pequeñas debajo */
+    .cats__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-4); }
+    .cat-tile { grid-column: span 3; aspect-ratio: 4 / 5; }
+    .cat-tile--grande { grid-column: span 4; aspect-ratio: 4 / 4.2; }
+    .cat-tile__txt { padding: var(--s-5); }
+  }
+
+  /* ---- Banda Funko ---- */
+  .band { background: var(--p-inv-bg); color: var(--p-inv-ink); padding-block: var(--s-8); }
+  .band ::selection { background: var(--p-inv-ink); color: var(--p-inv-bg); }
+  .band :focus-visible { outline-color: #8cc0a8; }
+  .band__grid { display: grid; gap: var(--s-7); align-items: center; }
+  .band__text { display: grid; gap: var(--s-5); justify-items: start; }
+  .band__text h2 { max-width: 14ch; }
+  .band__lead { color: var(--p-inv-muted); font-size: var(--t-lead); line-height: 1.5; max-width: 48ch; }
+  .tarifa { width: 100%; max-width: 520px; }
+  .tarifa div { display: flex; justify-content: space-between; gap: var(--s-4); padding-block: 14px; border-top: 1px solid rgb(239 233 224 / 0.16); }
+  .tarifa div:last-child { border-bottom: 1px solid rgb(239 233 224 / 0.16); }
+  .tarifa dd { font-family: var(--font-display); font-size: 1.375rem; letter-spacing: -0.02em; white-space: nowrap; }
+  .band__nota { color: var(--p-inv-muted); font-size: var(--t-small); }
+  .band__media { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; max-height: 640px; }
+  .band__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .btn--light { --btn-bg: var(--p-inv-ink); --btn-ink: var(--p-inv-bg); }
+  .btn--ghost-light { --btn-bg: transparent; --btn-ink: var(--p-inv-ink); border-color: rgb(239 233 224 / 0.4); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn--light:hover { --btn-bg: #fff !important; }
+    .btn--ghost-light:hover { --btn-bg: rgb(239 233 224 / 0.08) !important; border-color: var(--p-inv-ink) !important; }
+  }
+  @media (min-width: 1024px) {
+    .band { padding-block: var(--s-9); }
+    .band__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--s-8); }
+  }
+
+  /* ---- Cómo funciona (pinned-chapters de taste) ---- */
+  #como-funciona :global(.mo-pc__step) { border-left-width: 1px; }
+  #como-funciona :global(.mo-pc__step h3) { font-family: var(--font-display); font-size: 1.75rem; letter-spacing: -0.03em; font-weight: 450; }
+  #como-funciona :global(.mo-pc__visual img) { object-position: 50% 50%; }
+  /* Las fotos son verticales: el marco compartido también (el del kit es 4:3 y cortaba las cabezas) */
+  #como-funciona:global(.is-live) :global(.mo-pc__visuals) { aspect-ratio: 4 / 5; width: auto; height: min(680px, calc(100svh - 160px)); justify-self: center; border-radius: var(--r-lg); overflow: hidden; }
+
+  /* ---- Cierre ---- */
+  .cierre { background: var(--surface); }
+  .cierre__grid { display: grid; gap: var(--s-7); align-items: center; }
+  .cierre__text { display: grid; gap: var(--s-5); justify-items: start; }
+  .cierre .lead { color: var(--ink); }
+  .cierre__word { font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem); line-height: 0.92; letter-spacing: -0.04em; max-width: 9ch; }
+  .cierre__media { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; max-height: 560px; }
+  .cierre__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  @media (min-width: 1024px) { .cierre__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--s-8); } }
+</style>

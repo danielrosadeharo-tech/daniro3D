@@ -1,0 +1,18 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { sitio } from '../lib/catalogo';
+// BORRADOR: revisa plazos y costes reales antes de publicar.
+---
+<Legal title="Envíos" description={`Cómo enviamos los pedidos de ${sitio.marca}: plazos, costes y seguimiento.`} ruta="/envios">
+  <p class="lead">Cada pieza se imprime bajo pedido, así que el plazo tiene dos partes: lo que tardamos en fabricarla y lo que tarda el envío.</p>
+  <h2>Fabricación</h2>
+  <p>Al confirmar tu pedido te decimos cuántos días tardaremos en tenerlo listo. Depende del tamaño de la pieza y de los pedidos que haya en cola.</p>
+  <h2>Envío</h2>
+  <ul>
+    <li>Enviamos a toda España peninsular. Para Baleares, Canarias, Ceuta y Melilla, pregúntanos antes.</li>
+    <li>El coste del envío depende del tamaño y del peso del paquete. Te lo decimos antes de que pagues, nunca después.</li>
+    <li>Cuando sale el paquete te mandamos el número de seguimiento por WhatsApp o email.</li>
+  </ul>
+  <h2>Si llega dañado</h2>
+  <p>Escríbenos en las 48 horas siguientes con una foto del paquete y de la pieza. Lo reponemos o te devolvemos el dinero.</p>
+</Legal>

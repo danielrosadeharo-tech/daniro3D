@@ -1,0 +1,225 @@
+---
+import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { sitio, categoriasCatalogo, urlCategoria, enlaceWhatsApp, fotoAmbiente } from '../lib/catalogo';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata;
+  jsonLd?: object | object[];
+  noindex?: boolean;
+  /** Ruta activa del menú, p. ej. "/catalogo". */
+  activo?: string;
+}
+const { title, description, image, jsonLd, noindex = false, activo } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: image ?? fotoAmbiente('coleccion-pilotos.jpg'), width: 1200, format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
+const tituloCompleto = title.includes(sitio.marca) ? title : `${title} · ${sitio.marca}`;
+
+const nav = [
+  { href: '/catalogo', txt: 'Catálogo' },
+  { href: '/funkos', txt: 'Funkos' },
+  { href: '/catalogo/copas', txt: 'Copas' },
+  { href: '/catalogo/legos', txt: 'Legos' },
+  { href: '/encargos', txt: 'Encargos' },
+  { href: '/sobre-nosotros', txt: 'Sobre nosotros' },
+];
+const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const año = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{tituloCompleto}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="theme-color" content="#efe9e0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content={sitio.marca} />
+  <meta property="og:title" content={tituloCompleto} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogUrl} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="nav" data-nav>
+    <div class="wrap nav__bar">
+      <a class="logo" href="/" aria-label={`${sitio.marca}, inicio`}><Logo />{sitio.marca}</a>
+      <nav aria-label="Principal">
+        <ul class="nav__links">
+          {nav.map((n) => <li><a href={n.href} aria-current={activo === n.href ? 'page' : undefined}>{n.txt}</a></li>)}
+        </ul>
+      </nav>
+      <div class="nav__actions">
+        <a class="icon-btn" href="/cesta" data-abrir-cesta aria-label="Cesta, 0 piezas">
+          <Icon name="cesta" />
+          <span class="badge" data-badge hidden>0</span>
+        </a>
+        <button class="icon-btn nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+          <span class="sr-only" data-menu-label>Abrir menú</span>
+          <Icon name="menu" />
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-menu inert>
+    <ul>
+      <li><a href="/catalogo">Todo el catálogo <Icon name="flecha" /></a></li>
+      {categoriasCatalogo.map((c) => <li><a href={urlCategoria(c)}>{c.nombre} <Icon name="flecha" /></a></li>)}
+      <li><a href="/encargos">Encargos a medida <Icon name="flecha" /></a></li>
+    </ul>
+    <ul class="menu__small">
+      <li><a href="/sobre-nosotros">Sobre nosotros y contacto</a></li>
+      <li><a href={enlaceWhatsApp('¡Hola! Tengo una pregunta sobre el catálogo.')} rel="noopener" target="_blank">WhatsApp · {sitio.telefonoVisible}</a></li>
+    </ul>
+  </div>
+
+  <main id="contenido" tabindex="-1">
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="logo" href="/"><Logo />{sitio.marca}</a>
+          <p>Figuras, Funkos, posavasos y regalos impresos en 3D bajo pedido y a medida.</p>
+          <div class="btn-row" style="margin-top: var(--s-5)">
+            <a class="btn" href={enlaceWhatsApp('¡Hola! Me interesa un artículo del catálogo.')} rel="noopener" target="_blank"><WhatsAppIcon />Escribir por WhatsApp</a>
+          </div>
+        </div>
+        <nav aria-labelledby="f-cat">
+          <h2 id="f-cat">Catálogo</h2>
+          <ul>
+            {categoriasCatalogo.map((c) => <li><a href={urlCategoria(c)}>{c.nombre}</a></li>)}
+            <li><a href="/encargos">Encargos a medida</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-info">
+          <h2 id="f-info">Información</h2>
+          <ul>
+            <li><a href="/sobre-nosotros">Sobre nosotros y contacto</a></li>
+            <li><a href="/envios">Envíos</a></li>
+            <li><a href="/devoluciones">Devoluciones</a></li>
+            <li><a href="/privacidad">Privacidad y aviso legal</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-redes">
+          <h2 id="f-redes">También estamos en</h2>
+          <ul>
+            <li><a href={sitio.wallapop} rel="noopener" target="_blank">Wallapop</a></li>
+            <li><a href={sitio.vinted} rel="noopener" target="_blank">Vinted</a></li>
+            <li><a href={`https://wa.me/${sitio.whatsapp}`} rel="noopener" target="_blank">WhatsApp {sitio.telefonoVisible}</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__legal">
+        <span>© {año} {sitio.marca}. Precios en euros con IVA incluido.</span>
+        <span>Hecho en España</span>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="drawer" id="cesta" aria-labelledby="cesta-h">
+    <div class="drawer__inner">
+      <div class="drawer__head">
+        <h2 id="cesta-h">Tu cesta</h2>
+        <button class="icon-btn" type="button" data-cerrar-cesta aria-label="Cerrar la cesta"><Icon name="cerrar" /></button>
+      </div>
+      <div class="drawer__body">
+        <ul data-lineas style="list-style:none;padding:0"></ul>
+        <div class="vacio" data-vacio hidden>
+          <p>Tu cesta está vacía. Echa un vistazo al catálogo y añade lo que te guste.</p>
+          <a class="btn btn--secondary" href="/catalogo">Ver el catálogo</a>
+        </div>
+      </div>
+      <div class="drawer__foot" data-pie>
+        <div class="total"><span>Total</span><strong class="precio" data-total>0 €</strong></div>
+        <p class="nota" data-nota-consulta hidden>Las piezas a consultar no suman: te damos su precio al confirmar.</p>
+        <a class="btn btn--block" href="/cesta">Tramitar pedido</a>
+        <p class="nota">Sin pago en la web: nos llega tu pedido y te confirmamos precio final, envío y plazo.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span data-msg></span><button type="button" hidden></button></div>
+
+  <script>
+    import { cesta, htmlLineas, conectarLista, euros } from '../scripts/cesta';
+
+    // Cabecera: borde al hacer scroll
+    const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+    const onScroll = () => nav.toggleAttribute('data-scrolled', scrollY > 8);
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // Menú móvil
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+    const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+    const label = toggle.querySelector('[data-menu-label]')!;
+    const setMenu = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+      menu.toggleAttribute('data-open', open);
+      menu.inert = !open;
+      // Con el menú abierto, el tabulador no se escapa a la página de detrás
+      document.querySelectorAll<HTMLElement>('main, footer').forEach((el) => (el.inert = open));
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.hasAttribute('data-open')) { setMenu(false); toggle.focus(); } });
+    matchMedia('(min-width: 1024px)').addEventListener('change', (m) => m.matches && setMenu(false));
+
+    // Cesta
+    const dlg = document.getElementById('cesta') as HTMLDialogElement;
+    const ul = dlg.querySelector<HTMLElement>('[data-lineas]')!;
+    const badge = document.querySelector<HTMLElement>('[data-badge]')!;
+    const abrir = document.querySelector<HTMLAnchorElement>('[data-abrir-cesta]')!;
+    conectarLista(ul);
+
+    let previo = cesta.unidades();
+    function pintar() {
+      const ls = cesta.lineas();
+      const n = cesta.unidades();
+      ul.innerHTML = htmlLineas(ls);
+      dlg.querySelector('[data-vacio]')!.toggleAttribute('hidden', ls.length > 0);
+      dlg.querySelector('[data-pie]')!.toggleAttribute('hidden', ls.length === 0);
+      dlg.querySelector('[data-total]')!.textContent = euros(cesta.total());
+      dlg.querySelector('[data-nota-consulta]')!.toggleAttribute('hidden', !cesta.hayConsultas());
+      badge.textContent = String(n);
+      badge.hidden = n === 0;
+      abrir.setAttribute('aria-label', `Cesta, ${n} ${n === 1 ? 'pieza' : 'piezas'}`);
+      if (n > previo) { badge.classList.remove('is-bump'); void badge.offsetWidth; badge.classList.add('is-bump'); }
+      previo = n;
+    }
+    pintar();
+    document.addEventListener('cesta:cambio', pintar);
+
+    const abrirCesta = () => { if (!dlg.open) { dlg.showModal(); document.documentElement.style.overflow = 'hidden'; } };
+    abrir.addEventListener('click', (e) => { if (location.pathname !== '/cesta') { e.preventDefault(); abrirCesta(); } });
+    document.addEventListener('cesta:abrir', abrirCesta);
+    dlg.querySelector('[data-cerrar-cesta]')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; });
+  </script>
+</body>
+</html>

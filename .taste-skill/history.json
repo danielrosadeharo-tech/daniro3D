@@ -1,0 +1,20 @@
+{
+  "palettes": [
+    "clay-pine"
+  ],
+  "types": [
+    "bricolage"
+  ],
+  "dealt": [
+    "bricolage",
+    "instrument-serif",
+    "mona"
+  ],
+  "moments": [
+    {
+      "id": "pinned-chapters",
+      "at": "2026-11-09T13:15:20.984Z",
+      "seed": "003eb266"
+    }
+  ]
+}

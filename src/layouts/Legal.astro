@@ -1,0 +1,15 @@
+---
+import Base from './Base.astro';
+import Migas from '../components/Migas.astro';
+interface Props { title: string; description: string; ruta: string }
+const { title, description, ruta } = Astro.props;
+---
+<Base title={title} description={description}>
+  <div class="wrap page-head">
+    <Migas items={[{ nombre: 'Inicio', url: '/' }, { nombre: title, url: ruta }]} />
+    <h1>{title}</h1>
+  </div>
+  <div class="wrap" style="padding-bottom: var(--s-9)">
+    <div class="prose"><slot /></div>
+  </div>
+</Base>

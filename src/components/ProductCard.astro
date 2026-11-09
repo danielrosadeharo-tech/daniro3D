@@ -1,0 +1,29 @@
+---
+import { Picture } from 'astro:assets';
+import { foto, textoPrecio, categoria, urlProducto, type Producto } from '../lib/catalogo';
+interface Props { p: Producto; prioridad?: boolean; mostrarCategoria?: boolean; nivel?: 'h2' | 'h3' }
+const { p, prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
+const f = foto(p);
+const Tag = nivel;
+const cat = categoria(p.categoria);
+const etiqueta = p.personalizacion.disponible ? 'Personalizable' : p.etiquetas.includes('edicion-especial') ? 'Edición especial' : null;
+---
+<article class="card">
+  <div class="card__media">
+    <Picture
+      src={f.src}
+      alt={f.alt}
+      formats={['avif', 'webp']}
+      widths={[240, 360, 480, 720]}
+      sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 46vw"
+      loading={prioridad ? 'eager' : 'lazy'}
+      fetchpriority={prioridad ? 'high' : undefined}
+    />
+    {etiqueta && <span class="card__tag">{etiqueta}</span>}
+  </div>
+  <div class="card__body">
+    {mostrarCategoria && cat && <span class="card__cat">{cat.nombre}</span>}
+    <Tag class="card__title"><a href={urlProducto(p)}>{p.nombre}</a></Tag>
+    <span class:list={['card__price precio', { 'card__price--consultar': p.precio.tipo === 'consultar' }]}>{textoPrecio(p)}</span>
+  </div>
+</article>

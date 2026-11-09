@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /cesta
+
+Sitemap: https://daniro3d.es/sitemap-index.xml

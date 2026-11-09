@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import Catalogo from '../../components/Catalogo.astro';
+import Migas from '../../components/Migas.astro';
+import { productos } from '../../lib/catalogo';
+import { migasLd, listaLd } from '../../lib/seo';
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Catálogo', url: '/catalogo' }];
+---
+<Base
+  title="Catálogo de impresiones 3D: Funkos, figuras, posavasos y trofeos"
+  description={`Las ${productos.length} piezas del catálogo: Funkos personalizados, figuras de pilotos, posavasos, llaveros y trofeos impresos en 3D. Filtra por categoría, color y precio.`}
+  activo="/catalogo"
+  jsonLd={[migasLd(migas), listaLd('Catálogo', productos)]}
+>
+  <div class="wrap page-head">
+    <Migas items={migas} />
+    <h1>Catálogo</h1>
+    <p class="lead">Todo lo que hacemos, con precio. Si algo no tiene precio, pregúntanos: depende del tamaño o de lo que quieras cambiar.</p>
+  </div>
+  <div class="wrap" style="padding-bottom: var(--s-9)">
+    <Catalogo productos={productos} />
+  </div>
+</Base>

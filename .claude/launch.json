@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "daniro-web",
+      "runtimeExecutable": "C:\\Program Files\\nodejs\\npx.cmd",
+      "runtimeArgs": ["astro", "dev", "--port", "4321", "--root", "C:\\Users\\Daniel\\Desktop\\web"],
+      "port": 4321
+    }
+  ]
+}

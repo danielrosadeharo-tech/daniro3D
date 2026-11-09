@@ -1,0 +1,53 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Catalogo from '../../components/Catalogo.astro';
+import Migas from '../../components/Migas.astro';
+import { categoriasCatalogo, deCategoria, producto, foto, desdeCategoria, euros, type Categoria } from '../../lib/catalogo';
+import { migasLd, listaLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  // Las categorías con página propia (Funkos → /funkos) no generan /catalogo/<slug>
+  return categoriasCatalogo.filter((c) => !c.enlace).map((c) => ({ params: { categoria: c.slug }, props: { c } }));
+}
+const { c } = Astro.props as { c: Categoria };
+const ps = deCategoria(c.slug);
+const portada = producto(c.portada) ?? ps[0];
+const f = foto(portada);
+const desde = desdeCategoria(c.slug);
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Catálogo', url: '/catalogo' }, { nombre: c.nombre, url: `/catalogo/${c.slug}` }];
+---
+<Base
+  title={`${c.titulo}${desde != null ? ` desde ${euros(desde)}` : ''}`}
+  description={c.descripcion}
+  image={f.src}
+  activo={`/catalogo/${c.slug}`}
+  jsonLd={[migasLd(migas), listaLd(c.titulo, ps)]}
+>
+  <header class="wrap cat-head">
+    <div class="cat-head__text" data-enter>
+      <Migas items={migas} />
+      <h1>{c.titulo}</h1>
+      <p class="lead">{c.descripcion}</p>
+      <p class="cat-head__facts"><span class="num">{ps.length}</span> piezas{desde != null && <> · desde <span class="num">{euros(desde)}</span></>}</p>
+    </div>
+    <div class="cat-head__media">
+      <Picture src={f.src} alt={f.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes="(min-width: 768px) 34vw, 100vw" loading="eager" fetchpriority="high" />
+    </div>
+  </header>
+  <div class="wrap" style="padding-bottom: var(--s-9)">
+    <Catalogo productos={ps} categoriaFija={c.slug} />
+  </div>
+</Base>
+<style>
+  .cat-head { display: grid; gap: var(--s-6); padding-block: var(--s-5) var(--s-7); align-items: end; }
+  .cat-head__text { display: grid; gap: var(--s-4); }
+  .cat-head h1 { font-size: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem); max-width: 14ch; }
+  .cat-head__facts { font-weight: 560; }
+  .cat-head__media { border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 16 / 10; }
+  .cat-head__media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  @media (min-width: 768px) {
+    .cat-head { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s-7); }
+    .cat-head__media { aspect-ratio: 4 / 5; max-height: 460px; justify-self: end; width: 100%; }
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { sitio } from '../lib/catalogo';
+// BORRADOR: completa los datos del titular en src/data/sitio.json → "titular" y revísalo antes de publicar.
+const t = sitio.titular;
+---
+<Legal title="Privacidad y aviso legal" description={`Aviso legal y política de privacidad de ${sitio.marca}.`} ruta="/privacidad">
+  <h2>Quién es el responsable</h2>
+  <p>Esta web es de {t.nombre}, con NIF {t.nif}, en {t.domicilio}. Contacto: WhatsApp {sitio.telefonoVisible}{sitio.email && <> o {sitio.email}</>}.</p>
+  <h2>Qué datos usamos y para qué</h2>
+  <ul>
+    <li>Cuando nos mandas un pedido o un encargo, usamos tu nombre, tu teléfono o email y lo que nos cuentas para responderte, preparar el pedido y enviarlo.</li>
+    <li>No usamos tus datos para publicidad ni se los cedemos a nadie, salvo a la empresa de transporte para hacerte llegar el paquete.</li>
+    <li>Guardamos los datos del pedido el tiempo que obliga la ley (facturación) y los del contacto mientras dure la conversación.</li>
+  </ul>
+  <h2>Tu cesta y las cookies</h2>
+  <p>Esta web no usa cookies de seguimiento ni de publicidad. La cesta se guarda solo en tu navegador (almacenamiento local) para que no la pierdas al cambiar de página; no nos llega a nosotros hasta que envías el pedido.</p>
+  <h2>WhatsApp</h2>
+  <p>Si eliges enviar el pedido por WhatsApp, el mensaje pasa por los servidores de WhatsApp (Meta) y se rige también por su política de privacidad.</p>
+  <h2>Tus derechos</h2>
+  <p>Puedes pedirnos ver, corregir o borrar tus datos, o limitar su uso, escribiéndonos por los mismos canales. Si crees que no los tratamos bien, puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+</Legal>

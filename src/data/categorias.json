@@ -1,0 +1,60 @@
+[
+  {
+    "slug": "funkos",
+    "nombre": "Funkos",
+    "titulo": "Funkos personalizados con su caja",
+    "descripcion": "Funkos hechos a partir de tus fotos, con su caja a medida: personas, mascotas y momentos especiales. Desde 55 €.",
+    "portada": "edicion-especial-14",
+    "enlace": "/funkos",
+    "orden": 1
+  },
+  {
+    "slug": "copas",
+    "nombre": "Copas",
+    "titulo": "Réplicas de copas y trofeos",
+    "descripcion": "Réplicas de trofeos de fútbol y de película impresas en 3D, en plata y dorado. De 20 a 25 cm de alto.",
+    "portada": "copa-champions-league",
+    "orden": 2
+  },
+  {
+    "slug": "legos",
+    "nombre": "Legos",
+    "titulo": "Figuras de bloques de pilotos",
+    "descripcion": "Figuras de bloques de gran tamaño con cascos y monos de piloto, impresas en 3D a todo color. En 30 cm y algunas también en 15 cm.",
+    "portada": "max-verstappen-red-bull",
+    "orden": 3
+  },
+  {
+    "slug": "posavasos",
+    "nombre": "Posavasos",
+    "titulo": "Posavasos ilustrados",
+    "descripcion": "Posavasos con ilustración a color y acabado brillante: tu mascota, Pokémon, Fórmula 1 o un diseño para regalar.",
+    "portada": "posavasos-pokemon-vidriera",
+    "orden": 4
+  },
+  {
+    "slug": "llaveros",
+    "nombre": "Llaveros",
+    "titulo": "Llaveros y colgadores",
+    "descripcion": "Llaveros y colgadores con diseños divertidos, ligeros y resistentes.",
+    "portada": "colgador-llaves-ferrari-f40",
+    "orden": 5
+  },
+  {
+    "slug": "otros",
+    "nombre": "Más piezas",
+    "titulo": "Esculturas, estanterías y piezas especiales",
+    "descripcion": "Esculturas, estanterías, tarjetas NFC y otras piezas especiales.",
+    "portada": "lagarto-verde",
+    "orden": 6
+  },
+  {
+    "slug": "encargos",
+    "nombre": "Encargos a medida",
+    "titulo": "Encargos a medida",
+    "descripcion": "¿Tienes una idea o un archivo STL? Cuéntanos qué necesitas y te damos precio.",
+    "enlace": "/encargos",
+    "portada": "tarjetas-nfc-qr",
+    "orden": 7
+  }
+]

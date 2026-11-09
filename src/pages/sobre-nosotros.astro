@@ -1,0 +1,64 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { sitio, fotoAmbiente, productos, enlaceWhatsApp } from '../lib/catalogo';
+import { migasLd } from '../lib/seo';
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Sobre nosotros', url: '/sobre-nosotros' }];
+const comparativa = fotoAmbiente('comparativa-tamano.jpg');
+---
+<Base title="Sobre nosotros y contacto" description={`Quién está detrás de ${sitio.marca}, cómo trabajamos y cómo contactar: WhatsApp ${sitio.telefonoVisible}, Wallapop y Vinted.`} activo="/sobre-nosotros" jsonLd={migasLd(migas)}>
+  <div class="wrap page-head">
+    <Migas items={migas} />
+    <h1>Piezas impresas una a una, bajo pedido</h1>
+  </div>
+
+  <div class="wrap about">
+    <div class="prose">
+      <!-- CAMBIA ESTE TEXTO: cuenta quién eres, desde cuándo imprimes y con qué impresoras. -->
+      <p class="lead">{sitio.marca} es un taller pequeño de impresión 3D. Hacemos Funkos personalizados, figuras de pilotos, posavasos, llaveros, trofeos y encargos a medida.</p>
+      <p>No tenemos almacén: cada pieza se imprime cuando la pides. Por eso casi todo se puede cambiar, desde el tamaño hasta el nombre de la caja, y por eso te confirmamos precio y plazo antes de empezar.</p>
+      <p>Hoy hay {productos.length} piezas en el catálogo, todas fotografiadas tal y como salen de la impresora. Si buscas algo que no está, pregúntanos.</p>
+    </div>
+    <figure class="about__media"><Picture src={comparativa} alt="Comparativa de tamaño de las figuras de pilotos" formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 900px) 36vw, 92vw" loading="lazy" /></figure>
+  </div>
+
+  <section class="section contacto" id="contacto" aria-labelledby="contacto-h">
+    <div class="wrap">
+      <h2 id="contacto-h">Contacto</h2>
+      <ul class="contacto__lista">
+        <li>
+          <h3>WhatsApp</h3>
+          <p>La forma más rápida para pedidos, presupuestos y fotos.</p>
+          <a class="btn" href={enlaceWhatsApp('¡Hola! Me interesa un artículo del catálogo.')} target="_blank" rel="noopener"><WhatsAppIcon />Escribir al {sitio.telefonoVisible}</a>
+        </li>
+        <li>
+          <h3>Wallapop</h3>
+          <p>Algunas piezas también están a la venta allí, con su sistema de envío.</p>
+          <a class="btn btn--secondary" href={sitio.wallapop} target="_blank" rel="noopener">Ver el perfil de Wallapop</a>
+        </li>
+        <li>
+          <h3>Vinted</h3>
+          <p>El mismo catálogo, con el envío y la protección de Vinted.</p>
+          <a class="btn btn--secondary" href={sitio.vinted} target="_blank" rel="noopener">Ver el perfil de Vinted</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { display: grid; gap: var(--s-7); padding-bottom: var(--s-8); align-items: start; }
+  @media (min-width: 900px) { .about { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s-8); } }
+  .about__media { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; max-height: 600px; }
+  .about__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .contacto { background: var(--surface); }
+  .contacto h2 { margin-bottom: var(--s-6); }
+  .contacto__lista { list-style: none; padding: 0; display: grid; gap: var(--s-6); }
+  .contacto__lista li { display: grid; gap: var(--s-3); justify-items: start; align-content: start; padding-top: var(--s-5); border-top: 1px solid var(--line-strong); }
+  .contacto__lista p { color: var(--ink); max-width: 36ch; }
+  .contacto__lista li { min-width: 0; }
+  .contacto__lista .btn { max-width: 100%; white-space: normal; text-align: center; padding-block: 10px; }
+  @media (min-width: 1024px) { .contacto__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

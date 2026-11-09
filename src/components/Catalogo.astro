@@ -1,0 +1,341 @@
+---
+import ProductCard from './ProductCard.astro';
+import Icon from './Icon.astro';
+import { categoriasCatalogo, categoria as getCat, precioNumerico, urlCategoria, type Producto } from '../lib/catalogo';
+import { colorHex } from '../lib/colores';
+
+interface Props { productos: Producto[]; categoriaFija?: string }
+const { productos, categoriaFija } = Astro.props;
+
+const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const materiales = [...new Set(productos.flatMap((p) => p.materiales))].sort();
+const colores = [...new Set(productos.flatMap((p) => p.colores))].filter((c) => c !== 'A elegir').sort((a, b) => a.localeCompare(b, 'es'));
+const cuenta = (fn: (p: Producto) => boolean) => productos.filter(fn).length;
+const precios = productos.map(precioNumerico).filter((n): n is number => n != null);
+const maxPrecio = Math.max(...precios);
+const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a.destacado) || b.fechaAlta.localeCompare(a.fechaAlta));
+---
+<div class="cat" data-catalogo data-fija={categoriaFija ?? ''}>
+  <div class="cat__toolbar">
+    <label class="buscar">
+      <span class="sr-only">Buscar en el catálogo</span>
+      <Icon name="buscar" />
+      <input class="input" type="search" name="q" form="filtros" placeholder="Buscar: Senna, mascota, trofeo…" autocomplete="off" enterkeyhint="search" />
+    </label>
+    <button class="btn btn--secondary cat__abrir" type="button" data-abrir-filtros aria-controls="filtros-panel" aria-expanded="false">
+      <Icon name="filtro" />Filtros<span class="cat__n" data-n-filtros hidden></span>
+    </button>
+    <label class="ordenar">
+      <span class="sr-only">Ordenar por</span>
+      <select class="select" name="orden" form="filtros">
+        <option value="destacados">Destacados</option>
+        <option value="novedad">Novedades</option>
+        <option value="precio-asc">Precio: de menor a mayor</option>
+        <option value="precio-desc">Precio: de mayor a menor</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="cat__layout">
+    <aside class="cat__panel" id="filtros-panel" data-panel aria-labelledby="filtros-h">
+      <form id="filtros" class="filtros" role="search" aria-labelledby="filtros-h">
+        <div class="filtros__head">
+          <h2 id="filtros-h">Filtros</h2>
+          <button class="icon-btn cat__cerrar" type="button" data-cerrar-filtros aria-label="Cerrar filtros"><Icon name="cerrar" /></button>
+        </div>
+        <div class="filtros__body">
+          {categoriaFija ? (
+            <nav class="filtro" aria-labelledby="f-otras">
+              <h3 id="f-otras" class="filtro__t">Categoría</h3>
+              <div class="chips">
+                <a class="chip-link" href="/catalogo">Todas</a>
+                {categoriasCatalogo.map((c) => <a class="chip-link" href={urlCategoria(c)} aria-current={c.slug === categoriaFija ? 'page' : undefined}>{c.nombre}</a>)}
+              </div>
+            </nav>
+          ) : (
+            <fieldset class="filtro">
+              <legend class="filtro__t">Categoría</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="categoria" value="" checked /><span>Todas <small>{productos.length}</small></span></label>
+                {categoriasCatalogo.map((c) => (
+                  <label class="chip"><input type="radio" name="categoria" value={c.slug} /><span>{c.nombre} <small>{cuenta((p) => p.categoria === c.slug)}</small></span></label>
+                ))}
+              </div>
+            </fieldset>
+          )}
+
+          {colores.length > 1 && (
+            <fieldset class="filtro">
+              <legend class="filtro__t">Color</legend>
+              <div class="chips">
+                {colores.map((c) => (
+                  <label class="chip"><input type="checkbox" name="color" value={c} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{c}</span></label>
+                ))}
+              </div>
+            </fieldset>
+          )}
+
+          {materiales.length > 1 && (
+            <fieldset class="filtro">
+              <legend class="filtro__t">Material</legend>
+              <div class="chips">
+                {materiales.map((m) => <label class="chip"><input type="checkbox" name="material" value={m} /><span>{m}</span></label>)}
+              </div>
+            </fieldset>
+          )}
+
+          <fieldset class="filtro">
+            <legend class="filtro__t">Precio</legend>
+            <div class="rango">
+              <div class="field"><label for="f-min">Mínimo (€)</label><input class="input" id="f-min" name="min" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder="0" /></div>
+              <div class="field"><label for="f-max">Máximo (€)</label><input class="input" id="f-max" name="max" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder={String(maxPrecio)} /></div>
+            </div>
+            <p class="hint">Con un rango de precio no salen las piezas a consultar.</p>
+          </fieldset>
+
+          <fieldset class="filtro">
+            <legend class="filtro__t">Personalización</legend>
+            <label class="chip"><input type="checkbox" name="personalizable" value="1" /><span>Solo personalizables</span></label>
+          </fieldset>
+        </div>
+        <div class="filtros__foot">
+          <button class="btn btn--secondary" type="reset" data-borrar>Borrar filtros</button>
+          <button class="btn cat__ver" type="button" data-cerrar-filtros>Ver <span data-n-ver>{productos.length}</span> piezas</button>
+        </div>
+      </form>
+    </aside>
+
+    <section class="cat__resultados" aria-labelledby="res-h">
+      <h2 id="res-h" class="sr-only">Resultados</h2>
+      <p class="cat__count" aria-live="polite" data-count><span class="num">{productos.length}</span> piezas</p>
+      <ul class="grid-productos" data-grid>
+        {ordenInicial.map((p, i) => (
+          <li
+            data-cat={p.categoria}
+            data-mat={p.materiales.join('|')}
+            data-col={p.colores.join('|')}
+            data-precio={precioNumerico(p) ?? ''}
+            data-fecha={p.fechaAlta}
+            data-dest={p.destacado ? '1' : '0'}
+            data-pers={p.personalizacion.disponible ? '1' : '0'}
+            data-texto={norm([p.nombre, p.descripcionCorta, p.descripcionLarga, p.etiquetas.join(' '), getCat(p.categoria)?.nombre ?? ''].join(' '))}
+          >
+            <ProductCard p={p} prioridad={i < 4} mostrarCategoria={!categoriaFija} nivel="h3" />
+          </li>
+        ))}
+      </ul>
+      <div class="vacio cat__vacio" data-vacio hidden>
+        <h3>No hay piezas con estos filtros</h3>
+        <p class="lead">Prueba a quitar algún filtro. Y si lo que buscas no está, te lo hacemos a medida.</p>
+        <div class="btn-row">
+          <button class="btn btn--secondary" type="button" data-borrar-vacio>Borrar filtros</button>
+          <a class="btn" href="/encargos">Pedir un encargo a medida</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="cat__velo" data-velo hidden></div>
+</div>
+
+<style>
+  .cat__toolbar { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-3); margin-bottom: var(--s-5); }
+  .cat__toolbar > * { min-width: 0; }
+  .ordenar .select { width: 100%; text-overflow: ellipsis; }
+  .buscar { position: relative; grid-column: 1 / -1; }
+  .buscar :global(svg) { position: absolute; left: 14px; top: 50%; translate: 0 -50%; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+  .buscar .input { padding-left: 44px; }
+  .cat__abrir { padding-inline: 18px; }
+  .cat__n { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 11px; background: var(--ink); color: var(--bg); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+  .cat__n[hidden] { display: none; }
+  .cat__count { color: var(--muted); margin-bottom: var(--s-4); font-size: var(--t-small); }
+  .select { appearance: none; padding-right: 40px; background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2322261f' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 12px center; }
+
+  .filtros { display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
+  .filtros__head { display: flex; align-items: center; justify-content: space-between; }
+  .filtros__head h2 { font-size: 1.5rem; }
+  .filtros__body { display: grid; gap: var(--s-6); align-content: start; }
+  .filtro { display: grid; gap: var(--s-3); }
+  .filtro__t { font-family: var(--font-text); font-size: 0.9375rem; font-weight: 600; letter-spacing: 0; }
+  .rango { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+  .rango label { font-weight: 450; font-size: var(--t-small); color: var(--muted); }
+  .hint { font-size: var(--t-small); color: var(--muted); }
+  .filtros__foot { display: flex; gap: var(--s-3); }
+  .chip-link {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--r-pill);
+    border: 1px solid var(--line-strong); background: var(--card); font-weight: 500; font-size: 0.9375rem; text-decoration: none;
+    transition: border-color 160ms ease;
+  }
+  .chip-link[aria-current="page"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  @media (hover: hover) and (pointer: fine) { .chip-link:not([aria-current]):hover { border-color: var(--ink); } }
+
+  /* Móvil y tablet: el panel es una hoja lateral */
+  @media (max-width: 1023px) {
+    .cat__panel {
+      position: fixed; inset: 0 auto 0 0; z-index: 50; width: min(400px, 92vw); background: var(--bg);
+      transform: translateX(-102%); transition: transform 320ms var(--ease-drawer); visibility: hidden;
+      box-shadow: var(--shadow-2);
+    }
+    .cat__panel[data-open] { transform: none; visibility: visible; }
+    .filtros__head { padding: var(--s-3) var(--s-3) var(--s-3) var(--s-5); border-bottom: 1px solid var(--line); }
+    .filtros__body { overflow-y: auto; padding: var(--s-5); overscroll-behavior: contain; }
+    .filtros__foot { padding: var(--s-4) var(--s-5) calc(var(--s-4) + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+    .filtros__foot .btn { flex: 1; }
+    .cat__velo { position: fixed; inset: 0; z-index: 49; background: rgb(20 22 18 / 0.45); }
+    .cat__velo[hidden] { display: none; }
+  }
+  @media (min-width: 640px) {
+    .cat__toolbar { grid-template-columns: 1fr auto minmax(200px, auto); }
+    .buscar { grid-column: auto; }
+  }
+  @media (min-width: 1024px) {
+    .cat__layout { display: grid; grid-template-columns: 264px minmax(0, 1fr); gap: var(--s-7); align-items: start; }
+    .cat__abrir, .cat__cerrar, .cat__ver { display: none; }
+    .cat__panel { position: sticky; top: calc(var(--nav-h) + 24px); max-height: calc(100svh - var(--nav-h) - 48px); overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
+    .filtros { gap: var(--s-5); }
+    .filtros__head h2 { font-size: 1.25rem; }
+    .filtros__body { gap: var(--s-5); }
+    .cat__toolbar { grid-template-columns: 264px 1fr minmax(220px, auto); column-gap: var(--s-7); }
+    .cat__toolbar .buscar { grid-column: 2; }
+  }
+  .cat__vacio { padding-block: var(--s-7); }
+  .cat__vacio h3 { font-size: 1.75rem; }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-catalogo]')!;
+  const form = document.getElementById('filtros') as HTMLFormElement;
+  const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+  const items = [...grid.children] as HTMLElement[];
+  const original = items.slice();
+  const count = root.querySelector<HTMLElement>('[data-count]')!;
+  const vacio = root.querySelector<HTMLElement>('[data-vacio]')!;
+  const nFiltros = root.querySelector<HTMLElement>('[data-n-filtros]')!;
+  const nVer = root.querySelector<HTMLElement>('[data-n-ver]')!;
+  const panel = root.querySelector<HTMLElement>('[data-panel]')!;
+  const velo = root.querySelector<HTMLElement>('[data-velo]')!;
+  const abrirBtn = root.querySelector<HTMLButtonElement>('[data-abrir-filtros]')!;
+  const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  const fija = root.dataset.fija;
+
+  // ---- Estado <-> URL ----
+  function leerURL() {
+    const u = new URLSearchParams(location.search);
+    const set = (name: string, val: string | null) => {
+      // form.elements incluye también el buscador y el orden, que están fuera del <form> (form="filtros")
+      const els = ([...form.elements] as (HTMLInputElement | HTMLSelectElement)[]).filter((el) => el.name === name);
+      els.forEach((el) => {
+        if (el instanceof HTMLInputElement && (el.type === 'checkbox' || el.type === 'radio')) {
+          const vals = (val ?? '').split(',');
+          el.checked = el.type === 'radio' ? el.value === (val ?? '') : vals.includes(el.value);
+        } else if (val != null) el.value = val;
+      });
+    };
+    ['q', 'categoria', 'material', 'color', 'min', 'max', 'personalizable', 'orden'].forEach((k) => set(k, u.get(k)));
+    // inputs fuera del <form> (buscador y orden) usan form="filtros"
+  }
+  function estado() {
+    const fd = new FormData(form);
+    return {
+      q: norm(String(fd.get('q') ?? '')),
+      categoria: fija || String(fd.get('categoria') ?? ''),
+      material: fd.getAll('material').map(String),
+      color: fd.getAll('color').map(String),
+      min: fd.get('min') === '' || fd.get('min') == null ? null : Number(fd.get('min')),
+      max: fd.get('max') === '' || fd.get('max') == null ? null : Number(fd.get('max')),
+      personalizable: fd.get('personalizable') === '1',
+      orden: String(fd.get('orden') ?? 'destacados'),
+    };
+  }
+  function escribirURL(e: ReturnType<typeof estado>) {
+    const u = new URLSearchParams();
+    const fd = new FormData(form);
+    if (fd.get('q')) u.set('q', String(fd.get('q')));
+    if (!fija && e.categoria) u.set('categoria', e.categoria);
+    if (e.material.length) u.set('material', e.material.join(','));
+    if (e.color.length) u.set('color', e.color.join(','));
+    if (e.min != null) u.set('min', String(e.min));
+    if (e.max != null) u.set('max', String(e.max));
+    if (e.personalizable) u.set('personalizable', '1');
+    if (e.orden !== 'destacados') u.set('orden', e.orden);
+    const qs = u.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+  }
+
+  // ---- Filtrar y ordenar ----
+  function aplicar(actualizarURL = true) {
+    const e = estado();
+    const visibles: HTMLElement[] = [];
+    for (const li of items) {
+      const d = li.dataset;
+      const precio = d.precio === '' ? null : Number(d.precio);
+      let ok = true;
+      if (e.q && !e.q.split(/\s+/).every((w) => d.texto!.includes(w))) ok = false;
+      if (ok && e.categoria && d.cat !== e.categoria) ok = false;
+      if (ok && e.material.length && !e.material.some((m) => d.mat!.split('|').includes(m))) ok = false;
+      if (ok && e.color.length && !e.color.some((c) => d.col!.split('|').includes(c))) ok = false;
+      if (ok && (e.min != null || e.max != null)) {
+        if (precio == null) ok = false;
+        else if ((e.min != null && precio < e.min) || (e.max != null && precio > e.max)) ok = false;
+      }
+      if (ok && e.personalizable && d.pers !== '1') ok = false;
+      li.hidden = !ok;
+      if (ok) visibles.push(li);
+    }
+    const p = (li: HTMLElement) => (li.dataset.precio === '' ? null : Number(li.dataset.precio));
+    const orden = [...items];
+    if (e.orden === 'precio-asc' || e.orden === 'precio-desc') {
+      const dir = e.orden === 'precio-asc' ? 1 : -1;
+      orden.sort((a, b) => { const x = p(a), y = p(b); if (x == null) return 1; if (y == null) return -1; return (x - y) * dir; });
+    } else if (e.orden === 'novedad') {
+      orden.sort((a, b) => b.dataset.fecha!.localeCompare(a.dataset.fecha!));
+    } else orden.splice(0, orden.length, ...original);
+    grid.append(...orden);
+
+    const n = visibles.length;
+    count.innerHTML = `<span class="num">${n}</span> ${n === 1 ? 'pieza' : 'piezas'}`;
+    nVer.textContent = String(n);
+    vacio.hidden = n > 0;
+    grid.hidden = n === 0;
+    const activos = (e.categoria && !fija ? 1 : 0) + e.material.length + e.color.length + (e.min != null || e.max != null ? 1 : 0) + (e.personalizable ? 1 : 0);
+    nFiltros.hidden = activos === 0;
+    nFiltros.textContent = String(activos);
+    if (actualizarURL) escribirURL(e);
+  }
+
+  leerURL();
+  aplicar(false);
+
+  let t = 0;
+  // Escuchamos en el contenedor: el buscador y el orden viven fuera del <form>.
+  root.addEventListener('input', (ev) => {
+    const el = ev.target as HTMLInputElement;
+    if (el.form !== form) return;
+    clearTimeout(t);
+    if (el.name === 'q' || el.type === 'number') t = window.setTimeout(() => aplicar(), 160);
+    else aplicar();
+  });
+  root.addEventListener('change', (ev) => { if ((ev.target as HTMLInputElement).form === form) aplicar(); });
+  root.querySelector<HTMLInputElement>('input[name="q"]')!.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); aplicar(); } });
+  form.addEventListener('submit', (e) => { e.preventDefault(); aplicar(); });
+  // 'reset' salta antes de que el navegador restaure los valores: aplicamos en la siguiente vuelta.
+  form.addEventListener('reset', () => setTimeout(() => {
+    form.querySelectorAll<HTMLInputElement>('[name="categoria"][value=""]').forEach((r) => (r.checked = true));
+    aplicar();
+  }, 0));
+  root.querySelector('[data-borrar-vacio]')!.addEventListener('click', () => form.reset());
+
+  // ---- Panel de filtros en móvil ----
+  const setPanel = (open: boolean) => {
+    panel.toggleAttribute('data-open', open);
+    velo.hidden = !open;
+    abrirBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) panel.querySelector<HTMLElement>('[data-cerrar-filtros]')?.focus();
+    else abrirBtn.focus({ preventScroll: true });
+  };
+  abrirBtn.addEventListener('click', () => setPanel(true));
+  root.querySelectorAll('[data-cerrar-filtros]').forEach((b) => b.addEventListener('click', () => setPanel(false)));
+  velo.addEventListener('click', () => setPanel(false));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.hasAttribute('data-open')) setPanel(false); });
+  matchMedia('(min-width: 1024px)').addEventListener('change', (m) => { if (m.matches && panel.hasAttribute('data-open')) setPanel(false); });
+</script>

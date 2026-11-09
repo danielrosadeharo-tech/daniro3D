@@ -1,0 +1,261 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Galeria from '../../components/Galeria.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Migas from '../../components/Migas.astro';
+import Icon from '../../components/Icon.astro';
+import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
+import { productos, categoria, fotosDe, foto, textoPrecio, relacionados, euros, enlaceWhatsApp, sitio, urlProducto, urlCategoria, type Producto } from '../../lib/catalogo';
+import { colorHex } from '../../lib/colores';
+import { migasLd, productoLd, descripcionMeta } from '../../lib/seo';
+
+export function getStaticPaths() {
+  // Los productos con página propia (el Funko personalizado vive en /funkos) no generan ficha
+  return productos.filter((p) => !p.enlace).map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Producto };
+const cat = categoria(p.categoria)!;
+const fotos = fotosDe(p);
+const rel = relacionados(p);
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: cat.nombre, url: urlCategoria(cat) }, { nombre: p.nombre, url: urlProducto(p) }];
+const ldImgs = await Promise.all(fotos.slice(0, 4).map((f) => getImage({ src: f.src, width: 750, format: 'jpg' }).then((r) => r.src)));
+const miniatura = (await getImage({ src: foto(p).src, width: 144, format: 'webp' })).src;
+
+const consultar = p.precio.tipo === 'consultar';
+const variantes = p.variantes.length > 1 ? p.variantes : [];
+const colores = p.colores.filter((c) => c !== 'A elegir');
+// "colores" son los colores de la pieza. Solo se muestra selector si en productos.json pones "colorAElegir": true.
+const elegirColor = Boolean(p.colorAElegir) && colores.length > 1;
+const materiales = p.materiales;
+const precioBase = consultar ? null : (p.variantes[0]?.precio ?? p.precio.importe);
+const esFunko = p.configurador === 'funko';
+
+const specs = [
+  ['Material', materiales.join(', ')],
+  ['Colores', p.colores.join(', ')],
+  ['Medidas', p.dimensiones],
+  ['Composición', p.composicion],
+  ['Tiempo de fabricación', p.tiempoFabricacion],
+  ['Personalización', p.personalizacion.disponible ? 'Sí, a tu gusto' : null],
+].filter(([, v]) => v) as [string, string][];
+
+const msgWa = `¡Hola! Me interesa «${p.nombre}» (${sitio.dominio}${urlProducto(p)}). ¿Me dais precio y plazo?`;
+const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: miniatura, precio: precioBase, funko: esFunko };
+---
+<Base title={`${p.nombre} · ${textoPrecio(p)}`} description={descripcionMeta(p)} image={foto(p).src} jsonLd={[productoLd(p, ldImgs), migasLd(migas)]}>
+  <div class="wrap ficha-top"><Migas items={migas} /></div>
+
+  <article class="wrap ficha">
+    <div class="ficha__gal"><Galeria fotos={fotos} nombre={p.nombre} /></div>
+
+    <div class="ficha__info">
+      <header class="ficha__head">
+        <a class="ficha__cat" href={urlCategoria(cat)}>{cat.nombre}</a>
+        <h1>{p.nombre}</h1>
+        <p class="ficha__precio precio" data-precio-txt aria-live="polite">{textoPrecio(p)}</p>
+        <p class="ficha__corta">{p.descripcionCorta}</p>
+      </header>
+
+      <form class="opciones" data-opciones novalidate>
+        <script type="application/json" data-producto set:html={JSON.stringify(datos)} />
+
+        {esFunko && (
+          <div class="funko" data-funko>
+            <fieldset class="opcion">
+              <legend>Funkos de tamaño normal</legend>
+              <div class="chips">
+                {[1, 2].map((n) => <label class="chip"><input type="radio" name="normales" value={n} checked={n === 1} /><span>{n}</span></label>)}
+              </div>
+            </fieldset>
+            <fieldset class="opcion">
+              <legend>Funkos pequeños <span class="opcion__hint">mascotas, niños, objetos · +20 € cada uno</span></legend>
+              <div class="chips">
+                {[0, 1, 2, 3].map((n) => <label class="chip"><input type="radio" name="pequenos" value={n} checked={n === 0} /><span>{n}</span></label>)}
+              </div>
+            </fieldset>
+            <p class="funko__resumen" data-funko-resumen>Caja + 1 normal</p>
+            <p class="opcion__hint">Máximo por caja: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. El segundo normal suma 30 €.</p>
+          </div>
+        )}
+
+        {variantes.length > 0 && (
+          <fieldset class="opcion">
+            <legend>Tamaño</legend>
+            <div class="chips">
+              {variantes.map((v, i) => (
+                <label class="chip"><input type="radio" name="Tamaño" value={v.nombre} data-precio={v.precio ?? ''} checked={i === 0} /><span>{v.nombre} <small>{v.precio != null ? euros(v.precio) : 'a consultar'}</small></span></label>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        {elegirColor && (
+          <fieldset class="opcion">
+            <legend>Color</legend>
+            <div class="chips">
+              {colores.map((c, i) => <label class="chip"><input type="radio" name="Color" value={c} checked={i === 0} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{c}</span></label>)}
+            </div>
+          </fieldset>
+        )}
+
+        {materiales.length > 1 && (
+          <fieldset class="opcion">
+            <legend>Material</legend>
+            <div class="chips">
+              {materiales.map((m, i) => <label class="chip"><input type="radio" name="Material" value={m} checked={i === 0} /><span>{m}</span></label>)}
+            </div>
+          </fieldset>
+        )}
+
+        {p.personalizacion.disponible && (
+          <div class="field">
+            <label for="pers">Tu personalización <span class="opcion__hint">(opcional)</span></label>
+            <textarea class="textarea" id="pers" name="personalizacion" maxlength="400" rows="3" aria-describedby="pers-hint" placeholder={esFunko ? 'Ej.: mi hermana con gafas y su gato gris; en la caja «Laura #30»' : 'Escribe aquí lo que quieres'}></textarea>
+            <p class="hint" id="pers-hint">{p.personalizacion.notas} Las fotos nos las mandas por WhatsApp al confirmar.</p>
+          </div>
+        )}
+
+        <div class="comprar">
+          <div class="qty" role="group" aria-label="Cantidad">
+            <button type="button" data-q="-1" aria-label="Quitar una unidad"><Icon name="menos" size={16} /></button>
+            <output data-cantidad aria-live="polite">1</output>
+            <button type="button" data-q="1" aria-label="Añadir una unidad"><Icon name="mas" size={16} /></button>
+          </div>
+          {consultar ? (
+            <a class="btn comprar__main" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />Pedir presupuesto</a>
+          ) : (
+            <button class="btn comprar__main" type="submit"><Icon name="cesta" />Añadir a la cesta</button>
+          )}
+        </div>
+        {consultar ? (
+          <button class="btn btn--secondary btn--block" type="submit">Añadir a la cesta y pedir junto con más cosas</button>
+        ) : (
+          <a class="btn btn--secondary btn--block" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />Preguntar por WhatsApp</a>
+        )}
+        <p class="nota">Se hace bajo pedido. Sin pago en la web: te confirmamos precio final, envío y plazo antes de empezar.</p>
+      </form>
+
+      <section class="ficha__desc" aria-labelledby="desc-h">
+        <h2 id="desc-h">Sobre esta pieza</h2>
+        <p>{p.descripcionLarga}</p>
+        <dl class="specs">
+          {specs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+      </section>
+    </div>
+  </article>
+
+  {rel.length > 0 && (
+    <section class="section" aria-labelledby="rel-h">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <h2 id="rel-h">Más {cat.nombre.toLowerCase()}</h2>
+          <a class="link" href={urlCategoria(cat)}>Ver toda la categoría <Icon name="flecha" /></a>
+        </div>
+        <ul class="grid-productos grid-productos--4">
+          {rel.map((r) => <li><ProductCard p={r} mostrarCategoria={false} /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .ficha-top { padding-top: var(--s-4); }
+  .ficha { display: grid; gap: var(--s-6); padding-bottom: var(--s-8); padding-top: var(--s-3); }
+  .ficha > * { min-width: 0; }
+  @media (max-width: 767px) { .ficha__gal { margin-inline: calc(var(--gutter) * -1); } .ficha__gal :global(.gal__stage) { border-radius: 0; } .ficha__gal :global(.gal__thumbs) { padding-inline: var(--gutter); } }
+  @media (min-width: 900px) {
+    .ficha { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s-8); align-items: start; }
+    .ficha__gal { position: sticky; top: calc(var(--nav-h) + 16px); }
+  }
+  .ficha__info { display: grid; gap: var(--s-7); align-content: start; }
+  .ficha__head { display: grid; gap: var(--s-3); }
+  .ficha__cat { font-weight: 560; color: var(--accent); text-decoration: none; justify-self: start; padding-block: 6px; }
+  .ficha__cat:hover { text-decoration: underline; }
+  .ficha h1 { font-size: clamp(2.125rem, 1.6rem + 2.4vw, 3.5rem); line-height: 1; }
+  .ficha__precio { font-family: var(--font-display); font-size: 1.75rem; letter-spacing: -0.02em; font-weight: 500; }
+  .ficha__corta { color: var(--muted); font-size: var(--t-lead); line-height: 1.5; }
+
+  .opciones { display: grid; gap: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--line); }
+  .opcion { display: grid; gap: var(--s-3); }
+  .opcion legend { margin-bottom: var(--s-3); }
+  .opcion__hint { font-weight: 400; color: var(--muted); font-size: var(--t-small); }
+  .funko { display: grid; gap: var(--s-4); padding: var(--s-5); border-radius: var(--r-md); background: var(--card); }
+  .funko__resumen { font-weight: 560; }
+  .comprar { display: flex; gap: var(--s-3); align-items: stretch; }
+  .comprar .qty { flex: none; }
+  .comprar .qty button { height: 46px; }
+  .comprar__main { flex: 1; min-width: 0; padding-inline: var(--s-4); }
+  .nota { font-size: var(--t-small); color: var(--muted); }
+
+  .ficha__desc { display: grid; gap: var(--s-4); }
+  .ficha__desc h2 { font-size: 1.5rem; }
+  .ficha__desc > p { max-width: 62ch; }
+  .specs { display: grid; margin-top: var(--s-2); }
+  .specs div { display: grid; grid-template-columns: minmax(120px, 0.8fr) 1.2fr; gap: var(--s-4); padding-block: 12px; border-top: 1px solid var(--line); }
+  .specs div:last-child { border-bottom: 1px solid var(--line); }
+  .specs dt { color: var(--muted); }
+  .specs dd { font-weight: 500; }
+</style>
+
+<script>
+  import { cesta, avisar, euros } from '../../scripts/cesta';
+  const form = document.querySelector<HTMLFormElement>('[data-opciones]')!;
+  const d = JSON.parse(form.querySelector('[data-producto]')!.textContent!) as { slug: string; nombre: string; url: string; imagen: string; precio: number | null; funko: boolean };
+  const precioTxt = document.querySelector<HTMLElement>('[data-precio-txt]')!;
+  const out = form.querySelector<HTMLOutputElement>('[data-cantidad]')!;
+  const minus = form.querySelector<HTMLButtonElement>('[data-q="-1"]')!;
+  let cantidad = 1;
+
+  function funko() {
+    const fd = new FormData(form);
+    const n = Number(fd.get('normales') ?? 1);
+    const pequenos = form.querySelectorAll<HTMLInputElement>('input[name="pequenos"]');
+    // 2 normales solo admite 1 pequeño
+    pequenos.forEach((r) => (r.disabled = n === 2 && Number(r.value) > 1));
+    let s = Number(fd.get('pequenos') ?? 0);
+    if (n === 2 && s > 1) { s = 1; pequenos.forEach((r) => (r.checked = Number(r.value) === 1)); }
+    const precio = 55 + (n - 1) * 30 + s * 20;
+    const partes = [`${n} ${n === 1 ? 'normal' : 'normales'}`];
+    if (s) partes.push(`${s} ${s === 1 ? 'pequeño' : 'pequeños'}`);
+    const resumen = `Caja + ${partes.join(' + ')}`;
+    form.querySelector('[data-funko-resumen]')!.textContent = `${resumen}: ${euros(precio)}`;
+    return { precio, opciones: { Composición: resumen } as Record<string, string> };
+  }
+
+  function actual() {
+    if (d.funko) return funko();
+    const fd = new FormData(form);
+    const opciones: Record<string, string> = {};
+    let precio = d.precio;
+    for (const [k, v] of fd.entries()) {
+      if (k === 'personalizacion') continue;
+      opciones[k] = String(v);
+      const el = form.querySelector<HTMLInputElement>(`input[name="${CSS.escape(k)}"]:checked`);
+      if (el?.dataset.precio !== undefined) precio = el.dataset.precio === '' ? null : Number(el.dataset.precio);
+    }
+    return { precio, opciones };
+  }
+
+  function pintar() {
+    const { precio } = actual();
+    precioTxt.textContent = precio == null ? 'Precio a consultar' : euros(precio * cantidad) + (cantidad > 1 ? ` (${cantidad} × ${euros(precio)})` : '');
+    out.textContent = String(cantidad);
+    minus.disabled = cantidad <= 1;
+  }
+  form.addEventListener('change', pintar);
+  form.querySelectorAll<HTMLButtonElement>('[data-q]').forEach((b) => b.addEventListener('click', () => {
+    cantidad = Math.max(1, Math.min(99, cantidad + Number(b.dataset.q)));
+    pintar();
+  }));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const { precio, opciones } = actual();
+    const pers = (form.querySelector<HTMLTextAreaElement>('[name="personalizacion"]')?.value ?? '').trim();
+    cesta.añadir({ slug: d.slug, nombre: d.nombre, url: d.url, imagen: d.imagen, opciones, personalizacion: pers || undefined, precio }, cantidad);
+    avisar(`Añadido a la cesta: ${d.nombre}`, 'Ver cesta', () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
+  });
+  pintar();
+</script>

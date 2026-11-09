@@ -1,0 +1,168 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Migas from '../components/Migas.astro';
+import Icon from '../components/Icon.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { producto, foto, sitio } from '../lib/catalogo';
+import { migasLd } from '../lib/seo';
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Encargos a medida', url: '/encargos' }];
+const tarjeta = foto(producto('tarjetas-nfc-qr')!, 0);
+const estanteria = foto(producto('estanteria-stranger-things')!, 1);
+const conServicio = Boolean(sitio.formularioEncargos);
+---
+<Base title="Encargos de impresión 3D a medida" description="Cuéntanos tu idea o mándanos un archivo STL o una foto: piezas a medida, repuestos, regalos y tarjetas NFC impresas en 3D. Te damos precio sin compromiso." activo="/encargos" jsonLd={migasLd(migas)}>
+  <div class="wrap page-head">
+    <Migas items={migas} />
+    <h1>Encargos a medida</h1>
+    <p class="lead">Una pieza que ya no venden, un regalo con nombre, la tarjeta de tu negocio con NFC o algo que solo existe en tu cabeza. Cuéntanoslo y te damos precio sin compromiso.</p>
+  </div>
+
+  <div class="wrap encargo">
+    <aside class="encargo__info" aria-labelledby="ideas-h">
+      <h2 id="ideas-h" class="sr-only">Ejemplos de encargos</h2>
+      <div class="encargo__fotos">
+        <Picture src={tarjeta.src} alt={tarjeta.alt} formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 900px) 20vw, 46vw" loading="lazy" />
+        <Picture src={estanteria.src} alt={estanteria.alt} formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 900px) 20vw, 46vw" loading="lazy" />
+      </div>
+      <ul class="encargo__lista">
+        <li><strong>Con archivo.</strong> Si tienes el STL, 3MF u OBJ, adjúntalo y te decimos precio y plazo.</li>
+        <li><strong>Con una foto o un dibujo.</strong> Sin archivo también se puede: lo diseñamos a partir de tu referencia.</li>
+        <li><strong>Repuestos.</strong> Mide la pieza original con una regla o un calibre y apunta las medidas.</li>
+      </ul>
+    </aside>
+
+    <form class="encargo__form" data-encargo novalidate method="post" action={sitio.formularioEncargos ?? undefined} enctype="multipart/form-data">
+      <h2>Cuéntanos tu idea</h2>
+      <div class="field" data-campo="descripcion">
+        <label for="e-desc">Qué necesitas</label>
+        <textarea class="textarea" id="e-desc" name="descripcion" rows="5" required aria-describedby="e-desc-err" placeholder="Ej.: un soporte para colgar dos mandos de consola en la pared, en negro"></textarea>
+        <p class="error" id="e-desc-err" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="e-medidas">Medidas aproximadas <span class="hint">(opcional)</span></label>
+        <input class="input" id="e-medidas" name="medidas" placeholder="Ej.: 12 × 8 × 3 cm" />
+      </div>
+      <div class="field" data-campo="archivo">
+        <span class="label" id="e-file-l">Archivo STL o foto de referencia <span class="hint">(opcional, máx. 10 MB)</span></span>
+        <label class="file">
+          <input type="file" name="archivo" accept=".stl,.3mf,.obj,.step,.stp,image/*" aria-labelledby="e-file-l" aria-describedby="e-file-err e-file-name" data-file />
+          <span class="file__ui"><Icon name="subir" size={20} /><span data-file-txt>Elegir archivo</span></span>
+        </label>
+        <p class="hint" id="e-file-name" data-file-name></p>
+        <p class="error" id="e-file-err" aria-live="polite"></p>
+      </div>
+      <div class="grid2">
+        <div class="field" data-campo="nombre">
+          <label for="e-nombre">Nombre</label>
+          <input class="input" id="e-nombre" name="nombre" autocomplete="name" required aria-describedby="e-nombre-err" />
+          <p class="error" id="e-nombre-err" aria-live="polite"></p>
+        </div>
+        <div class="field" data-campo="contacto">
+          <label for="e-contacto">Teléfono o email</label>
+          <input class="input" id="e-contacto" name="contacto" autocomplete="email" required aria-describedby="e-contacto-err" />
+          <p class="error" id="e-contacto-err" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="field" data-campo="privacidad">
+        <label class="check"><input type="checkbox" name="privacidad" required aria-describedby="e-priv-err" /><span>He leído la <a href="/privacidad">política de privacidad</a> y acepto que uséis mis datos para responder a este encargo.</span></label>
+        <p class="error" id="e-priv-err" aria-live="polite"></p>
+      </div>
+      <button class="btn btn--block" type="submit" data-enviar>
+        {conServicio ? 'Enviar encargo' : <><WhatsAppIcon />Enviar por WhatsApp</>}
+      </button>
+      {!conServicio && <p class="nota">Se abre WhatsApp con tu encargo escrito. Si tienes archivo o fotos, adjúntalos en ese mismo chat.</p>}
+      <p class="ok" role="status" data-ok hidden></p>
+      <input type="hidden" name="_subject" value={`Encargo a medida · ${sitio.marca}`} />
+    </form>
+  </div>
+</Base>
+
+<style>
+  .encargo { display: grid; gap: var(--s-7); padding-bottom: var(--s-9); align-items: start; }
+  @media (min-width: 900px) { .encargo { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--s-8); } }
+  .encargo__info { display: grid; gap: var(--s-6); }
+  .encargo__fotos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+  .encargo__fotos :global(img) { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--r-md); }
+  .encargo__lista { list-style: none; padding: 0; display: grid; }
+  .encargo__lista li { padding-block: var(--s-4); border-top: 1px solid var(--line); }
+  .encargo__lista li:last-child { border-bottom: 1px solid var(--line); }
+  .encargo__form { display: grid; gap: var(--s-4); padding: var(--s-5); border-radius: var(--r-lg); background: var(--card); }
+  @media (min-width: 768px) { .encargo__form { padding: var(--s-6); } }
+  .encargo__form h2 { font-size: 1.75rem; }
+  .grid2 { display: grid; gap: var(--s-4); }
+  @media (min-width: 600px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .file { position: relative; display: block; }
+  .file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+  .file__ui { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 16px; border: 1px dashed var(--line-strong); border-radius: var(--r-sm); background: var(--bg); font-weight: 500; transition: border-color 160ms ease; }
+  .file:hover .file__ui { border-color: var(--ink); }
+  .file input:focus-visible + .file__ui { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400 !important; line-height: 1.5; cursor: pointer; }
+  .check input { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+  .ok { font-weight: 560; color: var(--accent); }
+  .nota { font-size: var(--t-small); color: var(--muted); }
+</style>
+
+<script>
+  import sitio from '../data/sitio.json';
+  const form = document.querySelector<HTMLFormElement>('[data-encargo]')!;
+  const file = form.querySelector<HTMLInputElement>('[data-file]')!;
+  const MAX = 10 * 1024 * 1024;
+
+  const err = (campo: string, msg: string) => {
+    const f = form.querySelector<HTMLElement>(`[data-campo="${campo}"]`)!;
+    f.toggleAttribute('data-error', Boolean(msg));
+    f.querySelector('.error')!.textContent = msg;
+    f.querySelector('input, textarea')!.setAttribute('aria-invalid', String(Boolean(msg)));
+  };
+
+  file.addEventListener('change', () => {
+    const f = file.files?.[0];
+    form.querySelector('[data-file-txt]')!.textContent = f ? 'Cambiar archivo' : 'Elegir archivo';
+    form.querySelector('[data-file-name]')!.textContent = f ? `${f.name} · ${(f.size / 1024 / 1024).toFixed(1)} MB` : '';
+    err('archivo', f && f.size > MAX ? 'El archivo pesa más de 10 MB. Mándalo por WhatsApp o comprímelo en .zip.' : '');
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const desc = String(fd.get('descripcion') ?? '').trim();
+    const nombre = String(fd.get('nombre') ?? '').trim();
+    const contacto = String(fd.get('contacto') ?? '').trim();
+    err('descripcion', desc.length >= 10 ? '' : 'Cuéntanos un poco más: qué es, para qué y de qué tamaño (mínimo 10 letras).');
+    err('nombre', nombre ? '' : 'Escribe tu nombre.');
+    err('contacto', /\d{9}/.test(contacto.replace(/\D/g, '')) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto) ? '' : 'Pon un teléfono de 9 cifras o un email para poder contestarte.');
+    err('privacidad', fd.get('privacidad') ? '' : 'Necesitamos tu permiso para usar estos datos y responderte.');
+    const f = file.files?.[0];
+    if (f && f.size > MAX) err('archivo', 'El archivo pesa más de 10 MB. Mándalo por WhatsApp o comprímelo en .zip.');
+    const primero = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+    if (primero) { primero.focus(); return; }
+
+    const ok = form.querySelector<HTMLElement>('[data-ok]')!;
+    const btn = form.querySelector<HTMLButtonElement>('[data-enviar]')!;
+
+    if (sitio.formularioEncargos) {
+      // Servicio de formularios (p. ej. Formspree) configurado en src/data/sitio.json
+      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = 'Enviando…';
+      try {
+        const r = await fetch(sitio.formularioEncargos, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        if (!r.ok) throw new Error(String(r.status));
+        form.reset(); file.dispatchEvent(new Event('change'));
+        ok.hidden = false; ok.style.color = ''; ok.textContent = 'Recibido. Te contestamos con precio y plazo en cuanto lo veamos.';
+      } catch {
+        ok.hidden = false; ok.style.color = 'var(--danger)';
+        ok.textContent = 'No se ha podido enviar. Prueba otra vez o escríbenos por WhatsApp.';
+      } finally { btn.disabled = false; btn.innerHTML = txt; }
+      return;
+    }
+
+    // Sin servicio de formularios: WhatsApp con el texto escrito
+    const medidas = String(fd.get('medidas') ?? '').trim();
+    const texto = ['¡Hola! Quiero pedir un encargo a medida:', '', desc, medidas && `Medidas: ${medidas}`, f && `Archivo: ${f.name} (te lo adjunto aquí)`, '', `Nombre: ${nombre}`, `Contacto: ${contacto}`].filter(Boolean).join('\n');
+    const url = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(texto)}`;
+    const w = window.open(url, '_blank');
+    if (w) w.opener = null; else location.href = url;
+    ok.hidden = false;
+    ok.textContent = f ? 'Abrimos WhatsApp con tu encargo. Adjunta el archivo en el chat y pulsa enviar.' : 'Abrimos WhatsApp con tu encargo. Solo falta pulsar enviar.';
+  });
+</script>
