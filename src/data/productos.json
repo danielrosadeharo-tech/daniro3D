@@ -980,8 +980,8 @@
     "etiquetas": [
       "superheroes"
     ],
-    "descripcionCorta": "Funko sin caja.",
-    "descripcionLarga": "Figura estilo Funko de Venom, sin caja. Pregúntanos por precio y plazo.",
+    "descripcionCorta": "Venom en estilo Funko, con su sonrisa de dientes y los tentáculos en la espalda.",
+    "descripcionLarga": "Figura estilo Funko de Venom en negro, con los ojos y la boca llena de dientes en blanco. Por detrás le salen los tentáculos del simbionte, todos impresos en la misma pieza. Se entrega sin caja.",
     "precio": {
       "tipo": "consultar"
     },
@@ -1258,8 +1258,8 @@
       "humor",
       "regalo"
     ],
-    "descripcionCorta": "Una lata de alubias en miniatura para tus llaves.",
-    "descripcionLarga": "Llavero con forma de lata de alubias «Deez Baked Beans».",
+    "descripcionCorta": "Una lata de alubias «Deez Baked Beans» en miniatura para colgar de las llaves.",
+    "descripcionLarga": "Llavero plano con forma de lata de alubias «Deez Baked Beans», con la etiqueta impresa en varios colores y anilla metálica con cadena. Un regalo de broma para quien se ríe con el meme, o para llevarlo en la mochila.",
     "precio": {
       "tipo": "consultar"
     },
@@ -1293,8 +1293,8 @@
       "motor",
       "hogar"
     ],
-    "descripcionCorta": "La trasera de un F40 para colgar las llaves en la pared.",
-    "descripcionLarga": "Colgador de pared con la trasera de un Ferrari F40 y ganchos para las llaves.",
+    "descripcionCorta": "La trasera de un Ferrari F40 con ganchos para dejar las llaves en la entrada.",
+    "descripcionLarga": "Colgador de pared con la trasera de un Ferrari F40: alerón, pilotos redondos, matrícula «F40» y ganchos debajo para colgar las llaves. Queda bien en la entrada, en el garaje o en el cuarto de alguien que viva por los coches.",
     "precio": {
       "tipo": "consultar"
     },
@@ -1328,8 +1328,8 @@
       "trofeos",
       "peliculas"
     ],
-    "descripcionCorta": "Trofeo impreso en 3D con acabado dorado.",
-    "descripcionLarga": "Réplica del trofeo Piston Cup con acabado dorado y peana negra.",
+    "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
+    "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
       "tipo": "fijo",
       "importe": 10
@@ -1373,8 +1373,8 @@
       "trofeos",
       "futbol"
     ],
-    "descripcionCorta": "Réplica del trofeo impresa en 3D en plata y dorado. 20 cm de alto.",
-    "descripcionLarga": "Réplica del trofeo impresa en 3D en plata y dorado. Mide 20 cm de alto.",
+    "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
+    "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
     "precio": {
       "tipo": "fijo",
       "importe": 15
@@ -1414,8 +1414,8 @@
       "trofeos",
       "futbol"
     ],
-    "descripcionCorta": "Réplica del trofeo impresa en 3D en plata. 25 cm de alto.",
-    "descripcionLarga": "Réplica del trofeo impresa en 3D en plata. Mide 25 cm de alto.",
+    "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
+    "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
       "tipo": "fijo",
       "importe": 20
@@ -1454,8 +1454,8 @@
       "trofeos",
       "futbol"
     ],
-    "descripcionCorta": "Réplica del trofeo impresa en 3D en plata. 25 cm de alto.",
-    "descripcionLarga": "Réplica del trofeo impresa en 3D en plata. Mide 25 cm de alto.",
+    "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
+    "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
     "precio": {
       "tipo": "fijo",
       "importe": 20
@@ -1498,8 +1498,8 @@
       "trofeos",
       "futbol"
     ],
-    "descripcionCorta": "Réplica del trofeo impresa en 3D en plata. 25 cm de alto.",
-    "descripcionLarga": "Réplica del trofeo impresa en 3D en plata. Mide 25 cm de alto.",
+    "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
+    "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
       "tipo": "fijo",
       "importe": 20
@@ -1538,8 +1538,8 @@
       "series",
       "hogar"
     ],
-    "descripcionCorta": "Con el tablero de letras y figuras.",
-    "descripcionLarga": "Estantería con el tablero de letras de la serie y sus figuras.",
+    "descripcionCorta": "Estantería de dos baldas con el tablero de letras de la serie y figuras de sus personajes.",
+    "descripcionLarga": "Estantería de dos baldas inspirada en Stranger Things: arriba, el abecedario de la pared de Joyce sobre fondo plateado y el logo de la serie; abajo, el fondo rojo del Mundo del Revés con el Azotamentes. Lleva figuras de los personajes en las baldas. Para el cuarto de un fan de la serie.",
     "precio": {
       "tipo": "consultar"
     },
@@ -1628,8 +1628,8 @@
       "figuras",
       "decoracion"
     ],
-    "descripcionCorta": "Figura decorativa.",
-    "descripcionLarga": "Figura decorativa de un lagarto verde.",
+    "descripcionCorta": "Un lagarto verde de dibujos con la lengua fuera, saludando.",
+    "descripcionLarga": "Figura de un lagarto verde de estilo dibujo animado: ojos grandes, la boca abierta con la lengua roja fuera y un brazo en alto como si saludara. Una pieza simpática para la estantería, el escritorio o el cuarto de los niños.",
     "precio": {
       "tipo": "consultar"
     },
