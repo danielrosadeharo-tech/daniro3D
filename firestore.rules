@@ -53,10 +53,12 @@ service cloud.firestore {
         && request.resource.data.metodo in ['whatsapp', 'email', 'tarjeta'];
 
       allow read: if esAdmin() || esDueno();
-      // El cliente no puede tocar su pedido; el administrador solo cambia el estado (y notas internas)
+      // El cliente no puede tocar su pedido; el administrador solo cambia el estado, la nota para el cliente
+      // (respuesta, la ve en "Mi cuenta") y las notas internas
       allow update: if esAdmin()
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['estado', 'notasInternas'])
-        && request.resource.data.estado in estados();
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['estado', 'respuesta', 'notasInternas'])
+        && request.resource.data.estado in estados()
+        && (!('respuesta' in request.resource.data) || texto(request.resource.data.respuesta, 0, 1000));
       allow delete: if esAdmin();
     }
 

@@ -62,11 +62,11 @@ import Icon from '../components/Icon.astro';
 
       <h3>Mis pedidos</h3>
       <ul class="lista" data-pedidos></ul>
-      <p class="vacio-txt" data-sin-pedidos hidden>Todavía no tienes pedidos. Los que hagas con la sesión iniciada aparecerán aquí. <a href="/catalogo">Ver el catálogo</a></p>
+      <p class="vacio-txt" data-sin-pedidos hidden>Todavía no tienes pedidos del catálogo. Los que hagas con la sesión iniciada aparecerán aquí. <a href="/catalogo">Ver el catálogo</a></p>
 
       <h3>Mis encargos</h3>
       <ul class="lista" data-encargos></ul>
-      <p class="vacio-txt" data-sin-encargos hidden>No tienes encargos a medida. <a href="/encargos">Pedir uno</a></p>
+      <p class="vacio-txt" data-sin-encargos hidden>No tienes encargos personalizados. <a href="/funkos">Crea tu Funko</a> o <a href="/encargos">pide una pieza a medida</a>.</p>
     </section>
   </div>
 </Base>
@@ -100,13 +100,21 @@ import Icon from '../components/Icon.astro';
   .lista :global(.estado[data-e="cancelado"]) { background: #f1d9d3; color: var(--danger); }
   .lista :global(ul) { padding-left: 1.1em; font-size: 0.9375rem; }
   .vacio-txt { color: var(--muted); }
+  .lista :global(.respuesta) { padding: var(--s-3) var(--s-4); border-radius: var(--r-sm); background: var(--bg); font-size: 0.9375rem; }
+  /* Camino del pedido: Recibido → Confirmado → En fabricación → Enviado → Entregado */
+  .lista :global(.pasos) { list-style: none; padding: 0; margin: var(--s-1) 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .lista :global(.pasos li) { display: grid; gap: 6px; font-size: 0.75rem; color: var(--muted); line-height: 1.25; }
+  .lista :global(.pasos li)::before { content: ""; height: 4px; border-radius: 2px; background: var(--line-strong); }
+  .lista :global(.pasos li.hecho)::before { background: var(--accent); }
+  .lista :global(.pasos li[aria-current]) { color: var(--ink); font-weight: 600; }
+  @media (max-width: 520px) { .lista :global(.pasos li:not([aria-current]) span) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
 </style>
 
 <script>
   import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from 'firebase/auth';
-  import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+  import { collection, query, where, onSnapshot, doc, getDoc, type Unsubscribe } from 'firebase/firestore';
   import { firebaseActivo, auth, db, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
-  import { textoEstado, textoFecha, esc } from '../lib/estados';
+  import { ESTADOS, textoEstado, textoFecha, esc, lineaPersonalizada, pasoEstado } from '../lib/estados';
   import { referencia } from '../lib/pedido/guardar';
 
   const root = document.querySelector<HTMLElement>('[data-cuenta]')!;
@@ -163,43 +171,79 @@ import Icon from '../components/Icon.astro';
 
     const porFecha = (a: { creado?: { toMillis?: () => number } }, b: typeof a) => (b.creado?.toMillis?.() ?? Infinity) - (a.creado?.toMillis?.() ?? Infinity);
 
-    async function cargar(uid: string) {
-      // Sin orderBy para no necesitar índices compuestos: se ordena aquí
-      const [ps, es] = await Promise.all([
-        getDocs(query(collection(db(), 'pedidos'), where('uid', '==', uid))),
-        getDocs(query(collection(db(), 'encargos'), where('uid', '==', uid))),
-      ]);
-      const pedidos = ps.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha);
-      const encargos = es.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha);
-      $('[data-pedidos]').innerHTML = pedidos.map((p) => `
+    // Pedidos y encargos del cliente, en directo: si cambiamos el estado en el panel, aquí se ve al momento.
+    // Lo que lleva personalización (Funko a medida, textos…) va a "Mis encargos"; el resto, a "Mis pedidos".
+    let escuchas: Unsubscribe[] = [];
+    const pasos = ESTADOS.filter((e) => e.id !== 'cancelado');
+    const htmlPasos = (estado: string) => estado === 'cancelado' ? '' : `<ol class="pasos" aria-label="Estado: ${esc(textoEstado(estado))}">${pasos.map((e, i) =>
+      `<li class="${i <= pasoEstado(estado) ? 'hecho' : ''}"${i === pasoEstado(estado) ? ' aria-current="step"' : ''}><span>${esc(e.txt)}</span></li>`).join('')}</ol>`;
+    const cabecera = (titulo: string, p: any) => `
+      <div class="fila"><span class="ref">${titulo}</span><span class="estado" data-e="${esc(p.estado)}">${esc(textoEstado(p.estado))}</span></div>
+      ${htmlPasos(p.estado)}`;
+    const htmlLinea = (l: any) => `<li>${esc(l.nombre)} × ${esc(l.cantidad)}${l.opciones && Object.keys(l.opciones).length ? ` · ${esc(Object.values(l.opciones).join(' · '))}` : ''}${l.personalizacion ? `<br><em>${esc(l.personalizacion)}</em>` : ''}</li>`;
+    const suma = (ls: any[]) => ls.reduce((n, l) => n + (l.precio ?? 0) * (l.cantidad ?? 1), 0);
+    const importe = (ls: any[]) => `${eur.format(suma(ls))}${ls.some((l) => l.precio == null) ? ' + piezas a consultar' : ''}`;
+    const nota = (txt: string | undefined, rotulo: string) => (txt ? `<p class="respuesta"><strong>${rotulo}:</strong> ${esc(txt)}</p>` : '');
+
+    function pintarListas(pedidos: any[], encargos: any[]) {
+      const normales = pedidos.map((p) => ({ p, ls: (p.lineas ?? []).filter((l: any) => !lineaPersonalizada(l)) })).filter((x) => x.ls.length);
+      const personal = pedidos.map((p) => ({ p, ls: (p.lineas ?? []).filter(lineaPersonalizada) })).filter((x) => x.ls.length);
+      $('[data-pedidos]').innerHTML = normales.map(({ p, ls }) => `
         <li>
-          <div class="fila"><span class="ref">Pedido ${esc(referencia(p.id))}</span><span class="estado" data-e="${esc(p.estado)}">${esc(textoEstado(p.estado))}</span></div>
-          <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${p.hayConsultas ? `${eur.format(p.total)} + piezas a consultar` : eur.format(p.total)}</span></div>
-          <ul>${(p.lineas ?? []).map((l: any) => `<li>${esc(l.nombre)} × ${esc(l.cantidad)}${l.opciones && Object.keys(l.opciones).length ? ` · ${esc(Object.values(l.opciones).join(' · '))}` : ''}</li>`).join('')}</ul>
+          ${cabecera(`Pedido ${esc(referencia(p.id))}`, p)}
+          <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${importe(ls)}</span></div>
+          <ul>${ls.map(htmlLinea).join('')}</ul>
+          ${nota(p.respuesta, 'Nuestra nota')}
         </li>`).join('');
-      $('[data-sin-pedidos]').hidden = pedidos.length > 0;
-      $('[data-encargos]').innerHTML = encargos.map((x) => `
-        <li>
-          <div class="fila"><span class="ref">Encargo ${esc(referencia(x.id))}</span><span class="estado" data-e="${esc(x.estado)}">${esc(textoEstado(x.estado))}</span></div>
+      $('[data-sin-pedidos]').hidden = normales.length > 0;
+
+      const items = [
+        ...personal.map(({ p, ls }) => ({ creado: p.creado, html: `
+          ${cabecera(`Pedido ${esc(referencia(p.id))} · personalizado`, p)}
+          <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${importe(ls)}</span></div>
+          <ul>${ls.map(htmlLinea).join('')}</ul>
+          ${nota(p.respuesta, 'Nuestra nota')}` })),
+        ...encargos.map((x) => ({ creado: x.creado, html: `
+          ${cabecera(`Encargo a medida ${esc(referencia(x.id))}`, x)}
           <div class="meta">${esc(textoFecha(x.creado))}${x.archivo ? ` · archivo: ${esc(x.archivo.nombre)}` : ''}</div>
           <p>${esc(x.descripcion)}</p>
-          ${x.respuesta ? `<p><strong>Nuestra respuesta:</strong> ${esc(x.respuesta)}</p>` : ''}
-        </li>`).join('');
-      $('[data-sin-encargos]').hidden = encargos.length > 0;
+          ${nota(x.respuesta, 'Nuestra respuesta')}` })),
+      ].sort(porFecha);
+      $('[data-encargos]').innerHTML = items.map((x) => `<li>${x.html}</li>`).join('');
+      $('[data-sin-encargos]').hidden = items.length > 0;
+    }
+
+    function escuchar(uid: string) {
+      escuchas.forEach((parar) => parar());
+      let pedidos: any[] = [], encargos: any[] = [];
+      const fallo = (err: unknown) => {
+        $('[data-pedidos]').innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`;
+        $('[data-encargos]').innerHTML = '';
+        $('[data-sin-pedidos]').hidden = true; $('[data-sin-encargos]').hidden = true;
+      };
+      // Sin orderBy para no necesitar índices compuestos: se ordena aquí
+      escuchas = [
+        onSnapshot(query(collection(db(), 'pedidos'), where('uid', '==', uid)), (s) => {
+          pedidos = s.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha); pintarListas(pedidos, encargos);
+        }, fallo),
+        onSnapshot(query(collection(db(), 'encargos'), where('uid', '==', uid)), (s) => {
+          encargos = s.docs.map((d) => ({ id: d.id, ...(d.data() as any) })).sort(porFecha); pintarListas(pedidos, encargos);
+        }, fallo),
+      ];
     }
 
     onAuthStateChanged(auth(), async (u) => {
       $('[data-cargando]').hidden = true;
       $('[data-acceso]').hidden = Boolean(u);
       $('[data-panel]').hidden = !u;
-      if (!u) return;
+      if (!u) { escuchas.forEach((parar) => parar()); escuchas = []; return; }
       $('[data-hola]').textContent = `Hola${u.displayName ? `, ${u.displayName.split(' ')[0]}` : ''}`;
       $('[data-email]').textContent = u.email ?? '';
       try {
         const esAdmin = (await getDoc(doc(db(), 'admins', u.uid))).exists();
         $('[data-enlace-admin]').hidden = !esAdmin;
       } catch { /* no es admin */ }
-      try { await cargar(u.uid); } catch (err) { $('[data-pedidos]').innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`; }
+      escuchar(u.uid);
     });
   }
 </script>

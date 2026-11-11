@@ -15,3 +15,10 @@ const fecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short',
 export const textoFecha = (t: { toDate?: () => Date } | null | undefined) => (t?.toDate ? fecha.format(t.toDate()) : 'Ahora mismo');
 
 export const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+/** Línea personalizada: el Funko a medida o cualquier pieza con texto de personalización. Va a "encargos". */
+export const lineaPersonalizada = (l: { slug?: string; personalizacion?: string | null }) =>
+  l.slug === 'funko-personalizado' || Boolean(l.personalizacion);
+
+/** Paso del estado en el camino del pedido (para la barra de progreso del cliente). */
+export const pasoEstado = (id: string) => ['nuevo', 'confirmado', 'fabricando', 'enviado', 'entregado'].indexOf(id);

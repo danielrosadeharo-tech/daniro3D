@@ -52,7 +52,10 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
           <label class="field-inline">Estado
             <select class="select" data-filtro-pedidos><option value="">Todos</option>{ESTADOS.map((e) => <option value={e.id}>{e.txt}</option>)}</select>
           </label>
-          <button class="btn btn--secondary btn--sm" type="button" data-recargar>Recargar</button>
+          <label class="field-inline">Tipo
+            <select class="select" data-tipo-pedidos><option value="">Todos</option><option value="catalogo">Del catálogo</option><option value="personalizado">Personalizados</option></select>
+          </label>
+          <span class="meta">Se actualiza solo. Lo que cambies aquí lo ve el cliente en "Mi cuenta".</span>
         </div>
         <ul class="items" data-lista-pedidos></ul>
       </section>
@@ -62,7 +65,7 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
           <label class="field-inline">Estado
             <select class="select" data-filtro-encargos><option value="">Todos</option>{ESTADOS.map((e) => <option value={e.id}>{e.txt}</option>)}</select>
           </label>
-          <button class="btn btn--secondary btn--sm" type="button" data-recargar>Recargar</button>
+          <span class="meta">Encargos a medida del formulario. Los Funkos personalizados están en Pedidos.</span>
         </div>
         <ul class="items" data-lista-encargos></ul>
       </section>
@@ -189,6 +192,8 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
   .items > :global(li) { display: grid; gap: var(--s-3); padding: var(--s-4) var(--s-5); border-radius: var(--r-md); background: var(--card); }
   .items :global(.fila) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-4); align-items: center; }
   .items :global(.ref) { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .items :global(.chip-tipo) { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; vertical-align: 1px; }
+  .barra .meta { color: var(--muted); font-size: var(--t-small); }
   .items :global(.meta) { color: var(--muted); font-size: var(--t-small); }
   .items :global(.lineas) { padding-left: 1.1em; font-size: 0.9375rem; display: grid; gap: 2px; }
   .items :global(.select) { min-height: 40px; padding-block: 6px; width: auto; }

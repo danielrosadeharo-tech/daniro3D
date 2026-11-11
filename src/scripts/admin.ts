@@ -1,10 +1,10 @@
 // Panel de administración: pedidos, encargos, productos y publicación.
 // Todo lo protege firestore.rules: solo los UID que estén en la colección "admins" pueden leer y escribir aquí.
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, writeBatch, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, writeBatch, serverTimestamp, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { firebaseActivo, auth, db, storage, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
-import { textoFecha, esc } from '../lib/estados';
+import { textoFecha, esc, lineaPersonalizada } from '../lib/estados';
 import { referencia } from '../lib/pedido/guardar';
 
 type Foto = { archivo: string; alt: string; url?: string; preview?: string };
@@ -49,12 +49,14 @@ function iniciar() {
     mostrar('[data-login]', !u);
     mostrar('[data-no-admin]', false);
     mostrar('[data-app]', false);
+    escuchas.forEach((parar) => parar()); escuchas = [];
     if (!u) return;
     $('[data-user-email]').textContent = u.email ?? '';
     let admin = false;
     try { admin = (await getDoc(doc(db(), 'admins', u.uid))).exists(); } catch { admin = false; }
     if (!admin) { $('[data-uid]').textContent = u.uid; mostrar('[data-no-admin]', true); return; }
     mostrar('[data-app]', true);
+    escucharPedidos();
     cargarTodo();
   });
 
@@ -66,6 +68,12 @@ function iniciar() {
   }));
   root.querySelectorAll('[data-recargar]').forEach((b) => b.addEventListener('click', cargarTodo));
   $('[data-filtro-pedidos]').addEventListener('change', pintarPedidos);
+  $('[data-tipo-pedidos]').addEventListener('change', pintarPedidos);
+  // Si llega un cambio mientras escribes una nota, se pinta al salir del cuadro (para no borrarte lo escrito)
+  root.addEventListener('focusout', () => setTimeout(() => {
+    if (document.activeElement?.matches('textarea') && root.contains(document.activeElement)) return;
+    pendientes.forEach((pintar) => pintar()); pendientes.clear();
+  }));
   $('[data-filtro-encargos]').addEventListener('change', pintarEncargos);
   $('[data-buscar-producto]').addEventListener('input', pintarProductos);
   conectarEditor();
@@ -76,42 +84,73 @@ let pedidos: any[] = [], encargos: any[] = [], productos: Prod[] = [];
 let previews = new Map<string, string>(); // "slug/archivo" -> miniatura de las fotos del repositorio
 let catalogoInicial: Prod[] = [];
 
+// Pedidos y encargos en directo: los nuevos aparecen solos y los cambios de estado se guardan al momento
+// (el cliente los ve igual de rápido en "Mi cuenta").
+let escuchas: Unsubscribe[] = [];
+const pendientes = new Set<() => void>();
+function pintarSiLibre(lista: string, pintar: () => void) {
+  const activo = document.activeElement;
+  if (activo?.matches('textarea') && $(lista).contains(activo)) { pendientes.add(pintar); return; }
+  pintar();
+}
+function escucharPedidos() {
+  const fallo = (lista: string) => (err: unknown) => { $(lista).innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`; };
+  escuchas = [
+    onSnapshot(query(collection(db(), 'pedidos'), orderBy('creado', 'desc'), limit(300)), (s) => {
+      pedidos = s.docs.map((d) => ({ id: d.id, ...d.data() }));
+      pintarSiLibre('[data-lista-pedidos]', pintarPedidos);
+    }, fallo('[data-lista-pedidos]')),
+    onSnapshot(query(collection(db(), 'encargos'), orderBy('creado', 'desc'), limit(300)), (s) => {
+      encargos = s.docs.map((d) => ({ id: d.id, ...d.data() }));
+      pintarSiLibre('[data-lista-encargos]', pintarEncargos);
+    }, fallo('[data-lista-encargos]')),
+  ];
+}
+
 async function cargarTodo() {
   try {
-    const [ps, es, pr, ini] = await Promise.all([
-      getDocs(query(collection(db(), 'pedidos'), orderBy('creado', 'desc'), limit(300))),
-      getDocs(query(collection(db(), 'encargos'), orderBy('creado', 'desc'), limit(300))),
+    const [pr, ini] = await Promise.all([
       getDocs(collection(db(), 'productos')),
       fetch('/admin/catalogo-inicial.json').then((r) => r.json()).catch(() => ({ productos: [] })),
     ]);
-    pedidos = ps.docs.map((d) => ({ id: d.id, ...d.data() }));
-    encargos = es.docs.map((d) => ({ id: d.id, ...d.data() }));
     productos = pr.docs.map((d) => ({ ...(d.data() as Prod), slug: d.id })).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
     catalogoInicial = ini.productos ?? [];
     previews = new Map(catalogoInicial.flatMap((p) => p.galeria.map((g) => [`${p.slug}/${g.archivo}`, g.preview ?? ''] as [string, string])));
-    pintarPedidos(); pintarEncargos(); pintarProductos();
+    pintarProductos();
   } catch (err) {
-    $('[data-lista-pedidos]').innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`;
+    $('[data-lista-productos]').innerHTML = `<li class="error">${esc(mensajeError(err))}</li>`;
   }
 }
 
 // ---- Pedidos ----
 function pintarPedidos() {
   const f = $<HTMLSelectElement>('[data-filtro-pedidos]').value;
-  const ls = pedidos.filter((p) => !f || p.estado === f);
+  const tipo = $<HTMLSelectElement>('[data-tipo-pedidos]').value;
+  const personal = (p: any) => (p.lineas ?? []).some(lineaPersonalizada);
+  const ls = pedidos.filter((p) => (!f || p.estado === f) && (!tipo || (tipo === 'personalizado') === personal(p)));
   $('[data-n-pedidos]').textContent = String(pedidos.filter((p) => p.estado === 'nuevo').length || '');
   $('[data-lista-pedidos]').innerHTML = ls.map((p) => `
     <li data-id="${esc(p.id)}">
-      <div class="fila"><span class="ref">Pedido ${esc(referencia(p.id))}</span>${selEstado(p.estado, 'data-estado-pedido')}</div>
+      <div class="fila"><span class="ref">Pedido ${esc(referencia(p.id))}${personal(p) ? ' <span class="chip-tipo">Personalizado</span>' : ''}</span>${selEstado(p.estado, 'data-estado-pedido')}</div>
       <div class="meta">${esc(textoFecha(p.creado))} · ${esc(p.metodo)}${p.uid ? ' · con cuenta' : ''}</div>
       <div><strong>${esc(p.cliente?.nombre)}</strong>${p.cliente?.telefono ? ` · <a href="https://wa.me/34${esc(String(p.cliente.telefono).replace(/\D/g, '').slice(-9))}" target="_blank" rel="noopener">${esc(p.cliente.telefono)}</a>` : ''}${p.cliente?.email ? ` · <a href="mailto:${esc(p.cliente.email)}">${esc(p.cliente.email)}</a>` : ''}</div>
       ${p.cliente?.notas ? `<div class="meta">Notas: ${esc(p.cliente.notas)}</div>` : ''}
       <ul class="lineas">${(p.lineas ?? []).map((l: any) => `<li>${esc(l.nombre)} × ${esc(l.cantidad)} — ${l.precio == null ? 'a consultar' : eur.format(l.precio * l.cantidad)}${l.opciones && Object.keys(l.opciones).length ? ` · ${esc(Object.entries(l.opciones).map(([k, v]) => `${k}: ${v}`).join(' · '))}` : ''}${l.personalizacion ? ` · <em>${esc(l.personalizacion)}</em>` : ''}</li>`).join('')}</ul>
       <div class="fila"><strong>Total: ${eur.format(p.total ?? 0)}${p.hayConsultas ? ' + piezas a consultar' : ''}</strong></div>
+      <label class="meta" for="nota-${esc(p.id)}">Nota para el cliente (la ve en "Mi cuenta"; p. ej. fecha de entrega o precio final)</label>
+      <textarea class="textarea" id="nota-${esc(p.id)}" data-respuesta maxlength="1000">${esc(p.respuesta ?? '')}</textarea>
+      <div><button type="button" class="btn btn--sm" data-guardar-nota>Guardar nota</button></div>
     </li>`).join('') || '<li class="meta">No hay pedidos.</li>';
-  root.querySelectorAll<HTMLSelectElement>('[data-estado-pedido]').forEach((s) => s.addEventListener('change', async () => {
+  const lista = $('[data-lista-pedidos]');
+  lista.querySelectorAll<HTMLSelectElement>('[data-estado-pedido]').forEach((s) => s.addEventListener('change', async () => {
     const id = s.closest<HTMLElement>('li')!.dataset.id!;
-    try { await updateDoc(doc(db(), 'pedidos', id), { estado: s.value }); pedidos.find((p) => p.id === id)!.estado = s.value; $('[data-n-pedidos]').textContent = String(pedidos.filter((p) => p.estado === 'nuevo').length || ''); }
+    try { await updateDoc(doc(db(), 'pedidos', id), { estado: s.value }); }
+    catch (err) { alert(mensajeError(err)); pintarPedidos(); }
+  }));
+  lista.querySelectorAll<HTMLButtonElement>('[data-guardar-nota]').forEach((b) => b.addEventListener('click', async () => {
+    const li = b.closest<HTMLElement>('li')!;
+    const txt = li.querySelector<HTMLTextAreaElement>('[data-respuesta]')!.value.trim();
+    try { await updateDoc(doc(db(), 'pedidos', li.dataset.id!), { respuesta: txt }); b.textContent = 'Guardada'; setTimeout(() => (b.textContent = 'Guardar nota'), 1500); }
     catch (err) { alert(mensajeError(err)); }
   }));
 }
@@ -136,8 +175,8 @@ function pintarEncargos() {
   const lista = $('[data-lista-encargos]');
   lista.querySelectorAll<HTMLSelectElement>('[data-estado-encargo]').forEach((s) => s.addEventListener('change', async () => {
     const id = s.closest<HTMLElement>('li')!.dataset.id!;
-    try { await updateDoc(doc(db(), 'encargos', id), { estado: s.value }); encargos.find((x) => x.id === id)!.estado = s.value; }
-    catch (err) { alert(mensajeError(err)); }
+    try { await updateDoc(doc(db(), 'encargos', id), { estado: s.value }); }
+    catch (err) { alert(mensajeError(err)); pintarEncargos(); }
   }));
   lista.querySelectorAll<HTMLButtonElement>('[data-guardar-respuesta]').forEach((b) => b.addEventListener('click', async () => {
     const li = b.closest<HTMLElement>('li')!;
