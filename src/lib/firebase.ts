@@ -84,6 +84,10 @@ export function mensajeError(e: unknown): string {
     'unavailable': 'Sin conexión con el servidor. Revisa tu internet.',
     'storage/unauthorized': 'No tienes permiso para subir este archivo.',
     'storage/unknown': 'No se pudo subir el archivo. ¿Está activado Firebase Storage?',
+    'messaging/permission-blocked': 'Las notificaciones están bloqueadas para esta web en el navegador.',
+    'messaging/token-subscribe-failed': 'Firebase no ha podido registrar este móvil para los avisos (revisa que Cloud Messaging esté activado en el proyecto).',
+    'messaging/unsupported-browser': 'Este navegador no admite avisos.',
+    'messaging/failed-service-worker-registration': 'No se pudo preparar el servicio de avisos en este navegador.',
   };
   return m[code] ?? `Ha habido un error (${code || (e as Error)?.message || 'desconocido'}).`;
 }

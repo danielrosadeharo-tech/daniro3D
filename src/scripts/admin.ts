@@ -6,6 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { firebaseActivo, auth, db, storage, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
 import { textoFecha, esc, lineaPersonalizada } from '../lib/estados';
 import { referencia } from '../lib/pedido/guardar';
+import { estadoAvisos, activarAvisos, desactivarAvisos, probarAvisos, esIOS, instalada, type EstadoAvisos } from '../lib/avisos';
 
 type Foto = { archivo: string; alt: string; url?: string; preview?: string };
 type Prod = Record<string, any> & { slug: string; nombre: string; galeria: Foto[] };
@@ -56,6 +57,7 @@ function iniciar() {
     try { admin = (await getDoc(doc(db(), 'admins', u.uid))).exists(); } catch { admin = false; }
     if (!admin) { $('[data-uid]').textContent = u.uid; mostrar('[data-no-admin]', true); return; }
     mostrar('[data-app]', true);
+    pintarAvisos();
     escucharPedidos();
     cargarTodo();
   });
@@ -78,6 +80,53 @@ function iniciar() {
   $('[data-buscar-producto]').addEventListener('input', pintarProductos);
   conectarEditor();
   conectarPublicar();
+  conectarAvisos();
+}
+
+// ---- Avisos de pedidos (notificaciones en el móvil) e instalación de la app ----
+const TEXTO_AVISOS: Record<EstadoAvisos, string> = {
+  activos: 'Activados: cuando entre un pedido o un encargo te llegará un aviso a este dispositivo, aunque tengas la app cerrada.',
+  apagados: 'Actívalos para recibir un aviso en este móvil cada vez que alguien haga un pedido o un encargo.',
+  bloqueados: 'Las notificaciones están bloqueadas para esta web. Permítelas en los ajustes del navegador (el candado junto a la dirección → Notificaciones) y recarga.',
+  'instalar-ios': 'En iPhone, primero añade esta página a la pantalla de inicio (Compartir → Añadir a pantalla de inicio), ábrela desde ese icono y activa aquí los avisos.',
+  'no-compatible': 'Este navegador no admite avisos. En Android usa Chrome; en iPhone, añade la página a la pantalla de inicio.',
+};
+async function pintarAvisos(ok = false) {
+  const e = await estadoAvisos();
+  const txt = $('[data-avisos-estado]');
+  txt.textContent = TEXTO_AVISOS[e];
+  txt.toggleAttribute('data-ok', ok || e === 'activos');
+  mostrar('[data-avisos-activar]', e === 'apagados');
+  mostrar('[data-avisos-probar]', e === 'activos');
+  mostrar('[data-avisos-desactivar]', e === 'activos');
+}
+let instalar: (Event & { prompt: () => Promise<void> }) | null = null;
+function conectarAvisos() {
+  const boton = (sel: string, fn: () => Promise<void>) => {
+    const b = $<HTMLButtonElement>(sel);
+    b.addEventListener('click', async () => {
+      const txt = b.textContent; b.disabled = true; b.textContent = 'Un momento…';
+      try { await fn(); }
+      catch (err) {
+        const m = (err as Error)?.message;
+        $('[data-avisos-estado]').textContent = m === 'bloqueados' ? TEXTO_AVISOS.bloqueados
+          : m === 'sin-permiso' ? 'No has dado permiso. Vuelve a pulsar «Activar avisos» y elige «Permitir».'
+          : `No se pudo: ${mensajeError(err).replace(/^Ha habido un error \((.*)\)\.$/, '$1')}`;
+      } finally { b.disabled = false; b.textContent = txt; }
+    });
+  };
+  boton('[data-avisos-activar]', async () => { await activarAvisos(); await pintarAvisos(true); });
+  boton('[data-avisos-desactivar]', async () => { await desactivarAvisos(); await pintarAvisos(); });
+  boton('[data-avisos-probar]', async () => {
+    const n = await probarAvisos();
+    $('[data-avisos-estado]').textContent = n ? `Aviso de prueba enviado a ${n} ${n === 1 ? 'dispositivo' : 'dispositivos'}. Debería llegarte en unos segundos.` : 'No hay ningún dispositivo con los avisos activados.';
+  });
+
+  // Android/Chrome ofrece instalar la web como app: lo enseñamos como botón en el panel
+  addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); instalar = e as typeof instalar; mostrar('[data-instalar]', !instalada()); });
+  $('[data-instalar]').addEventListener('click', async () => { await instalar?.prompt(); instalar = null; mostrar('[data-instalar]', false); });
+  addEventListener('appinstalled', () => mostrar('[data-instalar]', false));
+  if (esIOS() && !instalada()) mostrar('[data-instalar]', false);
 }
 
 let pedidos: any[] = [], encargos: any[] = [], productos: Prod[] = [];

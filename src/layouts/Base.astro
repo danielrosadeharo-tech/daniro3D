@@ -15,12 +15,14 @@ interface Props {
   image?: ImageMetadata;
   /** Imagen para compartir ya preparada (ruta pública), en lugar de `image`. */
   imageUrl?: string;
+  /** Manifiesto de la app instalable (el panel usa el suyo, que abre directamente en /admin). */
+  manifest?: string;
   jsonLd?: object | object[];
   noindex?: boolean;
   /** Ruta activa del menú, p. ej. "/catalogo". */
   activo?: string;
 }
-const { title, description, image, imageUrl, jsonLd, noindex = false, activo } = Astro.props;
+const { title, description, image, imageUrl, jsonLd, noindex = false, activo, manifest = '/manifest.webmanifest' } = Astro.props;
 // Con build.format 'file' la ruta llega como /index.html o /catalogo.html; Vercel la sirve sin extensión (cleanUrls).
 const rutaLimpia = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '') || '/';
 const canonical = new URL(rutaLimpia, Astro.site);
@@ -51,6 +53,8 @@ const año = new Date().getFullYear();
   <meta name="theme-color" content="#efe9e0" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href={manifest} />
+  <meta name="apple-mobile-web-app-title" content={manifest === '/manifest.webmanifest' ? sitio.marca : 'Pedidos'} />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_ES" />
   <meta property="og:site_name" content={sitio.marca} />

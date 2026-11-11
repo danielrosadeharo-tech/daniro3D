@@ -107,7 +107,7 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
 <script>
   import sitio from '../data/sitio.json';
   import { firebaseActivo, mensajeError } from '../lib/firebase';
-  import { guardarEncargo, referencia } from '../lib/pedido/guardar';
+  import { guardarEncargo, referencia, avisarPedido } from '../lib/pedido/guardar';
   const form = document.querySelector<HTMLFormElement>('[data-encargo]')!;
   const file = form.querySelector<HTMLInputElement>('[data-file]')!;
   const MAX = 10 * 1024 * 1024;
@@ -158,6 +158,7 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
       try {
         const r = await guardarEncargo({ descripcion: desc, medidas: String(fd.get('medidas') ?? '').trim(), nombre, contacto, archivo: f ?? null });
         const ref = referencia(r!.id);
+        avisarPedido('encargos', r!.id);
         form.reset(); file.dispatchEvent(new Event('change'));
         ok.hidden = false; ok.style.color = '';
         ok.textContent = `Encargo ${ref} recibido. Te contestamos con precio y plazo en cuanto lo veamos.`;

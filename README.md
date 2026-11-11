@@ -126,6 +126,20 @@ Para conectar una pasarela de pago más adelante, la estructura está en `src/li
 un objeto `MetodoPedido` (ver `tipos.ts`). Hay un ejemplo comentado en `index.ts`. Una pasarela necesita una función
 de servidor (Stripe Checkout, Redsys…), así que habrá que pasar de web estática a Netlify/Vercel Functions.
 
+## Avisos de pedidos en el móvil
+
+Cuando entra un pedido o un encargo, la web llama a `api/avisar-pedido.ts` (función de Vercel), que comprueba que
+existe en Firestore y manda una notificación con Firebase Cloud Messaging a los móviles del administrador.
+
+1. Firebase Console → ⚙ Configuración del proyecto → **Cuentas de servicio** → **Generar nueva clave privada**
+   (descarga un `.json`; no lo subas al repositorio).
+2. Vercel → el proyecto → Settings → **Environment Variables** → nueva variable `FIREBASE_SERVICE_ACCOUNT` con
+   **todo** el contenido de ese `.json` (Production). Después, Deployments → ⋯ → **Redeploy**.
+3. En el móvil: abre `/admin`, instala la app (Android: botón «Instalar la app» o menú ⋮ → Instalar;
+   iPhone: Compartir → Añadir a pantalla de inicio) y pulsa **Activar avisos** y luego **Mandar un aviso de prueba**.
+
+Los móviles con avisos se guardan en `ajustes/avisos` (campo `tokens`); `avisos/` evita avisar dos veces del mismo pedido.
+
 ## Formulario de encargos
 
 Sin configurar, el formulario abre WhatsApp con el encargo escrito (el archivo STL se adjunta en el chat).

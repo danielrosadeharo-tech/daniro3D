@@ -5,7 +5,7 @@ import { categorias } from '../../lib/catalogo';
 import { ESTADOS } from '../../lib/estados';
 const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug: c.slug, nombre: c.nombre }));
 ---
-<Base title="Panel de administración" description="Panel privado de Daniro 3D." noindex>
+<Base title="Panel de administración" description="Panel privado de Daniro 3D." noindex manifest="/admin.webmanifest">
   <div class="wrap admin" data-admin>
     <script type="application/json" data-config set:html={JSON.stringify({ cats, estados: ESTADOS })} />
 
@@ -40,6 +40,20 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
 
     <!-- Panel -->
     <div data-app hidden>
+      <!-- Avisos de pedidos nuevos en este móvil (notificaciones) -->
+      <section class="avisos" aria-labelledby="avisos-h" data-avisos>
+        <div class="avisos__txt">
+          <h2 id="avisos-h">Avisos de pedidos en este dispositivo</h2>
+          <p class="meta" data-avisos-estado>Comprobando…</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--sm" type="button" data-avisos-activar hidden>Activar avisos</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-avisos-probar hidden>Mandar un aviso de prueba</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-avisos-desactivar hidden>Desactivar aquí</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-instalar hidden>Instalar la app</button>
+        </div>
+      </section>
+
       <div class="tabs" role="tablist" aria-label="Secciones del panel">
         <button type="button" role="tab" aria-selected="true" data-tab="pedidos">Pedidos <span class="n" data-n-pedidos></span></button>
         <button type="button" role="tab" aria-selected="false" data-tab="encargos" tabindex="-1">Encargos <span class="n" data-n-encargos></span></button>
@@ -194,6 +208,10 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
   .items :global(.ref) { font-weight: 600; font-variant-numeric: tabular-nums; }
   .items :global(.chip-tipo) { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; vertical-align: 1px; }
   .barra .meta { color: var(--muted); font-size: var(--t-small); }
+  .avisos { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-3) var(--s-5); margin-bottom: var(--s-5); padding: var(--s-4) var(--s-5); border-radius: var(--r-md); background: var(--card); }
+  .avisos h2 { font-size: 1.125rem; }
+  .avisos .meta { color: var(--muted); font-size: var(--t-small); max-width: 60ch; margin-top: 2px; }
+  .avisos .meta[data-ok] { color: var(--accent); font-weight: 560; }
   .items :global(.meta) { color: var(--muted); font-size: var(--t-small); }
   .items :global(.lineas) { padding-left: 1.1em; font-size: 0.9375rem; display: grid; gap: 2px; }
   .items :global(.select) { min-height: 40px; padding-block: 6px; width: auto; }

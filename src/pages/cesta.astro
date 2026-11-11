@@ -91,7 +91,7 @@ const metodos = metodosDisponibles();
   import { cesta, htmlLineas, conectarLista, euros } from '../scripts/cesta';
   import { metodos, type Pedido } from '../lib/pedido';
   import { firebaseActivo, auth } from '../lib/firebase';
-  import { guardarPedido, referencia } from '../lib/pedido/guardar';
+  import { guardarPedido, referencia, avisarPedido } from '../lib/pedido/guardar';
   import { onAuthStateChanged } from 'firebase/auth';
   const root = document.querySelector<HTMLElement>('[data-checkout]')!;
   const ul = root.querySelector<HTMLElement>('[data-lineas]')!;
@@ -150,7 +150,7 @@ const metodos = metodosDisponibles();
       btn.disabled = true; btn.textContent = 'Enviando…';
       try {
         const id = await guardarPedido(pedido, metodo.id);
-        if (id) { (pedido as Pedido).referencia = referencia(id); guardado = true; }
+        if (id) { (pedido as Pedido).referencia = referencia(id); guardado = true; avisarPedido('pedidos', id); }
       } catch (e) {
         console.warn('No se pudo guardar el pedido en Firestore', e); // seguimos por WhatsApp igualmente
       } finally { btn.disabled = false; btn.textContent = 'Enviar pedido'; }

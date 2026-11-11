@@ -1,0 +1,22 @@
+{
+  "id": "/",
+  "name": "Daniro 3D",
+  "short_name": "Daniro 3D",
+  "description": "Figuras, Funkos, posavasos y regalos impresos en 3D bajo pedido y a medida.",
+  "lang": "es-ES",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#efe9e0",
+  "theme_color": "#efe9e0",
+  "icons": [
+    { "src": "/iconos/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/iconos/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/iconos/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Crear mi Funko", "url": "/funkos", "icons": [{ "src": "/iconos/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Catálogo", "url": "/catalogo", "icons": [{ "src": "/iconos/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Mi cuenta", "url": "/cuenta", "icons": [{ "src": "/iconos/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

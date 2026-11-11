@@ -60,3 +60,13 @@ export async function guardarEncargo(e: Encargo): Promise<{ id: string; archivoS
   }), 10000);
   return { id: r.id, archivoSubido };
 }
+
+/**
+ * Avisa al móvil del administrador de un pedido o encargo recién guardado (lo manda /api/avisar-pedido).
+ * Nunca falla: si no se puede, el pedido ya está guardado igual.
+ */
+export function avisarPedido(coleccion: 'pedidos' | 'encargos', id: string) {
+  // keepalive: el aviso sale aunque la página se vaya a WhatsApp justo después
+  fetch('/api/avisar-pedido', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ coleccion, id }), keepalive: true })
+    .catch(() => {});
+}
