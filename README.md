@@ -33,8 +33,9 @@ Sin estas variables la web funciona igual que antes: pedidos por WhatsApp y sin 
 ### 2. Reglas
 
 - **Firestore:** pega el contenido de `firestore.rules` en Firebase Console → Firestore → Reglas → Publicar.
-- **Storage:** activa Storage (Build → Storage) y pega `storage.rules` en Storage → Reglas. Cuando la consola
-  pregunte si Storage puede leer Firestore (para comprobar quién es admin), acepta.
+- **Storage (opcional):** solo hace falta para el archivo adjunto de los encargos a medida, y en los proyectos nuevos
+  exige el plan de pago (Blaze). Las fotos de los productos **no** lo usan: el panel las reduce y las guarda en Firestore.
+  Si lo activas, pega `storage.rules` en Storage → Reglas y acepta que Storage lea Firestore.
 - O con la CLI: `npx firebase-tools login`, `npx firebase-tools use <tu-project-id>` y
   `npx firebase-tools deploy --only firestore:rules,storage`.
 
@@ -65,6 +66,8 @@ Sin estas variables la web funciona igual que antes: pedidos por WhatsApp y sin 
 | `categorias` | Opcional: si existe, sustituye a `categorias.json` | Todos | Admins |
 | `pedidos` | Pedidos de la cesta (además van por WhatsApp) | Su cliente y admins | Cualquiera crea; admins cambian el estado |
 | `encargos` | Encargos a medida (el archivo va a Storage `encargos/`) | Su cliente y admins | Cualquiera crea; admins responden |
+| `fotos` | Fotos de productos subidas desde el panel (JPEG reducido como data URL, < 1 MB); el build las descarga | Todos | Admins |
+| `avisos` | Marca de "ya se avisó" de cada pedido (lo escribe `api/avisar-pedido`) | Nadie desde la web | Solo el servidor |
 | `admins` | UIDs con acceso al panel | Cada uno el suyo | Solo desde la consola |
 | `ajustes` | URL del Deploy Hook | Admins | Admins |
 

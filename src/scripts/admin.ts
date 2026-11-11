@@ -2,13 +2,15 @@
 // Todo lo protege firestore.rules: solo los UID que estén en la colección "admins" pueden leer y escribir aquí.
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, writeBatch, serverTimestamp, onSnapshot, type Unsubscribe } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL } from 'firebase/storage';
 import { firebaseActivo, auth, db, storage, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
 import { textoFecha, esc, lineaPersonalizada } from '../lib/estados';
 import { referencia } from '../lib/pedido/guardar';
 import { estadoAvisos, activarAvisos, desactivarAvisos, probarAvisos, esIOS, instalada, type EstadoAvisos } from '../lib/avisos';
 
-type Foto = { archivo: string; alt: string; url?: string; preview?: string };
+// Una foto de la galería. Las que se suben desde el panel se guardan en Firestore (colección "fotos", campo foto = id)
+// con una miniatura pequeña (mini) para el panel; las del repositorio usan "preview"; las antiguas de Storage, "url".
+type Foto = { archivo: string; alt: string; foto?: string; mini?: string; url?: string; preview?: string };
 type Prod = Record<string, any> & { slug: string; nombre: string; galeria: Foto[] };
 
 const root = document.querySelector<HTMLElement>('[data-admin]')!;
@@ -241,7 +243,7 @@ function pintarEncargos() {
 // ---- Productos ----
 const miniatura = (p: Prod) => {
   const g = p.galeria?.[0];
-  return g ? g.url || previews.get(`${p.slug}/${g.archivo}`) || '' : '';
+  return g ? g.mini || g.url || previews.get(`${p.slug}/${g.archivo}`) || '' : '';
 };
 const precioTxt = (p: Prod) => p.precio?.tipo === 'consultar' || !p.precio ? 'A consultar' : `${p.precio.tipo === 'desde' ? 'Desde ' : ''}${eur.format(p.precio.importe)}`;
 
@@ -317,34 +319,49 @@ function conectarEditor() {
     };
     try {
       await setDoc(doc(db(), 'productos', slug), datos);
+      // Las fotos que se han quitado del producto se borran de Firestore
+      const quitadas = (editando?.galeria ?? []).map((g) => g.foto).filter((id): id is string => Boolean(id) && !fotos.some((f) => f.foto === id));
+      await Promise.all(quitadas.map((id) => deleteDoc(doc(db(), 'fotos', id)).catch(() => {})));
       dlg.close();
       await cargarTodo();
+      avisarPublicar();
     } catch (e2) { err.textContent = mensajeError(e2); }
   });
 
   $('[data-borrar-producto]').addEventListener('click', async () => {
     if (!editando || !confirm(`¿Borrar "${editando.nombre}"? Desaparecerá de la web en la próxima publicación.`)) return;
-    try { await deleteDoc(doc(db(), 'productos', editando.slug)); dlg.close(); await cargarTodo(); }
+    try {
+      const ids = (editando.galeria ?? []).map((g) => g.foto).filter((id): id is string => Boolean(id));
+      await deleteDoc(doc(db(), 'productos', editando.slug));
+      await Promise.all(ids.map((id) => deleteDoc(doc(db(), 'fotos', id)).catch(() => {})));
+      dlg.close(); await cargarTodo(); avisarPublicar();
+    }
     catch (err) { $('[data-ed-error]').textContent = mensajeError(err); }
   });
 
-  // Subir fotos a Storage: productos/<slug>/<fecha>-<nombre>
+  // Subir fotos: se reducen en el navegador y se guardan en Firestore (colección "fotos"), sin Firebase Storage.
+  // Al publicar, Vercel las descarga y Astro genera las versiones optimizadas para la web.
   $<HTMLInputElement>('[data-subir]').addEventListener('change', async (e) => {
     const input = e.currentTarget as HTMLInputElement;
     const estado = $('[data-subir-estado]');
     const slug = (editando?.slug ?? $<HTMLInputElement>('#p-slug').value.trim()).toLowerCase();
-    if (!/^[a-z0-9-]+$/.test(slug)) { estado.textContent = 'Escribe primero un slug válido.'; input.value = ''; return; }
+    if (!/^[a-z0-9-]+$/.test(slug)) { estado.textContent = 'Escribe primero el nombre del producto.'; input.value = ''; return; }
     const files = [...(input.files ?? [])];
     for (const [i, f] of files.entries()) {
       estado.textContent = `Subiendo ${i + 1} de ${files.length}…`;
       try {
-        const nombre = `${Date.now()}-${f.name.replace(/[^\w.\-]+/g, '_')}`.toLowerCase();
-        const r = ref(storage(), `productos/${slug}/${nombre}`);
-        await uploadBytes(r, f, { contentType: f.type });
-        const url = await getDownloadURL(r);
-        fotos.push({ archivo: nombre, alt: $<HTMLInputElement>('#p-nombre').value || slug, url });
+        const grande = await reducir(f, [1600, 1400, 1200], 950_000);
+        const mini = await reducir(f, [240], 40_000);
+        const r = doc(collection(db(), 'fotos'));
+        await setDoc(r, { data: grande, producto: slug, creado: serverTimestamp() });
+        fotos.push({ archivo: `${r.id}.jpg`, alt: $<HTMLInputElement>('#p-nombre').value || slug, foto: r.id, mini });
         pintarFotos();
-      } catch (err) { estado.textContent = mensajeError(err); input.value = ''; return; }
+      } catch (err) {
+        estado.textContent = (err as Error)?.message === 'formato'
+          ? `No se puede leer «${f.name}». Usa fotos JPG o PNG (en iPhone: Ajustes → Cámara → Formatos → Más compatible).`
+          : mensajeError(err);
+        input.value = ''; return;
+      }
     }
     estado.textContent = 'Fotos subidas. Recuerda pulsar Guardar.';
     input.value = '';
@@ -365,11 +382,40 @@ function conectarEditor() {
   });
 }
 
+/**
+ * Reduce una foto a JPEG para guardarla en Firestore (un documento admite ~1 MB).
+ * Prueba de mayor a menor tamaño y calidad hasta que el resultado (data URL) quepa en `limite` caracteres.
+ */
+async function reducir(f: File, lados: number[], limite: number): Promise<string> {
+  let bmp: ImageBitmap;
+  try { bmp = await createImageBitmap(f, { imageOrientation: 'from-image' }); } catch { throw new Error('formato'); }
+  const c = document.createElement('canvas');
+  const ctx = c.getContext('2d')!;
+  let url = '';
+  for (const lado of lados) {
+    const k = Math.min(1, lado / Math.max(bmp.width, bmp.height));
+    c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); // las PNG transparentes quedan sobre blanco
+    ctx.drawImage(bmp, 0, 0, c.width, c.height);
+    for (const q of [0.86, 0.78, 0.7, 0.6]) {
+      url = c.toDataURL('image/jpeg', q);
+      if (url.length <= limite) { bmp.close(); return url; }
+    }
+  }
+  bmp.close();
+  return url;
+}
+
+/** Aviso tras guardar o borrar: los cambios llegan a la web al publicar. */
+function avisarPublicar() {
+  $('[data-cambios]').hidden = false;
+}
+
 function pintarFotos() {
   const slug = editando?.slug ?? '';
   $('[data-fotos]').innerHTML = fotos.map((g, i) => `
     <li data-i="${i}">
-      <img src="${esc(g.url || g.preview || previews.get(`${slug}/${g.archivo}`) || '')}" alt="" />
+      <img src="${esc(g.mini || g.url || g.preview || previews.get(`${slug}/${g.archivo}`) || '')}" alt="" />
       <input class="input" data-alt value="${esc(g.alt)}" aria-label="Descripción de la foto ${i + 1}" />
       <div class="acciones">
         <button type="button" data-f="subir" aria-label="Subir foto">↑</button>
@@ -432,13 +478,15 @@ function conectarPublicar() {
     try { await setDoc(ajustes(), { deployHook: url }, { merge: true }); estado.textContent = 'Guardado.'; }
     catch (err) { estado.textContent = mensajeError(err); }
   });
-  $('[data-publicar]').addEventListener('click', async () => {
+  // Hay dos botones de publicar: el de esta pestaña y el aviso de cambios sin publicar de Productos
+  root.querySelectorAll('[data-publicar]').forEach((b) => b.addEventListener('click', async () => {
     const url = hookInput.value.trim();
-    if (!url) { estado.textContent = 'Primero configura la URL del Deploy Hook (abajo).'; return; }
+    if (!url) { estado.textContent = 'Primero configura la URL del Deploy Hook (abajo).'; $('[data-cambios-txt]').textContent = 'Falta configurar la publicación: ve a la pestaña Publicar.'; return; }
     try {
       await fetch(url, { method: 'POST', mode: 'no-cors' }); // Vercel no devuelve CORS: la respuesta es opaca
       await setDoc(ajustes(), { ultima: serverTimestamp() }, { merge: true });
       estado.textContent = 'Publicación lanzada. En 1–3 minutos la web estará actualizada.';
+      $('[data-cambios-txt]').textContent = 'Publicación lanzada. En 1–3 minutos los cambios estarán en la web.';
     } catch (err) { estado.textContent = mensajeError(err); }
-  });
+  }));
 }

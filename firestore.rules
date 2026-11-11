@@ -32,6 +32,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if esAdmin();
     }
+    // Fotos de productos subidas desde el panel (JPEG reducido, como data URL). Las lee el build de Vercel.
+    match /fotos/{id} {
+      allow read: if true;
+      allow create, update: if esAdmin()
+        && request.resource.data.data is string
+        && request.resource.data.data.size() < 1000000;
+      allow delete: if esAdmin();
+    }
 
     // ---------- Pedidos ----------
     match /pedidos/{id} {

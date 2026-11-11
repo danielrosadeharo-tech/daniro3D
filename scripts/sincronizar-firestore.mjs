@@ -92,7 +92,14 @@ try {
     for (const [i, g] of p.galeria.entries()) {
       const archivo = (g.archivo || `foto-${i + 1}.jpg`).replace(/[^\w.\-]+/g, '_');
       const destino = join(dir, archivo);
-      if (g.url) {
+      if (g.foto) {
+        // Foto subida desde el panel: está en Firestore (fotos/<id>) como data URL JPEG
+        const r = await fetch(`${BASE}/fotos/${encodeURIComponent(g.foto)}?key=${KEY}`);
+        const data = r.ok ? (await r.json()).fields?.data?.stringValue : null;
+        const b64 = data && /^data:image\/[\w+.-]+;base64,/.test(data) ? data.slice(data.indexOf(',') + 1) : null;
+        if (!b64) { log(`AVISO ${p.slug}: no se pudo leer la foto ${g.foto} (HTTP ${r.status})`); continue; }
+        writeFileSync(destino, Buffer.from(b64, 'base64'));
+      } else if (g.url) {
         const r = await fetch(g.url);
         if (!r.ok) { log(`AVISO ${p.slug}: no se pudo descargar ${archivo} (HTTP ${r.status})`); continue; }
         writeFileSync(destino, Buffer.from(await r.arrayBuffer()));
