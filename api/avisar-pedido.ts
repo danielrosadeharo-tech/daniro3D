@@ -12,8 +12,14 @@ const eur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR',
 const referencia = (id: string) => id.slice(0, 6).toUpperCase();
 const corto = (s: unknown, n: number) => { const t = String(s ?? '').replace(/\s+/g, ' ').trim(); return t.length > n ? `${t.slice(0, n - 1)}…` : t; };
 
+class ClaveMal extends Error {}
 function app(): App {
-  return getApps()[0] ?? initializeApp({ credential: cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!)) });
+  if (getApps()[0]) return getApps()[0];
+  let cuenta: any;
+  // No se registra el error de JSON.parse: su mensaje copia un trozo de la clave en los registros
+  try { cuenta = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT!.trim()); } catch { throw new ClaveMal(); }
+  if (!cuenta?.private_key || !cuenta?.client_email) throw new ClaveMal();
+  return initializeApp({ credential: cert(cuenta) });
 }
 
 /** Manda el aviso a todos los móviles del administrador y borra los que ya no existen. */
@@ -83,6 +89,10 @@ export default async function handler(req: any, res: any) {
     const r = await enviar(db, { ...t, url: '/admin', id: `${coleccion}-${id}` });
     return res.status(200).json(r);
   } catch (e: any) {
+    if (e instanceof ClaveMal) {
+      console.error('avisar-pedido: FIREBASE_SERVICE_ACCOUNT no es el JSON de la clave privada de Firebase');
+      return res.status(503).json({ error: 'FIREBASE_SERVICE_ACCOUNT no contiene la clave de Firebase (tiene que ser el contenido completo del archivo .json).' });
+    }
     console.error('avisar-pedido', e);
     return res.status(500).json({ error: 'No se pudo mandar el aviso.' });
   }
