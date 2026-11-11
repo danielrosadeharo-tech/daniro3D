@@ -1,0 +1,124 @@
+---
+// Carrusel de fotos de los Funkos ya hechos (portada y página de Funkos).
+// Pasa solo cada 4 s, se para con el ratón o el foco encima, se desliza con el dedo y tiene botón de pausa.
+// Cada foto es un enlace (href) o un botón que abre el visor de la página (visor: data-visor={i}).
+// Desde fuera se puede parar y reanudar con los eventos "carrusel:parar" y "carrusel:seguir".
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Item { nombre: string; src: ImageMetadata; alt: string; href?: string }
+interface Props { items: Item[]; etiqueta: string; sizes: string; visor?: boolean; eager?: boolean; class?: string }
+const { items, etiqueta, sizes, visor = false, eager = false, class: clase } = Astro.props;
+---
+<div class:list={['carrusel', clase]} data-carrusel role="region" aria-roledescription="carrusel" aria-label={etiqueta}>
+  <ul class="carrusel__track" data-ctrack>
+    {items.map((it, i) => {
+      const img = <Picture src={it.src} alt={it.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes={sizes} loading={eager && i === 0 ? 'eager' : 'lazy'} fetchpriority={eager && i === 0 ? 'high' : undefined} />;
+      return (
+        <li class="carrusel__slide" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${items.length}: ${it.nombre}`}>
+          {visor
+            ? <button type="button" class="carrusel__btn carrusel__btn--zoom" data-visor={i} aria-label={`Ver las fotos de ${it.nombre}`} tabindex={i === 0 ? 0 : -1}>{img}</button>
+            : <a class="carrusel__btn" href={it.href} aria-label={`${it.nombre}: ver los Funkos hechos`} tabindex={i === 0 ? 0 : -1}>{img}</a>}
+          <span class="carrusel__nombre" aria-hidden="true">{it.nombre}</span>
+        </li>
+      );
+    })}
+  </ul>
+  <div class="carrusel__ctrl">
+    <button type="button" class="icon-btn" data-cprev aria-label="Funko anterior"><Icon name="izq" /></button>
+    <span class="carrusel__pos num" aria-live="off"><span data-cpos>1</span> / {items.length}</span>
+    <button type="button" class="icon-btn" data-cnext aria-label="Funko siguiente"><Icon name="der" /></button>
+    <button type="button" class="icon-btn" data-cpausa aria-label="Pausar el carrusel" aria-pressed="false">
+      <svg data-ico-pausa width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.5" height="14" rx="1"/><rect x="14" y="5" width="3.5" height="14" rx="1"/></svg>
+      <svg data-ico-play hidden width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .carrusel { position: relative; overflow: hidden; }
+  .carrusel__track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; list-style: none; padding: 0; margin: 0; overscroll-behavior-x: contain; }
+  .carrusel__track::-webkit-scrollbar { display: none; }
+  .carrusel__slide { position: relative; flex: 0 0 100%; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+  .carrusel__btn { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; overflow: hidden; }
+  .carrusel__btn--zoom { cursor: zoom-in; }
+  .carrusel__btn :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transition: scale 400ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .carrusel__btn:hover :global(img) { scale: 1.025; } }
+  .carrusel__btn:focus-visible { outline-offset: -4px; border-radius: var(--r-lg); }
+  .carrusel__nombre { position: absolute; left: 12px; top: 12px; padding: 4px 12px; border-radius: var(--r-pill); background: rgb(247 243 236 / 0.94); color: var(--p-ink); font-size: 0.875rem; font-weight: 560; pointer-events: none; }
+  .carrusel__ctrl {
+    position: absolute; left: 50%; bottom: 12px; translate: -50% 0; display: flex; align-items: center; gap: 2px;
+    padding: 2px; border-radius: var(--r-pill); background: rgb(34 38 31 / 0.88); color: #fff;
+  }
+  .carrusel__ctrl .icon-btn { width: 44px; height: 44px; color: #fff; }
+  .carrusel__ctrl .icon-btn :global(svg) { width: 20px; height: 20px; }
+  .carrusel__ctrl :focus-visible { outline-color: #8cc0a8; outline-offset: -2px; }
+  @media (hover: hover) and (pointer: fine) { .carrusel__ctrl .icon-btn:hover { background: rgb(255 255 255 / 0.14); } }
+  .carrusel__pos { min-width: 52px; text-align: center; font-size: 0.875rem; font-weight: 500; }
+</style>
+
+<script>
+  const reducido = matchMedia('(prefers-reduced-motion: reduce)');
+  const INTERVALO = 4000;
+
+  document.querySelectorAll<HTMLElement>('[data-carrusel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-ctrack]')!;
+    const slides = [...track.children] as HTMLElement[];
+    const pos = root.querySelector('[data-cpos]')!;
+    const btnPausa = root.querySelector<HTMLButtonElement>('[data-cpausa]')!;
+    let i = 0, timer = 0, pausadoPorUsuario = reducido.matches, encima = false, fuera = false, enPantalla = false;
+
+    const ir = (n: number, suave = true) => {
+      i = (n + slides.length) % slides.length;
+      track.scrollTo({ left: slides[i].offsetLeft, behavior: suave && !reducido.matches ? 'smooth' : 'auto' });
+    };
+    // El índice sigue al scroll (también cuando se desliza con el dedo)
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      i = slides.indexOf(e.target as HTMLElement);
+      pos.textContent = String(i + 1);
+      slides.forEach((s, n) => (s.querySelector<HTMLElement>('a, button')!.tabIndex = n === i ? 0 : -1));
+    }), { root: track, threshold: 0.6 });
+    slides.forEach((s) => io.observe(s));
+
+    const parar = () => { clearInterval(timer); timer = 0; };
+    const arrancar = () => {
+      parar();
+      // Solo pasa cuando se ve: fuera de pantalla no gasta ni mueve nada
+      if (pausadoPorUsuario || encima || fuera || !enPantalla || document.hidden) return;
+      timer = window.setInterval(() => ir(i + 1), INTERVALO);
+    };
+    new IntersectionObserver(([e]) => { enPantalla = e.isIntersecting; arrancar(); }, { threshold: 0.3 }).observe(root);
+
+    const pintarPausa = () => {
+      btnPausa.setAttribute('aria-pressed', String(pausadoPorUsuario));
+      btnPausa.setAttribute('aria-label', pausadoPorUsuario ? 'Reanudar el carrusel' : 'Pausar el carrusel');
+      btnPausa.querySelector('[data-ico-pausa]')!.toggleAttribute('hidden', pausadoPorUsuario);
+      btnPausa.querySelector('[data-ico-play]')!.toggleAttribute('hidden', !pausadoPorUsuario);
+    };
+
+    root.querySelector('[data-cprev]')!.addEventListener('click', () => { ir(i - 1); arrancar(); });
+    root.querySelector('[data-cnext]')!.addEventListener('click', () => { ir(i + 1); arrancar(); });
+    btnPausa.addEventListener('click', () => { pausadoPorUsuario = !pausadoPorUsuario; pintarPausa(); arrancar(); });
+    // Se detiene mientras el ratón o el foco están encima, o mientras se desliza con el dedo
+    root.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { encima = true; parar(); } });
+    root.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { encima = false; arrancar(); } });
+    root.addEventListener('focusin', () => { encima = true; parar(); });
+    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget as Node)) { encima = false; arrancar(); } });
+    track.addEventListener('touchstart', parar, { passive: true });
+    track.addEventListener('touchend', () => setTimeout(arrancar, 1500), { passive: true });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); ir(i + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); ir(i - 1); }
+    });
+    document.addEventListener('visibilitychange', arrancar);
+    // La página lo para mientras hay algo encima (p. ej. el visor de fotos)
+    document.addEventListener('carrusel:parar', () => { fuera = true; parar(); });
+    document.addEventListener('carrusel:seguir', () => { fuera = false; arrancar(); });
+    reducido.addEventListener('change', () => { if (reducido.matches) { pausadoPorUsuario = true; pintarPausa(); parar(); } });
+
+    pintarPausa();
+    arrancar();
+  });
+</script>

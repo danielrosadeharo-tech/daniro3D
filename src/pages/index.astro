@@ -4,7 +4,8 @@ import Base from '../layouts/Base.astro';
 import ProductCard from '../components/ProductCard.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
-import { productos, categorias, producto, foto, fotoAmbiente, desdeCategoria, deCategoria, euros, urlCategoria, enlaceWhatsApp, sitio } from '../lib/catalogo';
+import CarruselFunkos from '../components/CarruselFunkos.astro';
+import { productos, categorias, producto, foto, fotoAmbiente, desdeCategoria, deCategoria, euros, urlCategoria, enlaceWhatsApp, sitio, ejemplos } from '../lib/catalogo';
 
 // Las piezas del hero no se repiten en "Lo que más se pide"
 const enHero = ['perruno-17', 'rayquaza-escultura', 'estanteria-stranger-things'];
@@ -17,7 +18,10 @@ const perruno = foto(producto('perruno-17')!, 0);
 const rayquaza = foto(producto('rayquaza-escultura')!, 0);
 const funkoDetalle = foto(producto('perruno-17')!, 3);
 const posavasos = foto(producto('posavasos-mascotas')!, 0);
-const boda = foto(producto('boda-27')!, 0);
+// Carrusel de la banda de Funkos: los encargos hechos, empezando por la boda (la foto que había antes)
+const funkosHechos = ejemplos
+  .toSorted((a, b) => Number(b.slug === 'boda-27') - Number(a.slug === 'boda-27'))
+  .map((e) => ({ nombre: e.nombre.replace('Funko ', ''), src: foto(e).src, alt: foto(e).alt, href: '/funkos#encargos' }));
 const estanteria = foto(producto('estanteria-stranger-things')!, 0);
 
 const orgLd = {
@@ -108,7 +112,7 @@ const orgLd = {
           <a class="btn btn--ghost-light" href="/funkos#encargos">Ver Funkos hechos</a>
         </div>
       </div>
-      <figure class="band__media"><Picture src={boda.src} alt={boda.alt} formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 1024px) 40vw, 92vw" loading="lazy" /></figure>
+      <CarruselFunkos class="band__media" etiqueta="Funkos que ya hemos hecho" sizes="(min-width: 1024px) 40vw, 92vw" items={funkosHechos} />
     </div>
   </section>
 
@@ -217,8 +221,8 @@ const orgLd = {
   .tarifa div:last-child { border-bottom: 1px solid rgb(239 233 224 / 0.16); }
   .tarifa dd { font-family: var(--font-display); font-size: 1.375rem; letter-spacing: -0.02em; white-space: nowrap; }
   .band__nota { color: var(--p-inv-muted); font-size: var(--t-small); }
-  .band__media { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; max-height: 640px; }
-  .band__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  /* El carrusel es un componente: el tamaño se lo da la página con :global */
+  .band__grid :global(.band__media) { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; max-height: 640px; }
   .btn--light { --btn-bg: var(--p-inv-ink); --btn-ink: var(--p-inv-bg); }
   .btn--ghost-light { --btn-bg: transparent; --btn-ink: var(--p-inv-ink); border-color: rgb(239 233 224 / 0.4); }
   @media (hover: hover) and (pointer: fine) {

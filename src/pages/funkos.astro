@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Migas from '../components/Migas.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import CarruselFunkos from '../components/CarruselFunkos.astro';
 import { producto, ejemplos, foto, fotosDe, euros, enlaceWhatsApp, categoria } from '../lib/catalogo';
 import { FUNKO, precioFunko, resumenFunko, leerComposicion, svgCaja, svgFigura } from '../lib/funko';
 import { migasLd, productoLd } from '../lib/seo';
@@ -39,28 +40,10 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
       <p class="lead">{cat.descripcion.replace(' Desde 55 €.', '')} Eliges cuántas figuras van dentro y el precio sale solo.</p>
       <p class="fk-head__facts">Desde <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{ejemplos.length}</span> encargos hechos para ver</p>
     </div>
-    <!-- Carrusel con los Funkos ya hechos (la portada de cada encargo) -->
-    <div class="fk-head__media carrusel" data-carrusel role="region" aria-roledescription="carrusel" aria-label="Funkos que ya hemos hecho">
-      <ul class="carrusel__track" data-ctrack>
-        {hechos.map(({ e, portada }, i) => (
-          <li class="carrusel__slide" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${hechos.length}: ${e.nombre.replace('Funko ', '')}`}>
-            <button type="button" class="carrusel__btn" data-visor={i} aria-label={`Ver las fotos de ${e.nombre.replace('Funko ', '')}`} tabindex={i === 0 ? 0 : -1}>
-              <Picture src={portada.src} alt={portada.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes="(min-width: 768px) 34vw, 100vw" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
-            </button>
-            <span class="carrusel__nombre" aria-hidden="true">{e.nombre.replace('Funko ', '')}</span>
-          </li>
-        ))}
-      </ul>
-      <div class="carrusel__ctrl">
-        <button type="button" class="icon-btn" data-cprev aria-label="Funko anterior"><Icon name="izq" /></button>
-        <span class="carrusel__pos num" aria-live="off"><span data-cpos>1</span> / {hechos.length}</span>
-        <button type="button" class="icon-btn" data-cnext aria-label="Funko siguiente"><Icon name="der" /></button>
-        <button type="button" class="icon-btn" data-cpausa aria-label="Pausar el carrusel" aria-pressed="false">
-          <svg data-ico-pausa width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.5" height="14" rx="1"/><rect x="14" y="5" width="3.5" height="14" rx="1"/></svg>
-          <svg data-ico-play hidden width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
-        </button>
-      </div>
-    </div>
+    <!-- Carrusel con los Funkos ya hechos (la portada de cada encargo); cada foto abre el visor -->
+    <CarruselFunkos class="fk-head__media" etiqueta="Funkos que ya hemos hecho" visor eager
+      sizes="(min-width: 768px) 34vw, 100vw"
+      items={hechos.map(({ e, portada }) => ({ nombre: e.nombre.replace('Funko ', ''), src: portada.src, alt: portada.alt }))} />
   </header>
 
   <div class="wrap fk-tabs-wrap">
@@ -239,29 +222,12 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
   .fk-head__text { display: grid; gap: var(--s-4); }
   .fk-head h1 { font-size: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem); max-width: 13ch; }
   .fk-head__facts { font-weight: 560; }
-  .fk-head__media { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 4.4; min-width: 0; }
+  /* El carrusel es un componente: el tamaño se lo da la página con :global */
+  .fk-head :global(.fk-head__media) { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 4.4; min-width: 0; }
   @media (min-width: 768px) {
     .fk-head { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s-7); }
-    .fk-head__media { max-height: 460px; }
+    .fk-head :global(.fk-head__media) { max-height: 460px; }
   }
-
-  /* Carrusel */
-  .carrusel__track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; list-style: none; padding: 0; overscroll-behavior-x: contain; }
-  .carrusel__track::-webkit-scrollbar { display: none; }
-  .carrusel__slide { position: relative; flex: 0 0 100%; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; }
-  .carrusel__btn { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-  .carrusel__btn :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
-  .carrusel__btn:focus-visible { outline-offset: -4px; border-radius: var(--r-lg); }
-  .carrusel__nombre { position: absolute; left: 12px; top: 12px; padding: 4px 12px; border-radius: var(--r-pill); background: rgb(247 243 236 / 0.94); font-size: 0.875rem; font-weight: 560; pointer-events: none; }
-  .carrusel__ctrl {
-    position: absolute; left: 50%; bottom: 12px; translate: -50% 0; display: flex; align-items: center; gap: 2px;
-    padding: 2px; border-radius: var(--r-pill); background: rgb(34 38 31 / 0.88); color: #fff;
-  }
-  .carrusel__ctrl .icon-btn { width: 44px; height: 44px; color: #fff; }
-  .carrusel__ctrl .icon-btn svg { width: 20px; height: 20px; }
-  .carrusel__ctrl :focus-visible { outline-color: #8cc0a8; outline-offset: -2px; }
-  @media (hover: hover) and (pointer: fine) { .carrusel__ctrl .icon-btn:hover { background: rgb(255 255 255 / 0.14); } }
-  .carrusel__pos { min-width: 52px; text-align: center; font-size: 0.875rem; font-weight: 500; }
 
   /* Pestañas */
   .fk-tabs-wrap { position: sticky; top: var(--nav-h); z-index: 30; background: var(--bg); }
@@ -501,66 +467,7 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
   dlg.querySelector('[data-vcerrar]')!.addEventListener('click', () => dlg.close());
   dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') verFoto(foto + 1); if (e.key === 'ArrowLeft') verFoto(foto - 1); });
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
-  dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; origen?.focus({ preventScroll: true }); carrusel?.reanudar(); });
+  dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; origen?.focus({ preventScroll: true }); document.dispatchEvent(new Event('carrusel:seguir')); });
 
-  // ---- Carrusel de la cabecera ----
-  const carrusel = (() => {
-    const root = document.querySelector<HTMLElement>('[data-carrusel]');
-    if (!root) return null;
-    const track = root.querySelector<HTMLElement>('[data-ctrack]')!;
-    const slides = [...track.children] as HTMLElement[];
-    const pos = root.querySelector('[data-cpos]')!;
-    const btnPausa = root.querySelector<HTMLButtonElement>('[data-cpausa]')!;
-    const reducido = matchMedia('(prefers-reduced-motion: reduce)');
-    const INTERVALO = 4000;
-    let i = 0, timer = 0, pausadoPorUsuario = reducido.matches, encima = false;
-
-    const ir = (n: number, suave = true) => {
-      i = (n + slides.length) % slides.length;
-      track.scrollTo({ left: slides[i].offsetLeft, behavior: suave && !reducido.matches ? 'smooth' : 'auto' });
-    };
-    // El índice sigue al scroll (también cuando se desliza con el dedo)
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (!e.isIntersecting) return;
-      i = slides.indexOf(e.target as HTMLElement);
-      pos.textContent = String(i + 1);
-      slides.forEach((s, n) => s.querySelector('button')!.tabIndex = n === i ? 0 : -1);
-    }), { root: track, threshold: 0.6 });
-    slides.forEach((s) => io.observe(s));
-
-    const parar = () => { clearInterval(timer); timer = 0; };
-    const arrancar = () => {
-      parar();
-      if (pausadoPorUsuario || encima || document.hidden || dlg.open) return;
-      timer = window.setInterval(() => ir(i + 1), INTERVALO);
-    };
-    const pintarPausa = () => {
-      btnPausa.setAttribute('aria-pressed', String(pausadoPorUsuario));
-      btnPausa.setAttribute('aria-label', pausadoPorUsuario ? 'Reanudar el carrusel' : 'Pausar el carrusel');
-      btnPausa.querySelector('[data-ico-pausa]')!.toggleAttribute('hidden', pausadoPorUsuario);
-      btnPausa.querySelector('[data-ico-play]')!.toggleAttribute('hidden', !pausadoPorUsuario);
-    };
-
-    root.querySelector('[data-cprev]')!.addEventListener('click', () => { ir(i - 1); arrancar(); });
-    root.querySelector('[data-cnext]')!.addEventListener('click', () => { ir(i + 1); arrancar(); });
-    btnPausa.addEventListener('click', () => { pausadoPorUsuario = !pausadoPorUsuario; pintarPausa(); arrancar(); });
-    // Se detiene mientras el ratón o el foco están encima, o mientras se desliza con el dedo
-    root.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { encima = true; parar(); } });
-    root.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { encima = false; arrancar(); } });
-    root.addEventListener('focusin', () => { encima = true; parar(); });
-    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget as Node)) { encima = false; arrancar(); } });
-    track.addEventListener('touchstart', parar, { passive: true });
-    track.addEventListener('touchend', () => setTimeout(arrancar, 1500), { passive: true });
-    root.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); ir(i + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); ir(i - 1); }
-    });
-    document.addEventListener('visibilitychange', arrancar);
-    reducido.addEventListener('change', () => { if (reducido.matches) { pausadoPorUsuario = true; pintarPausa(); parar(); } });
-
-    pintarPausa();
-    arrancar();
-    return { reanudar: arrancar, parar };
-  })();
-  document.querySelectorAll('[data-visor]').forEach((b) => b.addEventListener('click', () => carrusel?.parar()));
+  document.querySelectorAll('[data-visor]').forEach((b) => b.addEventListener('click', () => document.dispatchEvent(new Event('carrusel:parar'))));
 </script>
