@@ -143,6 +143,14 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
 
     const ok = form.querySelector<HTMLElement>('[data-ok]')!;
     const btn = form.querySelector<HTMLButtonElement>('[data-enviar]')!;
+    const medidas = String(fd.get('medidas') ?? '').trim();
+    // WhatsApp con el encargo ya escrito: es el camino normal sin Firebase y el de reserva si Firebase falla
+    const porWhatsApp = () => {
+      const texto = ['¡Hola! Quiero pedir un encargo a medida:', '', desc, medidas && `Medidas: ${medidas}`, f && `Archivo: ${f.name} (te lo adjunto aquí)`, '', `Nombre: ${nombre}`, `Contacto: ${contacto}`].filter(Boolean).join('\n');
+      const url = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(texto)}`;
+      const w = window.open(url, '_blank');
+      if (w) w.opener = null; else location.href = url; // el navegador bloqueó la pestaña nueva
+    };
 
     if (firebaseActivo) {
       // Se guarda en Firestore (y el archivo en Storage); te llega al panel /admin
@@ -158,8 +166,13 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
           ok.innerHTML += ` No se pudo subir el archivo: <a href="${wa}" target="_blank" rel="noopener">mándanoslo por WhatsApp</a> con la referencia ${ref}.`;
         }
       } catch (e2) {
-        ok.hidden = false; ok.style.color = 'var(--danger)';
-        ok.textContent = `No se ha podido enviar: ${mensajeError(e2)} Prueba otra vez o escríbenos por WhatsApp.`;
+        // No se pudo guardar en la web: el encargo no se pierde, sale por WhatsApp
+        console.warn('No se pudo guardar el encargo en Firestore', mensajeError(e2));
+        porWhatsApp();
+        ok.hidden = false; ok.style.color = '';
+        ok.textContent = f
+          ? 'Te abrimos WhatsApp con tu encargo escrito. Adjunta el archivo en el chat y pulsa enviar.'
+          : 'Te abrimos WhatsApp con tu encargo escrito. Solo falta pulsar enviar.';
       } finally { btn.disabled = false; btn.innerHTML = txt; }
       return;
     }
@@ -180,11 +193,7 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
     }
 
     // Sin servicio de formularios: WhatsApp con el texto escrito
-    const medidas = String(fd.get('medidas') ?? '').trim();
-    const texto = ['¡Hola! Quiero pedir un encargo a medida:', '', desc, medidas && `Medidas: ${medidas}`, f && `Archivo: ${f.name} (te lo adjunto aquí)`, '', `Nombre: ${nombre}`, `Contacto: ${contacto}`].filter(Boolean).join('\n');
-    const url = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(texto)}`;
-    const w = window.open(url, '_blank');
-    if (w) w.opener = null; else location.href = url;
+    porWhatsApp();
     ok.hidden = false;
     ok.textContent = f ? 'Abrimos WhatsApp con tu encargo. Adjunta el archivo en el chat y pulsa enviar.' : 'Abrimos WhatsApp con tu encargo. Solo falta pulsar enviar.';
   });
