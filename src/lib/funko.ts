@@ -79,3 +79,13 @@ export function svgCaja(n: number, s: number, opts: { titulo?: string; nuevasN?:
     ${dibujos}
   </svg>`;
 }
+
+/** Todas las composiciones válidas (1 normal + 0-3 pequeños, 2 normales + 0-1 pequeño). */
+export const composiciones = (): { n: number; s: number }[] =>
+  Array.from({ length: FUNKO.maxNormales }, (_, i) => i + 1)
+    .flatMap((n) => Array.from({ length: FUNKO.maxPequenos(n) + 1 }, (_, s) => ({ n, s })));
+
+/** Página de cada composición (/funkos/caja-1-2): es la que va en el pedido y la que enseña WhatsApp. */
+export const urlCaja = (n: number, s: number) => `/funkos/caja-${n}-${s}`;
+/** Dibujo de la caja en PNG: grande para la vista previa de los enlaces, mini para la cesta. */
+export const imagenCaja = (n: number, s: number, mini = false) => `/funkos/caja-${n}-${s}${mini ? '-mini' : ''}.png`;

@@ -4,6 +4,7 @@ import Migas from '../components/Migas.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Icon from '../components/Icon.astro';
 import { metodosDisponibles } from '../lib/pedido';
+import sitio from '../data/sitio.json';
 const metodos = metodosDisponibles();
 ---
 <Base title="Tu cesta" description="Revisa tu pedido y envíalo por WhatsApp. Te confirmamos precio final, envío y plazo." noindex>
@@ -18,6 +19,12 @@ const metodos = metodosDisponibles();
       <div class="vacio" data-vacio hidden>
         <p class="lead">Tu cesta está vacía.</p>
         <a class="btn" href="/catalogo">Ver el catálogo</a>
+      </div>
+      <div class="vacio" data-hecho hidden>
+        <p class="lead">¡Pedido listo!</p>
+        <p data-hecho-msg role="status"></p>
+        <p class="nota">Si no se ha abierto nada, escríbenos por WhatsApp al {sitio.telefonoVisible} y lo vemos.</p>
+        <a class="btn btn--secondary" href="/catalogo">Seguir mirando el catálogo</a>
       </div>
       <div class="total checkout__total" data-con-lineas><span>Total</span><strong class="precio" data-total>0 €</strong></div>
       <p class="nota" data-nota-consulta hidden>Las piezas a consultar no suman: te damos su precio al confirmar.</p>
@@ -57,7 +64,6 @@ const metodos = metodosDisponibles();
 
         <button class="btn btn--block" type="submit" data-enviar>Enviar pedido</button>
         <p class="nota">No pagas nada todavía. Al recibir el pedido te confirmamos el precio final, el envío y el plazo, y acordamos el pago.</p>
-        <p class="ok" role="status" data-ok hidden></p>
       </form>
     </section>
   </div>
@@ -78,7 +84,6 @@ const metodos = metodosDisponibles();
   .metodo span { display: grid; gap: 2px; }
   .metodo strong { display: inline-flex; align-items: center; gap: 8px; font-weight: 560; }
   .metodo small { color: var(--muted); font-size: var(--t-small); line-height: 1.45; }
-  .ok { font-weight: 560; color: var(--accent); }
   .nota { font-size: var(--t-small); color: var(--muted); }
 </style>
 
@@ -92,11 +97,13 @@ const metodos = metodosDisponibles();
   const ul = root.querySelector<HTMLElement>('[data-lineas]')!;
   const form = root.querySelector<HTMLFormElement>('[data-form-pedido]')!;
   conectarLista(ul);
+  let enviado = false;
 
   function pintar() {
     const ls = cesta.lineas();
     ul.innerHTML = htmlLineas(ls);
-    root.querySelector('[data-vacio]')!.toggleAttribute('hidden', ls.length > 0);
+    root.querySelector('[data-vacio]')!.toggleAttribute('hidden', ls.length > 0 || enviado);
+    root.querySelector('[data-hecho]')!.toggleAttribute('hidden', ls.length > 0 || !enviado);
     root.querySelectorAll('[data-con-lineas]').forEach((el) => el.toggleAttribute('hidden', ls.length === 0));
     root.querySelector('[data-total]')!.textContent = euros(cesta.total());
     root.querySelector('[data-nota-consulta]')!.toggleAttribute('hidden', !cesta.hayConsultas());
@@ -137,7 +144,6 @@ const metodos = metodosDisponibles();
       hayConsultas: cesta.hayConsultas(),
     };
     const btn = form.querySelector<HTMLButtonElement>('[data-enviar]')!;
-    const ok = form.querySelector<HTMLElement>('[data-ok]')!;
     // 1) Se guarda en Firestore (si está configurado) para que aparezca en el panel y en "Mi cuenta"
     let guardado = false;
     if (firebaseActivo) {
@@ -151,13 +157,11 @@ const metodos = metodosDisponibles();
     }
     // 2) Y se manda por WhatsApp o email, como siempre
     const r = await metodo.enviar(pedido);
-    ok.hidden = false;
-    if (guardado) {
-      ok.textContent = `Pedido ${(pedido as Pedido).referencia} recibido. ${r.mensaje}`;
-      cesta.vaciar();
-    } else {
-      ok.textContent = r.mensaje + ' Tu cesta se queda guardada hasta que la vacíes.';
-    }
+    // El pedido ya va escrito en WhatsApp o en el correo: la cesta se vacía para el siguiente
+    root.querySelector('[data-hecho-msg]')!.textContent = guardado ? `Pedido ${(pedido as Pedido).referencia} recibido. ${r.mensaje}` : r.mensaje;
+    enviado = true;
+    form.reset();
+    cesta.vaciar();
     if (r.redirigirA) {
       if (r.redirigirA.startsWith('mailto:')) location.href = r.redirigirA;
       else {

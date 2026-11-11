@@ -389,7 +389,7 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
 
 <script>
   import { cesta, avisar, euros } from '../scripts/cesta';
-  import { FUNKO, precioFunko, resumenFunko, svgCaja } from '../lib/funko';
+  import { FUNKO, precioFunko, resumenFunko, svgCaja, urlCaja, imagenCaja } from '../lib/funko';
   import sitio from '../data/sitio.json';
 
   // ---- Pestañas (con #personaliza / #encargos en la URL) ----
@@ -466,10 +466,18 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
     const fd = new FormData(form);
     const pers = String(fd.get('personalizacion') ?? '').trim();
     const opciones: Record<string, string> = { Composición: resumenFunko(n, s), Plazo: "mínimo 2 semanas" };
-    cesta.añadir({ slug: d.slug, nombre: d.nombre, url: d.url, imagen: d.imagen, opciones, personalizacion: pers || undefined, precio: precioFunko(n, s) }, cantidad);
+    // Enlace e imagen de esta composición: en WhatsApp se ve la caja con sus figuras
+    cesta.añadir({ slug: d.slug, nombre: d.nombre, url: urlCaja(n, s), imagen: imagenCaja(n, s, true), opciones, personalizacion: pers || undefined, precio: precioFunko(n, s) }, cantidad);
     avisar('Funko añadido a la cesta', 'Ver cesta', () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
   });
   pintar();
+  // /funkos?n=1&s=2 (desde la página de cada caja) deja el configurador así
+  const q = new URLSearchParams(location.search);
+  if (q.has('n')) {
+    const n = Number(q.get('n')), s = Number(q.get('s') ?? 0);
+    if (n >= 1 && n <= FUNKO.maxNormales && s >= 0 && s <= FUNKO.maxPequenos(n)) aplicarPreset(n, s);
+    history.replaceState(null, '', location.pathname + location.hash);
+  }
 
   // ---- Visor de fotos de los encargos hechos ----
   const dlg = document.querySelector<HTMLDialogElement>('[data-visor-dlg]')!;

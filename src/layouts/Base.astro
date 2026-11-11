@@ -13,17 +13,19 @@ interface Props {
   title: string;
   description: string;
   image?: ImageMetadata;
+  /** Imagen para compartir ya preparada (ruta pública), en lugar de `image`. */
+  imageUrl?: string;
   jsonLd?: object | object[];
   noindex?: boolean;
   /** Ruta activa del menú, p. ej. "/catalogo". */
   activo?: string;
 }
-const { title, description, image, jsonLd, noindex = false, activo } = Astro.props;
+const { title, description, image, imageUrl, jsonLd, noindex = false, activo } = Astro.props;
 // Con build.format 'file' la ruta llega como /index.html o /catalogo.html; Vercel la sirve sin extensión (cleanUrls).
 const rutaLimpia = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '') || '/';
 const canonical = new URL(rutaLimpia, Astro.site);
-const og = await getImage({ src: image ?? fotoAmbiente('coleccion-pilotos.jpg'), width: 1200, format: 'jpg' });
-const ogUrl = new URL(og.src, Astro.site);
+const og = imageUrl ? null : await getImage({ src: image ?? fotoAmbiente('coleccion-pilotos.jpg'), width: 1200, format: 'jpg' });
+const ogUrl = new URL(imageUrl ?? og!.src, Astro.site);
 const tituloCompleto = title.includes(sitio.marca) ? title : `${title} · ${sitio.marca}`;
 
 const nav = [

@@ -1,0 +1,50 @@
+---
+// Una página por composición de la caja (/funkos/caja-1-2 = 1 normal + 2 pequeños).
+// Es el enlace que va en el pedido: WhatsApp enseña el dibujo de la caja en vez de una foto de otro encargo.
+import Base from '../../layouts/Base.astro';
+import Migas from '../../components/Migas.astro';
+import Icon from '../../components/Icon.astro';
+import { composiciones, precioFunko, resumenFunko, imagenCaja, FUNKO } from '../../lib/funko';
+import { euros } from '../../lib/catalogo';
+
+export const getStaticPaths = () => composiciones().map(({ n, s }) => ({ params: { comp: `${n}-${s}` }, props: { n, s } }));
+const { n, s } = Astro.props as { n: number; s: number };
+
+const precio = precioFunko(n, s);
+const resumen = resumenFunko(n, s);
+const figuras = [`${n} Funko${n > 1 ? 's' : ''} de tamaño normal`, s ? `${s} ${s > 1 ? 'pequeños' : 'pequeño'}` : ''].filter(Boolean).join(' y ');
+const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Funkos', url: '/funkos' }, { nombre: resumen }];
+---
+<Base
+  title={`Funko personalizado: ${resumen} · ${euros(precio)}`}
+  description={`Caja a medida con ${figuras}, hechos a partir de tus fotos. Plazo: mínimo 2 semanas.`}
+  imageUrl={imagenCaja(n, s)}
+  noindex
+  activo="/funkos"
+>
+  <div class="wrap caja">
+    <div class="caja__img">
+      <img src={imagenCaja(n, s)} alt={`Dibujo de la caja con ${figuras}`} width="1200" height="630" />
+    </div>
+    <div class="caja__txt">
+      <Migas items={migas} />
+      <h1>Funko personalizado</h1>
+      <p class="lead">{resumen}</p>
+      <p class="caja__precio precio">{euros(precio)}</p>
+      <p class="nota">Caja a medida con {figuras}, hechos a partir de tus fotos. Plazo de elaboración: mínimo 2 semanas.</p>
+      <div class="btn-row">
+        <a class="btn" href={`/funkos?n=${n}&s=${s}`}>Configurar la mía así</a>
+        <a class="btn btn--secondary" href="/funkos#encargos">Ver encargos hechos <Icon name="flecha" /></a>
+      </div>
+      <p class="nota">Desde {euros(FUNKO.base)} la caja con un Funko normal; +{euros(FUNKO.normalExtra)} el segundo normal y +{euros(FUNKO.pequeno)} cada pequeño.</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .caja { display: grid; gap: var(--s-6); padding-block: var(--s-6) var(--s-9); align-items: center; }
+  @media (min-width: 900px) { .caja { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s-8); } }
+  .caja__img img { width: 100%; height: auto; border-radius: var(--r-lg); }
+  .caja__txt { display: grid; gap: var(--s-4); justify-items: start; }
+  .caja__precio { font-size: 2rem; }
+</style>
