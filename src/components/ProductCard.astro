@@ -1,12 +1,15 @@
 ---
 import { Picture } from 'astro:assets';
-import { foto, catalogoEn, type Producto } from '../lib/catalogo';
+import { foto, fotoAmbiente, catalogoEn, type Producto } from '../lib/catalogo';
 import { idiomaDe } from '../i18n';
 interface Props { p: Producto; prioridad?: boolean; mostrarCategoria?: boolean; nivel?: 'h2' | 'h3' }
 const { prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
 const C = catalogoEn(idiomaDe(Astro.url));
 const p = C.loc(Astro.props.p);
-const f = foto(p);
+// El Funko personalizado no enseña un encargo real: enseña lo que incluye el precio base (la caja con un Funko normal)
+const f = p.slug === 'funko-personalizado'
+  ? { src: fotoAmbiente('funko-caja-1.png'), alt: C.t('Dibujo de la caja a medida con un Funko normal', 'Drawing of the made-to-measure box with one regular Funko', 'Dessin de la boîte sur mesure avec un Funko normal') }
+  : foto(p);
 const Tag = nivel;
 const cat = C.categoria(p.categoria);
 const etiqueta = p.personalizacion.disponible
