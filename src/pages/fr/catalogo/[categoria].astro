@@ -1,0 +1,7 @@
+---
+// Generado por scripts/crear-rutas-idiomas.mjs: la misma página que /catalogo/[categoria], en francés.
+import Pagina from '../../catalogo/[categoria].astro';
+import { rutasCategoria } from '../../../lib/rutas';
+export const getStaticPaths = rutasCategoria;
+---
+<Pagina {...Astro.props} />

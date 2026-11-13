@@ -1,4 +1,6 @@
 // Estados de pedidos y encargos (los mismos que admiten las reglas de Firestore).
+import { LOCALE, traductor, type Idioma } from '../i18n';
+
 export const ESTADOS = [
   { id: 'nuevo', txt: 'Recibido' },
   { id: 'confirmado', txt: 'Confirmado' },
@@ -8,11 +10,24 @@ export const ESTADOS = [
   { id: 'cancelado', txt: 'Cancelado' },
 ] as const;
 export type Estado = (typeof ESTADOS)[number]['id'];
-export const textoEstado = (id: string) => ESTADOS.find((e) => e.id === id)?.txt ?? id;
 
-const fecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+/** Nombre del estado en otros idiomas (el panel lo enseña siempre en español). */
+const TRAD_ESTADO: Record<string, { en: string; fr: string }> = {
+  nuevo: { en: 'Received', fr: 'Reçue' },
+  confirmado: { en: 'Confirmed', fr: 'Confirmée' },
+  fabricando: { en: 'In production', fr: 'En fabrication' },
+  enviado: { en: 'Shipped', fr: 'Expédiée' },
+  entregado: { en: 'Delivered', fr: 'Livrée' },
+  cancelado: { en: 'Cancelled', fr: 'Annulée' },
+};
+export const textoEstado = (id: string, l: Idioma = 'es') =>
+  l === 'es' ? ESTADOS.find((e) => e.id === id)?.txt ?? id : TRAD_ESTADO[id]?.[l] ?? id;
+
 /** Fecha de un Timestamp de Firestore (o "ahora mismo" si aún no ha llegado del servidor). */
-export const textoFecha = (t: { toDate?: () => Date } | null | undefined) => (t?.toDate ? fecha.format(t.toDate()) : 'Ahora mismo');
+export function textoFecha(t: { toDate?: () => Date } | null | undefined, l: Idioma = 'es') {
+  if (!t?.toDate) return traductor(l)('Ahora mismo', 'Just now', "À l'instant");
+  return new Intl.DateTimeFormat(LOCALE[l], { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(t.toDate());
+}
 
 export const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 

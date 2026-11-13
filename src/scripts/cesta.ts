@@ -1,8 +1,11 @@
 // Cesta guardada en el navegador (localStorage). Sin servidor.
 import type { Linea } from '../lib/pedido/tipos';
+import { idiomaDocumento, traductor, formatoEuros, ruta } from '../i18n';
 
 const CLAVE = 'daniro3d:cesta:v1';
-const eur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+// Idioma de la página (en, fr o es): textos de la cesta, formato de euros y enlaces a las fichas
+const idioma = idiomaDocumento();
+const tr = traductor(idioma);
 
 function leer(): Linea[] {
   try {
@@ -38,7 +41,7 @@ export const cesta = {
   vaciar() { guardar([]); },
 };
 
-export const euros = (n: number) => eur.format(n);
+export const euros = formatoEuros(idioma);
 
 // Sincroniza entre pestañas
 addEventListener('storage', (e) => {
@@ -52,20 +55,20 @@ const svg = (d: string) => `<svg width="16" height="16" viewBox="0 0 24 24" fill
 export function htmlLineas(ls: Linea[]): string {
   return ls.map((l) => {
     const ops = Object.entries(l.opciones).map(([k, v]) => `${esc(k)}: ${esc(v)}`).join(' · ');
-    const precio = l.precio == null ? 'A consultar' : euros(l.precio * l.cantidad);
+    const precio = l.precio == null ? tr('A consultar', 'On request', 'Sur demande') : euros(l.precio * l.cantidad);
     return `<li class="linea" data-id="${esc(l.id)}">
       <img src="${esc(l.imagen)}" alt="" width="72" height="96" loading="lazy">
       <div>
-        <div class="linea__top"><a class="linea__nombre" href="${esc(l.url)}">${esc(l.nombre)}</a><span class="precio">${precio}</span></div>
+        <div class="linea__top"><a class="linea__nombre" href="${esc(ruta(idioma, l.url))}">${esc(l.nombre)}</a><span class="precio">${precio}</span></div>
         ${ops ? `<p class="linea__meta">${ops}</p>` : ''}
-        ${l.personalizacion ? `<p class="linea__meta">Personalización: ${esc(l.personalizacion)}</p>` : ''}
+        ${l.personalizacion ? `<p class="linea__meta">${tr('Personalización', 'Personalisation', 'Personnalisation')}: ${esc(l.personalizacion)}</p>` : ''}
         <div class="linea__acciones">
-          <div class="qty" role="group" aria-label="Cantidad de ${esc(l.nombre)}">
-            <button type="button" data-accion="menos" aria-label="Quitar una unidad" ${l.cantidad <= 1 ? 'disabled' : ''}>${svg('<path d="M5 12h14"/>')}</button>
+          <div class="qty" role="group" aria-label="${tr('Cantidad de', 'Quantity of', 'Quantité de')} ${esc(l.nombre)}">
+            <button type="button" data-accion="menos" aria-label="${tr('Quitar una unidad', 'Remove one', 'Retirer une unité')}" ${l.cantidad <= 1 ? 'disabled' : ''}>${svg('<path d="M5 12h14"/>')}</button>
             <output aria-live="polite">${l.cantidad}</output>
-            <button type="button" data-accion="mas" aria-label="Añadir una unidad">${svg('<path d="M12 5v14M5 12h14"/>')}</button>
+            <button type="button" data-accion="mas" aria-label="${tr('Añadir una unidad', 'Add one', 'Ajouter une unité')}">${svg('<path d="M12 5v14M5 12h14"/>')}</button>
           </div>
-          <button type="button" class="quitar" data-accion="quitar">Quitar</button>
+          <button type="button" class="quitar" data-accion="quitar">${tr('Quitar', 'Remove', 'Retirer')}</button>
         </div>
       </div>
     </li>`;
@@ -84,7 +87,7 @@ export function conectarLista(ul: HTMLElement) {
     if (b.dataset.accion === 'menos') cesta.cantidad(l.id, l.cantidad - 1);
     if (b.dataset.accion === 'quitar') {
       cesta.quitar(l.id);
-      avisar(`${l.nombre} quitado de la cesta`, 'Deshacer', () => cesta.añadir(l, l.cantidad));
+      avisar(tr(`${l.nombre} quitado de la cesta`, `${l.nombre} removed from the basket`, `${l.nombre} retiré du panier`), tr('Deshacer', 'Undo', 'Annuler'), () => cesta.añadir(l, l.cantidad));
       return;
     }
     // Mantén el foco en el mismo botón tras re-pintar

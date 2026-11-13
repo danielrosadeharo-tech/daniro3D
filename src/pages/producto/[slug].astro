@@ -6,19 +6,21 @@ import ProductCard from '../../components/ProductCard.astro';
 import Migas from '../../components/Migas.astro';
 import Icon from '../../components/Icon.astro';
 import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
-import { productos, categoria, fotosDe, foto, textoPrecio, relacionados, euros, enlaceWhatsApp, sitio, urlProducto, urlCategoria, type Producto } from '../../lib/catalogo';
+import { fotosDe, foto, enlaceWhatsApp, sitio, catalogoEn, urlProducto as urlProductoEs, type Producto } from '../../lib/catalogo';
 import { colorHex } from '../../lib/colores';
 import { migasLd, productoLd, descripcionMeta } from '../../lib/seo';
+import { rutasProducto } from '../../lib/rutas';
+import { idiomaDe } from '../../i18n';
 
-export function getStaticPaths() {
-  // Los productos con página propia (el Funko personalizado vive en /funkos) no generan ficha
-  return productos.filter((p) => !p.enlace).map((p) => ({ params: { slug: p.slug }, props: { p } }));
-}
-const { p } = Astro.props as { p: Producto };
-const cat = categoria(p.categoria)!;
+export const getStaticPaths = rutasProducto;
+const l = idiomaDe(Astro.url);
+const C = catalogoEn(l);
+const t = C.t;
+const p = C.loc((Astro.props as { p: Producto }).p);
+const cat = C.categoria(p.categoria)!;
 const fotos = fotosDe(p);
-const rel = relacionados(p);
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: cat.nombre, url: urlCategoria(cat) }, { nombre: p.nombre, url: urlProducto(p) }];
+const rel = C.relacionados(p);
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: cat.nombre, url: C.urlCategoria(cat) }, { nombre: p.nombre, url: C.urlProducto(p) }];
 const ldImgs = await Promise.all(fotos.slice(0, 4).map((f) => getImage({ src: f.src, width: 750, format: 'jpg' }).then((r) => r.src)));
 const miniatura = (await getImage({ src: foto(p).src, width: 144, format: 'webp' })).src;
 
@@ -32,18 +34,26 @@ const precioBase = consultar ? null : (p.variantes[0]?.precio ?? p.precio.import
 const esFunko = p.configurador === 'funko';
 
 const specs = [
-  ['Material', materiales.join(', ')],
-  ['Colores', p.colores.join(', ')],
-  ['Medidas', p.dimensiones],
-  ['Composición', p.composicion],
-  ['Tiempo de fabricación', p.tiempoFabricacion],
-  ['Personalización', p.personalizacion.disponible ? 'Sí, a tu gusto' : null],
+  [t('Material', 'Material', 'Matière'), materiales.map(C.voc).join(', ')],
+  [t('Colores', 'Colours', 'Couleurs'), p.colores.map(C.voc).join(', ')],
+  [t('Medidas', 'Size', 'Dimensions'), p.dimensiones],
+  [t('Composición', 'Contents', 'Composition'), p.composicion],
+  [t('Tiempo de fabricación', 'Production time', 'Délai de fabrication'), p.tiempoFabricacion],
+  [t('Personalización', 'Personalisation', 'Personnalisation'), p.personalizacion.disponible ? t('Sí, a tu gusto', 'Yes, as you like', 'Oui, à votre goût') : null],
 ].filter(([, v]) => v) as [string, string][];
 
-const msgWa = `¡Hola! Me interesa «${p.nombre}» (${sitio.dominio}${urlProducto(p)}). ¿Me dais precio y plazo?`;
-const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: miniatura, precio: precioBase, funko: esFunko };
+const url = `${sitio.dominio}${C.urlProducto(p)}`;
+const msgWa = t(
+  `¡Hola! Me interesa «${p.nombre}» (${url}). ¿Me dais precio y plazo?`,
+  `Hi! I'm interested in "${p.nombre}" (${url}). Could you give me a price and lead time?`,
+  `Bonjour ! « ${p.nombre} » m'intéresse (${url}). Pouvez-vous m'indiquer le prix et le délai ?`,
+);
+// La línea de la cesta guarda la ruta española (la cesta la enseña con el prefijo del idioma de cada página)
+const datos = { slug: p.slug, nombre: p.nombre, url: urlProductoEs(p), imagen: miniatura, precio: precioBase, funko: esFunko };
+// Las opciones del pedido se guardan con nombres legibles en el idioma del cliente
+const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color', 'Colour', 'Couleur'), material: t('Material', 'Material', 'Matière') };
 ---
-<Base title={`${p.nombre} · ${textoPrecio(p)}`} description={descripcionMeta(p)} image={foto(p).src} jsonLd={[productoLd(p, ldImgs), migasLd(migas)]}>
+<Base title={`${p.nombre} · ${C.textoPrecio(p)}`} description={descripcionMeta(p, l, C.textoPrecio)} image={foto(p).src} jsonLd={[productoLd(p, ldImgs, C.urlProducto), migasLd(migas)]}>
   <div class="wrap ficha-top"><Migas items={migas} /></div>
 
   <article class="wrap ficha">
@@ -51,9 +61,9 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
 
     <div class="ficha__info">
       <header class="ficha__head">
-        <a class="ficha__cat" href={urlCategoria(cat)}>{cat.nombre}</a>
+        <a class="ficha__cat" href={C.urlCategoria(cat)}>{cat.nombre}</a>
         <h1>{p.nombre}</h1>
-        <p class="ficha__precio precio" data-precio-txt aria-live="polite">{textoPrecio(p)}</p>
+        <p class="ficha__precio precio" data-precio-txt aria-live="polite" data-consultar={t('Precio a consultar', 'Price on request', 'Prix sur demande')}>{C.textoPrecio(p)}</p>
         <p class="ficha__corta">{p.descripcionCorta}</p>
       </header>
 
@@ -63,28 +73,28 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
         {esFunko && (
           <div class="funko" data-funko>
             <fieldset class="opcion">
-              <legend>Funkos de tamaño normal</legend>
+              <legend>{t('Funkos de tamaño normal', 'Regular-size Funkos', 'Funkos de taille normale')}</legend>
               <div class="chips">
                 {[1, 2].map((n) => <label class="chip"><input type="radio" name="normales" value={n} checked={n === 1} /><span>{n}</span></label>)}
               </div>
             </fieldset>
             <fieldset class="opcion">
-              <legend>Funkos pequeños <span class="opcion__hint">mascotas, niños, objetos · +20 € cada uno</span></legend>
+              <legend>{t('Funkos pequeños', 'Small Funkos', 'Petits Funkos')} <span class="opcion__hint">{t(`mascotas, niños, objetos · +${C.euros(20)} cada uno`, `pets, children, objects · +${C.euros(20)} each`, `animaux, enfants, objets · +${C.euros(20)} chacun`)}</span></legend>
               <div class="chips">
                 {[0, 1, 2, 3].map((n) => <label class="chip"><input type="radio" name="pequenos" value={n} checked={n === 0} /><span>{n}</span></label>)}
               </div>
             </fieldset>
-            <p class="funko__resumen" data-funko-resumen>Caja + 1 normal</p>
-            <p class="opcion__hint">Máximo por caja: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. El segundo normal suma 30 €.</p>
+            <p class="funko__resumen" data-funko-resumen></p>
+            <p class="opcion__hint">{t(`Máximo por caja: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. El segundo normal suma ${C.euros(30)}.`, `Maximum per box: 1 regular + 3 small, or 2 regular + 1 small. The second regular adds ${C.euros(30)}.`, `Maximum par boîte : 1 normal + 3 petits, ou 2 normaux + 1 petit. Le deuxième normal ajoute ${C.euros(30)}.`)}</p>
           </div>
         )}
 
         {variantes.length > 0 && (
           <fieldset class="opcion">
-            <legend>Tamaño</legend>
+            <legend>{nombreOpcion.tamano}</legend>
             <div class="chips">
               {variantes.map((v, i) => (
-                <label class="chip"><input type="radio" name="Tamaño" value={v.nombre} data-precio={v.precio ?? ''} checked={i === 0} /><span>{v.nombre} <small>{v.precio != null ? euros(v.precio) : 'a consultar'}</small></span></label>
+                <label class="chip"><input type="radio" name={nombreOpcion.tamano} value={C.voc(v.nombre)} data-precio={v.precio ?? ''} checked={i === 0} /><span>{C.voc(v.nombre)} <small>{v.precio != null ? C.euros(v.precio) : t('a consultar', 'on request', 'sur demande')}</small></span></label>
               ))}
             </div>
           </fieldset>
@@ -92,52 +102,52 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
 
         {elegirColor && (
           <fieldset class="opcion">
-            <legend>Color</legend>
+            <legend>{nombreOpcion.color}</legend>
             <div class="chips">
-              {colores.map((c, i) => <label class="chip"><input type="radio" name="Color" value={c} checked={i === 0} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{c}</span></label>)}
+              {colores.map((c, i) => <label class="chip"><input type="radio" name={nombreOpcion.color} value={C.voc(c)} checked={i === 0} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{C.voc(c)}</span></label>)}
             </div>
           </fieldset>
         )}
 
         {materiales.length > 1 && (
           <fieldset class="opcion">
-            <legend>Material</legend>
+            <legend>{nombreOpcion.material}</legend>
             <div class="chips">
-              {materiales.map((m, i) => <label class="chip"><input type="radio" name="Material" value={m} checked={i === 0} /><span>{m}</span></label>)}
+              {materiales.map((m, i) => <label class="chip"><input type="radio" name={nombreOpcion.material} value={C.voc(m)} checked={i === 0} /><span>{C.voc(m)}</span></label>)}
             </div>
           </fieldset>
         )}
 
         {p.personalizacion.disponible && (
           <div class="field">
-            <label for="pers">Tu personalización <span class="opcion__hint">(opcional)</span></label>
-            <textarea class="textarea" id="pers" name="personalizacion" maxlength="400" rows="3" aria-describedby="pers-hint" placeholder={esFunko ? 'Ej.: mi hermana con gafas y su gato gris; en la caja «Laura #30»' : 'Escribe aquí lo que quieres'}></textarea>
-            <p class="hint" id="pers-hint">{p.personalizacion.notas} Las fotos nos las mandas por WhatsApp al confirmar.</p>
+            <label for="pers">{t('Tu personalización', 'Your personalisation', 'Votre personnalisation')} <span class="opcion__hint">{t('(opcional)', '(optional)', '(facultatif)')}</span></label>
+            <textarea class="textarea" id="pers" name="personalizacion" maxlength="400" rows="3" aria-describedby="pers-hint" placeholder={esFunko ? t('Ej.: mi hermana con gafas y su gato gris; en la caja «Laura #30»', 'E.g.: my sister with glasses and her grey cat; "Laura #30" on the box', 'Ex. : ma sœur avec des lunettes et son chat gris ; « Laura #30 » sur la boîte') : t('Escribe aquí lo que quieres', 'Tell us what you would like', 'Écrivez ici ce que vous souhaitez')}></textarea>
+            <p class="hint" id="pers-hint">{p.personalizacion.notas} {t('Las fotos nos las mandas por WhatsApp al confirmar.', 'Send us the photos on WhatsApp when we confirm.', 'Vous nous enverrez les photos sur WhatsApp à la confirmation.')}</p>
           </div>
         )}
 
         <div class="comprar">
-          <div class="qty" role="group" aria-label="Cantidad">
-            <button type="button" data-q="-1" aria-label="Quitar una unidad"><Icon name="menos" size={16} /></button>
+          <div class="qty" role="group" aria-label={t('Cantidad', 'Quantity', 'Quantité')}>
+            <button type="button" data-q="-1" aria-label={t('Quitar una unidad', 'Remove one', 'Retirer une unité')}><Icon name="menos" size={16} /></button>
             <output data-cantidad aria-live="polite">1</output>
-            <button type="button" data-q="1" aria-label="Añadir una unidad"><Icon name="mas" size={16} /></button>
+            <button type="button" data-q="1" aria-label={t('Añadir una unidad', 'Add one', 'Ajouter une unité')}><Icon name="mas" size={16} /></button>
           </div>
           {consultar ? (
-            <a class="btn comprar__main" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />Pedir presupuesto</a>
+            <a class="btn comprar__main" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />{t('Pedir presupuesto', 'Ask for a quote', 'Demander un devis')}</a>
           ) : (
-            <button class="btn comprar__main" type="submit"><Icon name="cesta" />Añadir a la cesta</button>
+            <button class="btn comprar__main" type="submit"><Icon name="cesta" />{t('Añadir a la cesta', 'Add to basket', 'Ajouter au panier')}</button>
           )}
         </div>
         {consultar ? (
-          <button class="btn btn--secondary btn--block" type="submit">Añadir a la cesta y pedir junto con más cosas</button>
+          <button class="btn btn--secondary btn--block" type="submit">{t('Añadir a la cesta y pedir junto con más cosas', 'Add to basket and order with other items', "Ajouter au panier et commander avec d'autres articles")}</button>
         ) : (
-          <a class="btn btn--secondary btn--block" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />Preguntar por WhatsApp</a>
+          <a class="btn btn--secondary btn--block" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />{t('Preguntar por WhatsApp', 'Ask on WhatsApp', 'Demander sur WhatsApp')}</a>
         )}
-        <p class="nota">Se hace bajo pedido. Sin pago en la web: te confirmamos precio final, envío y plazo antes de empezar.</p>
+        <p class="nota">{t('Se hace bajo pedido. Sin pago en la web: te confirmamos precio final, envío y plazo antes de empezar.', "Made to order. No payment on the website: we confirm the final price, shipping and lead time before we start.", "Fabriqué sur commande. Aucun paiement sur le site : nous vous confirmons le prix final, la livraison et le délai avant de commencer.")}</p>
       </form>
 
       <section class="ficha__desc" aria-labelledby="desc-h">
-        <h2 id="desc-h">Sobre esta pieza</h2>
+        <h2 id="desc-h">{t('Sobre esta pieza', 'About this piece', 'À propos de cette pièce')}</h2>
         <p>{p.descripcionLarga}</p>
         <dl class="specs">
           {specs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
@@ -150,8 +160,8 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
     <section class="section" aria-labelledby="rel-h">
       <div class="wrap">
         <div class="section-head section-head--row">
-          <h2 id="rel-h">Más {cat.nombre.toLowerCase()}</h2>
-          <a class="link" href={urlCategoria(cat)}>Ver toda la categoría <Icon name="flecha" /></a>
+          <h2 id="rel-h">{t(`Más ${cat.nombre.toLowerCase()}`, `More ${cat.nombre.toLowerCase()}`, `Plus de ${cat.nombre.toLowerCase()}`)}</h2>
+          <a class="link" href={C.urlCategoria(cat)}>{t('Ver toda la categoría', 'See the whole category', 'Voir toute la catégorie')} <Icon name="flecha" /></a>
         </div>
         <ul class="grid-productos grid-productos--4">
           {rel.map((r) => <li><ProductCard p={r} mostrarCategoria={false} /></li>)}
@@ -202,6 +212,10 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
 
 <script>
   import { cesta, avisar, euros } from '../../scripts/cesta';
+  import { resumenFunko } from '../../lib/funko';
+  import { idiomaDocumento, traductor } from '../../i18n';
+  const idioma = idiomaDocumento();
+  const t = traductor(idioma);
   const form = document.querySelector<HTMLFormElement>('[data-opciones]')!;
   const d = JSON.parse(form.querySelector('[data-producto]')!.textContent!) as { slug: string; nombre: string; url: string; imagen: string; precio: number | null; funko: boolean };
   const precioTxt = document.querySelector<HTMLElement>('[data-precio-txt]')!;
@@ -218,11 +232,9 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
     let s = Number(fd.get('pequenos') ?? 0);
     if (n === 2 && s > 1) { s = 1; pequenos.forEach((r) => (r.checked = Number(r.value) === 1)); }
     const precio = 55 + (n - 1) * 30 + s * 20;
-    const partes = [`${n} ${n === 1 ? 'normal' : 'normales'}`];
-    if (s) partes.push(`${s} ${s === 1 ? 'pequeño' : 'pequeños'}`);
-    const resumen = `Caja + ${partes.join(' + ')}`;
+    const resumen = resumenFunko(n, s, idioma);
     form.querySelector('[data-funko-resumen]')!.textContent = `${resumen}: ${euros(precio)}`;
-    return { precio, opciones: { Composición: resumen } as Record<string, string> };
+    return { precio, opciones: { [t('Composición', 'Contents', 'Composition')]: resumen } as Record<string, string> };
   }
 
   function actual() {
@@ -241,7 +253,7 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
 
   function pintar() {
     const { precio } = actual();
-    precioTxt.textContent = precio == null ? 'Precio a consultar' : euros(precio * cantidad) + (cantidad > 1 ? ` (${cantidad} × ${euros(precio)})` : '');
+    precioTxt.textContent = precio == null ? precioTxt.dataset.consultar! : euros(precio * cantidad) + (cantidad > 1 ? ` (${cantidad} × ${euros(precio)})` : '');
     out.textContent = String(cantidad);
     minus.disabled = cantidad <= 1;
   }
@@ -255,7 +267,7 @@ const datos = { slug: p.slug, nombre: p.nombre, url: urlProducto(p), imagen: min
     const { precio, opciones } = actual();
     const pers = (form.querySelector<HTMLTextAreaElement>('[name="personalizacion"]')?.value ?? '').trim();
     cesta.añadir({ slug: d.slug, nombre: d.nombre, url: d.url, imagen: d.imagen, opciones, personalizacion: pers || undefined, precio }, cantidad);
-    avisar(`Añadido a la cesta: ${d.nombre}`, 'Ver cesta', () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
+    avisar(t(`Añadido a la cesta: ${d.nombre}`, `Added to basket: ${d.nombre}`, `Ajouté au panier : ${d.nombre}`), t('Ver cesta', 'View basket', 'Voir le panier'), () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
   });
   pintar();
 </script>

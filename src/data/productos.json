@@ -1,67 +1,59 @@
 [
   {
-    "slug": "fernando-alonso-renault-2005",
-    "nombre": "Fernando Alonso · Renault 2005",
+    "slug": "ayrton-senna-mclaren-honda",
+    "nombre": "Ayrton Senna · McLaren Honda",
     "categoria": "legos",
     "etiquetas": [
       "formula-1",
       "pilotos"
     ],
-    "descripcionCorta": "Mono azul Renault con casco Hanjin / Team Spirit.",
-    "descripcionLarga": "Figura de bloques de gran tamaño de Fernando Alonso con el mono azul de Renault de 2005 y el casco Hanjin / Team Spirit. La visera se levanta y el casco lleva la bandera de España.",
+    "descripcionCorta": "Mono rojo y casco amarillo, verde y azul.",
+    "descripcionLarga": "Figura de bloques de Ayrton Senna con el mono rojo de McLaren Honda y su casco amarillo, verde y azul. Visera móvil.",
     "precio": {
       "tipo": "fijo",
-      "importe": 30
+      "importe": 35
     },
     "variantes": [
       {
         "nombre": "30 cm",
-        "precio": 30
+        "precio": 35
       },
       {
         "nombre": "15 cm",
-        "precio": 20
+        "precio": 25
       }
     ],
     "galeria": [
       {
         "archivo": "01.jpg",
-        "alt": "Figura de Fernando Alonso con mono Renault, vista frontal"
+        "alt": "Figura de Ayrton Senna, vista frontal"
       },
       {
         "archivo": "02.jpg",
-        "alt": "Figura de Fernando Alonso Renault con la visera levantada"
+        "alt": "Figura de Senna con la visera levantada"
       },
       {
         "archivo": "03.jpg",
-        "alt": "Figura de Fernando Alonso Renault, vista de tres cuartos"
+        "alt": "Figura de Ayrton Senna de perfil"
       },
       {
         "archivo": "04.jpg",
-        "alt": "Figura de Fernando Alonso Renault, vista frontal elevada"
+        "alt": "Casco de Senna de tres cuartos"
       },
       {
         "archivo": "05.jpg",
-        "alt": "Detalle del mono Telefónica de la figura Renault"
+        "alt": "Detalle del casco amarillo de Senna"
       },
       {
         "archivo": "06.jpg",
-        "alt": "Detalle del casco Hanjin de Fernando Alonso"
-      },
-      {
-        "archivo": "07.jpg",
-        "alt": "Casco con la bandera de España"
-      },
-      {
-        "archivo": "08.jpg",
-        "alt": "Detalle del casco y el hombro de la figura Renault"
+        "alt": "Detalle del mono rojo McLaren"
       }
     ],
     "materiales": [
       "PLA"
     ],
     "colores": [
-      "Azul",
+      "Rojo",
       "Amarillo"
     ],
     "dimensiones": "30 cm de alto (también en 15 cm)",
@@ -71,7 +63,526 @@
       "notas": null
     },
     "destacado": true,
-    "fechaAlta": "2025-03-01"
+    "fechaAlta": "2025-04-15"
+  },
+  {
+    "slug": "balonmano-42",
+    "nombre": "Funko Balonmano #42",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo",
+      "nfc"
+    ],
+    "descripcionCorta": "Caja + 1 normal. Veteranos Balonmano de Sevilla, con soporte trasero con chip NFC.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: veteranos Balonmano de Sevilla, con soporte trasero con chip NFC. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "importe": 55,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Balonmano #42: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Balonmano #42: detalle frontal"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Balonmano #42: vista trasera"
+      },
+      {
+        "archivo": "04.jpg",
+        "alt": "Funko Balonmano #42: soporte con nfc"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-03-20",
+    "composicion": "Caja + 1 normal",
+    "ejemplo": true
+  },
+  {
+    "slug": "boda-27",
+    "nombre": "Funko Boda #27",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 85
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Boda #27: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Boda #27: vista frontal"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Boda #27: detalle"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-06-21",
+    "composicion": "Caja + 2 normales",
+    "ejemplo": true
+  },
+  {
+    "slug": "chirigota-11",
+    "nombre": "Funko Chirigota #11",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "importe": 75,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Chirigota #11: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Chirigota #11: detalle"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Chirigota #11: detalle de la caja"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-04-05",
+    "composicion": "Caja + 1 normal + 1 pequeño (batería)",
+    "ejemplo": true
+  },
+  {
+    "slug": "colgador-llaves-ferrari-f40",
+    "nombre": "Colgador de llaves Ferrari F40",
+    "categoria": "llaveros",
+    "etiquetas": [
+      "motor",
+      "hogar"
+    ],
+    "descripcionCorta": "La trasera de un Ferrari F40 con ganchos para dejar las llaves en la entrada.",
+    "descripcionLarga": "Colgador de pared con la trasera de un Ferrari F40: alerón, pilotos redondos, matrícula «F40» y ganchos debajo para colgar las llaves. Queda bien en la entrada, en el garaje o en el cuarto de alguien que viva por los coches.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Colgador de llaves con la trasera de un Ferrari F40 rojo"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Rojo"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-05-25"
+  },
+  {
+    "slug": "copa-champions-league",
+    "nombre": "Copa Champions League",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "futbol"
+    ],
+    "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
+    "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 20
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Réplica de la Copa Champions League, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Réplica de la Copa Champions League, detalle del escudo"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Réplica de la Copa Champions League, vista desde arriba"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Plata"
+    ],
+    "dimensiones": "25 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": true,
+    "fechaAlta": "2025-06-05"
+  },
+  {
+    "slug": "copa-conference-league",
+    "nombre": "Copa Conference League",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "futbol"
+    ],
+    "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
+    "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
+    "precio": {
+      "importe": 20,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "fsS1PgO2jgAv0j9c4SvO.jpg",
+        "alt": "Copa Conference League, vista frontal con el logo de la UEFA"
+      },
+      {
+        "archivo": "MPKYAdXcdemT8e0L9FNx.jpg",
+        "alt": "Copa Conference League, vista trasera con la inscripción en la base"
+      },
+      {
+        "archivo": "hEPTajIr5RZpxscf8yzK.jpg",
+        "alt": "Copa Conference League con luz tenue, vista frontal"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Plata"
+    ],
+    "dimensiones": "25 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-13"
+  },
+  {
+    "slug": "copa-eurocopa",
+    "nombre": "Copa Eurocopa",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "futbol"
+    ],
+    "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
+    "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
+    "precio": {
+      "importe": 20,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Réplica de la Copa Eurocopa, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Réplica de la Copa Eurocopa, vista general"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Plata"
+    ],
+    "dimensiones": "25 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-07-15"
+  },
+  {
+    "slug": "copa-europa-league",
+    "nombre": "Copa Europa League",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "futbol"
+    ],
+    "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
+    "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 16
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Réplica de la Copa Europa League, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Réplica de la Copa Europa League, vista lateral"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Plata",
+      "Dorado"
+    ],
+    "dimensiones": "20 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-05-30"
+  },
+  {
+    "slug": "copa-nations-league",
+    "nombre": "Copa Nations League",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "futbol"
+    ],
+    "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
+    "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
+    "precio": {
+      "importe": 20,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Réplica de la Copa Nations League, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Réplica de la Copa Nations League, vista trasera"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Plata"
+    ],
+    "dimensiones": "25 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-06-25"
+  },
+  {
+    "slug": "edicion-especial-14",
+    "nombre": "Funko Edición especial #14",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con su gatito.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: funko con su gatito. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 75
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Edición especial #14: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Edición especial #14: vista de tres cuartos"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Edición especial #14: detalle"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-07-07",
+    "composicion": "Caja + 1 normal + 1 pequeño",
+    "ejemplo": true
+  },
+  {
+    "slug": "estanteria-stranger-things",
+    "nombre": "Estantería Stranger Things",
+    "categoria": "otros",
+    "etiquetas": [
+      "series",
+      "hogar"
+    ],
+    "descripcionCorta": "Estantería de dos baldas con el tablero de letras de la serie y figuras de sus personajes.",
+    "descripcionLarga": "Estantería de dos baldas inspirada en Stranger Things: arriba, el abecedario de la pared de Joyce sobre fondo plateado y el logo de la serie; abajo, el fondo rojo del Mundo del Revés con el Azotamentes. Lleva figuras de los personajes en las baldas. Para el cuarto de un fan de la serie.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Estantería Stranger Things con sus figuras"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Estantería Stranger Things vacía"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Negro",
+      "Multicolor"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-10-15"
+  },
+  {
+    "slug": "family",
+    "nombre": "Funko Family",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 2 normales. Limited Edition.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 85
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Family: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Family: detalle"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Family: detalle de la caja"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-09-09",
+    "composicion": "Caja + 2 normales",
+    "ejemplo": true
   },
   {
     "slug": "fernando-alonso-aston-martin",
@@ -84,8 +595,8 @@
     "descripcionCorta": "Mono verde Aston Martin Aramco con casco Cognizant.",
     "descripcionLarga": "Figura de bloques de Fernando Alonso con el mono verde de Aston Martin Aramco y el casco Cognizant. La visera sube y baja. Solo se hace en 30 cm.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 40
+      "importe": 40,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -206,125 +717,68 @@
     "fechaAlta": "2025-09-20"
   },
   {
-    "slug": "max-verstappen-red-bull",
-    "nombre": "Max Verstappen · Red Bull Racing",
+    "slug": "fernando-alonso-renault-2005",
+    "nombre": "Fernando Alonso · Renault 2005",
     "categoria": "legos",
     "etiquetas": [
       "formula-1",
       "pilotos"
     ],
-    "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
-    "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
+    "descripcionCorta": "Mono azul Renault con casco Hanjin / Team Spirit.",
+    "descripcionLarga": "Figura de bloques de gran tamaño de Fernando Alonso con el mono azul de Renault de 2005 y el casco Hanjin / Team Spirit. La visera se levanta y el casco lleva la bandera de España.",
     "precio": {
       "tipo": "fijo",
-      "importe": 35
+      "importe": 30
     },
     "variantes": [
       {
         "nombre": "30 cm",
-        "precio": 35
+        "precio": 30
       },
       {
         "nombre": "15 cm",
-        "precio": null
+        "precio": 20
       }
     ],
     "galeria": [
       {
         "archivo": "01.jpg",
-        "alt": "Figura de Max Verstappen, vista frontal"
+        "alt": "Figura de Fernando Alonso con mono Renault, vista frontal"
       },
       {
         "archivo": "02.jpg",
-        "alt": "Figura de Verstappen con la visera levantada"
+        "alt": "Figura de Fernando Alonso Renault con la visera levantada"
       },
       {
         "archivo": "03.jpg",
-        "alt": "Figura de Max Verstappen de perfil"
+        "alt": "Figura de Fernando Alonso Renault, vista de tres cuartos"
       },
       {
         "archivo": "04.jpg",
-        "alt": "Figura de Verstappen vista por detrás"
+        "alt": "Figura de Fernando Alonso Renault, vista frontal elevada"
       },
       {
         "archivo": "05.jpg",
-        "alt": "Detalle del casco de Verstappen"
+        "alt": "Detalle del mono Telefónica de la figura Renault"
       },
       {
         "archivo": "06.jpg",
-        "alt": "Detalle del casco y el mono Red Bull"
+        "alt": "Detalle del casco Hanjin de Fernando Alonso"
+      },
+      {
+        "archivo": "07.jpg",
+        "alt": "Casco con la bandera de España"
+      },
+      {
+        "archivo": "08.jpg",
+        "alt": "Detalle del casco y el hombro de la figura Renault"
       }
     ],
     "materiales": [
       "PLA"
     ],
     "colores": [
-      "Azul"
-    ],
-    "dimensiones": "30 cm de alto (también en 15 cm)",
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-05-02"
-  },
-  {
-    "slug": "ayrton-senna-mclaren-honda",
-    "nombre": "Ayrton Senna · McLaren Honda",
-    "categoria": "legos",
-    "etiquetas": [
-      "formula-1",
-      "pilotos"
-    ],
-    "descripcionCorta": "Mono rojo y casco amarillo, verde y azul.",
-    "descripcionLarga": "Figura de bloques de Ayrton Senna con el mono rojo de McLaren Honda y su casco amarillo, verde y azul. Visera móvil.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 35
-    },
-    "variantes": [
-      {
-        "nombre": "30 cm",
-        "precio": 35
-      },
-      {
-        "nombre": "15 cm",
-        "precio": 25
-      }
-    ],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Figura de Ayrton Senna, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Figura de Senna con la visera levantada"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Figura de Ayrton Senna de perfil"
-      },
-      {
-        "archivo": "04.jpg",
-        "alt": "Casco de Senna de tres cuartos"
-      },
-      {
-        "archivo": "05.jpg",
-        "alt": "Detalle del casco amarillo de Senna"
-      },
-      {
-        "archivo": "06.jpg",
-        "alt": "Detalle del mono rojo McLaren"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Rojo",
+      "Azul",
       "Amarillo"
     ],
     "dimensiones": "30 cm de alto (también en 15 cm)",
@@ -334,7 +788,493 @@
       "notas": null
     },
     "destacado": true,
-    "fechaAlta": "2025-04-15"
+    "fechaAlta": "2025-03-01"
+  },
+  {
+    "slug": "flamenco",
+    "nombre": "Funko Flamenco",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "importe": 75,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Flamenco: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Flamenco: vista frontal"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Flamenco: detalle"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-02-14",
+    "composicion": "Caja + 1 normal + 1 pequeño",
+    "ejemplo": true
+  },
+  {
+    "slug": "funko-aviacion-82",
+    "nombre": "Funko Aviación #82",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo",
+      "aviacion"
+    ],
+    "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "importe": 55,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "qDnbuOIYXf7alnhayw0t.jpg",
+        "alt": "Funko Aviación #82"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-11",
+    "composicion": "Caja + 1 normal",
+    "ejemplo": true
+  },
+  {
+    "slug": "funko-personalizado",
+    "nombre": "Funko personalizado con caja a medida",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
+    "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
+    "precio": {
+      "importe": 55,
+      "tipo": "desde"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "04.jpg",
+        "alt": "Funko Family con dos figuras en su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko de boda con dos figuras en su caja"
+      },
+      {
+        "archivo": "01.jpg",
+        "alt": "Caja de Funko personalizado con una figura y tres perritos"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko personalizado con su caja a medida"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": "Mínimo 2 semanas (pedido personalizado)",
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": true,
+    "fechaAlta": "2025-10-01",
+    "configurador": "funko",
+    "enlace": "/funkos"
+  },
+  {
+    "slug": "funko-venom",
+    "nombre": "Funko Venom",
+    "categoria": "funkos",
+    "etiquetas": [
+      "superheroes"
+    ],
+    "descripcionCorta": "Venom en estilo Funko, con su sonrisa de dientes y los tentáculos en la espalda.",
+    "descripcionLarga": "Figura estilo Funko de Venom en negro, con los ojos y la boca llena de dientes en blanco. Por detrás le salen los tentáculos del simbionte, todos impresos en la misma pieza. Se entrega sin caja.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Venom, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Venom, vista trasera"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Negro",
+      "Blanco"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-03-03",
+    "ejemplo": true
+  },
+  {
+    "slug": "grinch-1",
+    "nombre": "Funko Grinch #1",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo",
+      "nfc"
+    ],
+    "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 55
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Grinch #1: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Grinch #1: vista de tres cuartos"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Funko Grinch #1: vista trasera con nfc"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2024-12-15",
+    "composicion": "Caja + 1 normal",
+    "ejemplo": true
+  },
+  {
+    "slug": "horse-33",
+    "nombre": "Funko Horse #33",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "importe": 75,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Horse #33: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Horse #33: detalle"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-01-10",
+    "composicion": "Caja + 1 normal + 1 pequeño",
+    "ejemplo": true
+  },
+  {
+    "slug": "lagarto-verde",
+    "nombre": "Lagarto verde",
+    "categoria": "otros",
+    "etiquetas": [
+      "figuras",
+      "decoracion"
+    ],
+    "descripcionCorta": "Un lagarto verde de dibujos con la lengua fuera, saludando.",
+    "descripcionLarga": "Figura de un lagarto verde de estilo dibujo animado: ojos grandes, la boca abierta con la lengua roja fuera y un brazo en alto como si saludara. Una pieza simpática para la estantería, el escritorio o el cuarto de los niños.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Lagarto verde, vista superior"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Lagarto verde, vista lateral"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Verde"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-03-28"
+  },
+  {
+    "slug": "llavero-lata-baked-beans",
+    "nombre": "Llavero lata Deez Baked Beans",
+    "categoria": "llaveros",
+    "etiquetas": [
+      "humor",
+      "regalo"
+    ],
+    "descripcionCorta": "Una lata de alubias «Deez Baked Beans» en miniatura para colgar de las llaves.",
+    "descripcionLarga": "Llavero plano con forma de lata de alubias «Deez Baked Beans», con la etiqueta impresa en varios colores y anilla metálica con cadena. Un regalo de broma para quien se ríe con el meme, o para llevarlo en la mochila.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Llavero con forma de lata Deez Baked Beans"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Multicolor"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-04-01"
+  },
+  {
+    "slug": "llavero-mascota",
+    "nombre": "Llavero de tu mascota",
+    "categoria": "llaveros",
+    "etiquetas": [
+      "mascotas",
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Cara y reverso con detalle.",
+    "descripcionLarga": "Llavero con la cara de tu mascota en relieve y detalle en las dos caras. Ligero y resistente.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Llavero de un pug, anverso"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Llavero de un pug, reverso"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Llavero de un chihuahua, anverso"
+      },
+      {
+        "archivo": "04.jpg",
+        "alt": "Llavero de un chihuahua, reverso"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Multicolor"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Una foto de frente de tu mascota."
+    },
+    "destacado": true,
+    "fechaAlta": "2025-08-20"
+  },
+  {
+    "slug": "love-5",
+    "nombre": "Funko Love #5",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
+    "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 75
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Funko Love #5: con su caja"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Funko Love #5: detalle"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2025-05-18",
+    "composicion": "Caja + 1 normal + 1 pequeño",
+    "ejemplo": true
+  },
+  {
+    "slug": "m-antoine-intermarche",
+    "nombre": "M. Antoine · Intermarché",
+    "categoria": "legos",
+    "etiquetas": [
+      "pilotos"
+    ],
+    "descripcionCorta": "Mono blanco con patrocinadores y casco Arai.",
+    "descripcionLarga": "Figura de bloques con mono blanco de Intermarché lleno de patrocinadores y casco Arai.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Figura M. Antoine Intermarché, vista frontal"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Figura Intermarché, vista de tres cuartos"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Figura Intermarché de perfil"
+      },
+      {
+        "archivo": "04.jpg",
+        "alt": "Detalle del mono blanco con patrocinadores"
+      },
+      {
+        "archivo": "05.jpg",
+        "alt": "Detalle del casco Arai"
+      },
+      {
+        "archivo": "06.jpg",
+        "alt": "Casco Arai de lado"
+      },
+      {
+        "archivo": "07.jpg",
+        "alt": "Casco Arai visto por detrás"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Blanco"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-02-01"
   },
   {
     "slug": "marc-marquez-ducati",
@@ -404,436 +1344,69 @@
     "fechaAlta": "2026-11-09"
   },
   {
-    "slug": "m-antoine-intermarche",
-    "nombre": "M. Antoine · Intermarché",
+    "slug": "max-verstappen-red-bull",
+    "nombre": "Max Verstappen · Red Bull Racing",
     "categoria": "legos",
     "etiquetas": [
+      "formula-1",
       "pilotos"
     ],
-    "descripcionCorta": "Mono blanco con patrocinadores y casco Arai.",
-    "descripcionLarga": "Figura de bloques con mono blanco de Intermarché lleno de patrocinadores y casco Arai.",
+    "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
+    "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "tipo": "consultar"
+      "tipo": "fijo",
+      "importe": 35
     },
-    "variantes": [],
+    "variantes": [
+      {
+        "nombre": "30 cm",
+        "precio": 35
+      },
+      {
+        "nombre": "15 cm",
+        "precio": null
+      }
+    ],
     "galeria": [
       {
         "archivo": "01.jpg",
-        "alt": "Figura M. Antoine Intermarché, vista frontal"
+        "alt": "Figura de Max Verstappen, vista frontal"
       },
       {
         "archivo": "02.jpg",
-        "alt": "Figura Intermarché, vista de tres cuartos"
+        "alt": "Figura de Verstappen con la visera levantada"
       },
       {
         "archivo": "03.jpg",
-        "alt": "Figura Intermarché de perfil"
+        "alt": "Figura de Max Verstappen de perfil"
       },
       {
         "archivo": "04.jpg",
-        "alt": "Detalle del mono blanco con patrocinadores"
+        "alt": "Figura de Verstappen vista por detrás"
       },
       {
         "archivo": "05.jpg",
-        "alt": "Detalle del casco Arai"
+        "alt": "Detalle del casco de Verstappen"
       },
       {
         "archivo": "06.jpg",
-        "alt": "Casco Arai de lado"
-      },
-      {
-        "archivo": "07.jpg",
-        "alt": "Casco Arai visto por detrás"
+        "alt": "Detalle del casco y el mono Red Bull"
       }
     ],
     "materiales": [
       "PLA"
     ],
     "colores": [
-      "Blanco"
+      "Azul"
     ],
-    "dimensiones": null,
+    "dimensiones": "30 cm de alto (también en 15 cm)",
     "tiempoFabricacion": null,
     "personalizacion": {
       "disponible": false,
       "notas": null
     },
     "destacado": false,
-    "fechaAlta": "2025-02-01"
-  },
-  {
-    "slug": "funko-personalizado",
-    "nombre": "Funko personalizado con caja a medida",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
-    "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
-    "precio": {
-      "tipo": "desde",
-      "importe": 55
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "04.jpg",
-        "alt": "Funko Family con dos figuras en su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko de boda con dos figuras en su caja"
-      },
-      {
-        "archivo": "01.jpg",
-        "alt": "Caja de Funko personalizado con una figura y tres perritos"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko personalizado con su caja a medida"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": "Mínimo 2 semanas (pedido personalizado)",
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": true,
-    "fechaAlta": "2025-10-01",
-    "configurador": "funko",
-    "enlace": "/funkos"
-  },
-  {
-    "slug": "horse-33",
-    "nombre": "Funko Horse #33",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 75
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Horse #33: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Horse #33: detalle"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-01-10",
-    "composicion": "Caja + 1 normal + 1 pequeño",
-    "ejemplo": true
-  },
-  {
-    "slug": "flamenco",
-    "nombre": "Funko Flamenco",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 75
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Flamenco: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Flamenco: vista frontal"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Flamenco: detalle"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-02-14",
-    "composicion": "Caja + 1 normal + 1 pequeño",
-    "ejemplo": true
-  },
-  {
-    "slug": "balonmano-42",
-    "nombre": "Funko Balonmano #42",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo",
-      "nfc"
-    ],
-    "descripcionCorta": "Caja + 1 normal. Veteranos Balonmano de Sevilla, con soporte trasero con chip NFC.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: veteranos Balonmano de Sevilla, con soporte trasero con chip NFC. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 55
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Balonmano #42: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Balonmano #42: detalle frontal"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Balonmano #42: vista trasera"
-      },
-      {
-        "archivo": "04.jpg",
-        "alt": "Funko Balonmano #42: soporte con nfc"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-03-20",
-    "composicion": "Caja + 1 normal",
-    "ejemplo": true
-  },
-  {
-    "slug": "chirigota-11",
-    "nombre": "Funko Chirigota #11",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 75
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Chirigota #11: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Chirigota #11: detalle"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Chirigota #11: detalle de la caja"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-04-05",
-    "composicion": "Caja + 1 normal + 1 pequeño (batería)",
-    "ejemplo": true
-  },
-  {
-    "slug": "grinch-1",
-    "nombre": "Funko Grinch #1",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo",
-      "nfc"
-    ],
-    "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 55
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Grinch #1: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Grinch #1: vista de tres cuartos"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Grinch #1: vista trasera con nfc"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2024-12-15",
-    "composicion": "Caja + 1 normal",
-    "ejemplo": true
-  },
-  {
-    "slug": "boda-27",
-    "nombre": "Funko Boda #27",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 85
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Boda #27: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Boda #27: vista frontal"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Boda #27: detalle"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-06-21",
-    "composicion": "Caja + 2 normales",
-    "ejemplo": true
-  },
-  {
-    "slug": "edicion-especial-14",
-    "nombre": "Funko Edición especial #14",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con su gatito.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: funko con su gatito. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 75
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Edición especial #14: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Edición especial #14: vista de tres cuartos"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Funko Edición especial #14: detalle"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-07-07",
-    "composicion": "Caja + 1 normal + 1 pequeño",
-    "ejemplo": true
+    "fechaAlta": "2025-05-02"
   },
   {
     "slug": "perruno-17",
@@ -886,122 +1459,40 @@
     "ejemplo": true
   },
   {
-    "slug": "love-5",
-    "nombre": "Funko Love #5",
-    "categoria": "funkos",
+    "slug": "piston-cup",
+    "nombre": "Trofeo Piston Cup",
+    "categoria": "copas",
     "etiquetas": [
-      "personalizado",
-      "regalo"
+      "trofeos",
+      "peliculas"
     ],
-    "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
+    "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
       {
         "archivo": "01.jpg",
-        "alt": "Funko Love #5: con su caja"
+        "alt": "Trofeo Piston Cup dorado, vista frontal"
       },
       {
         "archivo": "02.jpg",
-        "alt": "Funko Love #5: detalle"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-05-18",
-    "composicion": "Caja + 1 normal + 1 pequeño",
-    "ejemplo": true
-  },
-  {
-    "slug": "family",
-    "nombre": "Funko Family",
-    "categoria": "funkos",
-    "etiquetas": [
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Caja + 2 normales. Limited Edition.",
-    "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 85
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Family: con su caja"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Family: detalle"
+        "alt": "Trofeo Piston Cup, vista trasera"
       },
       {
         "archivo": "03.jpg",
-        "alt": "Funko Family: detalle de la caja"
+        "alt": "Trofeo Piston Cup junto a una regla"
       }
     ],
     "materiales": [
       "PLA"
     ],
     "colores": [
-      "A elegir"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
-    },
-    "destacado": false,
-    "fechaAlta": "2025-09-09",
-    "composicion": "Caja + 2 normales",
-    "ejemplo": true
-  },
-  {
-    "slug": "funko-venom",
-    "nombre": "Funko Venom",
-    "categoria": "funkos",
-    "etiquetas": [
-      "superheroes"
-    ],
-    "descripcionCorta": "Venom en estilo Funko, con su sonrisa de dientes y los tentáculos en la espalda.",
-    "descripcionLarga": "Figura estilo Funko de Venom en negro, con los ojos y la boca llena de dientes en blanco. Por detrás le salen los tentáculos del simbionte, todos impresos en la misma pieza. Se entrega sin caja.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Funko Venom, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Funko Venom, vista trasera"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Negro",
-      "Blanco"
+      "Dorado",
+      "Negro"
     ],
     "dimensiones": null,
     "tiempoFabricacion": null,
@@ -1010,8 +1501,52 @@
       "notas": null
     },
     "destacado": false,
-    "fechaAlta": "2025-03-03",
-    "ejemplo": true
+    "fechaAlta": "2025-02-20"
+  },
+  {
+    "slug": "posavasos-formula-1",
+    "nombre": "Posavasos de Fórmula 1",
+    "categoria": "posavasos",
+    "etiquetas": [
+      "formula-1",
+      "pilotos"
+    ],
+    "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
+    "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
+    "precio": {
+      "unidad": "ud.",
+      "importe": 2,
+      "tipo": "fijo"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "01.jpg",
+        "alt": "Posavasos de El Nano"
+      },
+      {
+        "archivo": "02.jpg",
+        "alt": "Posavasos de Senna con el McLaren Marlboro"
+      },
+      {
+        "archivo": "03.jpg",
+        "alt": "Posavasos de M. Antoine"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Multicolor"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2025-06-01"
   },
   {
     "slug": "posavasos-mascotas",
@@ -1079,8 +1614,8 @@
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "importe": 2,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "importe": 2
     },
     "variantes": [],
     "galeria": [
@@ -1117,51 +1652,6 @@
     "fechaAlta": "2025-07-12"
   },
   {
-    "slug": "posavasos-formula-1",
-    "nombre": "Posavasos de Fórmula 1",
-    "categoria": "posavasos",
-    "etiquetas": [
-      "formula-1",
-      "pilotos"
-    ],
-    "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
-    "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 2,
-      "unidad": "ud."
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Posavasos de El Nano"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Posavasos de Senna con el McLaren Marlboro"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Posavasos de M. Antoine"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Multicolor"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-06-01"
-  },
-  {
     "slug": "posavasos-regalo",
     "nombre": "Posavasos de regalo personalizados",
     "categoria": "posavasos",
@@ -1173,8 +1663,8 @@
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "importe": 5,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -1203,374 +1693,6 @@
     "fechaAlta": "2025-09-01"
   },
   {
-    "slug": "llavero-mascota",
-    "nombre": "Llavero de tu mascota",
-    "categoria": "llaveros",
-    "etiquetas": [
-      "mascotas",
-      "personalizado",
-      "regalo"
-    ],
-    "descripcionCorta": "Cara y reverso con detalle.",
-    "descripcionLarga": "Llavero con la cara de tu mascota en relieve y detalle en las dos caras. Ligero y resistente.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Llavero de un pug, anverso"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Llavero de un pug, reverso"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Llavero de un chihuahua, anverso"
-      },
-      {
-        "archivo": "04.jpg",
-        "alt": "Llavero de un chihuahua, reverso"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Multicolor"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": true,
-      "notas": "Una foto de frente de tu mascota."
-    },
-    "destacado": true,
-    "fechaAlta": "2025-08-20"
-  },
-  {
-    "slug": "llavero-lata-baked-beans",
-    "nombre": "Llavero lata Deez Baked Beans",
-    "categoria": "llaveros",
-    "etiquetas": [
-      "humor",
-      "regalo"
-    ],
-    "descripcionCorta": "Una lata de alubias «Deez Baked Beans» en miniatura para colgar de las llaves.",
-    "descripcionLarga": "Llavero plano con forma de lata de alubias «Deez Baked Beans», con la etiqueta impresa en varios colores y anilla metálica con cadena. Un regalo de broma para quien se ríe con el meme, o para llevarlo en la mochila.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Llavero con forma de lata Deez Baked Beans"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Multicolor"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-04-01"
-  },
-  {
-    "slug": "colgador-llaves-ferrari-f40",
-    "nombre": "Colgador de llaves Ferrari F40",
-    "categoria": "llaveros",
-    "etiquetas": [
-      "motor",
-      "hogar"
-    ],
-    "descripcionCorta": "La trasera de un Ferrari F40 con ganchos para dejar las llaves en la entrada.",
-    "descripcionLarga": "Colgador de pared con la trasera de un Ferrari F40: alerón, pilotos redondos, matrícula «F40» y ganchos debajo para colgar las llaves. Queda bien en la entrada, en el garaje o en el cuarto de alguien que viva por los coches.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Colgador de llaves con la trasera de un Ferrari F40 rojo"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Rojo"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-05-25"
-  },
-  {
-    "slug": "piston-cup",
-    "nombre": "Trofeo Piston Cup",
-    "categoria": "copas",
-    "etiquetas": [
-      "trofeos",
-      "peliculas"
-    ],
-    "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
-    "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 10
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Trofeo Piston Cup dorado, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Trofeo Piston Cup, vista trasera"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Trofeo Piston Cup junto a una regla"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Dorado",
-      "Negro"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-02-20"
-  },
-  {
-    "slug": "copa-europa-league",
-    "nombre": "Copa Europa League",
-    "categoria": "copas",
-    "etiquetas": [
-      "trofeos",
-      "futbol"
-    ],
-    "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
-    "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 15
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Réplica de la Copa Europa League, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Réplica de la Copa Europa League, vista lateral"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Plata",
-      "Dorado"
-    ],
-    "dimensiones": "20 cm de alto",
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-05-30"
-  },
-  {
-    "slug": "copa-eurocopa",
-    "nombre": "Copa Eurocopa",
-    "categoria": "copas",
-    "etiquetas": [
-      "trofeos",
-      "futbol"
-    ],
-    "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
-    "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 20
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Réplica de la Copa Eurocopa, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Réplica de la Copa Eurocopa, vista general"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Plata"
-    ],
-    "dimensiones": "25 cm de alto",
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-07-15"
-  },
-  {
-    "slug": "copa-champions-league",
-    "nombre": "Copa Champions League",
-    "categoria": "copas",
-    "etiquetas": [
-      "trofeos",
-      "futbol"
-    ],
-    "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
-    "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 20
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Réplica de la Copa Champions League, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Réplica de la Copa Champions League, detalle del escudo"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Réplica de la Copa Champions League, vista desde arriba"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Plata"
-    ],
-    "dimensiones": "25 cm de alto",
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": true,
-    "fechaAlta": "2025-06-05"
-  },
-  {
-    "slug": "copa-nations-league",
-    "nombre": "Copa Nations League",
-    "categoria": "copas",
-    "etiquetas": [
-      "trofeos",
-      "futbol"
-    ],
-    "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
-    "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
-    "precio": {
-      "tipo": "fijo",
-      "importe": 20
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Réplica de la Copa Nations League, vista frontal"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Réplica de la Copa Nations League, vista trasera"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Plata"
-    ],
-    "dimensiones": "25 cm de alto",
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-06-25"
-  },
-  {
-    "slug": "estanteria-stranger-things",
-    "nombre": "Estantería Stranger Things",
-    "categoria": "otros",
-    "etiquetas": [
-      "series",
-      "hogar"
-    ],
-    "descripcionCorta": "Estantería de dos baldas con el tablero de letras de la serie y figuras de sus personajes.",
-    "descripcionLarga": "Estantería de dos baldas inspirada en Stranger Things: arriba, el abecedario de la pared de Joyce sobre fondo plateado y el logo de la serie; abajo, el fondo rojo del Mundo del Revés con el Azotamentes. Lleva figuras de los personajes en las baldas. Para el cuarto de un fan de la serie.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Estantería Stranger Things con sus figuras"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Estantería Stranger Things vacía"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Negro",
-      "Multicolor"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-10-15"
-  },
-  {
     "slug": "rayquaza-escultura",
     "nombre": "Rayquaza · escultura",
     "categoria": "otros",
@@ -1582,8 +1704,8 @@
     "descripcionCorta": "Figura articulada de gran tamaño.",
     "descripcionLarga": "Escultura articulada de Rayquaza de gran tamaño: 40 cm de alto y 40 cm de diámetro.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 90
+      "importe": 90,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1619,45 +1741,6 @@
     },
     "destacado": true,
     "fechaAlta": "2025-10-20"
-  },
-  {
-    "slug": "lagarto-verde",
-    "nombre": "Lagarto verde",
-    "categoria": "otros",
-    "etiquetas": [
-      "figuras",
-      "decoracion"
-    ],
-    "descripcionCorta": "Un lagarto verde de dibujos con la lengua fuera, saludando.",
-    "descripcionLarga": "Figura de un lagarto verde de estilo dibujo animado: ojos grandes, la boca abierta con la lengua roja fuera y un brazo en alto como si saludara. Una pieza simpática para la estantería, el escritorio o el cuarto de los niños.",
-    "precio": {
-      "tipo": "consultar"
-    },
-    "variantes": [],
-    "galeria": [
-      {
-        "archivo": "01.jpg",
-        "alt": "Lagarto verde, vista superior"
-      },
-      {
-        "archivo": "02.jpg",
-        "alt": "Lagarto verde, vista lateral"
-      }
-    ],
-    "materiales": [
-      "PLA"
-    ],
-    "colores": [
-      "Verde"
-    ],
-    "dimensiones": null,
-    "tiempoFabricacion": null,
-    "personalizacion": {
-      "disponible": false,
-      "notas": null
-    },
-    "destacado": false,
-    "fechaAlta": "2025-03-28"
   },
   {
     "slug": "tarjetas-nfc-qr",

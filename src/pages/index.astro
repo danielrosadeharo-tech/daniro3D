@@ -5,24 +5,28 @@ import ProductCard from '../components/ProductCard.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import CarruselFunkos from '../components/CarruselFunkos.astro';
-import { productos, categorias, producto, foto, fotoAmbiente, desdeCategoria, deCategoria, euros, urlCategoria, enlaceWhatsApp, sitio, ejemplos } from '../lib/catalogo';
+import { foto, fotoAmbiente, enlaceWhatsApp, sitio, catalogoEn } from '../lib/catalogo';
+import { idiomaDe } from '../i18n';
 
+const C = catalogoEn(idiomaDe(Astro.url));
+const t = C.t;
 // Las piezas del hero no se repiten en "Lo que más se pide"
 const enHero = ['perruno-17', 'rayquaza-escultura', 'estanteria-stranger-things'];
-const destacados = productos
+const destacados = C.productos
   .filter((p) => !enHero.includes(p.slug))
   .toSorted((a, b) => Number(b.destacado) - Number(a.destacado) || b.fechaAlta.localeCompare(a.fechaAlta))
   .slice(0, 8);
 const pilotos = fotoAmbiente('coleccion-pilotos.jpg');
-const perruno = foto(producto('perruno-17')!, 0);
-const rayquaza = foto(producto('rayquaza-escultura')!, 0);
-const funkoDetalle = foto(producto('perruno-17')!, 3);
-const posavasos = foto(producto('posavasos-mascotas')!, 0);
+const perruno = foto(C.producto('perruno-17')!, 0);
+const rayquaza = foto(C.producto('rayquaza-escultura')!, 0);
+const funkoDetalle = foto(C.producto('perruno-17')!, 3);
+const posavasos = foto(C.producto('posavasos-mascotas')!, 0);
 // Carrusel de la banda de Funkos: los encargos hechos, empezando por la boda (la foto que había antes)
-const funkosHechos = ejemplos
+const funkosHechos = C.ejemplos
   .toSorted((a, b) => Number(b.slug === 'boda-27') - Number(a.slug === 'boda-27'))
-  .map((e) => ({ nombre: e.nombre.replace('Funko ', ''), src: foto(e).src, alt: foto(e).alt, href: '/funkos#encargos' }));
-const estanteria = foto(producto('estanteria-stranger-things')!, 0);
+  .map((e) => ({ nombre: e.nombre.replace('Funko ', ''), src: foto(e).src, alt: foto(e).alt, href: C.ruta('/funkos#encargos') }));
+const estanteria = foto(C.producto('estanteria-stranger-things')!, 0);
+const e55 = C.euros(55), e20 = C.euros(20), e30 = C.euros(30);
 
 const orgLd = {
   '@context': 'https://schema.org',
@@ -30,12 +34,16 @@ const orgLd = {
   name: sitio.marca,
   url: sitio.dominio,
   sameAs: [sitio.wallapop, sitio.vinted],
-  contactPoint: { '@type': 'ContactPoint', telephone: `+${sitio.whatsapp}`, contactType: 'customer service', availableLanguage: 'es' },
+  contactPoint: { '@type': 'ContactPoint', telephone: `+${sitio.whatsapp}`, contactType: 'customer service', availableLanguage: ['es', 'en', 'fr'] },
 };
 ---
 <Base
-  title={`${sitio.marca} · Funkos personalizados, figuras y regalos impresos en 3D`}
-  description="Funkos personalizados con su caja desde 55 €, figuras de pilotos de 30 cm, posavasos de tu mascota, llaveros y trofeos impresos en 3D bajo pedido. Pide por WhatsApp."
+  title={t(`${sitio.marca} · Funkos personalizados, figuras y regalos impresos en 3D`, `${sitio.marca} · Custom Funkos, figures and 3D-printed gifts`, `${sitio.marca} · Funkos personnalisés, figurines et cadeaux imprimés en 3D`)}
+  description={t(
+    'Funkos personalizados con su caja desde 55 €, figuras de pilotos de 30 cm, posavasos de tu mascota, llaveros y trofeos impresos en 3D bajo pedido. Pide por WhatsApp.',
+    'Custom Funkos with their box from €55, 30 cm racing driver figures, pet coasters, keyrings and trophies, 3D-printed to order. Order on WhatsApp.',
+    'Funkos personnalisés avec leur boîte dès 55 €, figurines de pilotes de 30 cm, sous-verres de votre animal, porte-clés et trophées imprimés en 3D sur commande. Commandez sur WhatsApp.',
+  )}
   image={pilotos}
   jsonLd={orgLd}
 >
@@ -43,15 +51,19 @@ const orgLd = {
   <section class="hero" aria-labelledby="hero-h">
     <div class="wrap hero__grid">
       <div class="hero__text" data-enter>
-        <h1 id="hero-h">Funkos, figuras y regalos impresos en 3D</h1>
-        <p class="lead">Funkos con tu cara y su caja desde 55 €, pilotos de Fórmula 1 de 30 cm, posavasos de tu mascota y trofeos. Todo se hace bajo pedido.</p>
+        <h1 id="hero-h">{t('Funkos, figuras y regalos impresos en 3D', 'Funkos, figures and 3D-printed gifts', 'Funkos, figurines et cadeaux imprimés en 3D')}</h1>
+        <p class="lead">{t(
+          `Funkos con tu cara y su caja desde ${e55}, pilotos de Fórmula 1 de 30 cm, posavasos de tu mascota y trofeos. Todo se hace bajo pedido.`,
+          `Funkos with your face and their own box from ${e55}, 30 cm Formula 1 drivers, coasters of your pet and trophies. Everything is made to order.`,
+          `Des Funkos à votre image avec leur boîte dès ${e55}, des pilotes de Formule 1 de 30 cm, des sous-verres de votre animal et des trophées. Tout est fabriqué sur commande.`,
+        )}</p>
         <div class="btn-row">
-          <a class="btn" href="/catalogo">Ver el catálogo</a>
-          <a class="btn btn--secondary" href="/funkos">Crear mi Funko</a>
+          <a class="btn" href={C.ruta('/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a>
+          <a class="btn btn--secondary" href={C.ruta('/funkos')}>{t('Crear mi Funko', 'Create my Funko', 'Créer mon Funko')}</a>
         </div>
       </div>
       <div class="hero__collage">
-        <figure class="hero__a"><Picture src={pilotos} alt="Tres figuras de bloques de pilotos de Fórmula 1: Alonso con Renault, Senna y Alonso con Aston Martin" formats={['avif', 'webp']} widths={[390, 560, 750]} sizes="(min-width: 1024px) 28vw, 60vw" loading="eager" fetchpriority="high" /></figure>
+        <figure class="hero__a"><Picture src={pilotos} alt={t('Tres figuras de bloques de pilotos de Fórmula 1: Alonso con Renault, Senna y Alonso con Aston Martin', 'Three Formula 1 driver block figures: Alonso with Renault, Senna and Alonso with Aston Martin', 'Trois figurines en blocs de pilotes de Formule 1 : Alonso avec Renault, Senna et Alonso avec Aston Martin')} formats={['avif', 'webp']} widths={[390, 560, 750]} sizes="(min-width: 1024px) 28vw, 60vw" loading="eager" fetchpriority="high" /></figure>
         <figure class="hero__b"><Picture src={perruno.src} alt={perruno.alt} formats={['avif', 'webp']} widths={[240, 400]} sizes="(min-width: 1024px) 18vw, 38vw" loading="eager" /></figure>
         <figure class="hero__c"><Picture src={rayquaza.src} alt={rayquaza.alt} formats={['avif', 'webp']} widths={[240, 400]} sizes="(min-width: 1024px) 18vw, 38vw" loading="eager" /></figure>
       </div>
@@ -61,21 +73,22 @@ const orgLd = {
   <section class="section cats" aria-labelledby="cats-h">
     <div class="wrap">
       <div class="section-head section-head--row">
-        <h2 id="cats-h">Compra por categoría</h2>
-        <a class="link" href="/catalogo">Todo el catálogo <Icon name="flecha" /></a>
+        <h2 id="cats-h">{t('Compra por categoría', 'Shop by category', 'Acheter par catégorie')}</h2>
+        <a class="link" href={C.ruta('/catalogo')}>{t('Todo el catálogo', 'Full catalogue', 'Tout le catalogue')} <Icon name="flecha" /></a>
       </div>
       <ul class="cats__grid">
-        {categorias.map((c, i) => {
-          const pf = producto(c.portada);
+        {C.categorias.map((c, i) => {
+          const pf = C.producto(c.portada);
           const f = pf ? foto(pf) : null;
-          const desde = c.enlace ? null : desdeCategoria(c.slug);
-          const n = c.enlace ? null : deCategoria(c.slug).length;
+          const desde = c.enlace ? null : C.desdeCategoria(c.slug);
+          const n = c.enlace ? null : C.deCategoria(c.slug).length;
+          const desdeTxt = desde != null ? ` · ${t('desde', 'from', 'dès')} ${C.euros(desde)}` : '';
           return (
             <li class:list={['cat-tile', { 'cat-tile--grande': i < 3 }]}>
               {f && <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
               <div class="cat-tile__txt">
-                <h3><a href={urlCategoria(c)}>{c.nombre}</a></h3>
-                <p class="num">{c.enlace ? 'Tu idea, con precio' : `${n} piezas${desde != null ? ` · desde ${euros(desde)}` : ''}`}</p>
+                <h3><a href={C.urlCategoria(c)}>{c.nombre}</a></h3>
+                <p class="num">{c.enlace ? t('Tu idea, con precio', 'Your idea, with a price', 'Votre idée, avec un prix') : `${n} ${t('piezas', 'items', 'pièces')}${desdeTxt}`}</p>
               </div>
             </li>
           );
@@ -87,8 +100,8 @@ const orgLd = {
   <section class="section" aria-labelledby="dest-h">
     <div class="wrap">
       <div class="section-head section-head--row">
-        <h2 id="dest-h">Lo que más se pide</h2>
-        <a class="link" href="/catalogo">Ver las {productos.length} piezas <Icon name="flecha" /></a>
+        <h2 id="dest-h">{t('Lo que más se pide', 'Most popular', 'Les plus demandés')}</h2>
+        <a class="link" href={C.ruta('/catalogo')}>{t(`Ver las ${C.productos.length} piezas`, `See all ${C.productos.length} items`, `Voir les ${C.productos.length} pièces`)} <Icon name="flecha" /></a>
       </div>
       <ul class="grid-productos grid-productos--4">
         {destacados.map((p) => <li><ProductCard p={p} /></li>)}
@@ -99,41 +112,45 @@ const orgLd = {
   <section class="band" aria-labelledby="funko-h">
     <div class="wrap band__grid">
       <div class="band__text">
-        <h2 id="funko-h">Tu Funko, con su caja, desde 55 €</h2>
-        <p class="band__lead">Lo hacemos a partir de tus fotos: la persona, su ropa, su mascota y el texto de la caja. El precio sale de lo que metas dentro.</p>
+        <h2 id="funko-h">{t(`Tu Funko, con su caja, desde ${e55}`, `Your Funko, with its box, from ${e55}`, `Votre Funko, avec sa boîte, dès ${e55}`)}</h2>
+        <p class="band__lead">{t(
+          'Lo hacemos a partir de tus fotos: la persona, su ropa, su mascota y el texto de la caja. El precio sale de lo que metas dentro.',
+          'We make it from your photos: the person, their clothes, their pet and the text on the box. The price depends on what goes inside.',
+          "Nous le réalisons à partir de vos photos : la personne, ses vêtements, son animal et le texte de la boîte. Le prix dépend de ce que vous mettez dedans.",
+        )}</p>
         <dl class="tarifa">
-          <div><dt>Caja a medida + 1 Funko normal</dt><dd class="num">55 €</dd></div>
-          <div><dt>Cada Funko pequeño más (mascota, niño, objeto)</dt><dd class="num">+20 €</dd></div>
-          <div><dt>Un segundo Funko normal</dt><dd class="num">+30 €</dd></div>
+          <div><dt>{t('Caja a medida + 1 Funko normal', 'Made-to-measure box + 1 regular Funko', 'Boîte sur mesure + 1 Funko normal')}</dt><dd class="num">{e55}</dd></div>
+          <div><dt>{t('Cada Funko pequeño más (mascota, niño, objeto)', 'Each extra small Funko (pet, child, object)', 'Chaque petit Funko en plus (animal, enfant, objet)')}</dt><dd class="num">+{e20}</dd></div>
+          <div><dt>{t('Un segundo Funko normal', 'A second regular Funko', 'Un deuxième Funko normal')}</dt><dd class="num">+{e30}</dd></div>
         </dl>
-        <p class="band__nota">Caben 1 normal + 3 pequeños, o 2 normales + 1 pequeño.</p>
+        <p class="band__nota">{t('Caben 1 normal + 3 pequeños, o 2 normales + 1 pequeño.', 'A box fits 1 regular + 3 small, or 2 regular + 1 small.', 'Une boîte contient 1 normal + 3 petits, ou 2 normaux + 1 petit.')}</p>
         <div class="btn-row">
-          <a class="btn btn--light" href="/funkos">Calcular el precio de mi Funko</a>
-          <a class="btn btn--ghost-light" href="/funkos#encargos">Ver Funkos hechos</a>
+          <a class="btn btn--light" href={C.ruta('/funkos')}>{t('Calcular el precio de mi Funko', 'Work out my Funko price', 'Calculer le prix de mon Funko')}</a>
+          <a class="btn btn--ghost-light" href={C.ruta('/funkos#encargos')}>{t('Ver Funkos hechos', 'See finished Funkos', 'Voir des Funkos réalisés')}</a>
         </div>
       </div>
-      <CarruselFunkos class="band__media" etiqueta="Funkos que ya hemos hecho" sizes="(min-width: 1024px) 40vw, 92vw" items={funkosHechos} />
+      <CarruselFunkos class="band__media" etiqueta={t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')} sizes="(min-width: 1024px) 40vw, 92vw" items={funkosHechos} />
     </div>
   </section>
 
   <section class="section" id="como-funciona" style="--h: 2" data-moment="pinned-chapters" aria-labelledby="como-h">
     <div class="wrap mo-pc__grid">
       <div class="mo-pc__text">
-        <h2 id="como-h">Así se pide una pieza</h2>
+        <h2 id="como-h">{t('Así se pide una pieza', 'How to order a piece', 'Comment commander une pièce')}</h2>
         <ol class="mo-pc__steps">
           <li class="mo-pc__step">
-            <h3>Elige</h3>
-            <p>Busca en el catálogo o trae tu idea. Cada ficha enseña la pieza real desde varios ángulos, con su precio.</p>
-            <figure class="mo-pc__visual"><Picture src={pilotos} alt="Las tres figuras de pilotos juntas" formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
+            <h3>{t('Elige', 'Choose', 'Choisissez')}</h3>
+            <p>{t('Busca en el catálogo o trae tu idea. Cada ficha enseña la pieza real desde varios ángulos, con su precio.', 'Browse the catalogue or bring your own idea. Every product page shows the real piece from several angles, with its price.', 'Parcourez le catalogue ou apportez votre idée. Chaque fiche montre la vraie pièce sous plusieurs angles, avec son prix.')}</p>
+            <figure class="mo-pc__visual"><Picture src={pilotos} alt={t('Las tres figuras de pilotos juntas', 'The three driver figures together', 'Les trois figurines de pilotes ensemble')} formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
           </li>
           <li class="mo-pc__step">
-            <h3>Personaliza</h3>
-            <p>Nombre, mascota, tamaño, el texto de la caja. Escríbelo en la ficha y mándanos las fotos por WhatsApp.</p>
+            <h3>{t('Personaliza', 'Personalise', 'Personnalisez')}</h3>
+            <p>{t('Nombre, mascota, tamaño, el texto de la caja. Escríbelo en la ficha y mándanos las fotos por WhatsApp.', 'Name, pet, size, the text on the box. Write it on the product page and send us the photos on WhatsApp.', "Prénom, animal, taille, texte de la boîte. Indiquez-le sur la fiche et envoyez-nous les photos sur WhatsApp.")}</p>
             <figure class="mo-pc__visual"><Picture src={posavasos.src} alt={posavasos.alt} formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
           </li>
           <li class="mo-pc__step">
-            <h3>Recibe</h3>
-            <p>Te confirmamos precio, envío y plazo antes de empezar. Se imprime bajo pedido y te llega a casa.</p>
+            <h3>{t('Recibe', 'Receive', 'Recevez')}</h3>
+            <p>{t('Te confirmamos precio, envío y plazo antes de empezar. Se imprime bajo pedido y te llega a casa.', "We confirm the price, shipping and lead time before we start. It's printed to order and delivered to your door.", "Nous vous confirmons le prix, la livraison et le délai avant de commencer. La pièce est imprimée sur commande et livrée chez vous.")}</p>
             <figure class="mo-pc__visual"><Picture src={funkoDetalle.src} alt={funkoDetalle.alt} formats={['avif', 'webp']} widths={[480, 750]} sizes="(min-width: 1024px) 45vw, 92vw" loading="lazy" /></figure>
           </li>
         </ol>
@@ -145,11 +162,15 @@ const orgLd = {
   <section class="section cierre" aria-labelledby="cierre-h">
     <div class="wrap cierre__grid">
       <div class="cierre__text">
-        <h2 id="cierre-h" class="cierre__word">¿Tienes una idea?</h2>
-        <p class="lead">Una estantería de tu serie, la tarjeta de tu negocio con NFC, una pieza rota que ya no venden. Cuéntanos qué necesitas, con un archivo STL o una foto, y te damos precio.</p>
+        <h2 id="cierre-h" class="cierre__word">{t('¿Tienes una idea?', 'Got an idea?', 'Une idée ?')}</h2>
+        <p class="lead">{t(
+          'Una estantería de tu serie, la tarjeta de tu negocio con NFC, una pieza rota que ya no venden. Cuéntanos qué necesitas, con un archivo STL o una foto, y te damos precio.',
+          "A shelf for your favourite show, an NFC card for your business, a broken part you can't buy any more. Tell us what you need, with an STL file or a photo, and we'll give you a price.",
+          "Une étagère de votre série préférée, une carte NFC pour votre commerce, une pièce cassée qui ne se vend plus. Dites-nous ce qu'il vous faut, avec un fichier STL ou une photo, et nous vous donnons un prix.",
+        )}</p>
         <div class="btn-row">
-          <a class="btn" href="/encargos">Pedir un encargo a medida</a>
-          <a class="btn btn--secondary" href={enlaceWhatsApp('¡Hola! Tengo una idea para un encargo a medida.')} target="_blank" rel="noopener"><WhatsAppIcon />Contarlo por WhatsApp</a>
+          <a class="btn" href={C.ruta('/encargos')}>{t('Pedir un encargo a medida', 'Request a custom order', 'Demander une pièce sur mesure')}</a>
+          <a class="btn btn--secondary" href={enlaceWhatsApp(t('¡Hola! Tengo una idea para un encargo a medida.', 'Hi! I have an idea for a custom order.', "Bonjour ! J'ai une idée de pièce sur mesure."))} target="_blank" rel="noopener"><WhatsAppIcon />{t('Contarlo por WhatsApp', 'Tell us on WhatsApp', 'En parler sur WhatsApp')}</a>
         </div>
       </div>
       <figure class="cierre__media"><Picture src={estanteria.src} alt={estanteria.alt} formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 1024px) 34vw, 92vw" loading="lazy" /></figure>

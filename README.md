@@ -129,6 +129,18 @@ Para conectar una pasarela de pago más adelante, la estructura está en `src/li
 un objeto `MetodoPedido` (ver `tipos.ts`). Hay un ejemplo comentado en `index.ts`. Una pasarela necesita una función
 de servidor (Stripe Checkout, Redsys…), así que habrá que pasar de web estática a Netlify/Vercel Functions.
 
+## Idiomas (español, inglés y francés)
+
+- El español vive en la raíz (`/catalogo`); el inglés en `/en/...` y el francés en `/fr/...`. Las páginas de `src/pages/en`
+  y `src/pages/fr` las genera `node scripts/crear-rutas-idiomas.mjs` (importan la página española; el idioma sale de la URL).
+  Si creas una página pública nueva, añádela a la lista de ese script y ejecútalo.
+- Al entrar, la web mira el idioma del dispositivo y lleva a esa versión. Si el visitante elige otro en el selector
+  (ES · EN · FR), manda su elección. El panel `/admin` solo está en español.
+- Textos de la web: en cada página, con `t('español', 'english', 'français')`.
+- Productos y categorías: `src/data/traducciones.json` (traducidos a mano). Cuando se crea o edita un producto en el panel,
+  `scripts/traducir.mjs` lo traduce solo al publicar (MyMemory, gratis) y guarda el resultado en Firestore (`traducciones/`)
+  para no repetirlo. Para corregir una traducción automática, pon la buena en `traducciones.json` (manda sobre la automática).
+
 ## Avisos de pedidos en el móvil
 
 Cuando entra un pedido o un encargo, la web llama a `api/avisar-pedido.ts` (función de Vercel), que comprueba que

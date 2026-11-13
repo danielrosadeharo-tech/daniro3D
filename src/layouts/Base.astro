@@ -7,7 +7,8 @@ import type { ImageMetadata } from 'astro';
 import Icon from '../components/Icon.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
-import { sitio, categoriasCatalogo, urlCategoria, enlaceWhatsApp, fotoAmbiente } from '../lib/catalogo';
+import { sitio, enlaceWhatsApp, fotoAmbiente, catalogoEn } from '../lib/catalogo';
+import { IDIOMAS, NOMBRE_IDIOMA, CLAVE_IDIOMA, idiomaDe, sinIdioma, ruta } from '../i18n';
 
 interface Props {
   title: string;
@@ -19,36 +20,70 @@ interface Props {
   manifest?: string;
   jsonLd?: object | object[];
   noindex?: boolean;
-  /** Ruta activa del menú, p. ej. "/catalogo". */
+  /** Ruta activa del menú (sin prefijo de idioma), p. ej. "/catalogo". */
   activo?: string;
+  /** Páginas que solo existen en español (el panel): sin selector de idioma ni versiones en otros idiomas. */
+  soloEspanol?: boolean;
 }
-const { title, description, image, imageUrl, jsonLd, noindex = false, activo, manifest = '/manifest.webmanifest' } = Astro.props;
+const { title, description, image, imageUrl, jsonLd, noindex = false, activo, manifest = '/manifest.webmanifest', soloEspanol = false } = Astro.props;
+const l = idiomaDe(Astro.url);
+const C = catalogoEn(l);
+const t = C.t;
 // Con build.format 'file' la ruta llega como /index.html o /catalogo.html; Vercel la sirve sin extensión (cleanUrls).
-const rutaLimpia = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '') || '/';
+const rutaLimpia = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '').replace(/\/$/, '') || '/';
 const canonical = new URL(rutaLimpia, Astro.site);
+// La misma página en los otros idiomas (hreflang y selector)
+const base = sinIdioma(rutaLimpia);
+const versiones = soloEspanol ? [] : IDIOMAS.map((i) => ({ i, href: ruta(i, base) }));
 const og = imageUrl ? null : await getImage({ src: image ?? fotoAmbiente('coleccion-pilotos.jpg'), width: 1200, format: 'jpg' });
 const ogUrl = new URL(imageUrl ?? og!.src, Astro.site);
 const tituloCompleto = title.includes(sitio.marca) ? title : `${title} · ${sitio.marca}`;
+const ogLocale = { es: 'es_ES', en: 'en_GB', fr: 'fr_FR' }[l];
 
 const nav = [
-  { href: '/catalogo', txt: 'Catálogo' },
+  { href: '/catalogo', txt: t('Catálogo', 'Catalogue', 'Catalogue') },
   { href: '/funkos', txt: 'Funkos' },
-  { href: '/catalogo/copas', txt: 'Copas' },
-  { href: '/catalogo/legos', txt: 'Legos' },
-  { href: '/encargos', txt: 'Encargos' },
-  { href: '/sobre-nosotros', txt: 'Sobre nosotros' },
+  { href: '/catalogo/copas', txt: t('Copas', 'Trophies', 'Coupes') },
+  { href: '/catalogo/legos', txt: t('Legos', 'Block figures', 'Figurines') },
+  { href: '/encargos', txt: t('Encargos', 'Custom orders', 'Sur mesure') },
+  { href: '/sobre-nosotros', txt: t('Sobre nosotros', 'About us', 'À propos') },
 ];
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const año = new Date().getFullYear();
 ---
 <!doctype html>
-<html lang="es">
+<html lang={l}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  {!soloEspanol && (
+    // Primera visita: si el dispositivo está en inglés o francés, lleva a esa versión de la misma página.
+    // Si el visitante eligió idioma a mano (selector), manda su elección. Los buscadores no se redirigen.
+    <script is:inline define:vars={{ clave: CLAVE_IDIOMA }}>
+      (function () {
+        try {
+          var p = location.pathname, m = /^\/(en|fr)(?=\/|$)/.exec(p), actual = m ? m[1] : 'es';
+          if (/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent) || navigator.webdriver) return;
+          var elegido = null; try { elegido = localStorage.getItem(clave); } catch (e) {}
+          var quiero = elegido;
+          if (!quiero) {
+            var ls = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'es'];
+            for (var i = 0; i < ls.length && !quiero; i++) { var c = String(ls[i]).slice(0, 2).toLowerCase(); if (c === 'es' || c === 'en' || c === 'fr') quiero = c; }
+            quiero = quiero || 'es';
+          }
+          if (quiero === actual) return;
+          var resto = p.replace(/^\/(en|fr)(?=\/|$)/, '') || '/';
+          var destino = quiero === 'es' ? resto : '/' + quiero + (resto === '/' ? '' : resto);
+          location.replace(destino + location.search + location.hash);
+        } catch (e) {}
+      })();
+    </script>
+  )}
   <title>{tituloCompleto}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {versiones.map((v) => <link rel="alternate" hreflang={v.i} href={new URL(v.href, Astro.site)} />)}
+  {versiones.length > 0 && <link rel="alternate" hreflang="x-default" href={new URL(base, Astro.site)} />}
   {noindex && <meta name="robots" content="noindex" />}
   <meta name="theme-color" content="#efe9e0" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -56,7 +91,7 @@ const año = new Date().getFullYear();
   <link rel="manifest" href={manifest} />
   <meta name="apple-mobile-web-app-title" content={manifest === '/manifest.webmanifest' ? sitio.marca : 'Pedidos'} />
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content={sitio.marca} />
   <meta property="og:title" content={tituloCompleto} />
   <meta property="og:description" content={description} />
@@ -68,24 +103,29 @@ const año = new Date().getFullYear();
   <slot name="head" />
 </head>
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <a class="skip-link" href="#contenido">{t('Saltar al contenido', 'Skip to content', 'Aller au contenu')}</a>
 
   <header class="nav" data-nav>
     <div class="wrap nav__bar">
-      <a class="logo" href="/" aria-label={`${sitio.marca}, inicio`}><Logo />{sitio.marca}</a>
-      <nav aria-label="Principal">
+      <a class="logo" href={C.ruta('/')} aria-label={t(`${sitio.marca}, inicio`, `${sitio.marca}, home`, `${sitio.marca}, accueil`)}><Logo />{sitio.marca}</a>
+      <nav aria-label={t('Principal', 'Main', 'Principal')}>
         <ul class="nav__links">
-          {nav.map((n) => <li><a href={n.href} aria-current={activo === n.href ? 'page' : undefined}>{n.txt}</a></li>)}
+          {nav.map((n) => <li><a href={C.ruta(n.href)} aria-current={activo === n.href ? 'page' : undefined}>{n.txt}</a></li>)}
         </ul>
       </nav>
       <div class="nav__actions">
-        <a class="icon-btn" href="/cuenta" aria-label="Mi cuenta" aria-current={activo === '/cuenta' ? 'page' : undefined}><Icon name="persona" /></a>
-        <a class="icon-btn" href="/cesta" data-abrir-cesta aria-label="Cesta, 0 piezas">
+        {versiones.length > 0 && (
+          <ul class="idiomas idiomas--nav" aria-label={t('Idioma', 'Language', 'Langue')}>
+            {versiones.map((v) => <li><a href={v.href} hreflang={v.i} lang={v.i} data-idioma={v.i} aria-current={v.i === l ? 'true' : undefined} title={NOMBRE_IDIOMA[v.i]}>{v.i.toUpperCase()}</a></li>)}
+          </ul>
+        )}
+        <a class="icon-btn" href={C.ruta('/cuenta')} aria-label={t('Mi cuenta', 'My account', 'Mon compte')} aria-current={activo === '/cuenta' ? 'page' : undefined}><Icon name="persona" /></a>
+        <a class="icon-btn" href={C.ruta('/cesta')} data-abrir-cesta aria-label={t('Cesta, 0 piezas', 'Basket, 0 items', 'Panier, 0 article')}>
           <Icon name="cesta" />
           <span class="badge" data-badge hidden>0</span>
         </a>
         <button class="icon-btn nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
-          <span class="sr-only" data-menu-label>Abrir menú</span>
+          <span class="sr-only" data-menu-label>{t('Abrir menú', 'Open menu', 'Ouvrir le menu')}</span>
           <Icon name="menu" />
         </button>
       </div>
@@ -94,14 +134,19 @@ const año = new Date().getFullYear();
 
   <div class="menu" id="menu" data-menu inert>
     <ul>
-      <li><a href="/catalogo">Todo el catálogo <Icon name="flecha" /></a></li>
-      {categoriasCatalogo.map((c) => <li><a href={urlCategoria(c)}>{c.nombre} <Icon name="flecha" /></a></li>)}
-      <li><a href="/encargos">Encargos a medida <Icon name="flecha" /></a></li>
+      <li><a href={C.ruta('/catalogo')}>{t('Todo el catálogo', 'Full catalogue', 'Tout le catalogue')} <Icon name="flecha" /></a></li>
+      {C.categoriasCatalogo.map((c) => <li><a href={C.urlCategoria(c)}>{c.nombre} <Icon name="flecha" /></a></li>)}
+      <li><a href={C.ruta('/encargos')}>{t('Encargos a medida', 'Custom orders', 'Commandes sur mesure')} <Icon name="flecha" /></a></li>
     </ul>
     <ul class="menu__small">
-      <li><a href="/sobre-nosotros">Sobre nosotros y contacto</a></li>
-      <li><a href={enlaceWhatsApp('¡Hola! Tengo una pregunta sobre el catálogo.')} rel="noopener" target="_blank">WhatsApp · {sitio.telefonoVisible}</a></li>
+      <li><a href={C.ruta('/sobre-nosotros')}>{t('Sobre nosotros y contacto', 'About us and contact', 'À propos et contact')}</a></li>
+      <li><a href={enlaceWhatsApp(t('¡Hola! Tengo una pregunta sobre el catálogo.', 'Hi! I have a question about the catalogue.', 'Bonjour ! J\'ai une question sur le catalogue.'))} rel="noopener" target="_blank">WhatsApp · {sitio.telefonoVisible}</a></li>
     </ul>
+    {versiones.length > 0 && (
+      <ul class="idiomas idiomas--menu" aria-label={t('Idioma', 'Language', 'Langue')}>
+        {versiones.map((v) => <li><a href={v.href} hreflang={v.i} lang={v.i} data-idioma={v.i} aria-current={v.i === l ? 'true' : undefined}>{NOMBRE_IDIOMA[v.i]}</a></li>)}
+      </ul>
+    )}
   </div>
 
   <main id="contenido" tabindex="-1">
@@ -112,30 +157,30 @@ const año = new Date().getFullYear();
     <div class="wrap">
       <div class="footer__grid">
         <div class="footer__brand">
-          <a class="logo" href="/"><Logo />{sitio.marca}</a>
-          <p>Figuras, Funkos, posavasos y regalos impresos en 3D bajo pedido y a medida.</p>
+          <a class="logo" href={C.ruta('/')}><Logo />{sitio.marca}</a>
+          <p>{t('Figuras, Funkos, posavasos y regalos impresos en 3D bajo pedido y a medida.', '3D-printed figures, Funkos, coasters and gifts, made to order and made to measure.', 'Figurines, Funkos, sous-verres et cadeaux imprimés en 3D sur commande et sur mesure.')}</p>
           <div class="btn-row" style="margin-top: var(--s-5)">
-            <a class="btn" href={enlaceWhatsApp('¡Hola! Me interesa un artículo del catálogo.')} rel="noopener" target="_blank"><WhatsAppIcon />Escribir por WhatsApp</a>
+            <a class="btn" href={enlaceWhatsApp(t('¡Hola! Me interesa un artículo del catálogo.', "Hi! I'm interested in an item from the catalogue.", 'Bonjour ! Un article du catalogue m\'intéresse.'))} rel="noopener" target="_blank"><WhatsAppIcon />{t('Escribir por WhatsApp', 'Message us on WhatsApp', 'Écrire sur WhatsApp')}</a>
           </div>
         </div>
         <nav aria-labelledby="f-cat">
-          <h2 id="f-cat">Catálogo</h2>
+          <h2 id="f-cat">{t('Catálogo', 'Catalogue', 'Catalogue')}</h2>
           <ul>
-            {categoriasCatalogo.map((c) => <li><a href={urlCategoria(c)}>{c.nombre}</a></li>)}
-            <li><a href="/encargos">Encargos a medida</a></li>
+            {C.categoriasCatalogo.map((c) => <li><a href={C.urlCategoria(c)}>{c.nombre}</a></li>)}
+            <li><a href={C.ruta('/encargos')}>{t('Encargos a medida', 'Custom orders', 'Commandes sur mesure')}</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-info">
-          <h2 id="f-info">Información</h2>
+          <h2 id="f-info">{t('Información', 'Information', 'Informations')}</h2>
           <ul>
-            <li><a href="/sobre-nosotros">Sobre nosotros y contacto</a></li>
-            <li><a href="/envios">Envíos</a></li>
-            <li><a href="/devoluciones">Devoluciones</a></li>
-            <li><a href="/privacidad">Privacidad y aviso legal</a></li>
+            <li><a href={C.ruta('/sobre-nosotros')}>{t('Sobre nosotros y contacto', 'About us and contact', 'À propos et contact')}</a></li>
+            <li><a href={C.ruta('/envios')}>{t('Envíos', 'Shipping', 'Livraison')}</a></li>
+            <li><a href={C.ruta('/devoluciones')}>{t('Devoluciones', 'Returns', 'Retours')}</a></li>
+            <li><a href={C.ruta('/privacidad')}>{t('Privacidad y aviso legal', 'Privacy and legal notice', 'Confidentialité et mentions légales')}</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-redes">
-          <h2 id="f-redes">También estamos en</h2>
+          <h2 id="f-redes">{t('También estamos en', 'You can also find us on', 'Retrouvez-nous aussi sur')}</h2>
           <ul>
             <li><a href={sitio.wallapop} rel="noopener" target="_blank">Wallapop</a></li>
             <li><a href={sitio.vinted} rel="noopener" target="_blank">Vinted</a></li>
@@ -144,8 +189,13 @@ const año = new Date().getFullYear();
         </nav>
       </div>
       <div class="footer__legal">
-        <span>© {año} {sitio.marca}. Precios en euros con IVA incluido.</span>
-        <span>Hecho en España</span>
+        <span>© {año} {sitio.marca}. {t('Precios en euros con IVA incluido.', 'Prices in euros, VAT included.', 'Prix en euros, TVA comprise.')}</span>
+        {versiones.length > 0 && (
+          <ul class="idiomas idiomas--pie" aria-label={t('Idioma', 'Language', 'Langue')}>
+            {versiones.map((v) => <li><a href={v.href} hreflang={v.i} lang={v.i} data-idioma={v.i} aria-current={v.i === l ? 'true' : undefined}>{NOMBRE_IDIOMA[v.i]}</a></li>)}
+          </ul>
+        )}
+        <span>{t('Hecho en España', 'Made in Spain', 'Fabriqué en Espagne')}</span>
       </div>
     </div>
   </footer>
@@ -153,21 +203,21 @@ const año = new Date().getFullYear();
   <dialog class="drawer" id="cesta" aria-labelledby="cesta-h">
     <div class="drawer__inner">
       <div class="drawer__head">
-        <h2 id="cesta-h">Tu cesta</h2>
-        <button class="icon-btn" type="button" data-cerrar-cesta aria-label="Cerrar la cesta"><Icon name="cerrar" /></button>
+        <h2 id="cesta-h">{t('Tu cesta', 'Your basket', 'Votre panier')}</h2>
+        <button class="icon-btn" type="button" data-cerrar-cesta aria-label={t('Cerrar la cesta', 'Close the basket', 'Fermer le panier')}><Icon name="cerrar" /></button>
       </div>
       <div class="drawer__body">
         <ul data-lineas style="list-style:none;padding:0"></ul>
         <div class="vacio" data-vacio hidden>
-          <p>Tu cesta está vacía. Echa un vistazo al catálogo y añade lo que te guste.</p>
-          <a class="btn btn--secondary" href="/catalogo">Ver el catálogo</a>
+          <p>{t('Tu cesta está vacía. Echa un vistazo al catálogo y añade lo que te guste.', 'Your basket is empty. Have a look at the catalogue and add whatever you like.', 'Votre panier est vide. Jetez un œil au catalogue et ajoutez ce qui vous plaît.')}</p>
+          <a class="btn btn--secondary" href={C.ruta('/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a>
         </div>
       </div>
       <div class="drawer__foot" data-pie>
         <div class="total"><span>Total</span><strong class="precio" data-total>0 €</strong></div>
-        <p class="nota" data-nota-consulta hidden>Las piezas a consultar no suman: te damos su precio al confirmar.</p>
-        <a class="btn btn--block" href="/cesta">Tramitar pedido</a>
-        <p class="nota">Sin pago en la web: nos llega tu pedido y te confirmamos precio final, envío y plazo.</p>
+        <p class="nota" data-nota-consulta hidden>{t('Las piezas a consultar no suman: te damos su precio al confirmar.', "Price-on-request items aren't included: we'll give you their price when we confirm.", 'Les pièces sur demande ne sont pas comptées : nous vous donnons leur prix à la confirmation.')}</p>
+        <a class="btn btn--block" href={C.ruta('/cesta')}>{t('Tramitar pedido', 'Checkout', 'Passer la commande')}</a>
+        <p class="nota">{t('Sin pago en la web: nos llega tu pedido y te confirmamos precio final, envío y plazo.', 'No payment on the website: we receive your order and confirm the final price, shipping and lead time.', 'Aucun paiement sur le site : nous recevons votre commande et vous confirmons le prix final, la livraison et le délai.')}</p>
       </div>
     </div>
   </dialog>
@@ -176,6 +226,13 @@ const año = new Date().getFullYear();
 
   <script>
     import { cesta, htmlLineas, conectarLista, euros } from '../scripts/cesta';
+    import { traductor, idiomaDocumento, CLAVE_IDIOMA } from '../i18n';
+    const t = traductor(idiomaDocumento());
+
+    // Selector de idioma: la elección manda sobre el idioma del dispositivo en las próximas visitas
+    document.querySelectorAll<HTMLAnchorElement>('[data-idioma]').forEach((a) => a.addEventListener('click', () => {
+      try { localStorage.setItem(CLAVE_IDIOMA, a.dataset.idioma!); } catch { /* sin almacenamiento */ }
+    }));
 
     // Cabecera: borde al hacer scroll
     const nav = document.querySelector<HTMLElement>('[data-nav]')!;
@@ -188,7 +245,7 @@ const año = new Date().getFullYear();
     const label = toggle.querySelector('[data-menu-label]')!;
     const setMenu = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
-      label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+      label.textContent = open ? t('Cerrar menú', 'Close menu', 'Fermer le menu') : t('Abrir menú', 'Open menu', 'Ouvrir le menu');
       menu.toggleAttribute('data-open', open);
       menu.inert = !open;
       // Con el menú abierto, el tabulador no se escapa a la página de detrás
@@ -217,7 +274,7 @@ const año = new Date().getFullYear();
       dlg.querySelector('[data-nota-consulta]')!.toggleAttribute('hidden', !cesta.hayConsultas());
       badge.textContent = String(n);
       badge.hidden = n === 0;
-      abrir.setAttribute('aria-label', `Cesta, ${n} ${n === 1 ? 'pieza' : 'piezas'}`);
+      abrir.setAttribute('aria-label', n === 1 ? t('Cesta, 1 pieza', 'Basket, 1 item', 'Panier, 1 article') : t(`Cesta, ${n} piezas`, `Basket, ${n} items`, `Panier, ${n} articles`));
       if (n > previo) { badge.classList.remove('is-bump'); void badge.offsetWidth; badge.classList.add('is-bump'); }
       previo = n;
     }
@@ -225,7 +282,7 @@ const año = new Date().getFullYear();
     document.addEventListener('cesta:cambio', pintar);
 
     const abrirCesta = () => { if (!dlg.open) { dlg.showModal(); document.documentElement.style.overflow = 'hidden'; } };
-    abrir.addEventListener('click', (e) => { if (location.pathname !== '/cesta') { e.preventDefault(); abrirCesta(); } });
+    abrir.addEventListener('click', (e) => { if (!/^\/((en|fr)\/)?cesta$/.test(location.pathname)) { e.preventDefault(); abrirCesta(); } });
     document.addEventListener('cesta:abrir', abrirCesta);
     dlg.querySelector('[data-cerrar-cesta]')!.addEventListener('click', () => dlg.close());
     dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });

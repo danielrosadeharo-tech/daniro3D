@@ -1,11 +1,17 @@
 ---
 import ProductCard from './ProductCard.astro';
 import Icon from './Icon.astro';
-import { categoriasCatalogo, categoria as getCat, precioNumerico, urlCategoria, type Producto } from '../lib/catalogo';
+import { precioNumerico, catalogoEn, todos as todosEs, type Producto } from '../lib/catalogo';
 import { colorHex } from '../lib/colores';
+import { idiomaDe } from '../i18n';
 
 interface Props { productos: Producto[]; categoriaFija?: string }
-const { productos, categoriaFija } = Astro.props;
+const { categoriaFija } = Astro.props;
+const C = catalogoEn(idiomaDe(Astro.url));
+const t = C.t;
+const productos = Astro.props.productos.map(C.loc);
+// El buscador encuentra la pieza tanto por su texto traducido como por el original en español
+const textoEs = (slug: string) => { const p = todosEs.find((x) => x.slug === slug); return p ? [p.nombre, p.descripcionCorta].join(' ') : ''; };
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 const materiales = [...new Set(productos.flatMap((p) => p.materiales))].sort();
@@ -18,20 +24,20 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
 <div class="cat" data-catalogo data-fija={categoriaFija ?? ''}>
   <div class="cat__toolbar">
     <label class="buscar">
-      <span class="sr-only">Buscar en el catálogo</span>
+      <span class="sr-only">{t('Buscar en el catálogo', 'Search the catalogue', 'Rechercher dans le catalogue')}</span>
       <Icon name="buscar" />
-      <input class="input" type="search" name="q" form="filtros" placeholder="Buscar: Senna, mascota, trofeo…" autocomplete="off" enterkeyhint="search" />
+      <input class="input" type="search" name="q" form="filtros" placeholder={t('Buscar: Senna, mascota, trofeo…', 'Search: Senna, pet, trophy…', 'Rechercher : Senna, animal, trophée…')} autocomplete="off" enterkeyhint="search" />
     </label>
     <button class="btn btn--secondary cat__abrir" type="button" data-abrir-filtros aria-controls="filtros-panel" aria-expanded="false">
-      <Icon name="filtro" />Filtros<span class="cat__n" data-n-filtros hidden></span>
+      <Icon name="filtro" />{t('Filtros', 'Filters', 'Filtres')}<span class="cat__n" data-n-filtros hidden></span>
     </button>
     <label class="ordenar">
-      <span class="sr-only">Ordenar por</span>
+      <span class="sr-only">{t('Ordenar por', 'Sort by', 'Trier par')}</span>
       <select class="select" name="orden" form="filtros">
-        <option value="destacados">Destacados</option>
-        <option value="novedad">Novedades</option>
-        <option value="precio-asc">Precio: de menor a mayor</option>
-        <option value="precio-desc">Precio: de mayor a menor</option>
+        <option value="destacados">{t('Destacados', 'Featured', 'En vedette')}</option>
+        <option value="novedad">{t('Novedades', 'Newest', 'Nouveautés')}</option>
+        <option value="precio-asc">{t('Precio: de menor a mayor', 'Price: low to high', 'Prix : croissant')}</option>
+        <option value="precio-desc">{t('Precio: de mayor a menor', 'Price: high to low', 'Prix : décroissant')}</option>
       </select>
     </label>
   </div>
@@ -40,24 +46,24 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
     <aside class="cat__panel" id="filtros-panel" data-panel aria-labelledby="filtros-h">
       <form id="filtros" class="filtros" role="search" aria-labelledby="filtros-h">
         <div class="filtros__head">
-          <h2 id="filtros-h">Filtros</h2>
-          <button class="icon-btn cat__cerrar" type="button" data-cerrar-filtros aria-label="Cerrar filtros"><Icon name="cerrar" /></button>
+          <h2 id="filtros-h">{t('Filtros', 'Filters', 'Filtres')}</h2>
+          <button class="icon-btn cat__cerrar" type="button" data-cerrar-filtros aria-label={t('Cerrar filtros', 'Close filters', 'Fermer les filtres')}><Icon name="cerrar" /></button>
         </div>
         <div class="filtros__body">
           {categoriaFija ? (
             <nav class="filtro" aria-labelledby="f-otras">
-              <h3 id="f-otras" class="filtro__t">Categoría</h3>
+              <h3 id="f-otras" class="filtro__t">{t('Categoría', 'Category', 'Catégorie')}</h3>
               <div class="chips">
-                <a class="chip-link" href="/catalogo">Todas</a>
-                {categoriasCatalogo.map((c) => <a class="chip-link" href={urlCategoria(c)} aria-current={c.slug === categoriaFija ? 'page' : undefined}>{c.nombre}</a>)}
+                <a class="chip-link" href={C.ruta('/catalogo')}>{t('Todas', 'All', 'Toutes')}</a>
+                {C.categoriasCatalogo.map((c) => <a class="chip-link" href={C.urlCategoria(c)} aria-current={c.slug === categoriaFija ? 'page' : undefined}>{c.nombre}</a>)}
               </div>
             </nav>
           ) : (
             <fieldset class="filtro">
-              <legend class="filtro__t">Categoría</legend>
+              <legend class="filtro__t">{t('Categoría', 'Category', 'Catégorie')}</legend>
               <div class="chips">
-                <label class="chip"><input type="radio" name="categoria" value="" checked /><span>Todas <small>{productos.length}</small></span></label>
-                {categoriasCatalogo.map((c) => (
+                <label class="chip"><input type="radio" name="categoria" value="" checked /><span>{t('Todas', 'All', 'Toutes')} <small>{productos.length}</small></span></label>
+                {C.categoriasCatalogo.map((c) => (
                   <label class="chip"><input type="radio" name="categoria" value={c.slug} /><span>{c.nombre} <small>{cuenta((p) => p.categoria === c.slug)}</small></span></label>
                 ))}
               </div>
@@ -66,10 +72,10 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
 
           {colores.length > 1 && (
             <fieldset class="filtro">
-              <legend class="filtro__t">Color</legend>
+              <legend class="filtro__t">{t('Color', 'Colour', 'Couleur')}</legend>
               <div class="chips">
                 {colores.map((c) => (
-                  <label class="chip"><input type="checkbox" name="color" value={c} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{c}</span></label>
+                  <label class="chip"><input type="checkbox" name="color" value={c} /><span><i class="swatch" style={`background:${colorHex(c)}`}></i>{C.voc(c)}</span></label>
                 ))}
               </div>
             </fieldset>
@@ -77,37 +83,37 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
 
           {materiales.length > 1 && (
             <fieldset class="filtro">
-              <legend class="filtro__t">Material</legend>
+              <legend class="filtro__t">{t('Material', 'Material', 'Matière')}</legend>
               <div class="chips">
-                {materiales.map((m) => <label class="chip"><input type="checkbox" name="material" value={m} /><span>{m}</span></label>)}
+                {materiales.map((m) => <label class="chip"><input type="checkbox" name="material" value={m} /><span>{C.voc(m)}</span></label>)}
               </div>
             </fieldset>
           )}
 
           <fieldset class="filtro">
-            <legend class="filtro__t">Precio</legend>
+            <legend class="filtro__t">{t('Precio', 'Price', 'Prix')}</legend>
             <div class="rango">
-              <div class="field"><label for="f-min">Mínimo (€)</label><input class="input" id="f-min" name="min" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder="0" /></div>
-              <div class="field"><label for="f-max">Máximo (€)</label><input class="input" id="f-max" name="max" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder={String(maxPrecio)} /></div>
+              <div class="field"><label for="f-min">{t('Mínimo (€)', 'Min (€)', 'Minimum (€)')}</label><input class="input" id="f-min" name="min" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder="0" /></div>
+              <div class="field"><label for="f-max">{t('Máximo (€)', 'Max (€)', 'Maximum (€)')}</label><input class="input" id="f-max" name="max" type="number" inputmode="numeric" min="0" max={maxPrecio} step="1" placeholder={String(maxPrecio)} /></div>
             </div>
-            <p class="hint">Con un rango de precio no salen las piezas a consultar.</p>
+            <p class="hint">{t('Con un rango de precio no salen las piezas a consultar.', 'Price-on-request items are hidden when you set a price range.', "Les pièces sur demande ne s'affichent pas avec une fourchette de prix.")}</p>
           </fieldset>
 
           <fieldset class="filtro">
-            <legend class="filtro__t">Personalización</legend>
-            <label class="chip"><input type="checkbox" name="personalizable" value="1" /><span>Solo personalizables</span></label>
+            <legend class="filtro__t">{t('Personalización', 'Personalisation', 'Personnalisation')}</legend>
+            <label class="chip"><input type="checkbox" name="personalizable" value="1" /><span>{t('Solo personalizables', 'Customisable only', 'Personnalisables uniquement')}</span></label>
           </fieldset>
         </div>
         <div class="filtros__foot">
-          <button class="btn btn--secondary" type="reset" data-borrar>Borrar filtros</button>
-          <button class="btn cat__ver" type="button" data-cerrar-filtros>Ver <span data-n-ver>{productos.length}</span> piezas</button>
+          <button class="btn btn--secondary" type="reset" data-borrar>{t('Borrar filtros', 'Clear filters', 'Effacer les filtres')}</button>
+          <button class="btn cat__ver" type="button" data-cerrar-filtros>{t('Ver', 'Show', 'Voir')} <span data-n-ver>{productos.length}</span> {t('piezas', 'items', 'pièces')}</button>
         </div>
       </form>
     </aside>
 
     <section class="cat__resultados" aria-labelledby="res-h">
-      <h2 id="res-h" class="sr-only">Resultados</h2>
-      <p class="cat__count" aria-live="polite" data-count><span class="num">{productos.length}</span> piezas</p>
+      <h2 id="res-h" class="sr-only">{t('Resultados', 'Results', 'Résultats')}</h2>
+      <p class="cat__count" aria-live="polite" data-count data-uno={t('pieza', 'item', 'pièce')} data-varios={t('piezas', 'items', 'pièces')}><span class="num">{productos.length}</span> {t('piezas', 'items', 'pièces')}</p>
       <ul class="grid-productos" data-grid>
         {ordenInicial.map((p, i) => (
           <li
@@ -118,18 +124,18 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
             data-fecha={p.fechaAlta}
             data-dest={p.destacado ? '1' : '0'}
             data-pers={p.personalizacion.disponible ? '1' : '0'}
-            data-texto={norm([p.nombre, p.descripcionCorta, p.descripcionLarga, p.etiquetas.join(' '), getCat(p.categoria)?.nombre ?? ''].join(' '))}
+            data-texto={norm([p.nombre, p.descripcionCorta, p.descripcionLarga, p.etiquetas.join(' '), C.categoria(p.categoria)?.nombre ?? '', textoEs(p.slug)].join(' '))}
           >
             <ProductCard p={p} prioridad={i < 4} mostrarCategoria={!categoriaFija} nivel="h3" />
           </li>
         ))}
       </ul>
       <div class="vacio cat__vacio" data-vacio hidden>
-        <h3>No hay piezas con estos filtros</h3>
-        <p class="lead">Prueba a quitar algún filtro. Y si lo que buscas no está, te lo hacemos a medida.</p>
+        <h3>{t('No hay piezas con estos filtros', 'No items match these filters', 'Aucune pièce ne correspond à ces filtres')}</h3>
+        <p class="lead">{t('Prueba a quitar algún filtro. Y si lo que buscas no está, te lo hacemos a medida.', "Try removing a filter. And if what you're looking for isn't here, we'll make it to measure.", "Essayez de retirer un filtre. Et si ce que vous cherchez n'y est pas, nous le faisons sur mesure.")}</p>
         <div class="btn-row">
-          <button class="btn btn--secondary" type="button" data-borrar-vacio>Borrar filtros</button>
-          <a class="btn" href="/encargos">Pedir un encargo a medida</a>
+          <button class="btn btn--secondary" type="button" data-borrar-vacio>{t('Borrar filtros', 'Clear filters', 'Effacer les filtres')}</button>
+          <a class="btn" href={C.ruta('/encargos')}>{t('Pedir un encargo a medida', 'Request a custom order', 'Demander une pièce sur mesure')}</a>
         </div>
       </div>
     </section>
@@ -292,7 +298,7 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
     grid.append(...orden);
 
     const n = visibles.length;
-    count.innerHTML = `<span class="num">${n}</span> ${n === 1 ? 'pieza' : 'piezas'}`;
+    count.innerHTML = `<span class="num">${n}</span> ${n === 1 ? count.dataset.uno : count.dataset.varios}`;
     nVer.textContent = String(n);
     vacio.hidden = n > 0;
     grid.hidden = n === 0;

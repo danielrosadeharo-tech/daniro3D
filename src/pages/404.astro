@@ -1,10 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
+// Una sola página de error para los tres idiomas (Vercel sirve /404.html para cualquier ruta que no existe).
+// El script la cambia al inglés o al francés si la dirección que falló empieza por /en o /fr.
 ---
-<Base title="Página no encontrada" description="Esta página no existe. Vuelve al catálogo." noindex>
-  <div class="wrap page-head" style="padding-block: var(--s-9)">
-    <h1>Esta página no existe</h1>
-    <p class="lead">Puede que la pieza ya no esté en el catálogo o que el enlace tenga una errata.</p>
-    <div class="btn-row"><a class="btn" href="/catalogo">Ir al catálogo</a><a class="btn btn--secondary" href="/">Volver al inicio</a></div>
+<Base title="Página no encontrada" description="Esta página no existe. Vuelve al catálogo." noindex soloEspanol>
+  <div class="wrap page-head" style="padding-block: var(--s-9)" data-error404>
+    <h1 data-t-h>Esta página no existe</h1>
+    <p class="lead" data-t-p>Puede que la pieza ya no esté en el catálogo o que el enlace tenga una errata.</p>
+    <div class="btn-row"><a class="btn" href="/catalogo" data-t-cat>Ir al catálogo</a><a class="btn btn--secondary" href="/" data-t-ini>Volver al inicio</a></div>
   </div>
 </Base>
+
+<script>
+  const m = /^\/(en|fr)(?=\/|$)/.exec(location.pathname);
+  if (m) {
+    const l = m[1] as 'en' | 'fr';
+    const T = {
+      en: { h: "This page doesn't exist", p: 'The piece may no longer be in the catalogue, or the link may have a typo.', cat: 'Go to the catalogue', ini: 'Back to home', t: 'Page not found' },
+      fr: { h: "Cette page n'existe pas", p: "La pièce n'est peut-être plus au catalogue, ou le lien contient une erreur.", cat: 'Aller au catalogue', ini: "Retour à l'accueil", t: 'Page introuvable' },
+    }[l];
+    const $ = (s: string) => document.querySelector<HTMLElement>(s)!;
+    document.documentElement.lang = l;
+    document.title = `${T.t} · Daniro 3D`;
+    $('[data-t-h]').textContent = T.h;
+    $('[data-t-p]').textContent = T.p;
+    const cat = $('[data-t-cat]') as HTMLAnchorElement; cat.textContent = T.cat; cat.href = `/${l}/catalogo`;
+    const ini = $('[data-t-ini]') as HTMLAnchorElement; ini.textContent = T.ini; ini.href = `/${l}`;
+  }
+</script>

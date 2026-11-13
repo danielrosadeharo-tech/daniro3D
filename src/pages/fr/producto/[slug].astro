@@ -1,0 +1,7 @@
+---
+// Generado por scripts/crear-rutas-idiomas.mjs: la misma página que /producto/[slug], en francés.
+import Pagina from '../../producto/[slug].astro';
+import { rutasProducto } from '../../../lib/rutas';
+export const getStaticPaths = rutasProducto;
+---
+<Pagina {...Astro.props} />

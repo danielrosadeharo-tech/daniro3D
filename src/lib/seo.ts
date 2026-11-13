@@ -1,4 +1,5 @@
-import { sitio, textoPrecio, urlProducto, type Producto } from './catalogo';
+import { sitio, urlProducto as urlProductoEs, textoPrecio as textoPrecioEs, type Producto } from './catalogo';
+import { traductor, type Idioma } from '../i18n';
 
 const abs = (path: string) => new URL(path, sitio.dominio).toString();
 
@@ -10,19 +11,20 @@ export function migasLd(items: { nombre: string; url?: string }[]) {
   };
 }
 
-export function listaLd(nombre: string, ps: Producto[]) {
+/** Lista de productos. `url` da la ruta de cada uno en el idioma de la página (por defecto, la española). */
+export function listaLd(nombre: string, ps: Producto[], url: (p: Producto) => string = urlProductoEs) {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: nombre,
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: ps.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(urlProducto(p)), name: p.nombre })),
+      itemListElement: ps.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(url(p)), name: p.nombre })),
     },
   };
 }
 
-export function productoLd(p: Producto, imagenes: string[]) {
+export function productoLd(p: Producto, imagenes: string[], url: (p: Producto) => string = urlProductoEs) {
   const pr = p.precio;
   const base = {
     '@context': 'https://schema.org',
@@ -40,8 +42,11 @@ export function productoLd(p: Producto, imagenes: string[]) {
   const vendedor = { '@type': 'Organization', name: sitio.marca };
   const offers = precios.length > 1 || pr.tipo === 'desde'
     ? { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: Math.min(...precios), highPrice: Math.max(...precios), offerCount: precios.length, availability: 'https://schema.org/MadeToOrder', seller: vendedor }
-    : { '@type': 'Offer', priceCurrency: 'EUR', price: pr.importe, availability: 'https://schema.org/MadeToOrder', url: abs(urlProducto(p)), seller: vendedor, itemCondition: 'https://schema.org/NewCondition' };
+    : { '@type': 'Offer', priceCurrency: 'EUR', price: pr.importe, availability: 'https://schema.org/MadeToOrder', url: abs(url(p)), seller: vendedor, itemCondition: 'https://schema.org/NewCondition' };
   return { ...base, offers };
 }
 
-export const descripcionMeta = (p: Producto) => `${p.nombre}. ${p.descripcionCorta} ${textoPrecio(p)}. Impreso en 3D por ${sitio.marca}.`.slice(0, 158);
+export function descripcionMeta(p: Producto, l: Idioma = 'es', textoPrecio: (p: Producto) => string = textoPrecioEs) {
+  const t = traductor(l);
+  return `${p.nombre}. ${p.descripcionCorta} ${textoPrecio(p)}. ${t('Impreso en 3D por', '3D-printed by', 'Imprimé en 3D par')} ${sitio.marca}.`.slice(0, 158);
+}

@@ -4,39 +4,61 @@
 import Base from '../../layouts/Base.astro';
 import Migas from '../../components/Migas.astro';
 import Icon from '../../components/Icon.astro';
-import { composiciones, precioFunko, resumenFunko, imagenCaja, FUNKO } from '../../lib/funko';
-import { euros } from '../../lib/catalogo';
+import { precioFunko, resumenFunko, imagenCaja, FUNKO } from '../../lib/funko';
+import { catalogoEn } from '../../lib/catalogo';
+import { rutasCaja } from '../../lib/rutas';
+import { idiomaDe } from '../../i18n';
 
-export const getStaticPaths = () => composiciones().map(({ n, s }) => ({ params: { comp: `${n}-${s}` }, props: { n, s } }));
+export const getStaticPaths = rutasCaja;
 const { n, s } = Astro.props as { n: number; s: number };
+const l = idiomaDe(Astro.url);
+const C = catalogoEn(l);
+const t = C.t;
+const euros = C.euros;
 
 const precio = precioFunko(n, s);
-const resumen = resumenFunko(n, s);
-const figuras = [`${n} Funko${n > 1 ? 's' : ''} de tamaño normal`, s ? `${s} ${s > 1 ? 'pequeños' : 'pequeño'}` : ''].filter(Boolean).join(' y ');
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Funkos', url: '/funkos' }, { nombre: resumen }];
+const resumen = resumenFunko(n, s, l);
+const figuras = t(
+  [`${n} Funko${n > 1 ? 's' : ''} de tamaño normal`, s ? `${s} ${s > 1 ? 'pequeños' : 'pequeño'}` : ''].filter(Boolean).join(' y '),
+  [`${n} regular-size Funko${n > 1 ? 's' : ''}`, s ? `${s} small` : ''].filter(Boolean).join(' and '),
+  [`${n} Funko${n > 1 ? 's' : ''} de taille normale`, s ? `${s} ${s > 1 ? 'petits' : 'petit'}` : ''].filter(Boolean).join(' et '),
+);
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: 'Funkos', url: C.ruta('/funkos') }, { nombre: resumen }];
 ---
 <Base
-  title={`Funko personalizado: ${resumen} · ${euros(precio)}`}
-  description={`Caja a medida con ${figuras}, hechos a partir de tus fotos. Plazo: mínimo 2 semanas.`}
+  title={`${t('Funko personalizado', 'Custom Funko', 'Funko personnalisé')}: ${resumen} · ${euros(precio)}`}
+  description={t(
+    `Caja a medida con ${figuras}, hechos a partir de tus fotos. Plazo: mínimo 2 semanas.`,
+    `Made-to-measure box with ${figuras}, made from your photos. Lead time: at least 2 weeks.`,
+    `Boîte sur mesure avec ${figuras}, réalisés à partir de vos photos. Délai : 2 semaines minimum.`,
+  )}
   imageUrl={imagenCaja(n, s)}
   noindex
   activo="/funkos"
 >
   <div class="wrap caja">
     <div class="caja__img">
-      <img src={imagenCaja(n, s)} alt={`Dibujo de la caja con ${figuras}`} width="1200" height="630" />
+      <img src={imagenCaja(n, s)} alt={t(`Dibujo de la caja con ${figuras}`, `Drawing of the box with ${figuras}`, `Dessin de la boîte avec ${figuras}`)} width="1200" height="630" />
     </div>
     <div class="caja__txt">
       <Migas items={migas} />
-      <h1>Funko personalizado</h1>
+      <h1>{t('Funko personalizado', 'Custom Funko', 'Funko personnalisé')}</h1>
       <p class="lead">{resumen}</p>
       <p class="caja__precio precio">{euros(precio)}</p>
-      <p class="nota">Caja a medida con {figuras}, hechos a partir de tus fotos. Plazo de elaboración: mínimo 2 semanas.</p>
+      <p class="nota">{t(
+        `Caja a medida con ${figuras}, hechos a partir de tus fotos. Plazo de elaboración: mínimo 2 semanas.`,
+        `Made-to-measure box with ${figuras}, made from your photos. Production time: at least 2 weeks.`,
+        `Boîte sur mesure avec ${figuras}, réalisés à partir de vos photos. Délai de fabrication : 2 semaines minimum.`,
+      )}</p>
       <div class="btn-row">
-        <a class="btn" href={`/funkos?n=${n}&s=${s}`}>Configurar la mía así</a>
-        <a class="btn btn--secondary" href="/funkos#encargos">Ver encargos hechos <Icon name="flecha" /></a>
+        <a class="btn" href={C.ruta(`/funkos?n=${n}&s=${s}`)}>{t('Configurar la mía así', 'Build mine like this', 'Composer la mienne ainsi')}</a>
+        <a class="btn btn--secondary" href={C.ruta('/funkos#encargos')}>{t('Ver encargos hechos', 'See finished orders', 'Voir les commandes réalisées')} <Icon name="flecha" /></a>
       </div>
-      <p class="nota">Desde {euros(FUNKO.base)} la caja con un Funko normal; +{euros(FUNKO.normalExtra)} el segundo normal y +{euros(FUNKO.pequeno)} cada pequeño.</p>
+      <p class="nota">{t(
+        `Desde ${euros(FUNKO.base)} la caja con un Funko normal; +${euros(FUNKO.normalExtra)} el segundo normal y +${euros(FUNKO.pequeno)} cada pequeño.`,
+        `From ${euros(FUNKO.base)} for the box with one regular Funko; +${euros(FUNKO.normalExtra)} for a second regular one and +${euros(FUNKO.pequeno)} for each small one.`,
+        `À partir de ${euros(FUNKO.base)} la boîte avec un Funko normal ; +${euros(FUNKO.normalExtra)} le deuxième normal et +${euros(FUNKO.pequeno)} chaque petit.`,
+      )}</p>
     </div>
   </div>
 </Base>

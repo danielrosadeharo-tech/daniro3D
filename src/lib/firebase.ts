@@ -4,6 +4,7 @@ import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAuth, getRedirectResult, signInWithPopup, signInWithRedirect, GoogleAuthProvider, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
+import { idiomaDocumento, traductor } from '../i18n';
 
 // En la web publicada, el acceso con Google pasa por /__/auth/ del propio dominio (vercel.json lo reenvía a
 // firebaseapp.com). Así el navegador no lo trata como de otro sitio y no bloquea la sesión al volver de Google.
@@ -60,9 +61,31 @@ export function conLimite<T>(p: Promise<T>, ms = 10000): Promise<T> {
   return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(Object.assign(new Error('tiempo'), { code: 'tiempo' })), ms))]);
 }
 
-/** Mensajes de error de Firebase en español, para enseñárselos al usuario. */
+/** Mensajes de error de Firebase para el usuario, en el idioma de la página (el panel, siempre en español). */
 export function mensajeError(e: unknown): string {
   const code = (e as { code?: string })?.code ?? '';
+  const l = idiomaDocumento();
+  if (l !== 'es') {
+    const t = traductor(l);
+    const fuera: Record<string, string> = {
+      'auth/invalid-credential': t('', 'The email or password is incorrect.', "L'e-mail ou le mot de passe est incorrect."),
+      'auth/invalid-email': t('', "That email isn't valid.", "Cet e-mail n'est pas valide."),
+      'auth/user-not-found': t('', 'There is no account with that email.', "Aucun compte n'existe avec cet e-mail."),
+      'auth/wrong-password': t('', 'The password is incorrect.', 'Le mot de passe est incorrect.'),
+      'auth/email-already-in-use': t('', 'There is already an account with that email. Try signing in.', 'Un compte existe déjà avec cet e-mail. Essayez de vous connecter.'),
+      'auth/weak-password': t('', 'The password must be at least 6 characters long.', 'Le mot de passe doit contenir au moins 6 caractères.'),
+      'auth/too-many-requests': t('', 'Too many attempts. Wait a few minutes and try again.', 'Trop de tentatives. Attendez quelques minutes et réessayez.'),
+      'auth/popup-closed-by-user': t('', 'The Google window was closed before finishing.', 'La fenêtre Google a été fermée avant la fin.'),
+      'auth/cancelled-popup-request': '',
+      'auth/popup-blocked': t('', 'Your browser blocked the Google window. Allow pop-ups for this site and try again.', 'Votre navigateur a bloqué la fenêtre Google. Autorisez les fenêtres pop-up pour ce site et réessayez.'),
+      'auth/web-storage-unsupported': t('', 'Your browser blocks the storage Google sign-in needs. Try signing in with email.', 'Votre navigateur bloque le stockage nécessaire à la connexion Google. Essayez avec votre e-mail.'),
+      'auth/network-request-failed': t('', 'No connection to the server. Check your internet.', 'Pas de connexion au serveur. Vérifiez votre connexion internet.'),
+      'unavailable': t('', 'No connection to the server. Check your internet.', 'Pas de connexion au serveur. Vérifiez votre connexion internet.'),
+      'tiempo': t('', 'The server is taking too long to respond.', 'Le serveur met trop de temps à répondre.'),
+      'permission-denied': t('', "You don't have permission to do this.", "Vous n'avez pas l'autorisation de faire cela."),
+    };
+    return fuera[code] ?? t('', `Something went wrong (${code || (e as Error)?.message || 'unknown'}).`, `Une erreur s'est produite (${code || (e as Error)?.message || 'inconnue'}).`);
+  }
   const m: Record<string, string> = {
     'auth/invalid-credential': 'El email o la contraseña no son correctos.',
     'auth/invalid-email': 'Ese email no es válido.',

@@ -2,27 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Migas from '../components/Migas.astro';
 import Icon from '../components/Icon.astro';
+import { idiomaDe, traductor, ruta } from '../i18n';
+const l = idiomaDe(Astro.url);
+const t = traductor(l);
 ---
-<Base title="Mi cuenta" description="Entra en tu cuenta para ver tus pedidos y encargos." activo="/cuenta" noindex>
+<Base title={t('Mi cuenta', 'My account', 'Mon compte')} description={t('Entra en tu cuenta para ver tus pedidos y encargos.', 'Sign in to see your orders and custom requests.', 'Connectez-vous pour voir vos commandes et vos demandes sur mesure.')} activo="/cuenta" noindex>
   <div class="wrap page-head">
-    <Migas items={[{ nombre: 'Inicio', url: '/' }, { nombre: 'Mi cuenta' }]} />
-    <h1 data-titulo>Mi cuenta</h1>
+    <Migas items={[{ nombre: t('Inicio', 'Home', 'Accueil'), url: ruta(l, '/') }, { nombre: t('Mi cuenta', 'My account', 'Mon compte') }]} />
+    <h1 data-titulo>{t('Mi cuenta', 'My account', 'Mon compte')}</h1>
   </div>
 
   <div class="wrap cuenta" data-cuenta>
-    <p class="aviso" data-sin-firebase hidden>Las cuentas todavía no están activadas en esta web.</p>
-    <p class="aviso" data-cargando>Cargando…</p>
+    <p class="aviso" data-sin-firebase hidden>{t('Las cuentas todavía no están activadas en esta web.', "Accounts aren't enabled on this website yet.", 'Les comptes ne sont pas encore activés sur ce site.')}</p>
+    <p class="aviso" data-cargando>{t('Cargando…', 'Loading…', 'Chargement…')}</p>
 
     <!-- Sin sesión -->
     <section class="acceso" data-acceso hidden aria-labelledby="acceso-h">
-      <h2 id="acceso-h" class="sr-only">Entrar o crear cuenta</h2>
-      <div class="acceso__tabs" role="tablist" aria-label="Acceso">
-        <button type="button" role="tab" aria-selected="true" data-modo="entrar">Entrar</button>
-        <button type="button" role="tab" aria-selected="false" data-modo="registro">Crear cuenta</button>
+      <h2 id="acceso-h" class="sr-only">{t('Entrar o crear cuenta', 'Sign in or create an account', 'Se connecter ou créer un compte')}</h2>
+      <div class="acceso__tabs" role="tablist" aria-label={t('Acceso', 'Access', 'Accès')}>
+        <button type="button" role="tab" aria-selected="true" data-modo="entrar">{t('Entrar', 'Sign in', 'Se connecter')}</button>
+        <button type="button" role="tab" aria-selected="false" data-modo="registro">{t('Crear cuenta', 'Create account', 'Créer un compte')}</button>
       </div>
       <form class="acceso__form" data-form-acceso novalidate>
         <div class="field" data-solo-registro hidden>
-          <label for="a-nombre">Nombre</label>
+          <label for="a-nombre">{t('Nombre', 'Name', 'Nom')}</label>
           <input class="input" id="a-nombre" name="nombre" autocomplete="name" />
         </div>
         <div class="field">
@@ -30,46 +33,47 @@ import Icon from '../components/Icon.astro';
           <input class="input" id="a-email" name="email" type="email" autocomplete="email" required />
         </div>
         <div class="field">
-          <label for="a-pass">Contraseña</label>
+          <label for="a-pass">{t('Contraseña', 'Password', 'Mot de passe')}</label>
           <input class="input" id="a-pass" name="pass" type="password" autocomplete="current-password" minlength="6" required />
-          <p class="hint" data-solo-registro hidden>Mínimo 6 caracteres.</p>
+          <p class="hint" data-solo-registro hidden>{t('Mínimo 6 caracteres.', 'At least 6 characters.', '6 caractères minimum.')}</p>
         </div>
         <p class="error" role="alert" data-error></p>
         <p class="ok" role="status" data-info></p>
-        <button class="btn btn--block" type="submit" data-enviar>Entrar</button>
-        <button class="link olvido" type="button" data-olvido>He olvidado mi contraseña</button>
-        <div class="o" aria-hidden="true"><span>o</span></div>
+        <button class="btn btn--block" type="submit" data-enviar>{t('Entrar', 'Sign in', 'Se connecter')}</button>
+        <button class="link olvido" type="button" data-olvido>{t('He olvidado mi contraseña', 'I forgot my password', "J'ai oublié mon mot de passe")}</button>
+        <div class="o" aria-hidden="true"><span>{t('o', 'or', 'ou')}</span></div>
         <button class="btn btn--secondary btn--block" type="button" data-google>
           <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
-          Continuar con Google
+          {t('Continuar con Google', 'Continue with Google', 'Continuer avec Google')}
         </button>
       </form>
-      <p class="nota">No hace falta cuenta para pedir. Con cuenta ves el estado de tus pedidos y encargos.</p>
+      <p class="nota">{t('No hace falta cuenta para pedir. Con cuenta ves el estado de tus pedidos y encargos.', "You don't need an account to order. With one, you can follow the status of your orders and custom requests.", "Pas besoin de compte pour commander. Avec un compte, vous suivez l'état de vos commandes et demandes sur mesure.")}</p>
     </section>
 
     <!-- Con sesión -->
     <section class="panel" data-panel hidden aria-labelledby="panel-h">
       <div class="panel__head">
         <div>
-          <h2 id="panel-h" data-hola>Hola</h2>
+          <h2 id="panel-h" data-hola>{t('Hola', 'Hello', 'Bonjour')}</h2>
           <p class="nota" data-email></p>
         </div>
         <div class="btn-row">
           <a class="btn btn--secondary" href="/admin" data-enlace-admin hidden>Panel de administración</a>
-          <button class="btn btn--secondary" type="button" data-salir><Icon name="salir" />Cerrar sesión</button>
+          <button class="btn btn--secondary" type="button" data-salir><Icon name="salir" />{t('Cerrar sesión', 'Sign out', 'Se déconnecter')}</button>
         </div>
       </div>
 
-      <h3>Mis pedidos</h3>
+      <h3>{t('Mis pedidos', 'My orders', 'Mes commandes')}</h3>
       <ul class="lista" data-pedidos></ul>
-      <p class="vacio-txt" data-sin-pedidos hidden>Todavía no tienes pedidos del catálogo. Los que hagas con la sesión iniciada aparecerán aquí. <a href="/catalogo">Ver el catálogo</a></p>
+      <p class="vacio-txt" data-sin-pedidos hidden>{t('Todavía no tienes pedidos del catálogo. Los que hagas con la sesión iniciada aparecerán aquí.', "You don't have any catalogue orders yet. Orders you place while signed in will appear here.", "Vous n'avez pas encore de commande du catalogue. Celles que vous passerez en étant connecté apparaîtront ici.")} <a href={ruta(l, '/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a></p>
 
-      <h3>Mis encargos</h3>
+      <h3>{t('Mis encargos', 'My custom orders', 'Mes commandes sur mesure')}</h3>
       <ul class="lista" data-encargos></ul>
-      <p class="vacio-txt" data-sin-encargos hidden>No tienes encargos personalizados. <a href="/funkos">Crea tu Funko</a> o <a href="/encargos">pide una pieza a medida</a>.</p>
+      <p class="vacio-txt" data-sin-encargos hidden>{t('No tienes encargos personalizados.', "You don't have any custom orders.", "Vous n'avez pas de commande personnalisée.")} <a href={ruta(l, '/funkos')}>{t('Crea tu Funko', 'Create your Funko', 'Créez votre Funko')}</a> {t('o', 'or', 'ou')} <a href={ruta(l, '/encargos')}>{t('pide una pieza a medida', 'request a made-to-measure piece', 'demandez une pièce sur mesure')}</a>.</p>
     </section>
   </div>
 </Base>
+
 
 <style>
   .cuenta { padding-bottom: var(--s-9); }
@@ -114,12 +118,17 @@ import Icon from '../components/Icon.astro';
   import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from 'firebase/auth';
   import { collection, query, where, onSnapshot, doc, getDoc, type Unsubscribe } from 'firebase/firestore';
   import { firebaseActivo, auth, db, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
-  import { ESTADOS, textoEstado, textoFecha, esc, lineaPersonalizada, pasoEstado } from '../lib/estados';
+  import { ESTADOS, textoEstado as textoEstadoEs, textoFecha as textoFechaEs, esc, lineaPersonalizada, pasoEstado } from '../lib/estados';
+  import { idiomaDocumento, traductor, formatoEuros } from '../i18n';
+  const idioma = idiomaDocumento();
+  const tr = traductor(idioma);
+  const textoEstado = (id: string) => textoEstadoEs(id, idioma);
+  const textoFecha = (f: { toDate?: () => Date } | null | undefined) => textoFechaEs(f, idioma);
   import { referencia } from '../lib/pedido/guardar';
 
   const root = document.querySelector<HTMLElement>('[data-cuenta]')!;
   const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
-  const eur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  const eur = { format: formatoEuros(idioma) };
 
   if (!firebaseActivo) {
     $('[data-cargando]').hidden = true;
@@ -133,7 +142,7 @@ import Icon from '../components/Icon.astro';
       root.querySelectorAll<HTMLButtonElement>('[data-modo]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.modo === m)));
       root.querySelectorAll<HTMLElement>('[data-solo-registro]').forEach((el) => (el.hidden = m !== 'registro'));
       $<HTMLInputElement>('#a-pass').autocomplete = m === 'registro' ? 'new-password' : 'current-password';
-      enviar.textContent = m === 'registro' ? 'Crear cuenta' : 'Entrar';
+      enviar.textContent = m === 'registro' ? tr('Crear cuenta', 'Create account', 'Créer un compte') : tr('Entrar', 'Sign in', 'Se connecter');
       error.textContent = ''; info.textContent = '';
     };
     root.querySelectorAll<HTMLButtonElement>('[data-modo]').forEach((b) => b.addEventListener('click', () => setModo(b.dataset.modo as typeof modo)));
@@ -143,7 +152,7 @@ import Icon from '../components/Icon.astro';
       error.textContent = ''; info.textContent = '';
       const fd = new FormData(form);
       const email = String(fd.get('email') ?? '').trim(), pass = String(fd.get('pass') ?? ''), nombre = String(fd.get('nombre') ?? '').trim();
-      if (!email || !pass) { error.textContent = 'Escribe tu email y tu contraseña.'; return; }
+      if (!email || !pass) { error.textContent = tr('Escribe tu email y tu contraseña.', 'Enter your email and password.', 'Saisissez votre e-mail et votre mot de passe.'); return; }
       enviar.disabled = true;
       try {
         if (modo === 'registro') {
@@ -163,8 +172,8 @@ import Icon from '../components/Icon.astro';
     $('[data-olvido]').addEventListener('click', async () => {
       error.textContent = ''; info.textContent = '';
       const email = $<HTMLInputElement>('#a-email').value.trim();
-      if (!email) { error.textContent = 'Escribe primero tu email y vuelve a pulsar.'; $<HTMLInputElement>('#a-email').focus(); return; }
-      try { await sendPasswordResetEmail(auth(), email); info.textContent = 'Te hemos mandado un email para cambiar la contraseña.'; }
+      if (!email) { error.textContent = tr('Escribe primero tu email y vuelve a pulsar.', 'Enter your email first, then tap again.', 'Saisissez d\'abord votre e-mail, puis cliquez à nouveau.'); $<HTMLInputElement>('#a-email').focus(); return; }
+      try { await sendPasswordResetEmail(auth(), email); info.textContent = tr('Te hemos mandado un email para cambiar la contraseña.', "We've sent you an email to reset your password.", 'Nous vous avons envoyé un e-mail pour changer votre mot de passe.'); }
       catch (err) { error.textContent = mensajeError(err); }
     });
     $('[data-salir]').addEventListener('click', () => signOut(auth()));
@@ -175,14 +184,16 @@ import Icon from '../components/Icon.astro';
     // Lo que lleva personalización (Funko a medida, textos…) va a "Mis encargos"; el resto, a "Mis pedidos".
     let escuchas: Unsubscribe[] = [];
     const pasos = ESTADOS.filter((e) => e.id !== 'cancelado');
-    const htmlPasos = (estado: string) => estado === 'cancelado' ? '' : `<ol class="pasos" aria-label="Estado: ${esc(textoEstado(estado))}">${pasos.map((e, i) =>
-      `<li class="${i <= pasoEstado(estado) ? 'hecho' : ''}"${i === pasoEstado(estado) ? ' aria-current="step"' : ''}><span>${esc(e.txt)}</span></li>`).join('')}</ol>`;
+    const htmlPasos = (estado: string) => estado === 'cancelado' ? '' : `<ol class="pasos" aria-label="${tr('Estado', 'Status', 'État')}: ${esc(textoEstado(estado))}">${pasos.map((e, i) =>
+      `<li class="${i <= pasoEstado(estado) ? 'hecho' : ''}"${i === pasoEstado(estado) ? ' aria-current="step"' : ''}><span>${esc(textoEstado(e.id))}</span></li>`).join('')}</ol>`;
     const cabecera = (titulo: string, p: any) => `
       <div class="fila"><span class="ref">${titulo}</span><span class="estado" data-e="${esc(p.estado)}">${esc(textoEstado(p.estado))}</span></div>
       ${htmlPasos(p.estado)}`;
     const htmlLinea = (l: any) => `<li>${esc(l.nombre)} × ${esc(l.cantidad)}${l.opciones && Object.keys(l.opciones).length ? ` · ${esc(Object.values(l.opciones).join(' · '))}` : ''}${l.personalizacion ? `<br><em>${esc(l.personalizacion)}</em>` : ''}</li>`;
     const suma = (ls: any[]) => ls.reduce((n, l) => n + (l.precio ?? 0) * (l.cantidad ?? 1), 0);
-    const importe = (ls: any[]) => `${eur.format(suma(ls))}${ls.some((l) => l.precio == null) ? ' + piezas a consultar' : ''}`;
+    const importe = (ls: any[]) => `${eur.format(suma(ls))}${ls.some((l) => l.precio == null) ? tr(' + piezas a consultar', ' + price-on-request items', ' + pièces sur demande') : ''}`;
+    const tPedido = tr('Pedido', 'Order', 'Commande');
+    const tNota = tr('Nuestra nota', 'Our note', 'Notre message');
     const nota = (txt: string | undefined, rotulo: string) => (txt ? `<p class="respuesta"><strong>${rotulo}:</strong> ${esc(txt)}</p>` : '');
 
     function pintarListas(pedidos: any[], encargos: any[]) {
@@ -190,24 +201,24 @@ import Icon from '../components/Icon.astro';
       const personal = pedidos.map((p) => ({ p, ls: (p.lineas ?? []).filter(lineaPersonalizada) })).filter((x) => x.ls.length);
       $('[data-pedidos]').innerHTML = normales.map(({ p, ls }) => `
         <li>
-          ${cabecera(`Pedido ${esc(referencia(p.id))}`, p)}
+          ${cabecera(`${tPedido} ${esc(referencia(p.id))}`, p)}
           <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${importe(ls)}</span></div>
           <ul>${ls.map(htmlLinea).join('')}</ul>
-          ${nota(p.respuesta, 'Nuestra nota')}
+          ${nota(p.respuesta, tNota)}
         </li>`).join('');
       $('[data-sin-pedidos]').hidden = normales.length > 0;
 
       const items = [
         ...personal.map(({ p, ls }) => ({ creado: p.creado, html: `
-          ${cabecera(`Pedido ${esc(referencia(p.id))} · personalizado`, p)}
+          ${cabecera(`${tPedido} ${esc(referencia(p.id))} · ${tr('personalizado', 'custom', 'personnalisée')}`, p)}
           <div class="fila meta"><span>${esc(textoFecha(p.creado))}</span><span>${importe(ls)}</span></div>
           <ul>${ls.map(htmlLinea).join('')}</ul>
-          ${nota(p.respuesta, 'Nuestra nota')}` })),
+          ${nota(p.respuesta, tNota)}` })),
         ...encargos.map((x) => ({ creado: x.creado, html: `
-          ${cabecera(`Encargo a medida ${esc(referencia(x.id))}`, x)}
-          <div class="meta">${esc(textoFecha(x.creado))}${x.archivo ? ` · archivo: ${esc(x.archivo.nombre)}` : ''}</div>
+          ${cabecera(`${tr('Encargo a medida', 'Custom order', 'Commande sur mesure')} ${esc(referencia(x.id))}`, x)}
+          <div class="meta">${esc(textoFecha(x.creado))}${x.archivo ? ` · ${tr('archivo', 'file', 'fichier')}: ${esc(x.archivo.nombre)}` : ''}</div>
           <p>${esc(x.descripcion)}</p>
-          ${nota(x.respuesta, 'Nuestra respuesta')}` })),
+          ${nota(x.respuesta, tr('Nuestra respuesta', 'Our reply', 'Notre réponse'))}` })),
       ].sort(porFecha);
       $('[data-encargos]').innerHTML = items.map((x) => `<li>${x.html}</li>`).join('');
       $('[data-sin-encargos]').hidden = items.length > 0;
@@ -237,7 +248,7 @@ import Icon from '../components/Icon.astro';
       $('[data-acceso]').hidden = Boolean(u);
       $('[data-panel]').hidden = !u;
       if (!u) { escuchas.forEach((parar) => parar()); escuchas = []; return; }
-      $('[data-hola]').textContent = `Hola${u.displayName ? `, ${u.displayName.split(' ')[0]}` : ''}`;
+      $('[data-hola]').textContent = `${tr('Hola', 'Hello', 'Bonjour')}${u.displayName ? `, ${u.displayName.split(' ')[0]}` : ''}`;
       $('[data-email]').textContent = u.email ?? '';
       try {
         const esAdmin = (await getDoc(doc(db(), 'admins', u.uid))).exists();

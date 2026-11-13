@@ -1,27 +1,74 @@
 ---
 import Legal from '../layouts/Legal.astro';
 import { sitio } from '../lib/catalogo';
+import { idiomaDe } from '../i18n';
 // BORRADOR: completa los datos del titular en src/data/sitio.json → "titular" y revísalo antes de publicar.
 // Los campos vacíos o que aún dicen "[COMPLETAR…]" no se muestran.
+// Las versiones en inglés y francés son traducciones informativas; manda la española.
 const relleno = (v?: string | null) => (v && !v.trim().startsWith('[') ? v.trim() : null);
 const t = { nombre: relleno(sitio.titular.nombre), nif: relleno(sitio.titular.nif), domicilio: relleno(sitio.titular.domicilio) };
+const l = idiomaDe(Astro.url);
 ---
-<Legal title="Privacidad y aviso legal" description={`Aviso legal y política de privacidad de ${sitio.marca}.`} ruta="/privacidad">
-  <h2>Quién es el responsable</h2>
-  <p>Esta web es de {t.nombre ?? sitio.marca}{t.nif && `, con NIF ${t.nif}`}{t.domicilio && `, en ${t.domicilio}`}. Contacto: WhatsApp {sitio.telefonoVisible}{sitio.email && <> o {sitio.email}</>}.</p>
-  <h2>Qué datos usamos y para qué</h2>
-  <ul>
-    <li>Cuando nos mandas un pedido o un encargo, usamos tu nombre, tu teléfono o email y lo que nos cuentas para responderte, preparar el pedido y enviarlo. Si adjuntas un archivo (una foto o un STL), lo usamos solo para preparar tu encargo.</li>
-    <li>Si creas una cuenta, guardamos tu nombre y tu email (o los que te da Google, si entras con Google) para que puedas ver tus pedidos y encargos y en qué estado están.</li>
-    <li>No usamos tus datos para publicidad ni se los cedemos a nadie, salvo a la empresa de transporte para hacerte llegar el paquete y a los servicios que nos ayudan a gestionarlos (abajo).</li>
-    <li>Guardamos los datos del pedido el tiempo que obliga la ley (facturación) y los del contacto mientras dure la conversación. Las cuentas, hasta que nos pidas borrarlas.</li>
-  </ul>
-  <h2>Dónde se guardan</h2>
-  <p>Los pedidos, los encargos, los archivos adjuntos y las cuentas se guardan en Firebase, un servicio de Google. Google actúa como encargado del tratamiento: los guarda por nosotros y no puede usarlos para sus propios fines. Algunos de sus servidores pueden estar fuera de la Unión Europea; en ese caso la transferencia está cubierta por las garantías que exige el RGPD (cláusulas contractuales tipo de la Comisión Europea). Solo nosotros podemos ver los pedidos y encargos de todos los clientes; tú ves solo los tuyos.</p>
-  <h2>Tu cesta y las cookies</h2>
-  <p>Esta web no usa cookies de seguimiento ni de publicidad. La cesta se guarda solo en tu navegador (almacenamiento local) para que no la pierdas al cambiar de página; no nos llega a nosotros hasta que envías el pedido. Si inicias sesión, tu navegador guarda también tu sesión para que no tengas que entrar cada vez; se borra al cerrar sesión. Si entras con Google, Google puede usar sus propias cookies en la ventana de acceso.</p>
-  <h2>WhatsApp</h2>
-  <p>Si eliges enviar el pedido por WhatsApp, el mensaje pasa por los servidores de WhatsApp (Meta) y se rige también por su política de privacidad.</p>
-  <h2>Tus derechos</h2>
-  <p>Puedes pedirnos ver, corregir o borrar tus datos, o limitar su uso, escribiéndonos por los mismos canales. Si crees que no los tratamos bien, puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
-</Legal>
+{l === 'en' ? (
+  <Legal title="Privacy and legal notice" description={`Legal notice and privacy policy of ${sitio.marca}.`} ruta="/privacidad">
+    <h2>Who is responsible</h2>
+    <p>This website belongs to {t.nombre ?? sitio.marca}{t.nif && `, tax ID ${t.nif}`}{t.domicilio && `, in ${t.domicilio}`} (Spain). Contact: WhatsApp +34 {sitio.telefonoVisible}{sitio.email && <> or {sitio.email}</>}.</p>
+    <h2>What data we use and why</h2>
+    <ul>
+      <li>When you send us an order or a custom request, we use your name, your phone or email and what you tell us to reply to you, prepare the order and ship it. If you attach a file (a photo or an STL), we only use it to prepare your request.</li>
+      <li>If you create an account, we store your name and email (or the ones Google gives us, if you sign in with Google) so you can see your orders and requests and their status.</li>
+      <li>We don't use your data for advertising or share it with anyone, except the courier company so your parcel reaches you, and the services that help us manage them (below).</li>
+      <li>We keep order data for as long as the law requires (invoicing) and contact data for as long as the conversation lasts. Accounts are kept until you ask us to delete them.</li>
+    </ul>
+    <h2>Where it is stored</h2>
+    <p>Orders, custom requests, attached files and accounts are stored in Firebase, a Google service. Google acts as a data processor: it stores them on our behalf and cannot use them for its own purposes. Some of its servers may be outside the European Union; in that case the transfer is covered by the safeguards required by the GDPR (the European Commission's standard contractual clauses). Only we can see all customers' orders and requests; you only see your own.</p>
+    <h2>Your basket and cookies</h2>
+    <p>This website doesn't use tracking or advertising cookies. The basket is stored only in your browser (local storage) so you don't lose it when you change page; it doesn't reach us until you send the order. Your language choice is also stored in your browser. If you sign in, your browser also keeps your session so you don't have to sign in every time; it is deleted when you sign out. If you sign in with Google, Google may use its own cookies in the sign-in window.</p>
+    <h2>WhatsApp</h2>
+    <p>If you choose to send your order by WhatsApp, the message goes through WhatsApp's (Meta's) servers and is also subject to their privacy policy.</p>
+    <h2>Your rights</h2>
+    <p>You can ask us to see, correct or delete your data, or to restrict its use, by writing to us through the same channels. If you think we are not handling it properly, you can complain to the Spanish Data Protection Agency (aepd.es) or to the data protection authority in your country.</p>
+    <p><small>This is an informative translation; the Spanish version is the one that applies.</small></p>
+  </Legal>
+) : l === 'fr' ? (
+  <Legal title="Confidentialité et mentions légales" description={`Mentions légales et politique de confidentialité de ${sitio.marca}.`} ruta="/privacidad">
+    <h2>Qui est responsable</h2>
+    <p>Ce site appartient à {t.nombre ?? sitio.marca}{t.nif && `, NIF ${t.nif}`}{t.domicilio && `, à ${t.domicilio}`} (Espagne). Contact : WhatsApp +34 {sitio.telefonoVisible}{sitio.email && <> ou {sitio.email}</>}.</p>
+    <h2>Quelles données nous utilisons et pourquoi</h2>
+    <ul>
+      <li>Quand vous nous envoyez une commande ou une demande sur mesure, nous utilisons votre nom, votre téléphone ou votre e-mail et ce que vous nous racontez pour vous répondre, préparer la commande et l'expédier. Si vous joignez un fichier (une photo ou un STL), nous l'utilisons uniquement pour préparer votre demande.</li>
+      <li>Si vous créez un compte, nous conservons votre nom et votre e-mail (ou ceux que Google nous transmet, si vous vous connectez avec Google) pour que vous puissiez voir vos commandes et demandes et leur état.</li>
+      <li>Nous n'utilisons pas vos données à des fins publicitaires et ne les cédons à personne, sauf au transporteur pour vous livrer le colis et aux services qui nous aident à les gérer (ci-dessous).</li>
+      <li>Nous conservons les données de commande le temps exigé par la loi (facturation) et les données de contact le temps de la conversation. Les comptes, jusqu'à ce que vous nous demandiez de les supprimer.</li>
+    </ul>
+    <h2>Où elles sont conservées</h2>
+    <p>Les commandes, les demandes sur mesure, les fichiers joints et les comptes sont conservés dans Firebase, un service de Google. Google agit en tant que sous-traitant : il les conserve pour notre compte et ne peut pas les utiliser à ses propres fins. Certains de ses serveurs peuvent se trouver hors de l'Union européenne ; dans ce cas, le transfert est encadré par les garanties exigées par le RGPD (clauses contractuelles types de la Commission européenne). Nous seuls pouvons voir les commandes et demandes de tous les clients ; vous ne voyez que les vôtres.</p>
+    <h2>Votre panier et les cookies</h2>
+    <p>Ce site n'utilise pas de cookies de suivi ni de publicité. Le panier est conservé uniquement dans votre navigateur (stockage local) pour que vous ne le perdiez pas en changeant de page ; il ne nous parvient qu'au moment où vous envoyez la commande. Votre choix de langue est aussi conservé dans votre navigateur. Si vous vous connectez, votre navigateur conserve également votre session pour vous éviter de vous reconnecter à chaque fois ; elle est supprimée à la déconnexion. Si vous vous connectez avec Google, Google peut utiliser ses propres cookies dans la fenêtre de connexion.</p>
+    <h2>WhatsApp</h2>
+    <p>Si vous choisissez d'envoyer votre commande par WhatsApp, le message passe par les serveurs de WhatsApp (Meta) et est également soumis à leur politique de confidentialité.</p>
+    <h2>Vos droits</h2>
+    <p>Vous pouvez nous demander d'accéder à vos données, de les rectifier, de les supprimer ou d'en limiter l'usage, en nous écrivant par les mêmes moyens. Si vous estimez que nous ne les traitons pas correctement, vous pouvez déposer une réclamation auprès de l'Agence espagnole de protection des données (aepd.es) ou de la CNIL en France.</p>
+    <p><small>Ceci est une traduction informative ; seule la version espagnole fait foi.</small></p>
+  </Legal>
+) : (
+  <Legal title="Privacidad y aviso legal" description={`Aviso legal y política de privacidad de ${sitio.marca}.`} ruta="/privacidad">
+    <h2>Quién es el responsable</h2>
+    <p>Esta web es de {t.nombre ?? sitio.marca}{t.nif && `, con NIF ${t.nif}`}{t.domicilio && `, en ${t.domicilio}`}. Contacto: WhatsApp {sitio.telefonoVisible}{sitio.email && <> o {sitio.email}</>}.</p>
+    <h2>Qué datos usamos y para qué</h2>
+    <ul>
+      <li>Cuando nos mandas un pedido o un encargo, usamos tu nombre, tu teléfono o email y lo que nos cuentas para responderte, preparar el pedido y enviarlo. Si adjuntas un archivo (una foto o un STL), lo usamos solo para preparar tu encargo.</li>
+      <li>Si creas una cuenta, guardamos tu nombre y tu email (o los que te da Google, si entras con Google) para que puedas ver tus pedidos y encargos y en qué estado están.</li>
+      <li>No usamos tus datos para publicidad ni se los cedemos a nadie, salvo a la empresa de transporte para hacerte llegar el paquete y a los servicios que nos ayudan a gestionarlos (abajo).</li>
+      <li>Guardamos los datos del pedido el tiempo que obliga la ley (facturación) y los del contacto mientras dure la conversación. Las cuentas, hasta que nos pidas borrarlas.</li>
+    </ul>
+    <h2>Dónde se guardan</h2>
+    <p>Los pedidos, los encargos, los archivos adjuntos y las cuentas se guardan en Firebase, un servicio de Google. Google actúa como encargado del tratamiento: los guarda por nosotros y no puede usarlos para sus propios fines. Algunos de sus servidores pueden estar fuera de la Unión Europea; en ese caso la transferencia está cubierta por las garantías que exige el RGPD (cláusulas contractuales tipo de la Comisión Europea). Solo nosotros podemos ver los pedidos y encargos de todos los clientes; tú ves solo los tuyos.</p>
+    <h2>Tu cesta y las cookies</h2>
+    <p>Esta web no usa cookies de seguimiento ni de publicidad. La cesta se guarda solo en tu navegador (almacenamiento local) para que no la pierdas al cambiar de página; no nos llega a nosotros hasta que envías el pedido. El idioma que eliges también se guarda en tu navegador. Si inicias sesión, tu navegador guarda también tu sesión para que no tengas que entrar cada vez; se borra al cerrar sesión. Si entras con Google, Google puede usar sus propias cookies en la ventana de acceso.</p>
+    <h2>WhatsApp</h2>
+    <p>Si eliges enviar el pedido por WhatsApp, el mensaje pasa por los servidores de WhatsApp (Meta) y se rige también por su política de privacidad.</p>
+    <h2>Tus derechos</h2>
+    <p>Puedes pedirnos ver, corregir o borrar tus datos, o limitar su uso, escribiéndonos por los mismos canales. Si crees que no los tratamos bien, puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+  </Legal>
+)}

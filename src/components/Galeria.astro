@@ -2,17 +2,19 @@
 import { Picture, getImage } from 'astro:assets';
 import Icon from './Icon.astro';
 import type { ImageMetadata } from 'astro';
+import { idiomaDe, traductor } from '../i18n';
 interface Props { fotos: { src: ImageMetadata; alt: string }[]; nombre: string }
 const { fotos, nombre } = Astro.props;
 const grandes = await Promise.all(fotos.map((f) => getImage({ src: f.src, width: f.src.width, format: 'webp', quality: 88 })));
 const varias = fotos.length > 1;
+const t = traductor(idiomaDe(Astro.url));
 ---
 <div class="gal" data-galeria>
   <div class="gal__stage">
-    <ul class="gal__track" data-track aria-label={`Fotos de ${nombre}`}>
+    <ul class="gal__track" data-track aria-label={t(`Fotos de ${nombre}`, `Photos of ${nombre}`, `Photos de ${nombre}`)}>
       {fotos.map((f, i) => (
         <li class="gal__slide" id={`foto-${i + 1}`}>
-          <button type="button" class="gal__zoom" data-zoom={i} aria-label={`Ampliar foto ${i + 1} de ${fotos.length}: ${f.alt}`}>
+          <button type="button" class="gal__zoom" data-zoom={i} aria-label={t(`Ampliar foto ${i + 1} de ${fotos.length}: ${f.alt}`, `Enlarge photo ${i + 1} of ${fotos.length}: ${f.alt}`, `Agrandir la photo ${i + 1} sur ${fotos.length} : ${f.alt}`)}>
             <Picture
               src={f.src}
               alt={f.alt}
@@ -28,18 +30,18 @@ const varias = fotos.length > 1;
     </ul>
     {varias && (
       <>
-        <button type="button" class="gal__nav gal__nav--prev icon-btn" data-prev aria-label="Foto anterior"><Icon name="izq" /></button>
-        <button type="button" class="gal__nav gal__nav--next icon-btn" data-next aria-label="Foto siguiente"><Icon name="der" /></button>
+        <button type="button" class="gal__nav gal__nav--prev icon-btn" data-prev aria-label={t("Foto anterior", "Previous photo", "Photo précédente")}><Icon name="izq" /></button>
+        <button type="button" class="gal__nav gal__nav--next icon-btn" data-next aria-label={t("Foto siguiente", "Next photo", "Photo suivante")}><Icon name="der" /></button>
         <p class="gal__pos" aria-hidden="true"><span data-pos>1</span> / {fotos.length}</p>
       </>
     )}
-    <span class="gal__hint" aria-hidden="true"><Icon name="zoom" size={18} />Toca para ampliar</span>
+    <span class="gal__hint" aria-hidden="true"><Icon name="zoom" size={18} />{t("Toca para ampliar", "Tap to enlarge", "Touchez pour agrandir")}</span>
   </div>
   {varias && (
-    <ul class="gal__thumbs" aria-label="Elegir foto">
+    <ul class="gal__thumbs" aria-label={t("Elegir foto", "Choose a photo", "Choisir une photo")}>
       {fotos.map((f, i) => (
         <li>
-          <button type="button" data-ir={i} aria-label={`Ver foto ${i + 1}: ${f.alt}`} aria-current={i === 0 ? 'true' : undefined}>
+          <button type="button" data-ir={i} aria-label={t(`Ver foto ${i + 1}: ${f.alt}`, `View photo ${i + 1}: ${f.alt}`, `Voir la photo ${i + 1} : ${f.alt}`)} aria-current={i === 0 ? 'true' : undefined}>
             <Picture src={f.src} alt="" formats={['webp']} widths={[96, 160]} sizes="80px" loading="lazy" />
           </button>
         </li>
@@ -47,21 +49,21 @@ const varias = fotos.length > 1;
     </ul>
   )}
 
-  <dialog class="zoom" data-zoom-dlg aria-label={`Foto ampliada de ${nombre}`}>
+  <dialog class="zoom" data-zoom-dlg aria-label={t(`Foto ampliada de ${nombre}`, `Enlarged photo of ${nombre}`, `Photo agrandie de ${nombre}`)}>
     <div class="zoom__bar">
       <p class="zoom__pos" aria-live="polite"><span data-zpos>1</span> / {fotos.length}</p>
-      <button type="button" class="icon-btn" data-zcerrar aria-label="Cerrar"><Icon name="cerrar" /></button>
+      <button type="button" class="icon-btn" data-zcerrar aria-label={t("Cerrar", "Close", "Fermer")}><Icon name="cerrar" /></button>
     </div>
     <div class="zoom__view" data-zview>
       <img data-zimg src={grandes[0].src} alt={fotos[0].alt} width={fotos[0].src.width} height={fotos[0].src.height} />
     </div>
     {varias && (
       <>
-        <button type="button" class="zoom__nav zoom__nav--prev icon-btn" data-zprev aria-label="Foto anterior"><Icon name="izq" /></button>
-        <button type="button" class="zoom__nav zoom__nav--next icon-btn" data-znext aria-label="Foto siguiente"><Icon name="der" /></button>
+        <button type="button" class="zoom__nav zoom__nav--prev icon-btn" data-zprev aria-label={t("Foto anterior", "Previous photo", "Photo précédente")}><Icon name="izq" /></button>
+        <button type="button" class="zoom__nav zoom__nav--next icon-btn" data-znext aria-label={t("Foto siguiente", "Next photo", "Photo suivante")}><Icon name="der" /></button>
       </>
     )}
-    <p class="zoom__help">Pulsa la foto para acercar · mueve para recorrerla</p>
+    <p class="zoom__help">{t("Pulsa la foto para acercar · mueve para recorrerla", "Tap the photo to zoom in · move to look around", "Touchez la photo pour zoomer · déplacez pour la parcourir")}</p>
     <script type="application/json" data-zdata set:html={JSON.stringify(grandes.map((g, i) => ({ src: g.src, alt: fotos[i].alt, w: fotos[i].src.width, h: fotos[i].src.height })))} />
   </dialog>
 </div>

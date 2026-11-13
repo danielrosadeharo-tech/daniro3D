@@ -3,57 +3,67 @@ import Base from '../layouts/Base.astro';
 import Migas from '../components/Migas.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Icon from '../components/Icon.astro';
-import { metodosDisponibles } from '../lib/pedido';
+import { metodosDisponibles, textosMetodo } from '../lib/pedido';
 import sitio from '../data/sitio.json';
-const metodos = metodosDisponibles();
+import { idiomaDe, traductor, ruta } from '../i18n';
+const l = idiomaDe(Astro.url);
+const t = traductor(l);
+const metodos = metodosDisponibles().map((m) => ({ ...m, ...textosMetodo(m.id, l) }));
+const opcional = t('(opcional)', '(optional)', '(facultatif)');
 ---
-<Base title="Tu cesta" description="Revisa tu pedido y envíalo por WhatsApp. Te confirmamos precio final, envío y plazo." noindex>
+<Base title={t('Tu cesta', 'Your basket', 'Votre panier')} description={t('Revisa tu pedido y envíalo por WhatsApp. Te confirmamos precio final, envío y plazo.', 'Check your order and send it on WhatsApp. We confirm the final price, shipping and lead time.', 'Vérifiez votre commande et envoyez-la sur WhatsApp. Nous vous confirmons le prix final, la livraison et le délai.')} noindex>
   <div class="wrap page-head">
-    <Migas items={[{ nombre: 'Inicio', url: '/' }, { nombre: 'Cesta' }]} />
-    <h1>Tu cesta</h1>
+    <Migas items={[{ nombre: t('Inicio', 'Home', 'Accueil'), url: ruta(l, '/') }, { nombre: t('Cesta', 'Basket', 'Panier') }]} />
+    <h1>{t('Tu cesta', 'Your basket', 'Votre panier')}</h1>
   </div>
-  <div class="wrap checkout" data-checkout>
+  <div class="wrap checkout" data-checkout
+    data-t-enviando={t('Enviando…', 'Sending…', 'Envoi…')}
+    data-t-enviar={t('Enviar pedido', 'Send order', 'Envoyer la commande')}
+    data-t-falta-nombre={t('Escribe tu nombre para saber de quién es el pedido.', 'Enter your name so we know whose order it is.', 'Indiquez votre nom pour que nous sachions de qui vient la commande.')}
+    data-t-email-mal={t('Este email no parece completo. Revisa que tenga @ y dominio.', "This email doesn't look complete. Check it has an @ and a domain.", "Cet e-mail ne semble pas complet. Vérifiez qu'il contient un @ et un domaine.")}
+    data-t-recibido={t('Pedido {ref} recibido.', 'Order {ref} received.', 'Commande {ref} reçue.')}
+  >
     <section class="checkout__lineas" aria-labelledby="lin-h">
-      <h2 id="lin-h" class="sr-only">Piezas en la cesta</h2>
+      <h2 id="lin-h" class="sr-only">{t('Piezas en la cesta', 'Items in the basket', 'Articles du panier')}</h2>
       <ul data-lineas style="list-style:none;padding:0"></ul>
       <div class="vacio" data-vacio hidden>
-        <p class="lead">Tu cesta está vacía.</p>
-        <a class="btn" href="/catalogo">Ver el catálogo</a>
+        <p class="lead">{t('Tu cesta está vacía.', 'Your basket is empty.', 'Votre panier est vide.')}</p>
+        <a class="btn" href={ruta(l, '/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a>
       </div>
       <div class="vacio" data-hecho hidden>
-        <p class="lead">¡Pedido listo!</p>
+        <p class="lead">{t('¡Pedido listo!', 'Order ready!', 'Commande prête !')}</p>
         <p data-hecho-msg role="status"></p>
-        <p class="nota">Si no se ha abierto nada, escríbenos por WhatsApp al {sitio.telefonoVisible} y lo vemos.</p>
-        <a class="btn btn--secondary" href="/catalogo">Seguir mirando el catálogo</a>
+        <p class="nota">{t(`Si no se ha abierto nada, escríbenos por WhatsApp al ${sitio.telefonoVisible} y lo vemos.`, `If nothing opened, message us on WhatsApp at +34 ${sitio.telefonoVisible} and we'll sort it out.`, `Si rien ne s'est ouvert, écrivez-nous sur WhatsApp au +34 ${sitio.telefonoVisible} et nous verrons ensemble.`)}</p>
+        <a class="btn btn--secondary" href={ruta(l, '/catalogo')}>{t('Seguir mirando el catálogo', 'Keep browsing the catalogue', 'Continuer à parcourir le catalogue')}</a>
       </div>
       <div class="total checkout__total" data-con-lineas><span>Total</span><strong class="precio" data-total>0 €</strong></div>
-      <p class="nota" data-nota-consulta hidden>Las piezas a consultar no suman: te damos su precio al confirmar.</p>
+      <p class="nota" data-nota-consulta hidden>{t('Las piezas a consultar no suman: te damos su precio al confirmar.', "Price-on-request items aren't included: we'll give you their price when we confirm.", 'Les pièces sur demande ne sont pas comptées : nous vous donnons leur prix à la confirmation.')}</p>
     </section>
 
     <section class="checkout__form" data-con-lineas aria-labelledby="datos-h">
       <form data-form-pedido novalidate>
-        <h2 id="datos-h">Tus datos</h2>
+        <h2 id="datos-h">{t('Tus datos', 'Your details', 'Vos coordonnées')}</h2>
         <div class="field" data-campo="nombre">
-          <label for="c-nombre">Nombre</label>
+          <label for="c-nombre">{t('Nombre', 'Name', 'Nom')}</label>
           <input class="input" id="c-nombre" name="nombre" autocomplete="name" required aria-describedby="e-nombre" />
           <p class="error" id="e-nombre" aria-live="polite"></p>
         </div>
         <div class="field">
-          <label for="c-tel">Teléfono <span class="hint">(opcional)</span></label>
+          <label for="c-tel">{t('Teléfono', 'Phone', 'Téléphone')} <span class="hint">{opcional}</span></label>
           <input class="input" id="c-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" />
         </div>
         <div class="field" data-campo="email">
-          <label for="c-email">Email <span class="hint">(opcional)</span></label>
+          <label for="c-email">Email <span class="hint">{opcional}</span></label>
           <input class="input" id="c-email" name="email" type="email" autocomplete="email" aria-describedby="e-email" />
           <p class="error" id="e-email" aria-live="polite"></p>
         </div>
         <div class="field">
-          <label for="c-notas">Notas <span class="hint">(opcional)</span></label>
-          <textarea class="textarea" id="c-notas" name="notas" rows="3" placeholder="Ciudad para el envío, fecha que te viene bien, dudas…"></textarea>
+          <label for="c-notas">{t('Notas', 'Notes', 'Remarques')} <span class="hint">{opcional}</span></label>
+          <textarea class="textarea" id="c-notas" name="notas" rows="3" placeholder={t('Ciudad para el envío, fecha que te viene bien, dudas…', 'Delivery city and country, a date that suits you, questions…', 'Ville et pays de livraison, date qui vous convient, questions…')}></textarea>
         </div>
 
         <fieldset class="metodos">
-          <legend>Cómo nos mandas el pedido</legend>
+          <legend>{t('Cómo nos mandas el pedido', 'How to send us your order', 'Comment nous envoyer la commande')}</legend>
           {metodos.map((m, i) => (
             <label class="metodo">
               <input type="radio" name="metodo" value={m.id} checked={i === 0} />
@@ -62,8 +72,8 @@ const metodos = metodosDisponibles();
           ))}
         </fieldset>
 
-        <button class="btn btn--block" type="submit" data-enviar>Enviar pedido</button>
-        <p class="nota">No pagas nada todavía. Al recibir el pedido te confirmamos el precio final, el envío y el plazo, y acordamos el pago.</p>
+        <button class="btn btn--block" type="submit" data-enviar>{t('Enviar pedido', 'Send order', 'Envoyer la commande')}</button>
+        <p class="nota">{t('No pagas nada todavía. Al recibir el pedido te confirmamos el precio final, el envío y el plazo, y acordamos el pago.', "You don't pay anything yet. When we receive the order we confirm the final price, shipping and lead time, and agree on payment.", "Vous ne payez rien pour l'instant. À réception de la commande, nous vous confirmons le prix final, la livraison et le délai, et convenons du paiement.")}</p>
       </form>
     </section>
   </div>
@@ -131,8 +141,8 @@ const metodos = metodosDisponibles();
     const fd = new FormData(form);
     const nombre = String(fd.get('nombre') ?? '').trim();
     const email = String(fd.get('email') ?? '').trim();
-    err('nombre', nombre ? '' : 'Escribe tu nombre para saber de quién es el pedido.');
-    err('email', !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Este email no parece completo. Revisa que tenga @ y dominio.');
+    err('nombre', nombre ? '' : root.dataset.tFaltaNombre!);
+    err('email', !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : root.dataset.tEmailMal!);
     const primero = form.querySelector<HTMLInputElement>('[aria-invalid="true"]');
     if (primero) { primero.focus(); return; }
 
@@ -147,18 +157,18 @@ const metodos = metodosDisponibles();
     // 1) Se guarda en Firestore (si está configurado) para que aparezca en el panel y en "Mi cuenta"
     let guardado = false;
     if (firebaseActivo) {
-      btn.disabled = true; btn.textContent = 'Enviando…';
+      btn.disabled = true; btn.textContent = root.dataset.tEnviando!;
       try {
         const id = await guardarPedido(pedido, metodo.id);
         if (id) { (pedido as Pedido).referencia = referencia(id); guardado = true; avisarPedido('pedidos', id); }
       } catch (e) {
         console.warn('No se pudo guardar el pedido en Firestore', e); // seguimos por WhatsApp igualmente
-      } finally { btn.disabled = false; btn.textContent = 'Enviar pedido'; }
+      } finally { btn.disabled = false; btn.textContent = root.dataset.tEnviar!; }
     }
     // 2) Y se manda por WhatsApp o email, como siempre
     const r = await metodo.enviar(pedido);
     // El pedido ya va escrito en WhatsApp o en el correo: la cesta se vacía para el siguiente
-    root.querySelector('[data-hecho-msg]')!.textContent = guardado ? `Pedido ${(pedido as Pedido).referencia} recibido. ${r.mensaje}` : r.mensaje;
+    root.querySelector('[data-hecho-msg]')!.textContent = guardado ? `${root.dataset.tRecibido!.replace('{ref}', (pedido as Pedido).referencia ?? '')} ${r.mensaje}` : r.mensaje;
     enviado = true;
     form.reset();
     cesta.vaciar();

@@ -1,14 +1,41 @@
 ---
 import Legal from '../layouts/Legal.astro';
 import { sitio } from '../lib/catalogo';
+import { idiomaDe } from '../i18n';
 // BORRADOR basado en la Ley General para la Defensa de los Consumidores y Usuarios. Revísalo antes de publicar.
+// Las versiones en inglés y francés son traducciones informativas; manda la española.
+const l = idiomaDe(Astro.url);
 ---
-<Legal title="Devoluciones" description={`Política de devoluciones de ${sitio.marca}: derecho de desistimiento, piezas personalizadas y garantía.`} ruta="/devoluciones">
-  <p class="lead">Queremos que te guste lo que recibes. Si no es así, esto es lo que puedes hacer.</p>
-  <h2>Piezas del catálogo sin personalizar</h2>
-  <p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones. Escríbenos por WhatsApp o email, mándanos la pieza en buen estado y te devolvemos el importe en un máximo de 14 días desde que la recibimos. Los gastos de la devolución corren de tu cuenta.</p>
-  <h2>Piezas personalizadas o hechas a medida</h2>
-  <p>Los Funkos personalizados, los posavasos y llaveros con tu mascota o tu texto, y cualquier encargo a medida se fabrican según tus indicaciones, así que no tienen derecho de desistimiento (artículo 103 de la Ley General para la Defensa de los Consumidores y Usuarios). Por eso te enseñamos el diseño y te confirmamos los detalles antes de imprimir.</p>
-  <h2>Garantía</h2>
-  <p>Si la pieza llega rota o con un defecto de fabricación, la reponemos o te devolvemos el dinero, también si es personalizada. Escríbenos con una foto.</p>
-</Legal>
+{l === 'en' ? (
+  <Legal title="Returns" description={`${sitio.marca} returns policy: right of withdrawal, personalised pieces and guarantee.`} ruta="/devoluciones">
+    <p class="lead">We want you to love what you receive. If you don't, this is what you can do.</p>
+    <h2>Catalogue pieces that aren't personalised</h2>
+    <p>You have 14 calendar days from receiving your order to return it without giving a reason. Message us on WhatsApp or by email, send the piece back in good condition and we will refund you within 14 days of receiving it. Return shipping costs are paid by you.</p>
+    <h2>Personalised or made-to-measure pieces</h2>
+    <p>Custom Funkos, coasters and keyrings with your pet or your text, and any made-to-measure order are made to your specifications, so the right of withdrawal does not apply (article 103 of the Spanish General Law for the Protection of Consumers and Users). That's why we show you the design and confirm the details before printing.</p>
+    <h2>Guarantee</h2>
+    <p>If the piece arrives broken or with a manufacturing defect, we will replace it or refund you, even if it is personalised. Write to us with a photo.</p>
+    <p><small>This is an informative translation; the Spanish version is the one that applies.</small></p>
+  </Legal>
+) : l === 'fr' ? (
+  <Legal title="Retours" description={`Politique de retour de ${sitio.marca} : droit de rétractation, pièces personnalisées et garantie.`} ruta="/devoluciones">
+    <p class="lead">Nous voulons que ce que vous recevez vous plaise. Si ce n'est pas le cas, voici ce que vous pouvez faire.</p>
+    <h2>Pièces du catalogue non personnalisées</h2>
+    <p>Vous disposez de 14 jours calendaires à compter de la réception de votre commande pour la retourner sans avoir à vous justifier. Écrivez-nous sur WhatsApp ou par e-mail, renvoyez la pièce en bon état et nous vous remboursons dans un délai de 14 jours à compter de sa réception. Les frais de retour sont à votre charge.</p>
+    <h2>Pièces personnalisées ou sur mesure</h2>
+    <p>Les Funkos personnalisés, les sous-verres et porte-clés avec votre animal ou votre texte, et toute commande sur mesure sont fabriqués selon vos indications : ils ne bénéficient donc pas du droit de rétractation (article 103 de la loi générale espagnole pour la défense des consommateurs et usagers). C'est pourquoi nous vous montrons le design et confirmons les détails avant l'impression.</p>
+    <h2>Garantie</h2>
+    <p>Si la pièce arrive cassée ou présente un défaut de fabrication, nous la remplaçons ou vous remboursons, même si elle est personnalisée. Écrivez-nous avec une photo.</p>
+    <p><small>Ceci est une traduction informative ; seule la version espagnole fait foi.</small></p>
+  </Legal>
+) : (
+  <Legal title="Devoluciones" description={`Política de devoluciones de ${sitio.marca}: derecho de desistimiento, piezas personalizadas y garantía.`} ruta="/devoluciones">
+    <p class="lead">Queremos que te guste lo que recibes. Si no es así, esto es lo que puedes hacer.</p>
+    <h2>Piezas del catálogo sin personalizar</h2>
+    <p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones. Escríbenos por WhatsApp o email, mándanos la pieza en buen estado y te devolvemos el importe en un máximo de 14 días desde que la recibimos. Los gastos de la devolución corren de tu cuenta.</p>
+    <h2>Piezas personalizadas o hechas a medida</h2>
+    <p>Los Funkos personalizados, los posavasos y llaveros con tu mascota o tu texto, y cualquier encargo a medida se fabrican según tus indicaciones, así que no tienen derecho de desistimiento (artículo 103 de la Ley General para la Defensa de los Consumidores y Usuarios). Por eso te enseñamos el diseño y te confirmamos los detalles antes de imprimir.</p>
+    <h2>Garantía</h2>
+    <p>Si la pieza llega rota o con un defecto de fabricación, la reponemos o te devolvemos el dinero, también si es personalizada. Escríbenos con una foto.</p>
+  </Legal>
+)}

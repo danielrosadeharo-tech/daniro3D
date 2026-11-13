@@ -6,30 +6,32 @@
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Icon from './Icon.astro';
+import { idiomaDe, traductor } from '../i18n';
 
 interface Item { nombre: string; src: ImageMetadata; alt: string; href?: string }
 interface Props { items: Item[]; etiqueta: string; sizes: string; visor?: boolean; eager?: boolean; class?: string }
 const { items, etiqueta, sizes, visor = false, eager = false, class: clase } = Astro.props;
+const t = traductor(idiomaDe(Astro.url));
 ---
-<div class:list={['carrusel', clase]} data-carrusel role="region" aria-roledescription="carrusel" aria-label={etiqueta}>
+<div class:list={['carrusel', clase]} data-carrusel role="region" aria-roledescription={t("carrusel", "carousel", "carrousel")} aria-label={etiqueta} data-pausar={t("Pausar el carrusel", "Pause the carousel", "Mettre le carrousel en pause")} data-reanudar={t("Reanudar el carrusel", "Resume the carousel", "Relancer le carrousel")}>
   <ul class="carrusel__track" data-ctrack>
     {items.map((it, i) => {
       const img = <Picture src={it.src} alt={it.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes={sizes} loading={eager && i === 0 ? 'eager' : 'lazy'} fetchpriority={eager && i === 0 ? 'high' : undefined} />;
       return (
-        <li class="carrusel__slide" aria-roledescription="diapositiva" aria-label={`${i + 1} de ${items.length}: ${it.nombre}`}>
+        <li class="carrusel__slide" aria-roledescription={t("diapositiva", "slide", "diapositive")} aria-label={t(`${i + 1} de ${items.length}: ${it.nombre}`, `${i + 1} of ${items.length}: ${it.nombre}`, `${i + 1} sur ${items.length} : ${it.nombre}`)}>
           {visor
-            ? <button type="button" class="carrusel__btn carrusel__btn--zoom" data-visor={i} aria-label={`Ver las fotos de ${it.nombre}`} tabindex={i === 0 ? 0 : -1}>{img}</button>
-            : <a class="carrusel__btn" href={it.href} aria-label={`${it.nombre}: ver los Funkos hechos`} tabindex={i === 0 ? 0 : -1}>{img}</a>}
+            ? <button type="button" class="carrusel__btn carrusel__btn--zoom" data-visor={i} aria-label={t(`Ver las fotos de ${it.nombre}`, `See the photos of ${it.nombre}`, `Voir les photos de ${it.nombre}`)} tabindex={i === 0 ? 0 : -1}>{img}</button>
+            : <a class="carrusel__btn" href={it.href} aria-label={t(`${it.nombre}: ver los Funkos hechos`, `${it.nombre}: see the Funkos we have made`, `${it.nombre} : voir les Funkos réalisés`)} tabindex={i === 0 ? 0 : -1}>{img}</a>}
           <span class="carrusel__nombre" aria-hidden="true">{it.nombre}</span>
         </li>
       );
     })}
   </ul>
   <div class="carrusel__ctrl">
-    <button type="button" class="icon-btn" data-cprev aria-label="Funko anterior"><Icon name="izq" /></button>
+    <button type="button" class="icon-btn" data-cprev aria-label={t("Funko anterior", "Previous Funko", "Funko précédent")}><Icon name="izq" /></button>
     <span class="carrusel__pos num" aria-live="off"><span data-cpos>1</span> / {items.length}</span>
-    <button type="button" class="icon-btn" data-cnext aria-label="Funko siguiente"><Icon name="der" /></button>
-    <button type="button" class="icon-btn" data-cpausa aria-label="Pausar el carrusel" aria-pressed="false">
+    <button type="button" class="icon-btn" data-cnext aria-label={t("Funko siguiente", "Next Funko", "Funko suivant")}><Icon name="der" /></button>
+    <button type="button" class="icon-btn" data-cpausa aria-label={t("Pausar el carrusel", "Pause the carousel", "Mettre le carrousel en pause")} aria-pressed="false">
       <svg data-ico-pausa width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.5" height="14" rx="1"/><rect x="14" y="5" width="3.5" height="14" rx="1"/></svg>
       <svg data-ico-play hidden width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
     </button>
@@ -93,7 +95,7 @@ const { items, etiqueta, sizes, visor = false, eager = false, class: clase } = A
 
     const pintarPausa = () => {
       btnPausa.setAttribute('aria-pressed', String(pausadoPorUsuario));
-      btnPausa.setAttribute('aria-label', pausadoPorUsuario ? 'Reanudar el carrusel' : 'Pausar el carrusel');
+      btnPausa.setAttribute('aria-label', (pausadoPorUsuario ? root.dataset.reanudar : root.dataset.pausar) ?? '');
       btnPausa.querySelector('[data-ico-pausa]')!.toggleAttribute('hidden', pausadoPorUsuario);
       btnPausa.querySelector('[data-ico-play]')!.toggleAttribute('hidden', !pausadoPorUsuario);
     };

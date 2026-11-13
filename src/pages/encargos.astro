@@ -4,75 +4,92 @@ import Base from '../layouts/Base.astro';
 import Migas from '../components/Migas.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
-import { producto, foto, sitio } from '../lib/catalogo';
+import { foto, sitio, catalogoEn } from '../lib/catalogo';
 import { migasLd } from '../lib/seo';
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Encargos a medida', url: '/encargos' }];
-const tarjeta = foto(producto('tarjetas-nfc-qr')!, 0);
-const estanteria = foto(producto('estanteria-stranger-things')!, 1);
+import { idiomaDe } from '../i18n';
+const C = catalogoEn(idiomaDe(Astro.url));
+const t = C.t;
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: t('Encargos a medida', 'Custom orders', 'Commandes sur mesure'), url: C.ruta('/encargos') }];
+const tarjeta = foto(C.producto('tarjetas-nfc-qr')!, 0);
+const estanteria = foto(C.producto('estanteria-stranger-things')!, 1);
 // Con Firebase configurado (variables PUBLIC_FIREBASE_*) el encargo se guarda en Firestore; si no, va por WhatsApp
 const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env.PUBLIC_FIREBASE_API_KEY && import.meta.env.PUBLIC_FIREBASE_PROJECT_ID);
+const opcional = t('(opcional)', '(optional)', '(facultatif)');
 ---
-<Base title="Encargos de impresión 3D a medida" description="Cuéntanos tu idea o mándanos un archivo STL o una foto: piezas a medida, repuestos, regalos y tarjetas NFC impresas en 3D. Te damos precio sin compromiso." activo="/encargos" jsonLd={migasLd(migas)}>
+<Base
+  title={t('Encargos de impresión 3D a medida', 'Custom 3D printing orders', 'Impression 3D sur mesure')}
+  description={t(
+    'Cuéntanos tu idea o mándanos un archivo STL o una foto: piezas a medida, repuestos, regalos y tarjetas NFC impresas en 3D. Te damos precio sin compromiso.',
+    'Tell us your idea or send us an STL file or a photo: made-to-measure pieces, spare parts, gifts and 3D-printed NFC cards. Free, no-obligation quote.',
+    'Racontez-nous votre idée ou envoyez-nous un fichier STL ou une photo : pièces sur mesure, pièces détachées, cadeaux et cartes NFC imprimées en 3D. Devis gratuit et sans engagement.',
+  )}
+  activo="/encargos"
+  jsonLd={migasLd(migas)}
+>
   <div class="wrap page-head">
     <Migas items={migas} />
-    <h1>Encargos a medida</h1>
-    <p class="lead">Una pieza que ya no venden, un regalo con nombre, la tarjeta de tu negocio con NFC o algo que solo existe en tu cabeza. Cuéntanoslo y te damos precio sin compromiso.</p>
+    <h1>{t('Encargos a medida', 'Custom orders', 'Commandes sur mesure')}</h1>
+    <p class="lead">{t(
+      'Una pieza que ya no venden, un regalo con nombre, la tarjeta de tu negocio con NFC o algo que solo existe en tu cabeza. Cuéntanoslo y te damos precio sin compromiso.',
+      "A part you can't buy any more, a gift with a name on it, an NFC card for your business or something that only exists in your head. Tell us about it and we'll give you a free quote.",
+      "Une pièce qui ne se vend plus, un cadeau avec un prénom, la carte NFC de votre commerce ou quelque chose qui n'existe que dans votre tête. Racontez-nous et nous vous faisons un devis sans engagement.",
+    )}</p>
   </div>
 
   <div class="wrap encargo">
     <aside class="encargo__info" aria-labelledby="ideas-h">
-      <h2 id="ideas-h" class="sr-only">Ejemplos de encargos</h2>
+      <h2 id="ideas-h" class="sr-only">{t('Ejemplos de encargos', 'Examples of custom orders', 'Exemples de commandes sur mesure')}</h2>
       <div class="encargo__fotos">
         <Picture src={tarjeta.src} alt={tarjeta.alt} formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 900px) 20vw, 46vw" loading="lazy" />
         <Picture src={estanteria.src} alt={estanteria.alt} formats={['avif', 'webp']} widths={[320, 480]} sizes="(min-width: 900px) 20vw, 46vw" loading="lazy" />
       </div>
       <ul class="encargo__lista">
-        <li><strong>Con archivo.</strong> Si tienes el STL, 3MF u OBJ, adjúntalo y te decimos precio y plazo.</li>
-        <li><strong>Con una foto o un dibujo.</strong> Sin archivo también se puede: lo diseñamos a partir de tu referencia.</li>
-        <li><strong>Repuestos.</strong> Mide la pieza original con una regla o un calibre y apunta las medidas.</li>
+        <li><strong>{t('Con archivo.', 'With a file.', 'Avec un fichier.')}</strong> {t('Si tienes el STL, 3MF u OBJ, adjúntalo y te decimos precio y plazo.', "If you have the STL, 3MF or OBJ file, attach it and we'll give you a price and lead time.", 'Si vous avez le fichier STL, 3MF ou OBJ, joignez-le et nous vous donnons le prix et le délai.')}</li>
+        <li><strong>{t('Con una foto o un dibujo.', 'With a photo or a drawing.', 'Avec une photo ou un dessin.')}</strong> {t('Sin archivo también se puede: lo diseñamos a partir de tu referencia.', "No file? No problem: we'll design it from your reference.", "Sans fichier, c'est possible aussi : nous le concevons à partir de votre référence.")}</li>
+        <li><strong>{t('Repuestos.', 'Spare parts.', 'Pièces détachées.')}</strong> {t('Mide la pieza original con una regla o un calibre y apunta las medidas.', 'Measure the original part with a ruler or calipers and note down the sizes.', "Mesurez la pièce d'origine avec une règle ou un pied à coulisse et notez les dimensions.")}</li>
       </ul>
     </aside>
 
     <form class="encargo__form" data-encargo novalidate method="post" action={sitio.formularioEncargos ?? undefined} enctype="multipart/form-data">
-      <h2>Cuéntanos tu idea</h2>
+      <h2>{t('Cuéntanos tu idea', 'Tell us your idea', 'Racontez-nous votre idée')}</h2>
       <div class="field" data-campo="descripcion">
-        <label for="e-desc">Qué necesitas</label>
-        <textarea class="textarea" id="e-desc" name="descripcion" rows="5" required aria-describedby="e-desc-err" placeholder="Ej.: un soporte para colgar dos mandos de consola en la pared, en negro"></textarea>
+        <label for="e-desc">{t('Qué necesitas', 'What you need', 'Ce dont vous avez besoin')}</label>
+        <textarea class="textarea" id="e-desc" name="descripcion" rows="5" required aria-describedby="e-desc-err" placeholder={t('Ej.: un soporte para colgar dos mandos de consola en la pared, en negro', 'E.g.: a wall mount for two game controllers, in black', 'Ex. : un support mural pour deux manettes de console, en noir')}></textarea>
         <p class="error" id="e-desc-err" aria-live="polite"></p>
       </div>
       <div class="field">
-        <label for="e-medidas">Medidas aproximadas <span class="hint">(opcional)</span></label>
-        <input class="input" id="e-medidas" name="medidas" placeholder="Ej.: 12 × 8 × 3 cm" />
+        <label for="e-medidas">{t('Medidas aproximadas', 'Approximate size', 'Dimensions approximatives')} <span class="hint">{opcional}</span></label>
+        <input class="input" id="e-medidas" name="medidas" placeholder={t('Ej.: 12 × 8 × 3 cm', 'E.g.: 12 × 8 × 3 cm', 'Ex. : 12 × 8 × 3 cm')} />
       </div>
       <div class="field" data-campo="archivo">
-        <span class="label" id="e-file-l">Archivo STL o foto de referencia <span class="hint">(opcional, máx. 10 MB)</span></span>
+        <span class="label" id="e-file-l">{t('Archivo STL o foto de referencia', 'STL file or reference photo', 'Fichier STL ou photo de référence')} <span class="hint">{t('(opcional, máx. 10 MB)', '(optional, max. 10 MB)', '(facultatif, 10 Mo max.)')}</span></span>
         <label class="file">
           <input type="file" name="archivo" accept=".stl,.3mf,.obj,.step,.stp,image/*" aria-labelledby="e-file-l" aria-describedby="e-file-err e-file-name" data-file />
-          <span class="file__ui"><Icon name="subir" size={20} /><span data-file-txt>Elegir archivo</span></span>
+          <span class="file__ui"><Icon name="subir" size={20} /><span data-file-txt>{t('Elegir archivo', 'Choose a file', 'Choisir un fichier')}</span></span>
         </label>
         <p class="hint" id="e-file-name" data-file-name></p>
         <p class="error" id="e-file-err" aria-live="polite"></p>
       </div>
       <div class="grid2">
         <div class="field" data-campo="nombre">
-          <label for="e-nombre">Nombre</label>
+          <label for="e-nombre">{t('Nombre', 'Name', 'Nom')}</label>
           <input class="input" id="e-nombre" name="nombre" autocomplete="name" required aria-describedby="e-nombre-err" />
           <p class="error" id="e-nombre-err" aria-live="polite"></p>
         </div>
         <div class="field" data-campo="contacto">
-          <label for="e-contacto">Teléfono o email</label>
+          <label for="e-contacto">{t('Teléfono o email', 'Phone or email', 'Téléphone ou e-mail')}</label>
           <input class="input" id="e-contacto" name="contacto" autocomplete="email" required aria-describedby="e-contacto-err" />
           <p class="error" id="e-contacto-err" aria-live="polite"></p>
         </div>
       </div>
       <div class="field" data-campo="privacidad">
-        <label class="check"><input type="checkbox" name="privacidad" required aria-describedby="e-priv-err" /><span>He leído la <a href="/privacidad">política de privacidad</a> y acepto que uséis mis datos para responder a este encargo.</span></label>
+        <label class="check"><input type="checkbox" name="privacidad" required aria-describedby="e-priv-err" /><span>{t('He leído la', 'I have read the', "J'ai lu la")} <a href={C.ruta('/privacidad')}>{t('política de privacidad', 'privacy policy', 'politique de confidentialité')}</a> {t('y acepto que uséis mis datos para responder a este encargo.', 'and agree to my details being used to reply to this request.', "et j'accepte que mes données soient utilisées pour répondre à cette demande.")}</span></label>
         <p class="error" id="e-priv-err" aria-live="polite"></p>
       </div>
       <button class="btn btn--block" type="submit" data-enviar>
-        {conServicio ? 'Enviar encargo' : <><WhatsAppIcon />Enviar por WhatsApp</>}
+        {conServicio ? t('Enviar encargo', 'Send request', 'Envoyer la demande') : <><WhatsAppIcon />{t('Enviar por WhatsApp', 'Send on WhatsApp', 'Envoyer sur WhatsApp')}</>}
       </button>
-      {!conServicio && <p class="nota">Se abre WhatsApp con tu encargo escrito. Si tienes archivo o fotos, adjúntalos en ese mismo chat.</p>}
+      {!conServicio && <p class="nota">{t('Se abre WhatsApp con tu encargo escrito. Si tienes archivo o fotos, adjúntalos en ese mismo chat.', 'WhatsApp opens with your request already written. If you have a file or photos, attach them in that chat.', "WhatsApp s'ouvre avec votre demande déjà rédigée. Si vous avez un fichier ou des photos, joignez-les dans cette conversation.")}</p>}
       <p class="ok" role="status" data-ok hidden></p>
       <input type="hidden" name="_subject" value={`Encargo a medida · ${sitio.marca}`} />
     </form>
@@ -108,9 +125,13 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
   import sitio from '../data/sitio.json';
   import { firebaseActivo, mensajeError } from '../lib/firebase';
   import { guardarEncargo, referencia, avisarPedido } from '../lib/pedido/guardar';
+  import { idiomaDocumento, traductor } from '../i18n';
+  const tr = traductor(idiomaDocumento());
   const form = document.querySelector<HTMLFormElement>('[data-encargo]')!;
   const file = form.querySelector<HTMLInputElement>('[data-file]')!;
   const MAX = 10 * 1024 * 1024;
+  const PESADO = tr('El archivo pesa más de 10 MB. Mándalo por WhatsApp o comprímelo en .zip.', 'The file is larger than 10 MB. Send it on WhatsApp or compress it into a .zip.', 'Le fichier dépasse 10 Mo. Envoyez-le sur WhatsApp ou compressez-le en .zip.');
+  const ENVIANDO = tr('Enviando…', 'Sending…', 'Envoi…');
 
   const err = (campo: string, msg: string) => {
     const f = form.querySelector<HTMLElement>(`[data-campo="${campo}"]`)!;
@@ -121,9 +142,9 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
 
   file.addEventListener('change', () => {
     const f = file.files?.[0];
-    form.querySelector('[data-file-txt]')!.textContent = f ? 'Cambiar archivo' : 'Elegir archivo';
+    form.querySelector('[data-file-txt]')!.textContent = f ? tr('Cambiar archivo', 'Change file', 'Changer de fichier') : tr('Elegir archivo', 'Choose a file', 'Choisir un fichier');
     form.querySelector('[data-file-name]')!.textContent = f ? `${f.name} · ${(f.size / 1024 / 1024).toFixed(1)} MB` : '';
-    err('archivo', f && f.size > MAX ? 'El archivo pesa más de 10 MB. Mándalo por WhatsApp o comprímelo en .zip.' : '');
+    err('archivo', f && f.size > MAX ? PESADO : '');
   });
 
   form.addEventListener('submit', async (e) => {
@@ -132,12 +153,12 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
     const desc = String(fd.get('descripcion') ?? '').trim();
     const nombre = String(fd.get('nombre') ?? '').trim();
     const contacto = String(fd.get('contacto') ?? '').trim();
-    err('descripcion', desc.length >= 10 ? '' : 'Cuéntanos un poco más: qué es, para qué y de qué tamaño (mínimo 10 letras).');
-    err('nombre', nombre ? '' : 'Escribe tu nombre.');
-    err('contacto', /\d{9}/.test(contacto.replace(/\D/g, '')) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto) ? '' : 'Pon un teléfono de 9 cifras o un email para poder contestarte.');
-    err('privacidad', fd.get('privacidad') ? '' : 'Necesitamos tu permiso para usar estos datos y responderte.');
+    err('descripcion', desc.length >= 10 ? '' : tr('Cuéntanos un poco más: qué es, para qué y de qué tamaño (mínimo 10 letras).', 'Tell us a bit more: what it is, what it is for and how big (at least 10 characters).', "Dites-nous-en un peu plus : ce que c'est, à quoi ça sert et quelle taille (10 caractères minimum)."));
+    err('nombre', nombre ? '' : tr('Escribe tu nombre.', 'Enter your name.', 'Indiquez votre nom.'));
+    err('contacto', /\d{9}/.test(contacto.replace(/\D/g, '')) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto) ? '' : tr('Pon un teléfono de 9 cifras o un email para poder contestarte.', 'Enter a phone number or an email so we can reply.', 'Indiquez un numéro de téléphone ou un e-mail pour que nous puissions vous répondre.'));
+    err('privacidad', fd.get('privacidad') ? '' : tr('Necesitamos tu permiso para usar estos datos y responderte.', 'We need your permission to use these details and reply to you.', 'Nous avons besoin de votre accord pour utiliser ces données et vous répondre.'));
     const f = file.files?.[0];
-    if (f && f.size > MAX) err('archivo', 'El archivo pesa más de 10 MB. Mándalo por WhatsApp o comprímelo en .zip.');
+    if (f && f.size > MAX) err('archivo', PESADO);
     const primero = form.querySelector<HTMLElement>('[aria-invalid="true"]');
     if (primero) { primero.focus(); return; }
 
@@ -146,49 +167,60 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
     const medidas = String(fd.get('medidas') ?? '').trim();
     // WhatsApp con el encargo ya escrito: es el camino normal sin Firebase y el de reserva si Firebase falla
     const porWhatsApp = () => {
-      const texto = ['¡Hola! Quiero pedir un encargo a medida:', '', desc, medidas && `Medidas: ${medidas}`, f && `Archivo: ${f.name} (te lo adjunto aquí)`, '', `Nombre: ${nombre}`, `Contacto: ${contacto}`].filter(Boolean).join('\n');
+      const texto = [
+        tr('¡Hola! Quiero pedir un encargo a medida:', "Hi! I'd like to request a custom order:", 'Bonjour ! Je voudrais demander une pièce sur mesure :'),
+        '', desc,
+        medidas && `${tr('Medidas', 'Size', 'Dimensions')}: ${medidas}`,
+        f && `${tr('Archivo', 'File', 'Fichier')}: ${f.name} ${tr('(te lo adjunto aquí)', "(I'll attach it here)", '(je le joins ici)')}`,
+        '', `${tr('Nombre', 'Name', 'Nom')}: ${nombre}`, `${tr('Contacto', 'Contact', 'Contact')}: ${contacto}`,
+      ].filter(Boolean).join('\n');
       const url = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(texto)}`;
       const w = window.open(url, '_blank');
       if (w) w.opener = null; else location.href = url; // el navegador bloqueó la pestaña nueva
     };
+    const abiertoWa = f
+      ? tr('Te abrimos WhatsApp con tu encargo escrito. Adjunta el archivo en el chat y pulsa enviar.', "We've opened WhatsApp with your request already written. Attach the file in the chat and tap send.", 'Nous avons ouvert WhatsApp avec votre demande déjà rédigée. Joignez le fichier dans la conversation et appuyez sur envoyer.')
+      : tr('Te abrimos WhatsApp con tu encargo escrito. Solo falta pulsar enviar.', "We've opened WhatsApp with your request already written. Just tap send.", "Nous avons ouvert WhatsApp avec votre demande déjà rédigée. Il ne reste qu'à appuyer sur envoyer.");
 
     if (firebaseActivo) {
       // Se guarda en Firestore (y el archivo en Storage); te llega al panel /admin
-      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = f ? 'Subiendo archivo…' : 'Enviando…';
+      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = f ? tr('Subiendo archivo…', 'Uploading file…', 'Envoi du fichier…') : ENVIANDO;
       try {
         const r = await guardarEncargo({ descripcion: desc, medidas: String(fd.get('medidas') ?? '').trim(), nombre, contacto, archivo: f ?? null });
         const ref = referencia(r!.id);
         avisarPedido('encargos', r!.id);
         form.reset(); file.dispatchEvent(new Event('change'));
         ok.hidden = false; ok.style.color = '';
-        ok.textContent = `Encargo ${ref} recibido. Te contestamos con precio y plazo en cuanto lo veamos.`;
+        ok.textContent = tr(`Encargo ${ref} recibido. Te contestamos con precio y plazo en cuanto lo veamos.`, `Request ${ref} received. We'll reply with a price and lead time as soon as we've looked at it.`, `Demande ${ref} reçue. Nous vous répondons avec le prix et le délai dès que nous l'avons étudiée.`);
         if (f && !r!.archivoSubido) {
-          const wa = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(`¡Hola! Os mando el archivo del encargo ${ref}.`)}`;
-          ok.innerHTML += ` No se pudo subir el archivo: <a href="${wa}" target="_blank" rel="noopener">mándanoslo por WhatsApp</a> con la referencia ${ref}.`;
+          const wa = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(tr(`¡Hola! Os mando el archivo del encargo ${ref}.`, `Hi! Here is the file for request ${ref}.`, `Bonjour ! Voici le fichier de la demande ${ref}.`))}`;
+          ok.innerHTML += ' ' + tr(
+            `No se pudo subir el archivo: <a href="${wa}" target="_blank" rel="noopener">mándanoslo por WhatsApp</a> con la referencia ${ref}.`,
+            `The file couldn't be uploaded: <a href="${wa}" target="_blank" rel="noopener">send it to us on WhatsApp</a> with reference ${ref}.`,
+            `Le fichier n'a pas pu être envoyé : <a href="${wa}" target="_blank" rel="noopener">envoyez-le-nous sur WhatsApp</a> avec la référence ${ref}.`,
+          );
         }
       } catch (e2) {
         // No se pudo guardar en la web: el encargo no se pierde, sale por WhatsApp
         console.warn('No se pudo guardar el encargo en Firestore', mensajeError(e2));
         porWhatsApp();
         ok.hidden = false; ok.style.color = '';
-        ok.textContent = f
-          ? 'Te abrimos WhatsApp con tu encargo escrito. Adjunta el archivo en el chat y pulsa enviar.'
-          : 'Te abrimos WhatsApp con tu encargo escrito. Solo falta pulsar enviar.';
+        ok.textContent = abiertoWa;
       } finally { btn.disabled = false; btn.innerHTML = txt; }
       return;
     }
 
     if (sitio.formularioEncargos) {
       // Servicio de formularios (p. ej. Formspree) configurado en src/data/sitio.json
-      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = 'Enviando…';
+      btn.disabled = true; const txt = btn.innerHTML; btn.textContent = ENVIANDO;
       try {
         const r = await fetch(sitio.formularioEncargos, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
         if (!r.ok) throw new Error(String(r.status));
         form.reset(); file.dispatchEvent(new Event('change'));
-        ok.hidden = false; ok.style.color = ''; ok.textContent = 'Recibido. Te contestamos con precio y plazo en cuanto lo veamos.';
+        ok.hidden = false; ok.style.color = ''; ok.textContent = tr('Recibido. Te contestamos con precio y plazo en cuanto lo veamos.', "Received. We'll reply with a price and lead time as soon as we've looked at it.", "Reçu. Nous vous répondons avec le prix et le délai dès que nous l'avons étudiée.");
       } catch {
         ok.hidden = false; ok.style.color = 'var(--danger)';
-        ok.textContent = 'No se ha podido enviar. Prueba otra vez o escríbenos por WhatsApp.';
+        ok.textContent = tr('No se ha podido enviar. Prueba otra vez o escríbenos por WhatsApp.', "It couldn't be sent. Try again or message us on WhatsApp.", "L'envoi a échoué. Réessayez ou écrivez-nous sur WhatsApp.");
       } finally { btn.disabled = false; btn.innerHTML = txt; }
       return;
     }
@@ -196,6 +228,6 @@ const conServicio = Boolean(sitio.formularioEncargos) || Boolean(import.meta.env
     // Sin servicio de formularios: WhatsApp con el texto escrito
     porWhatsApp();
     ok.hidden = false;
-    ok.textContent = f ? 'Abrimos WhatsApp con tu encargo. Adjunta el archivo en el chat y pulsa enviar.' : 'Abrimos WhatsApp con tu encargo. Solo falta pulsar enviar.';
+    ok.textContent = abiertoWa;
   });
 </script>

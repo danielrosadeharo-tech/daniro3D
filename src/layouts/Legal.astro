@@ -1,12 +1,15 @@
 ---
 import Base from './Base.astro';
 import Migas from '../components/Migas.astro';
+import { idiomaDe, traductor, ruta } from '../i18n';
 interface Props { title: string; description: string; ruta: string }
-const { title, description, ruta } = Astro.props;
+const { title, description } = Astro.props;
+const l = idiomaDe(Astro.url);
+const t = traductor(l);
 ---
 <Base title={title} description={description}>
   <div class="wrap page-head">
-    <Migas items={[{ nombre: 'Inicio', url: '/' }, { nombre: title, url: ruta }]} />
+    <Migas items={[{ nombre: t('Inicio', 'Home', 'Accueil'), url: ruta(l, '/') }, { nombre: title, url: ruta(l, Astro.props.ruta) }]} />
     <h1>{title}</h1>
   </div>
   <div class="wrap" style="padding-bottom: var(--s-9)">

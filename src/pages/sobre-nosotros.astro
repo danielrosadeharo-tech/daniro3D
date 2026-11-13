@@ -3,45 +3,70 @@ import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Migas from '../components/Migas.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
-import { sitio, fotoAmbiente, productos, enlaceWhatsApp } from '../lib/catalogo';
+import { sitio, fotoAmbiente, enlaceWhatsApp, catalogoEn } from '../lib/catalogo';
 import { migasLd } from '../lib/seo';
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Sobre nosotros', url: '/sobre-nosotros' }];
+import { idiomaDe } from '../i18n';
+const C = catalogoEn(idiomaDe(Astro.url));
+const t = C.t;
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: t('Sobre nosotros', 'About us', 'À propos'), url: C.ruta('/sobre-nosotros') }];
 const comparativa = fotoAmbiente('comparativa-tamano.jpg');
+const n = C.productos.length;
 ---
-<Base title="Sobre nosotros y contacto" description={`Quién está detrás de ${sitio.marca}, cómo trabajamos y cómo contactar: WhatsApp ${sitio.telefonoVisible}, Wallapop y Vinted.`} activo="/sobre-nosotros" jsonLd={migasLd(migas)}>
+<Base
+  title={t('Sobre nosotros y contacto', 'About us and contact', 'À propos et contact')}
+  description={t(
+    `Quién está detrás de ${sitio.marca}, cómo trabajamos y cómo contactar: WhatsApp ${sitio.telefonoVisible}, Wallapop y Vinted.`,
+    `Who is behind ${sitio.marca}, how we work and how to get in touch: WhatsApp +34 ${sitio.telefonoVisible}, Wallapop and Vinted.`,
+    `Qui se cache derrière ${sitio.marca}, comment nous travaillons et comment nous contacter : WhatsApp +34 ${sitio.telefonoVisible}, Wallapop et Vinted.`,
+  )}
+  activo="/sobre-nosotros"
+  jsonLd={migasLd(migas)}
+>
   <div class="wrap page-head">
     <Migas items={migas} />
-    <h1>Piezas impresas una a una, bajo pedido</h1>
+    <h1>{t('Piezas impresas una a una, bajo pedido', 'Pieces printed one by one, made to order', 'Des pièces imprimées une à une, sur commande')}</h1>
   </div>
 
   <div class="wrap about">
     <div class="prose">
       <!-- CAMBIA ESTE TEXTO: cuenta quién eres, desde cuándo imprimes y con qué impresoras. -->
-      <p class="lead">{sitio.marca} es un taller pequeño de impresión 3D. Hacemos Funkos personalizados, figuras de pilotos, posavasos, llaveros, trofeos y encargos a medida.</p>
-      <p>No tenemos almacén: cada pieza se imprime cuando la pides. Por eso casi todo se puede cambiar, desde el tamaño hasta el nombre de la caja, y por eso te confirmamos precio y plazo antes de empezar.</p>
-      <p>Hoy hay {productos.length} piezas en el catálogo, todas fotografiadas tal y como salen de la impresora. Si buscas algo que no está, pregúntanos.</p>
+      <p class="lead">{t(
+        `${sitio.marca} es un taller pequeño de impresión 3D. Hacemos Funkos personalizados, figuras de pilotos, posavasos, llaveros, trofeos y encargos a medida.`,
+        `${sitio.marca} is a small 3D printing workshop in Spain. We make custom Funkos, racing driver figures, coasters, keyrings, trophies and made-to-measure pieces.`,
+        `${sitio.marca} est un petit atelier d'impression 3D en Espagne. Nous fabriquons des Funkos personnalisés, des figurines de pilotes, des sous-verres, des porte-clés, des trophées et des pièces sur mesure.`,
+      )}</p>
+      <p>{t(
+        'No tenemos almacén: cada pieza se imprime cuando la pides. Por eso casi todo se puede cambiar, desde el tamaño hasta el nombre de la caja, y por eso te confirmamos precio y plazo antes de empezar.',
+        "We don't keep stock: every piece is printed when you order it. That's why almost anything can be changed, from the size to the name on the box, and why we confirm the price and lead time before we start.",
+        "Nous n'avons pas de stock : chaque pièce est imprimée quand vous la commandez. C'est pourquoi presque tout peut être modifié, de la taille au nom sur la boîte, et pourquoi nous vous confirmons le prix et le délai avant de commencer.",
+      )}</p>
+      <p>{t(
+        `Hoy hay ${n} piezas en el catálogo, todas fotografiadas tal y como salen de la impresora. Si buscas algo que no está, pregúntanos.`,
+        `There are ${n} items in the catalogue today, all photographed just as they come off the printer. If you're looking for something that isn't there, just ask.`,
+        `Le catalogue compte aujourd'hui ${n} pièces, toutes photographiées telles qu'elles sortent de l'imprimante. Si vous cherchez quelque chose qui n'y est pas, demandez-nous.`,
+      )}</p>
     </div>
-    <figure class="about__media"><Picture src={comparativa} alt="Comparativa de tamaño de las figuras de pilotos" formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 900px) 36vw, 92vw" loading="lazy" /></figure>
+    <figure class="about__media"><Picture src={comparativa} alt={t('Comparativa de tamaño de las figuras de pilotos', 'Size comparison of the racing driver figures', 'Comparaison de taille des figurines de pilotes')} formats={['avif', 'webp']} widths={[400, 600, 750]} sizes="(min-width: 900px) 36vw, 92vw" loading="lazy" /></figure>
   </div>
 
   <section class="section contacto" id="contacto" aria-labelledby="contacto-h">
     <div class="wrap">
-      <h2 id="contacto-h">Contacto</h2>
+      <h2 id="contacto-h">{t('Contacto', 'Contact', 'Contact')}</h2>
       <ul class="contacto__lista">
         <li>
           <h3>WhatsApp</h3>
-          <p>La forma más rápida para pedidos, presupuestos y fotos.</p>
-          <a class="btn" href={enlaceWhatsApp('¡Hola! Me interesa un artículo del catálogo.')} target="_blank" rel="noopener"><WhatsAppIcon />Escribir al {sitio.telefonoVisible}</a>
+          <p>{t('La forma más rápida para pedidos, presupuestos y fotos.', 'The quickest way for orders, quotes and photos.', 'Le moyen le plus rapide pour les commandes, les devis et les photos.')}</p>
+          <a class="btn" href={enlaceWhatsApp(t('¡Hola! Me interesa un artículo del catálogo.', "Hi! I'm interested in an item from the catalogue.", "Bonjour ! Un article du catalogue m'intéresse."))} target="_blank" rel="noopener"><WhatsAppIcon />{t(`Escribir al ${sitio.telefonoVisible}`, `Message +34 ${sitio.telefonoVisible}`, `Écrire au +34 ${sitio.telefonoVisible}`)}</a>
         </li>
         <li>
           <h3>Wallapop</h3>
-          <p>Algunas piezas también están a la venta allí, con su sistema de envío.</p>
-          <a class="btn btn--secondary" href={sitio.wallapop} target="_blank" rel="noopener">Ver el perfil de Wallapop</a>
+          <p>{t('Algunas piezas también están a la venta allí, con su sistema de envío.', 'Some pieces are also for sale there, with their shipping system.', 'Certaines pièces y sont aussi en vente, avec leur système de livraison.')}</p>
+          <a class="btn btn--secondary" href={sitio.wallapop} target="_blank" rel="noopener">{t('Ver el perfil de Wallapop', 'See our Wallapop profile', 'Voir notre profil Wallapop')}</a>
         </li>
         <li>
           <h3>Vinted</h3>
-          <p>El mismo catálogo, con el envío y la protección de Vinted.</p>
-          <a class="btn btn--secondary" href={sitio.vinted} target="_blank" rel="noopener">Ver el perfil de Vinted</a>
+          <p>{t('El mismo catálogo, con el envío y la protección de Vinted.', "The same catalogue, with Vinted's shipping and buyer protection.", 'Le même catalogue, avec la livraison et la protection de Vinted.')}</p>
+          <a class="btn btn--secondary" href={sitio.vinted} target="_blank" rel="noopener">{t('Ver el perfil de Vinted', 'See our Vinted profile', 'Voir notre profil Vinted')}</a>
         </li>
       </ul>
     </div>

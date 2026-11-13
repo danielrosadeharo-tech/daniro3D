@@ -2,22 +2,34 @@
 import Base from '../../layouts/Base.astro';
 import Catalogo from '../../components/Catalogo.astro';
 import Migas from '../../components/Migas.astro';
-import { productos } from '../../lib/catalogo';
+import { catalogoEn } from '../../lib/catalogo';
 import { migasLd, listaLd } from '../../lib/seo';
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Catálogo', url: '/catalogo' }];
+import { idiomaDe } from '../../i18n';
+const C = catalogoEn(idiomaDe(Astro.url));
+const t = C.t;
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: t('Catálogo', 'Catalogue', 'Catalogue'), url: C.ruta('/catalogo') }];
+const n = C.productos.length;
 ---
 <Base
-  title="Catálogo de impresiones 3D: Funkos, figuras, posavasos y trofeos"
-  description={`Las ${productos.length} piezas del catálogo: Funkos personalizados, figuras de pilotos, posavasos, llaveros y trofeos impresos en 3D. Filtra por categoría, color y precio.`}
+  title={t('Catálogo de impresiones 3D: Funkos, figuras, posavasos y trofeos', '3D printing catalogue: Funkos, figures, coasters and trophies', "Catalogue d'impressions 3D : Funkos, figurines, sous-verres et trophées")}
+  description={t(
+    `Las ${n} piezas del catálogo: Funkos personalizados, figuras de pilotos, posavasos, llaveros y trofeos impresos en 3D. Filtra por categoría, color y precio.`,
+    `All ${n} items in the catalogue: custom Funkos, racing driver figures, coasters, keyrings and 3D-printed trophies. Filter by category, colour and price.`,
+    `Les ${n} pièces du catalogue : Funkos personnalisés, figurines de pilotes, sous-verres, porte-clés et trophées imprimés en 3D. Filtrez par catégorie, couleur et prix.`,
+  )}
   activo="/catalogo"
-  jsonLd={[migasLd(migas), listaLd('Catálogo', productos)]}
+  jsonLd={[migasLd(migas), listaLd(t('Catálogo', 'Catalogue', 'Catalogue'), C.productos, C.urlProducto)]}
 >
   <div class="wrap page-head">
     <Migas items={migas} />
-    <h1>Catálogo</h1>
-    <p class="lead">Todo lo que hacemos, con precio. Si algo no tiene precio, pregúntanos: depende del tamaño o de lo que quieras cambiar.</p>
+    <h1>{t('Catálogo', 'Catalogue', 'Catalogue')}</h1>
+    <p class="lead">{t(
+      'Todo lo que hacemos, con precio. Si algo no tiene precio, pregúntanos: depende del tamaño o de lo que quieras cambiar.',
+      "Everything we make, with prices. If something has no price, just ask: it depends on the size or what you'd like to change.",
+      "Tout ce que nous fabriquons, avec les prix. Si une pièce n'a pas de prix, demandez-nous : cela dépend de la taille ou de ce que vous voulez changer.",
+    )}</p>
   </div>
   <div class="wrap" style="padding-bottom: var(--s-9)">
-    <Catalogo productos={productos} />
+    <Catalogo productos={C.productos} />
   </div>
 </Base>

@@ -12,17 +12,20 @@ export const FUNKO = {
 
 export const precioFunko = (n: number, s: number) => FUNKO.base + (n - 1) * FUNKO.normalExtra + s * FUNKO.pequeno;
 
-export function resumenFunko(n: number, s: number) {
+/** "Caja + 1 normal + 2 pequeños" en el idioma de la página (el pedido que te llega usa el del cliente). */
+export function resumenFunko(n: number, s: number, l: 'es' | 'en' | 'fr' = 'es') {
+  if (l === 'en') return `Box + ${n} regular${s ? ` + ${s} small` : ''}`;
+  if (l === 'fr') return `Boîte + ${n} ${n === 1 ? 'normale' : 'normales'}${s ? ` + ${s} ${s === 1 ? 'petite' : 'petites'}` : ''}`;
   const partes = [`${n} ${n === 1 ? 'normal' : 'normales'}`];
   if (s) partes.push(`${s} ${s === 1 ? 'pequeño' : 'pequeños'}`);
   return `Caja + ${partes.join(' + ')}`;
 }
 
-/** Lee "Caja + 1 normal + 3 pequeños" → { n: 1, s: 3 } (null si no es una composición válida). */
+/** Lee "Caja + 1 normal + 3 pequeños" (o su versión en inglés o francés) → { n: 1, s: 3 }; null si no es válida. */
 export function leerComposicion(txt?: string | null): { n: number; s: number } | null {
   if (!txt) return null;
-  const n = Number(/(\d+)\s+normal/i.exec(txt)?.[1] ?? 0);
-  const s = Number(/(\d+)\s+peque/i.exec(txt)?.[1] ?? 0);
+  const n = Number(/(\d+)\s+(normal|regular)/i.exec(txt)?.[1] ?? 0);
+  const s = Number(/(\d+)\s+(peque|small|petite)/i.exec(txt)?.[1] ?? 0);
   if (n < 1 || n > FUNKO.maxNormales || s > FUNKO.maxPequenos(n)) return null;
   return { n, s };
 }
@@ -53,7 +56,7 @@ export function svgFigura(tipo: 'normal' | 'pequeno', titulo: string) {
  * Caja con sus figuras (los normales primero). La caja se ensancha con cada figura, como en la realidad.
  * `nuevas` marca cuántas figuras del final acaban de entrar (para animarlas).
  */
-export function svgCaja(n: number, s: number, opts: { titulo?: string; nuevasN?: number; nuevasS?: number } = {}) {
+export function svgCaja(n: number, s: number, opts: { titulo?: string; nuevasN?: number; nuevasS?: number; l?: 'es' | 'en' | 'fr' } = {}) {
   const figs: ('normal' | 'pequeno')[] = [...Array(n).fill('normal'), ...Array(s).fill('pequeno')];
   const gap = 14, pad = 22, marco = 14, arriba = 26, abajo = 22;
   const contenido = figs.reduce((a, f) => a + W[f], 0) + Math.max(0, figs.length - 1) * gap;
@@ -70,7 +73,7 @@ export function svgCaja(n: number, s: number, opts: { titulo?: string; nuevasN?:
     x += W[f] + gap;
     return g;
   }).join('');
-  const titulo = opts.titulo ?? (figs.length ? `${resumenFunko(n, s)}` : 'Caja a medida');
+  const titulo = opts.titulo ?? (figs.length ? resumenFunko(n, s, opts.l) : 'Caja a medida');
   return `<svg class="fk-svg fk-caja" viewBox="0 0 ${total} ${alto}" width="${total}" height="${alto}" role="img" aria-label="${titulo}">
     <rect class="fk-marco" x="0" y="0" width="${total}" height="${alto}" rx="7"/>
     <rect class="fk-claro" x="${marco - 2}" y="8" width="44" height="9" rx="2"/>

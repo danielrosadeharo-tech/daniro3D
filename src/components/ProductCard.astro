@@ -1,12 +1,17 @@
 ---
 import { Picture } from 'astro:assets';
-import { foto, textoPrecio, categoria, urlProducto, type Producto } from '../lib/catalogo';
+import { foto, catalogoEn, type Producto } from '../lib/catalogo';
+import { idiomaDe } from '../i18n';
 interface Props { p: Producto; prioridad?: boolean; mostrarCategoria?: boolean; nivel?: 'h2' | 'h3' }
-const { p, prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
+const { prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
+const C = catalogoEn(idiomaDe(Astro.url));
+const p = C.loc(Astro.props.p);
 const f = foto(p);
 const Tag = nivel;
-const cat = categoria(p.categoria);
-const etiqueta = p.personalizacion.disponible ? 'Personalizable' : p.etiquetas.includes('edicion-especial') ? 'Edición especial' : null;
+const cat = C.categoria(p.categoria);
+const etiqueta = p.personalizacion.disponible
+  ? C.t('Personalizable', 'Customisable', 'Personnalisable')
+  : p.etiquetas.includes('edicion-especial') ? C.t('Edición especial', 'Special edition', 'Édition spéciale') : null;
 ---
 <article class="card">
   <div class="card__media">
@@ -23,7 +28,7 @@ const etiqueta = p.personalizacion.disponible ? 'Personalizable' : p.etiquetas.i
   </div>
   <div class="card__body">
     {mostrarCategoria && cat && <span class="card__cat">{cat.nombre}</span>}
-    <Tag class="card__title"><a href={urlProducto(p)}>{p.nombre}</a></Tag>
-    <span class:list={['card__price precio', { 'card__price--consultar': p.precio.tipo === 'consultar' }]}>{textoPrecio(p)}</span>
+    <Tag class="card__title"><a href={C.urlProducto(p)}>{p.nombre}</a></Tag>
+    <span class:list={['card__price precio', { 'card__price--consultar': p.precio.tipo === 'consultar' }]}>{C.textoPrecio(p)}</span>
   </div>
 </article>

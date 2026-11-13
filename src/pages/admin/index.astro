@@ -5,7 +5,7 @@ import { categorias } from '../../lib/catalogo';
 import { ESTADOS } from '../../lib/estados';
 const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug: c.slug, nombre: c.nombre }));
 ---
-<Base title="Panel de administración" description="Panel privado de Daniro 3D." noindex manifest="/admin.webmanifest">
+<Base title="Panel de administración" description="Panel privado de Daniro 3D." noindex manifest="/admin.webmanifest" soloEspanol>
   <div class="wrap admin" data-admin>
     <script type="application/json" data-config set:html={JSON.stringify({ cats, estados: ESTADOS })} />
 

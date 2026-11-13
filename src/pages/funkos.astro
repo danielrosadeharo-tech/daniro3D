@@ -5,51 +5,64 @@ import Migas from '../components/Migas.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import CarruselFunkos from '../components/CarruselFunkos.astro';
-import { producto, ejemplos, foto, fotosDe, euros, enlaceWhatsApp, categoria } from '../lib/catalogo';
+import { foto, fotosDe, enlaceWhatsApp, catalogoEn, todos as todosEs } from '../lib/catalogo';
 import { FUNKO, precioFunko, resumenFunko, leerComposicion, svgCaja, svgFigura } from '../lib/funko';
 import { migasLd, productoLd } from '../lib/seo';
+import { idiomaDe } from '../i18n';
 
-const p = producto('funko-personalizado')!;
-const cat = categoria('funkos')!;
-const migas = [{ nombre: 'Inicio', url: '/' }, { nombre: 'Funkos', url: '/funkos' }];
-const cabecera = foto(producto('perruno-17')!, 0);
+const l = idiomaDe(Astro.url);
+const C = catalogoEn(l);
+const t = C.t;
+const euros = C.euros;
+const p = C.producto('funko-personalizado')!;
+const cat = C.categoria('funkos')!;
+const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: 'Funkos', url: C.ruta('/funkos') }];
+const cabecera = foto(C.producto('perruno-17')!, 0);
 const miniatura = (await getImage({ src: foto(p).src, width: 144, format: 'webp' })).src;
 const ldImgs = await Promise.all(fotosDe(p).map((f) => getImage({ src: f.src, width: 750, format: 'jpg' }).then((r) => r.src)));
 
-// Galería de encargos hechos: todas las fotos de cada uno, para el visor
-const hechos = await Promise.all(ejemplos.map(async (e) => {
-  const comp = leerComposicion(e.composicion);
+// Galería de encargos hechos: todas las fotos de cada uno, para el visor.
+// La composición se lee del texto español (el traducido solo se enseña).
+const hechos = await Promise.all(C.ejemplos.map(async (e) => {
+  const comp = leerComposicion(todosEs.find((x) => x.slug === e.slug)?.composicion);
   const fotos = await Promise.all(fotosDe(e).map(async (f) => ({ src: (await getImage({ src: f.src, width: 750, format: 'webp', quality: 86 })).src, alt: f.alt })));
   return { e, comp, fotos, portada: foto(e) };
 }));
 
 const opciones = [{ n: 1, s: 3 }, { n: 2, s: 1 }];
 const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatura };
+const caja = t('Caja', 'Box', 'Boîte');
+const normal = t('Funko normal', 'Regular Funko', 'Funko normal');
+const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
 ---
 <Base
-  title="Funko personalizado con tu foto y su caja, desde 55 €"
-  description="Crea tu Funko personalizado a partir de tus fotos, con caja a medida. Caja + Funko normal 55 €; +20 € por pequeño y +30 € por normal. Mira los Funkos que ya hemos hecho."
+  title={t(`Funko personalizado con tu foto y su caja, desde ${euros(FUNKO.base)}`, `Custom Funko from your photo with its box, from ${euros(FUNKO.base)}`, `Funko personnalisé à partir de votre photo avec sa boîte, dès ${euros(FUNKO.base)}`)}
+  description={t(
+    `Crea tu Funko personalizado a partir de tus fotos, con caja a medida. Caja + Funko normal ${euros(FUNKO.base)}; +${euros(FUNKO.pequeno)} por pequeño y +${euros(FUNKO.normalExtra)} por normal. Mira los Funkos que ya hemos hecho.`,
+    `Create your custom Funko from your photos, with a made-to-measure box. Box + regular Funko ${euros(FUNKO.base)}; +${euros(FUNKO.pequeno)} per small one and +${euros(FUNKO.normalExtra)} per regular one. See the Funkos we've already made.`,
+    `Créez votre Funko personnalisé à partir de vos photos, avec une boîte sur mesure. Boîte + Funko normal ${euros(FUNKO.base)} ; +${euros(FUNKO.pequeno)} par petit et +${euros(FUNKO.normalExtra)} par normal. Découvrez les Funkos déjà réalisés.`,
+  )}
   image={cabecera.src}
   activo="/funkos"
-  jsonLd={[productoLd(p, ldImgs), migasLd(migas)]}
+  jsonLd={[productoLd(p, ldImgs, C.urlProducto), migasLd(migas)]}
 >
   <header class="wrap fk-head">
     <div class="fk-head__text" data-enter>
       <Migas items={migas} />
-      <h1>Funkos personalizados con su caja</h1>
-      <p class="lead">{cat.descripcion.replace(' Desde 55 €.', '')} Eliges cuántas figuras van dentro y el precio sale solo.</p>
-      <p class="fk-head__facts">Desde <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{ejemplos.length}</span> encargos hechos para ver</p>
+      <h1>{t('Funkos personalizados con su caja', 'Custom Funkos with their box', 'Funkos personnalisés avec leur boîte')}</h1>
+      <p class="lead">{cat.descripcion.replace(/\s*(Desde 55 €|From €55|À partir de 55 €)\.$/, '')} {t('Eliges cuántas figuras van dentro y el precio sale solo.', 'Choose how many figures go inside and the price works itself out.', 'Choisissez combien de figurines vont dedans et le prix se calcule tout seul.')}</p>
+      <p class="fk-head__facts">{t('Desde', 'From', 'À partir de')} <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{C.ejemplos.length}</span> {t('encargos hechos para ver', 'finished orders to see', 'commandes réalisées à découvrir')}</p>
     </div>
     <!-- Carrusel con los Funkos ya hechos (la portada de cada encargo); cada foto abre el visor -->
-    <CarruselFunkos class="fk-head__media" etiqueta="Funkos que ya hemos hecho" visor eager
+    <CarruselFunkos class="fk-head__media" etiqueta={t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')} visor eager
       sizes="(min-width: 768px) 34vw, 100vw"
       items={hechos.map(({ e, portada }) => ({ nombre: e.nombre.replace('Funko ', ''), src: portada.src, alt: portada.alt }))} />
   </header>
 
   <div class="wrap fk-tabs-wrap">
     <div class="fk-tabs" role="tablist" aria-label="Funkos" data-tabs>
-      <button type="button" role="tab" id="tab-personaliza" aria-controls="personaliza" aria-selected="true" data-tab="personaliza">Personaliza tu Funko</button>
-      <button type="button" role="tab" id="tab-encargos" aria-controls="encargos" aria-selected="false" tabindex="-1" data-tab="encargos">Encargos hechos <span class="fk-tabs__n num">{ejemplos.length}</span></button>
+      <button type="button" role="tab" id="tab-personaliza" aria-controls="personaliza" aria-selected="true" data-tab="personaliza">{t('Personaliza tu Funko', 'Customise your Funko', 'Personnalisez votre Funko')}</button>
+      <button type="button" role="tab" id="tab-encargos" aria-controls="encargos" aria-selected="false" tabindex="-1" data-tab="encargos">{t('Encargos hechos', 'Finished orders', 'Commandes réalisées')} <span class="fk-tabs__n num">{C.ejemplos.length}</span></button>
     </div>
   </div>
 
@@ -59,103 +72,103 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
       <!-- Configurador -->
       <form class="fk-config" data-config novalidate aria-labelledby="config-h">
         <script type="application/json" data-producto set:html={JSON.stringify(datos)} />
-        <h2 id="config-h">Configura tu caja</h2>
+        <h2 id="config-h">{t('Configura tu caja', 'Build your box', 'Composez votre boîte')}</h2>
         <div class="fk-preview" aria-live="polite">
-          <div class="fk-preview__caja" data-caja set:html={svgCaja(1, 0)} />
-          <p class="fk-preview__txt"><span data-resumen>{resumenFunko(1, 0)}</span><strong class="precio" data-precio>{euros(precioFunko(1, 0))}</strong></p>
-          <p class="fk-plazo">Plazo de elaboración: <strong>mínimo 2 semanas</strong>, al ser un pedido personalizado.</p>
+          <div class="fk-preview__caja" data-caja set:html={svgCaja(1, 0, { l })} />
+          <p class="fk-preview__txt"><span data-resumen>{resumenFunko(1, 0, l)}</span><strong class="precio" data-precio>{euros(precioFunko(1, 0))}</strong></p>
+          <p class="fk-plazo">{t('Plazo de elaboración:', 'Production time:', 'Délai de fabrication :')} <strong>{t('mínimo 2 semanas', 'at least 2 weeks', '2 semaines minimum')}</strong>{t(', al ser un pedido personalizado.', ', as it is a custom order.', ', car il s\'agit d\'une commande personnalisée.')}</p>
         </div>
 
         <fieldset class="opcion">
-          <legend>Funkos de tamaño normal <span class="opcion__hint">personas · el segundo suma {euros(FUNKO.normalExtra)}</span></legend>
+          <legend>{t('Funkos de tamaño normal', 'Regular-size Funkos', 'Funkos de taille normale')} <span class="opcion__hint">{t(`personas · el segundo suma ${euros(FUNKO.normalExtra)}`, `people · the second one adds ${euros(FUNKO.normalExtra)}`, `personnes · le deuxième ajoute ${euros(FUNKO.normalExtra)}`)}</span></legend>
           <div class="chips">
             {[1, 2].map((n) => <label class="chip"><input type="radio" name="normales" value={n} checked={n === 1} /><span>{n}</span></label>)}
           </div>
         </fieldset>
         <fieldset class="opcion">
-          <legend>Funkos pequeños <span class="opcion__hint">mascotas, niños, objetos · +{euros(FUNKO.pequeno)} cada uno</span></legend>
+          <legend>{t('Funkos pequeños', 'Small Funkos', 'Petits Funkos')} <span class="opcion__hint">{t(`mascotas, niños, objetos · +${euros(FUNKO.pequeno)} cada uno`, `pets, children, objects · +${euros(FUNKO.pequeno)} each`, `animaux, enfants, objets · +${euros(FUNKO.pequeno)} chacun`)}</span></legend>
           <div class="chips">
             {[0, 1, 2, 3].map((n) => <label class="chip"><input type="radio" name="pequenos" value={n} checked={n === 0} /><span>{n}</span></label>)}
           </div>
-          <p class="opcion__hint" data-aviso-max hidden>Con 2 normales cabe 1 pequeño como máximo.</p>
+          <p class="opcion__hint" data-aviso-max hidden>{t('Con 2 normales cabe 1 pequeño como máximo.', 'With 2 regular Funkos, only 1 small one fits.', 'Avec 2 Funkos normaux, la boîte accueille 1 petit au maximum.')}</p>
         </fieldset>
 
         <div class="field">
-          <label for="fk-pers">Cuéntanos quién va dentro <span class="opcion__hint">(opcional)</span></label>
-          <textarea class="textarea" id="fk-pers" name="personalizacion" rows="3" maxlength="400" placeholder="Ej.: mi hermana con gafas y su gato gris; ella con la camiseta del Betis"></textarea>
-          <p class="hint">Las fotos nos las mandas por WhatsApp al confirmar el pedido.</p>
+          <label for="fk-pers">{t('Cuéntanos quién va dentro', "Tell us who's going inside", 'Dites-nous qui sera dans la boîte')} <span class="opcion__hint">{t('(opcional)', '(optional)', '(facultatif)')}</span></label>
+          <textarea class="textarea" id="fk-pers" name="personalizacion" rows="3" maxlength="400" placeholder={t('Ej.: mi hermana con gafas y su gato gris; ella con la camiseta del Betis', 'E.g.: my sister with glasses and her grey cat; she is wearing her football shirt', 'Ex. : ma sœur avec des lunettes et son chat gris ; elle porte son maillot de foot')}></textarea>
+          <p class="hint">{t('Las fotos nos las mandas por WhatsApp al confirmar el pedido.', 'Send us the photos on WhatsApp when we confirm the order.', 'Vous nous enverrez les photos sur WhatsApp à la confirmation de la commande.')}</p>
         </div>
 
         <div class="comprar">
-          <div class="qty" role="group" aria-label="Número de cajas">
-            <button type="button" data-q="-1" aria-label="Una caja menos"><Icon name="menos" size={16} /></button>
+          <div class="qty" role="group" aria-label={t('Número de cajas', 'Number of boxes', 'Nombre de boîtes')}>
+            <button type="button" data-q="-1" aria-label={t('Una caja menos', 'One box fewer', 'Une boîte de moins')}><Icon name="menos" size={16} /></button>
             <output data-cantidad aria-live="polite">1</output>
-            <button type="button" data-q="1" aria-label="Una caja más"><Icon name="mas" size={16} /></button>
+            <button type="button" data-q="1" aria-label={t('Una caja más', 'One more box', 'Une boîte de plus')}><Icon name="mas" size={16} /></button>
           </div>
-          <button class="btn comprar__main" type="submit"><Icon name="cesta" />Añadir a la cesta</button>
+          <button class="btn comprar__main" type="submit"><Icon name="cesta" />{t('Añadir a la cesta', 'Add to basket', 'Ajouter au panier')}</button>
         </div>
-        <a class="btn btn--secondary btn--block" href={enlaceWhatsApp('¡Hola! Quiero un Funko personalizado.')} target="_blank" rel="noopener" data-wa><WhatsAppIcon />Pedirlo por WhatsApp</a>
-        <p class="nota">Se hace bajo pedido y tarda como mínimo 2 semanas. Sin pago en la web: te confirmamos los detalles y la fecha antes de imprimir.</p>
+        <a class="btn btn--secondary btn--block" href={enlaceWhatsApp(t('¡Hola! Quiero un Funko personalizado.', 'Hi! I would like a custom Funko.', 'Bonjour ! Je voudrais un Funko personnalisé.'))} target="_blank" rel="noopener" data-wa><WhatsAppIcon />{t('Pedirlo por WhatsApp', 'Order on WhatsApp', 'Commander sur WhatsApp')}</a>
+        <p class="nota">{t('Se hace bajo pedido y tarda como mínimo 2 semanas. Sin pago en la web: te confirmamos los detalles y la fecha antes de imprimir.', 'Made to order and takes at least 2 weeks. No payment on the website: we confirm the details and the date before printing.', "Fabriqué sur commande, comptez 2 semaines minimum. Aucun paiement sur le site : nous vous confirmons les détails et la date avant l'impression.")}</p>
       </form>
 
       <!-- Guía de precios (la misma del catálogo) -->
       <div class="fk-guia">
-        <h2>Guía de precios</h2>
+        <h2>{t('Guía de precios', 'Price guide', 'Guide des prix')}</h2>
 
         <section class="paso" aria-labelledby="p1">
-          <h3 id="p1"><span class="paso__n" aria-hidden="true">1</span>Elementos del pedido</h3>
+          <h3 id="p1"><span class="paso__n" aria-hidden="true">1</span>{t('Elementos del pedido', "What's in an order", 'Éléments de la commande')}</h3>
           <ul class="elementos">
-            <li><span class="elementos__l" aria-hidden="true">A</span><div class="elementos__img" set:html={svgCaja(0, 0, { titulo: 'Caja' })} /><strong>Caja</strong><span>A medida, con tu texto</span></li>
-            <li><span class="elementos__l" aria-hidden="true">B</span><div class="elementos__img" set:html={svgFigura('normal', 'Funko normal')} /><strong>Funko normal</strong><span>Tamaño estándar</span></li>
-            <li><span class="elementos__l" aria-hidden="true">C</span><div class="elementos__img" set:html={svgFigura('pequeno', 'Funko pequeño')} /><strong>Funko pequeño</strong><span>Tamaño reducido</span></li>
+            <li><span class="elementos__l" aria-hidden="true">A</span><div class="elementos__img" set:html={svgCaja(0, 0, { titulo: caja })} /><strong>{caja}</strong><span>{t('A medida, con tu texto', 'Made to measure, with your text', 'Sur mesure, avec votre texte')}</span></li>
+            <li><span class="elementos__l" aria-hidden="true">B</span><div class="elementos__img" set:html={svgFigura('normal', normal)} /><strong>{normal}</strong><span>{t('Tamaño estándar', 'Standard size', 'Taille standard')}</span></li>
+            <li><span class="elementos__l" aria-hidden="true">C</span><div class="elementos__img" set:html={svgFigura('pequeno', pequeno)} /><strong>{pequeno}</strong><span>{t('Tamaño reducido', 'Smaller size', 'Taille réduite')}</span></li>
           </ul>
         </section>
 
         <section class="paso" aria-labelledby="p2">
-          <h3 id="p2"><span class="paso__n" aria-hidden="true">2</span>Precio base</h3>
+          <h3 id="p2"><span class="paso__n" aria-hidden="true">2</span>{t('Precio base', 'Base price', 'Prix de base')}</h3>
           <div class="base">
-            <div class="base__img" set:html={svgCaja(1, 0)} />
+            <div class="base__img" set:html={svgCaja(1, 0, { l })} />
             <div class="base__txt">
-              <strong>Caja + Funko normal</strong>
-              <span>Incluye la caja personalizada y un Funko de tamaño normal.</span>
+              <strong>{t('Caja + Funko normal', 'Box + regular Funko', 'Boîte + Funko normal')}</strong>
+              <span>{t('Incluye la caja personalizada y un Funko de tamaño normal.', 'Includes the custom box and one regular-size Funko.', 'Comprend la boîte personnalisée et un Funko de taille normale.')}</span>
             </div>
             <span class="base__precio num">{euros(FUNKO.base)}</span>
           </div>
         </section>
 
         <section class="paso" aria-labelledby="p3">
-          <h3 id="p3"><span class="paso__n" aria-hidden="true">3</span>Añadir más Funkos a la caja</h3>
+          <h3 id="p3"><span class="paso__n" aria-hidden="true">3</span>{t('Añadir más Funkos a la caja', 'Add more Funkos to the box', 'Ajouter des Funkos dans la boîte')}</h3>
           <ul class="extras">
-            <li><div class="extras__img" set:html={svgFigura('pequeno', 'Funko pequeño')} /><div><strong>Funko pequeño</strong><span>Por cada uno que añadas</span></div><span class="extras__precio num">+{euros(FUNKO.pequeno)}</span></li>
-            <li><div class="extras__img" set:html={svgFigura('normal', 'Funko normal')} /><div><strong>Funko normal</strong><span>Por cada uno que añadas</span></div><span class="extras__precio num">+{euros(FUNKO.normalExtra)}</span></li>
+            <li><div class="extras__img" set:html={svgFigura('pequeno', pequeno)} /><div><strong>{pequeno}</strong><span>{t('Por cada uno que añadas', 'For each one you add', 'Pour chaque Funko ajouté')}</span></div><span class="extras__precio num">+{euros(FUNKO.pequeno)}</span></li>
+            <li><div class="extras__img" set:html={svgFigura('normal', normal)} /><div><strong>{normal}</strong><span>{t('Por cada uno que añadas', 'For each one you add', 'Pour chaque Funko ajouté')}</span></div><span class="extras__precio num">+{euros(FUNKO.normalExtra)}</span></li>
           </ul>
-          <p class="hint">La caja aumenta de tamaño según el número de Funkos que incluyas.</p>
+          <p class="hint">{t('La caja aumenta de tamaño según el número de Funkos que incluyas.', 'The box gets bigger with the number of Funkos you include.', 'La boîte s\'agrandit selon le nombre de Funkos inclus.')}</p>
         </section>
 
         <section class="paso" aria-labelledby="p4">
-          <h3 id="p4"><span class="paso__n" aria-hidden="true">4</span>Máximo por caja</h3>
-          <p class="hint">En una misma caja cabe una de estas dos combinaciones:</p>
+          <h3 id="p4"><span class="paso__n" aria-hidden="true">4</span>{t('Máximo por caja', 'Maximum per box', 'Maximum par boîte')}</h3>
+          <p class="hint">{t('En una misma caja cabe una de estas dos combinaciones:', 'One box fits one of these two combinations:', 'Une même boîte peut contenir l\'une de ces deux combinaisons :')}</p>
           <ul class="combos">
             {opciones.map((o, i) => (
               <li>
-                <p class="combos__t"><strong>Opción {i + 1}</strong> {resumenFunko(o.n, o.s).replace('Caja + ', '')}</p>
-                <div class="combos__img" set:html={svgCaja(o.n, o.s)} />
+                <p class="combos__t"><strong>{t('Opción', 'Option', 'Option')} {i + 1}</strong> {resumenFunko(o.n, o.s, l).replace(/^(Caja|Box|Boîte) \+ /, '')}</p>
+                <div class="combos__img" set:html={svgCaja(o.n, o.s, { l })} />
                 <p class="combos__cuenta"><span>{euros(FUNKO.base)}{o.n > 1 && ` + ${euros(FUNKO.normalExtra)}`}{o.s > 0 && (o.s > 1 ? ` + ${o.s} × ${euros(FUNKO.pequeno)}` : ` + ${euros(FUNKO.pequeno)}`)} =</span><strong class="num">{euros(precioFunko(o.n, o.s))}</strong></p>
-                <button type="button" class="btn btn--secondary btn--sm" data-preset={`${o.n},${o.s}`}>Configurar así</button>
+                <button type="button" class="btn btn--secondary btn--sm" data-preset={`${o.n},${o.s}`}>{t('Configurar así', 'Build it like this', 'Composer ainsi')}</button>
               </li>
             ))}
           </ul>
         </section>
 
         <section class="paso" aria-labelledby="p5">
-          <h3 id="p5">Qué necesitamos de ti</h3>
+          <h3 id="p5">{t('Qué necesitamos de ti', 'What we need from you', 'Ce dont nous avons besoin')}</h3>
           <ul class="directrices">
-            <li><strong>Fotos de cada persona:</strong> una de frente y otra de cuerpo entero, con buena luz y sin gafas de sol.</li>
-            <li><strong>La ropa y los detalles:</strong> camiseta, peinado, gafas, gorra, un instrumento o lo que la haga reconocible.</li>
-            <li><strong>Mascotas:</strong> una foto de frente y otra de lado, para acertar con el color y las manchas.</li>
-            <li><strong>La caja:</strong> el nombre o texto, el número (#) y si quieres algún color o dibujo.</li>
-            <li><strong>Con tiempo:</strong> cada Funko se modela y se pinta a mano para ti, así que tarda como mínimo 2 semanas. Si es para una fecha concreta, avísanos al pedirlo.</li>
-            <li><strong>Cómo nos lo mandas:</strong> haz el pedido y envíanos las fotos por WhatsApp. Te confirmamos todo antes de imprimir.</li>
+            <li><strong>{t('Fotos de cada persona:', 'Photos of each person:', 'Des photos de chaque personne :')}</strong> {t('una de frente y otra de cuerpo entero, con buena luz y sin gafas de sol.', 'one from the front and one full-length, in good light and without sunglasses.', 'une de face et une en pied, avec une bonne lumière et sans lunettes de soleil.')}</li>
+            <li><strong>{t('La ropa y los detalles:', 'Clothes and details:', 'Les vêtements et les détails :')}</strong> {t('camiseta, peinado, gafas, gorra, un instrumento o lo que la haga reconocible.', 'T-shirt, hairstyle, glasses, cap, an instrument or whatever makes them recognisable.', "t-shirt, coiffure, lunettes, casquette, un instrument ou tout ce qui la rend reconnaissable.")}</li>
+            <li><strong>{t('Mascotas:', 'Pets:', 'Animaux :')}</strong> {t('una foto de frente y otra de lado, para acertar con el color y las manchas.', 'one photo from the front and one from the side, so we get the colours and markings right.', 'une photo de face et une de profil, pour bien reproduire la couleur et les taches.')}</li>
+            <li><strong>{t('La caja:', 'The box:', 'La boîte :')}</strong> {t('el nombre o texto, el número (#) y si quieres algún color o dibujo.', 'the name or text, the number (#) and any colour or drawing you would like.', 'le nom ou le texte, le numéro (#) et la couleur ou le dessin que vous souhaitez.')}</li>
+            <li><strong>{t('Con tiempo:', 'Allow time:', 'Prévoyez du temps :')}</strong> {t('cada Funko se modela y se pinta a mano para ti, así que tarda como mínimo 2 semanas. Si es para una fecha concreta, avísanos al pedirlo.', "each Funko is modelled and hand-painted for you, so it takes at least 2 weeks. If you need it by a certain date, let us know when you order.", "chaque Funko est modélisé et peint à la main pour vous, comptez donc 2 semaines minimum. Si c'est pour une date précise, prévenez-nous à la commande.")}</li>
+            <li><strong>{t('Cómo nos lo mandas:', 'How to send it:', 'Comment nous l\'envoyer :')}</strong> {t('haz el pedido y envíanos las fotos por WhatsApp. Te confirmamos todo antes de imprimir.', 'place your order and send us the photos on WhatsApp. We confirm everything before printing.', "passez commande et envoyez-nous les photos sur WhatsApp. Nous vous confirmons tout avant l'impression.")}</li>
           </ul>
         </section>
       </div>
@@ -165,25 +178,25 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
   <!-- ============ PESTAÑA 2: ENCARGOS HECHOS ============ -->
   <section class="wrap fk-panel" id="encargos" role="tabpanel" aria-labelledby="tab-encargos" data-panel="encargos">
     <div class="section-head">
-      <h2>Funkos que ya hemos hecho</h2>
-      <p>Son encargos de otros clientes y no están a la venta: sirven de ejemplo. Si te gusta uno, pide el tuyo con la misma composición.</p>
+      <h2>{t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')}</h2>
+      <p>{t('Son encargos de otros clientes y no están a la venta: sirven de ejemplo. Si te gusta uno, pide el tuyo con la misma composición.', "These were made for other customers and aren't for sale: they're here as examples. If you like one, order yours with the same contents.", "Ce sont des commandes d'autres clients qui ne sont pas à vendre : elles servent d'exemple. Si l'une vous plaît, commandez la vôtre avec la même composition.")}</p>
     </div>
     <ul class="grid-productos grid-productos--4 hechos">
       {hechos.map(({ e, comp, fotos, portada }, i) => (
         <li class="hecho">
-          <button type="button" class="hecho__media" data-visor={i} aria-label={`Ver las ${fotos.length} fotos de ${e.nombre}`}>
+          <button type="button" class="hecho__media" data-visor={i} aria-label={t(`Ver las ${fotos.length} fotos de ${e.nombre}`, `See the ${fotos.length} photos of ${e.nombre}`, `Voir les ${fotos.length} photos de ${e.nombre}`)}>
             <Picture src={portada.src} alt={portada.alt} formats={['avif', 'webp']} widths={[240, 360, 480, 720]} sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 46vw" loading="lazy" />
-            <span class="card__tag">Encargo hecho</span>
+            <span class="card__tag">{t('Encargo hecho', 'Finished order', 'Commande réalisée')}</span>
             <span class="hecho__n num" aria-hidden="true"><Icon name="zoom" size={16} />{fotos.length}</span>
           </button>
           <div class="card__body">
             <h3 class="card__title">{e.nombre.replace('Funko ', '')}</h3>
-            <p class="card__cat">{e.composicion ?? 'Sin caja'}{comp && <> · <span class="num">{euros(precioFunko(comp.n, comp.s))}</span></>}</p>
+            <p class="card__cat">{e.composicion ?? t('Sin caja', 'No box', 'Sans boîte')}{comp && <> · <span class="num">{euros(precioFunko(comp.n, comp.s))}</span></>}</p>
           </div>
           {comp ? (
-            <button type="button" class="link hecho__cta" data-preset={`${comp.n},${comp.s}`}>Quiero uno así <Icon name="flecha" /></button>
+            <button type="button" class="link hecho__cta" data-preset={`${comp.n},${comp.s}`}>{t('Quiero uno así', 'I want one like this', 'Je veux le même')} <Icon name="flecha" /></button>
           ) : (
-            <a class="link hecho__cta" href={enlaceWhatsApp(`¡Hola! Me gustaría un Funko como el de «${e.nombre}».`)} target="_blank" rel="noopener">Preguntar por uno así <Icon name="flecha" /></a>
+            <a class="link hecho__cta" href={enlaceWhatsApp(t(`¡Hola! Me gustaría un Funko como el de «${e.nombre}».`, `Hi! I would like a Funko like "${e.nombre}".`, `Bonjour ! Je voudrais un Funko comme « ${e.nombre} ».`))} target="_blank" rel="noopener">{t('Preguntar por uno así', 'Ask about one like this', 'Demander le même')} <Icon name="flecha" /></a>
           )}
         </li>
       ))}
@@ -194,11 +207,11 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
   <dialog class="visor" data-visor-dlg aria-labelledby="visor-t">
       <div class="visor__bar">
         <p id="visor-t" class="visor__t"><span data-vtitulo></span> · <span class="num" data-vpos></span></p>
-        <button type="button" class="icon-btn" data-vcerrar aria-label="Cerrar"><Icon name="cerrar" /></button>
+        <button type="button" class="icon-btn" data-vcerrar aria-label={t('Cerrar', 'Close', 'Fermer')}><Icon name="cerrar" /></button>
       </div>
       <div class="visor__view"><img data-vimg alt="" /></div>
-      <button type="button" class="visor__nav visor__nav--prev icon-btn" data-vprev aria-label="Foto anterior"><Icon name="izq" /></button>
-      <button type="button" class="visor__nav visor__nav--next icon-btn" data-vnext aria-label="Foto siguiente"><Icon name="der" /></button>
+      <button type="button" class="visor__nav visor__nav--prev icon-btn" data-vprev aria-label={t('Foto anterior', 'Previous photo', 'Photo précédente')}><Icon name="izq" /></button>
+      <button type="button" class="visor__nav visor__nav--next icon-btn" data-vnext aria-label={t('Foto siguiente', 'Next photo', 'Photo suivante')}><Icon name="der" /></button>
       <script type="application/json" data-vdata set:html={JSON.stringify(hechos.map((h) => ({ nombre: h.e.nombre.replace('Funko ', ''), fotos: h.fotos })))} />
   </dialog>
 </Base>
@@ -357,6 +370,9 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
   import { cesta, avisar, euros } from '../scripts/cesta';
   import { FUNKO, precioFunko, resumenFunko, svgCaja, urlCaja, imagenCaja } from '../lib/funko';
   import sitio from '../data/sitio.json';
+  import { idiomaDocumento, traductor } from '../i18n';
+  const idioma = idiomaDocumento();
+  const tr = traductor(idioma);
 
   // ---- Pestañas (con #personaliza / #encargos en la URL) ----
   const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-tab]')];
@@ -400,14 +416,15 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
     radiosS.forEach((r) => (r.disabled = Number(r.value) > max));
     avisoMax.hidden = n < 2;
     if (s > max) { s = max; radiosS.forEach((r) => (r.checked = Number(r.value) === s)); }
-    caja.innerHTML = svgCaja(n, s, { nuevasN: Math.max(0, n - prevN), nuevasS: Math.max(0, s - prevS) });
+    caja.innerHTML = svgCaja(n, s, { nuevasN: Math.max(0, n - prevN), nuevasS: Math.max(0, s - prevS), l: idioma });
     prevN = n; prevS = s;
     const p = precioFunko(n, s);
-    resumen.textContent = resumenFunko(n, s);
+    resumen.textContent = resumenFunko(n, s, idioma);
     precio.textContent = cantidad > 1 ? `${euros(p * cantidad)}` : euros(p);
     out.textContent = String(cantidad);
     form.querySelector<HTMLButtonElement>('[data-q="-1"]')!.disabled = cantidad <= 1;
-    wa.href = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(`¡Hola! Quiero un Funko personalizado: ${resumenFunko(n, s)} (${euros(p)}).`)}`;
+    const r = resumenFunko(n, s, idioma);
+    wa.href = `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(tr(`¡Hola! Quiero un Funko personalizado: ${r} (${euros(p)}).`, `Hi! I would like a custom Funko: ${r} (${euros(p)}).`, `Bonjour ! Je voudrais un Funko personnalisé : ${r} (${euros(p)}).`))}`;
   }
   form.addEventListener('change', pintar);
   form.querySelectorAll<HTMLButtonElement>('[data-q]').forEach((b) => b.addEventListener('click', () => {
@@ -424,17 +441,20 @@ const datos = { slug: p.slug, nombre: p.nombre, url: '/funkos', imagen: miniatur
     mostrar('personaliza');
     aplicarPreset(n, s);
     form.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-    avisar(`Caja configurada: ${resumenFunko(n, s)}`);
+    avisar(tr('Caja configurada: ', 'Box set to: ', 'Boîte composée : ') + resumenFunko(n, s, idioma));
   }));
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const { n, s } = leer();
     const fd = new FormData(form);
     const pers = String(fd.get('personalizacion') ?? '').trim();
-    const opciones: Record<string, string> = { Composición: resumenFunko(n, s), Plazo: "mínimo 2 semanas" };
+    const opciones: Record<string, string> = {
+      [tr('Composición', 'Contents', 'Composition')]: resumenFunko(n, s, idioma),
+      [tr('Plazo', 'Lead time', 'Délai')]: tr('mínimo 2 semanas', 'at least 2 weeks', '2 semaines minimum'),
+    };
     // Enlace e imagen de esta composición: en WhatsApp se ve la caja con sus figuras
     cesta.añadir({ slug: d.slug, nombre: d.nombre, url: urlCaja(n, s), imagen: imagenCaja(n, s, true), opciones, personalizacion: pers || undefined, precio: precioFunko(n, s) }, cantidad);
-    avisar('Funko añadido a la cesta', 'Ver cesta', () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
+    avisar(tr('Funko añadido a la cesta', 'Funko added to basket', 'Funko ajouté au panier'), tr('Ver cesta', 'View basket', 'Voir le panier'), () => document.dispatchEvent(new CustomEvent('cesta:abrir')));
   });
   pintar();
   // /funkos?n=1&s=2 (desde la página de cada caja) deja el configurador así

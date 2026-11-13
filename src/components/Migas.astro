@@ -1,8 +1,10 @@
 ---
+import { idiomaDe, traductor } from '../i18n';
 interface Props { items: { nombre: string; url?: string }[] }
 const { items } = Astro.props;
+const t = traductor(idiomaDe(Astro.url));
 ---
-<nav class="crumbs" aria-label="Migas de pan">
+<nav class="crumbs" aria-label={t('Migas de pan', 'Breadcrumb', "Fil d'Ariane")}>
   <ol>
     {items.map((it, i) => (
       <li>{it.url && i < items.length - 1 ? <a href={it.url}>{it.nombre}</a> : <span aria-current="page">{it.nombre}</span>}</li>

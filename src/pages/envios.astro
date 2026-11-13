@@ -1,18 +1,50 @@
 ---
 import Legal from '../layouts/Legal.astro';
 import { sitio } from '../lib/catalogo';
+import { idiomaDe } from '../i18n';
 // BORRADOR: revisa plazos y costes reales antes de publicar.
+const l = idiomaDe(Astro.url);
 ---
-<Legal title="Envíos" description={`Cómo enviamos los pedidos de ${sitio.marca}: plazos, costes y seguimiento.`} ruta="/envios">
-  <p class="lead">Cada pieza se imprime bajo pedido, así que el plazo tiene dos partes: lo que tardamos en fabricarla y lo que tarda el envío.</p>
-  <h2>Fabricación</h2>
-  <p>Al confirmar tu pedido te decimos cuántos días tardaremos en tenerlo listo. Depende del tamaño de la pieza y de los pedidos que haya en cola.</p>
-  <h2>Envío</h2>
-  <ul>
-    <li>Enviamos a toda España peninsular. Para Baleares, Canarias, Ceuta y Melilla, pregúntanos antes.</li>
-    <li>El coste del envío depende del tamaño y del peso del paquete. Te lo decimos antes de que pagues, nunca después.</li>
-    <li>Cuando sale el paquete te mandamos el número de seguimiento por WhatsApp o email.</li>
-  </ul>
-  <h2>Si llega dañado</h2>
-  <p>Escríbenos en las 48 horas siguientes con una foto del paquete y de la pieza. Lo reponemos o te devolvemos el dinero.</p>
-</Legal>
+{l === 'en' ? (
+  <Legal title="Shipping" description={`How ${sitio.marca} ships orders: lead times, costs and tracking.`} ruta="/envios">
+    <p class="lead">Every piece is printed to order, so the lead time has two parts: how long it takes us to make it and how long shipping takes.</p>
+    <h2>Production</h2>
+    <p>When we confirm your order we tell you how many days it will take to get it ready. It depends on the size of the piece and on how many orders are in the queue.</p>
+    <h2>Shipping</h2>
+    <ul>
+      <li>We ship from Spain. Shipping to mainland Spain is the standard option; for the Balearic and Canary Islands, Ceuta, Melilla or other countries, ask us first and we'll tell you whether we can ship and how much it costs.</li>
+      <li>The shipping cost depends on the size and weight of the parcel. We tell you before you pay, never afterwards.</li>
+      <li>When the parcel leaves we send you the tracking number by WhatsApp or email.</li>
+    </ul>
+    <h2>If it arrives damaged</h2>
+    <p>Write to us within 48 hours with a photo of the parcel and the piece. We will replace it or refund you.</p>
+  </Legal>
+) : l === 'fr' ? (
+  <Legal title="Livraison" description={`Comment ${sitio.marca} expédie les commandes : délais, frais et suivi.`} ruta="/envios">
+    <p class="lead">Chaque pièce est imprimée sur commande, le délai comporte donc deux parties : le temps de fabrication et le temps de livraison.</p>
+    <h2>Fabrication</h2>
+    <p>À la confirmation de votre commande, nous vous indiquons combien de jours il nous faudra pour la préparer. Cela dépend de la taille de la pièce et du nombre de commandes en attente.</p>
+    <h2>Livraison</h2>
+    <ul>
+      <li>Nous expédions depuis l'Espagne. La livraison en Espagne péninsulaire est l'option standard ; pour les Baléares, les Canaries, Ceuta, Melilla ou d'autres pays, demandez-nous d'abord et nous vous dirons si nous pouvons livrer et à quel prix.</li>
+      <li>Les frais de port dépendent de la taille et du poids du colis. Nous vous les indiquons avant le paiement, jamais après.</li>
+      <li>Quand le colis part, nous vous envoyons le numéro de suivi par WhatsApp ou par e-mail.</li>
+    </ul>
+    <h2>Si le colis arrive abîmé</h2>
+    <p>Écrivez-nous dans les 48 heures avec une photo du colis et de la pièce. Nous la remplaçons ou vous remboursons.</p>
+  </Legal>
+) : (
+  <Legal title="Envíos" description={`Cómo enviamos los pedidos de ${sitio.marca}: plazos, costes y seguimiento.`} ruta="/envios">
+    <p class="lead">Cada pieza se imprime bajo pedido, así que el plazo tiene dos partes: lo que tardamos en fabricarla y lo que tarda el envío.</p>
+    <h2>Fabricación</h2>
+    <p>Al confirmar tu pedido te decimos cuántos días tardaremos en tenerlo listo. Depende del tamaño de la pieza y de los pedidos que haya en cola.</p>
+    <h2>Envío</h2>
+    <ul>
+      <li>Enviamos a toda España peninsular. Para Baleares, Canarias, Ceuta y Melilla, pregúntanos antes.</li>
+      <li>El coste del envío depende del tamaño y del peso del paquete. Te lo decimos antes de que pagues, nunca después.</li>
+      <li>Cuando sale el paquete te mandamos el número de seguimiento por WhatsApp o email.</li>
+    </ul>
+    <h2>Si llega dañado</h2>
+    <p>Escríbenos en las 48 horas siguientes con una foto del paquete y de la pieza. Lo reponemos o te devolvemos el dinero.</p>
+  </Legal>
+)}
