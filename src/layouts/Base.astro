@@ -57,19 +57,32 @@ const año = new Date().getFullYear();
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   {!soloEspanol && (
-    // Primera visita: si el dispositivo está en inglés o francés, lleva a esa versión de la misma página.
-    // Si el visitante eligió idioma a mano (selector), manda su elección. Los buscadores no se redirigen.
+    // Cada visita se abre en el idioma del dispositivo: español, francés o, para cualquier otro idioma, inglés.
+    // Si el visitante cambia de idioma con el selector, se respeta mientras siga navegando (hasta cerrar la pestaña).
+    // Los buscadores no se redirigen.
     <script is:inline define:vars={{ clave: CLAVE_IDIOMA }}>
       (function () {
         try {
           var p = location.pathname, m = /^\/(en|fr)(?=\/|$)/.exec(p), actual = m ? m[1] : 'es';
           if (/bot|crawl|spider|slurp|lighthouse|headless/i.test(navigator.userAgent) || navigator.webdriver) return;
-          var elegido = null; try { elegido = localStorage.getItem(clave); } catch (e) {}
+          // La elección "para siempre" de versiones anteriores ya no se usa: se borra para que vuelva lo automático
+          try { localStorage.removeItem(clave); } catch (e) {}
+          var elegido = null; try { elegido = sessionStorage.getItem(clave); } catch (e) {}
           var quiero = elegido;
           if (!quiero) {
-            var ls = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'es'];
-            for (var i = 0; i < ls.length && !quiero; i++) { var c = String(ls[i]).slice(0, 2).toLowerCase(); if (c === 'es' || c === 'en' || c === 'fr') quiero = c; }
-            quiero = quiero || 'es';
+            // Primero el idioma del sistema (el de la interfaz del navegador, que en el móvil sigue al del teléfono);
+            // después la lista de idiomas preferidos del navegador
+            var ls = [];
+            try { ls.push(Intl.DateTimeFormat().resolvedOptions().locale); } catch (e) {}
+            if (navigator.languages) ls = ls.concat(navigator.languages);
+            ls.push(navigator.language || '');
+            for (var i = 0; i < ls.length && !quiero; i++) {
+              var c = String(ls[i] || '').slice(0, 2).toLowerCase();
+              if (c === 'es' || c === 'ca' || c === 'eu' || c === 'gl') quiero = 'es'; // lenguas de España → español
+              else if (c === 'fr') quiero = 'fr';
+              else if (c === 'en') quiero = 'en';
+            }
+            quiero = quiero || 'en'; // alemán, italiano, portugués… → inglés
           }
           if (quiero === actual) return;
           var resto = p.replace(/^\/(en|fr)(?=\/|$)/, '') || '/';
@@ -229,9 +242,9 @@ const año = new Date().getFullYear();
     import { traductor, idiomaDocumento, CLAVE_IDIOMA } from '../i18n';
     const t = traductor(idiomaDocumento());
 
-    // Selector de idioma: la elección manda sobre el idioma del dispositivo en las próximas visitas
+    // Selector de idioma: la elección manda mientras siga navegando; en la próxima visita vuelve el del dispositivo
     document.querySelectorAll<HTMLAnchorElement>('[data-idioma]').forEach((a) => a.addEventListener('click', () => {
-      try { localStorage.setItem(CLAVE_IDIOMA, a.dataset.idioma!); } catch { /* sin almacenamiento */ }
+      try { sessionStorage.setItem(CLAVE_IDIOMA, a.dataset.idioma!); } catch { /* sin almacenamiento */ }
     }));
 
     // Cabecera: borde al hacer scroll
