@@ -118,7 +118,7 @@ const t = traductor(l);
   import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from 'firebase/auth';
   import { collection, query, where, onSnapshot, doc, getDoc, type Unsubscribe } from 'firebase/firestore';
   import { firebaseActivo, auth, db, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
-  import { ESTADOS, textoEstado as textoEstadoEs, textoFecha as textoFechaEs, esc, lineaPersonalizada, pasoEstado } from '../lib/estados';
+  import { ESTADOS, textoEstado as textoEstadoEs, textoFecha as textoFechaEs, esc, enlazar, lineaPersonalizada, pasoEstado } from '../lib/estados';
   import { idiomaDocumento, traductor, formatoEuros } from '../i18n';
   const idioma = idiomaDocumento();
   const tr = traductor(idioma);
@@ -217,7 +217,7 @@ const t = traductor(l);
         ...encargos.map((x) => ({ creado: x.creado, html: `
           ${cabecera(`${tr('Encargo a medida', 'Custom order', 'Commande sur mesure')} ${esc(referencia(x.id))}`, x)}
           <div class="meta">${esc(textoFecha(x.creado))}${x.archivo ? ` · ${tr('archivo', 'file', 'fichier')}: ${esc(x.archivo.nombre)}` : ''}</div>
-          <p>${esc(x.descripcion)}</p>
+          <p style="white-space: pre-line; overflow-wrap: anywhere">${enlazar(x.descripcion)}</p>
           ${nota(x.respuesta, tr('Nuestra respuesta', 'Our reply', 'Notre réponse'))}` })),
       ].sort(porFecha);
       $('[data-encargos]').innerHTML = items.map((x) => `<li>${x.html}</li>`).join('');

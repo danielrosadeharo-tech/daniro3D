@@ -4,7 +4,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebas
 import { collection, getDocs, getDoc, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, writeBatch, serverTimestamp, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { firebaseActivo, auth, db, storage, mensajeError, prepararGoogle, entrarConGoogle } from '../lib/firebase';
-import { textoFecha, esc, lineaPersonalizada } from '../lib/estados';
+import { textoFecha, esc, enlazar, lineaPersonalizada } from '../lib/estados';
 import { referencia } from '../lib/pedido/guardar';
 import { estadoAvisos, activarAvisos, desactivarAvisos, probarAvisos, esIOS, instalada, type EstadoAvisos } from '../lib/avisos';
 
@@ -216,7 +216,7 @@ function pintarEncargos() {
       <div class="fila"><span class="ref">Encargo ${esc(referencia(x.id))}</span>${selEstado(x.estado, 'data-estado-encargo')}</div>
       <div class="meta">${esc(textoFecha(x.creado))}${x.uid ? ' · con cuenta' : ''}</div>
       <div><strong>${esc(x.nombre)}</strong> · ${esc(x.contacto)}</div>
-      <p>${esc(x.descripcion)}</p>
+      <p style="white-space: pre-line; overflow-wrap: anywhere">${enlazar(x.descripcion)}</p>
       ${x.medidas ? `<div class="meta">Medidas: ${esc(x.medidas)}</div>` : ''}
       ${x.archivo ? `<div><button type="button" class="btn btn--secondary btn--sm" data-descargar="${esc(x.archivo.ruta)}">Descargar ${esc(x.archivo.nombre)}</button></div>` : ''}
       <label class="meta" for="resp-${esc(x.id)}">Respuesta para el cliente (la ve en "Mi cuenta")</label>

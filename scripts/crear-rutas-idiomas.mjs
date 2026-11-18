@@ -12,6 +12,7 @@ const PAGINAS = [
   { ruta: 'funkos.astro' },
   { ruta: 'funkos/caja-[comp].astro', paths: 'rutasCaja' },
   { ruta: 'encargos.astro' },
+  { ruta: 'makerworld.astro' },
   { ruta: 'sobre-nosotros.astro' },
   { ruta: 'envios.astro' },
   { ruta: 'devoluciones.astro' },

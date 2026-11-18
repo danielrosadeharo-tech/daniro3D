@@ -31,6 +31,10 @@ export function textoFecha(t: { toDate?: () => Date } | null | undefined, l: Idi
 
 export const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
+/** Como esc(), pero los enlaces (p. ej. el modelo de MakerWorld de un encargo) se pueden pulsar. */
+export const enlazar = (s: unknown) =>
+  esc(s).replace(/https?:\/\/[^\s<]+/g, (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+
 /** Línea personalizada: el Funko a medida o cualquier pieza con texto de personalización. Va a "encargos". */
 export const lineaPersonalizada = (l: { slug?: string; personalizacion?: string | null }) =>
   l.slug === 'funko-personalizado' || Boolean(l.personalizacion);

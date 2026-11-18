@@ -148,6 +148,12 @@ html { scrollbar-color: #b9b0a1 var(--bg); }
   text-decoration: none; font-weight: 500; transition: background-color 160ms ease;
 }
 .nav__links a[aria-current="page"] { background: var(--surface); }
+.nav__links a { white-space: nowrap; }
+/* Entre 1024 y 1279 px caben los 7 enlaces si van un poco más juntos (en inglés y francés son más largos) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .nav__links { gap: 0; }
+  .nav__links a { padding: 0 9px; font-size: 0.9375rem; }
+}
 @media (hover: hover) and (pointer: fine) { .nav__links a:hover { background: rgb(34 38 31 / 0.06); } }
 .nav__actions { display: flex; align-items: center; gap: var(--s-2); margin-left: auto; }
 @media (min-width: 1024px) {

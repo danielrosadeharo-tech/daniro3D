@@ -135,9 +135,18 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
         <p class="lead">{t('Prueba a quitar algún filtro. Y si lo que buscas no está, te lo hacemos a medida.', "Try removing a filter. And if what you're looking for isn't here, we'll make it to measure.", "Essayez de retirer un filtre. Et si ce que vous cherchez n'y est pas, nous le faisons sur mesure.")}</p>
         <div class="btn-row">
           <button class="btn btn--secondary" type="button" data-borrar-vacio>{t('Borrar filtros', 'Clear filters', 'Effacer les filtres')}</button>
-          <a class="btn" href={C.ruta('/encargos')}>{t('Pedir un encargo a medida', 'Request a custom order', 'Demander une pièce sur mesure')}</a>
+          <a class="btn" href={C.ruta('/makerworld')}>{t('Buscarlo en MakerWorld', 'Find it on MakerWorld', 'Le chercher sur MakerWorld')}</a>
+          <a class="btn btn--secondary" href={C.ruta('/encargos')}>{t('Pedir un encargo a medida', 'Request a custom order', 'Demander une pièce sur mesure')}</a>
         </div>
       </div>
+      <!-- Al final del catálogo: si no está aquí, que lo busque en MakerWorld -->
+      <aside class="cat__mw" aria-labelledby="cat-mw-h">
+        <div>
+          <h2 id="cat-mw-h">{t('¿No encuentras lo que buscas?', "Can't find what you're looking for?", 'Vous ne trouvez pas votre bonheur ?')}</h2>
+          <p>{t('Elige entre miles de modelos de MakerWorld, mándanos el enlace y te lo imprimimos.', "Choose from thousands of MakerWorld models, send us the link and we'll print it for you.", 'Choisissez parmi des milliers de modèles MakerWorld, envoyez-nous le lien et nous l\'imprimons pour vous.')}</p>
+        </div>
+        <a class="btn" href={C.ruta('/makerworld')}>{t('Buscar en MakerWorld', 'Search MakerWorld', 'Chercher sur MakerWorld')} <Icon name="flecha" /></a>
+      </aside>
     </section>
   </div>
   <div class="cat__velo" data-velo hidden></div>
@@ -204,6 +213,10 @@ const ordenInicial = productos.toSorted((a, b) => Number(b.destacado) - Number(a
     .cat__toolbar .buscar { grid-column: 2; }
   }
   .cat__vacio { padding-block: var(--s-7); }
+  .cat__mw { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4) var(--s-6); margin-top: var(--s-8); padding: var(--s-6); border-radius: var(--r-lg); background: var(--surface); }
+  .cat__mw h2 { font-size: 1.5rem; margin-bottom: var(--s-2); }
+  .cat__mw p { color: var(--muted); max-width: 52ch; }
+  .cat__mw .btn { flex: none; }
   .cat__vacio h3 { font-size: 1.75rem; }
 </style>
 

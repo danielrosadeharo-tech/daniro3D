@@ -46,6 +46,7 @@ const nav = [
   { href: '/catalogo/copas', txt: t('Copas', 'Trophies', 'Coupes') },
   { href: '/catalogo/legos', txt: t('Legos', 'Block figures', 'Figurines') },
   { href: '/encargos', txt: t('Encargos', 'Custom orders', 'Sur mesure') },
+  { href: '/makerworld', txt: t('¿No lo encuentras?', "Can't find it?", 'Introuvable ?') },
   { href: '/sobre-nosotros', txt: t('Sobre nosotros', 'About us', 'À propos') },
 ];
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -150,6 +151,7 @@ const año = new Date().getFullYear();
       <li><a href={C.ruta('/catalogo')}>{t('Todo el catálogo', 'Full catalogue', 'Tout le catalogue')} <Icon name="flecha" /></a></li>
       {C.categoriasCatalogo.map((c) => <li><a href={C.urlCategoria(c)}>{c.nombre} <Icon name="flecha" /></a></li>)}
       <li><a href={C.ruta('/encargos')}>{t('Encargos a medida', 'Custom orders', 'Commandes sur mesure')} <Icon name="flecha" /></a></li>
+      <li><a href={C.ruta('/makerworld')}>{t('¿No lo encuentras?', "Can't find it?", 'Introuvable ?')} <Icon name="flecha" /></a></li>
     </ul>
     <ul class="menu__small">
       <li><a href={C.ruta('/sobre-nosotros')}>{t('Sobre nosotros y contacto', 'About us and contact', 'À propos et contact')}</a></li>
@@ -181,6 +183,7 @@ const año = new Date().getFullYear();
           <ul>
             {C.categoriasCatalogo.map((c) => <li><a href={C.urlCategoria(c)}>{c.nombre}</a></li>)}
             <li><a href={C.ruta('/encargos')}>{t('Encargos a medida', 'Custom orders', 'Commandes sur mesure')}</a></li>
+            <li><a href={C.ruta('/makerworld')}>{t('Modelos de MakerWorld', 'MakerWorld models', 'Modèles MakerWorld')}</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-info">
