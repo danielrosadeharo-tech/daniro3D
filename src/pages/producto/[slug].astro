@@ -123,7 +123,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
           <div class="field">
             <label for="pers">{t('Tu personalización', 'Your personalisation', 'Votre personnalisation')} <span class="opcion__hint">{t('(opcional)', '(optional)', '(facultatif)')}</span></label>
             <textarea class="textarea" id="pers" name="personalizacion" maxlength="400" rows="3" aria-describedby="pers-hint" placeholder={esFunko ? t('Ej.: mi hermana con gafas y su gato gris; en la caja «Laura #30»', 'E.g.: my sister with glasses and her grey cat; "Laura #30" on the box', 'Ex. : ma sœur avec des lunettes et son chat gris ; « Laura #30 » sur la boîte') : t('Escribe aquí lo que quieres', 'Tell us what you would like', 'Écrivez ici ce que vous souhaitez')}></textarea>
-            <p class="hint" id="pers-hint">{p.personalizacion.notas} {t('Las fotos nos las mandas por WhatsApp al confirmar.', 'Send us the photos on WhatsApp when we confirm.', 'Vous nous enverrez les photos sur WhatsApp à la confirmation.')}</p>
+            <p class="hint" id="pers-hint">{p.personalizacion.notas} {/foto|logo/i.test(p.personalizacion.notas ?? 'foto') && t('Las fotos nos las mandas por WhatsApp al confirmar.', 'Send us the photos on WhatsApp when we confirm.', 'Vous nous enverrez les photos sur WhatsApp à la confirmation.')}</p>
           </div>
         )}
 

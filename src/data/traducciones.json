@@ -911,6 +911,31 @@
           "Funko Dessert Bar #11 avec sa boîte"
         ]
       }
+    },
+    "cajonera-huevos-aviario": {
+      "huella": "a8a2mr",
+      "en": {
+        "nombre": "Personalised aviary egg drawer unit",
+        "descripcionCorta": "16 numbered drawers for eggs, with your aviary's name.",
+        "descripcionLarga": "Wall-mounted unit with 16 numbered drawers to keep the eggs from each nest apart and keep track of them. It carries your aviary's name in raised black letters and a bird silhouette cut into the back panel, with two slots to hang it. On top there is an open tray for notes or tools, and each drawer pulls all the way out by its half-moon handle.",
+        "alts": [
+          "Personalised aviary egg drawer unit",
+          "Personalised aviary egg drawer unit",
+          "Personalised aviary egg drawer unit",
+          "Personalised aviary egg drawer unit"
+        ]
+      },
+      "fr": {
+        "nombre": "Tiroirs à œufs personnalisés pour volière",
+        "descripcionCorta": "16 tiroirs numérotés pour les œufs, au nom de votre volière.",
+        "descripcionLarga": "Meuble mural à 16 tiroirs numérotés pour séparer et suivre les œufs de chaque nid. Il porte le nom de votre volière en lettres noires en relief et une silhouette d’oiseau découpée dans le dossier, avec deux encoches pour l’accrocher. En haut, un bac ouvert accueille notes ou ustensiles, et chaque tiroir sort entièrement grâce à sa poignée en demi-lune.",
+        "alts": [
+          "Tiroirs à œufs personnalisés pour volière",
+          "Tiroirs à œufs personnalisés pour volière",
+          "Tiroirs à œufs personnalisés pour volière",
+          "Tiroirs à œufs personnalisés pour volière"
+        ]
+      }
     }
   },
   "categorias": {
@@ -996,6 +1021,18 @@
         "nombre": "Commandes sur mesure",
         "titulo": "Commandes sur mesure",
         "descripcion": "Vous avez une idée ou un fichier STL ? Dites-nous ce qu'il vous faut et nous vous donnons un prix."
+      }
+    },
+    "cajoneras": {
+      "en": {
+        "nombre": "Aviary drawers",
+        "titulo": "Egg drawers for aviaries",
+        "descripcion": "Wall-mounted units with 16 numbered drawers to keep eggs in, with your aviary's name. €60."
+      },
+      "fr": {
+        "nombre": "Tiroirs de volière",
+        "titulo": "Tiroirs à œufs pour volière",
+        "descripcion": "Meubles muraux à 16 tiroirs numérotés pour ranger les œufs, au nom de votre volière. 60 €."
       }
     }
   },
@@ -1163,6 +1200,10 @@
     "Logo, colores y el enlace que debe abrir.": {
       "en": "Logo, colours and the link it should open.",
       "fr": "Logo, couleurs et le lien qu'elle doit ouvrir."
+    },
+    "Escribe el nombre de tu aviario tal como quieres que salga.": {
+      "en": "Enter the name of your aviary as you want it to appear.",
+      "fr": "Saisissez le nom de votre volière tel que vous souhaitez qu’il apparaisse."
     }
   }
 }

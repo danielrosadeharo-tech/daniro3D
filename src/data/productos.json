@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -161,6 +161,57 @@
     "fechaAlta": "2025-06-21",
     "composicion": "Caja + 2 normales",
     "ejemplo": true
+  },
+  {
+    "slug": "cajonera-huevos-aviario",
+    "nombre": "Cajonera de huevos para aviario personalizada",
+    "categoria": "cajoneras",
+    "etiquetas": [
+      "aviario",
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "16 cajones numerados para los huevos, con el nombre de tu aviario.",
+    "descripcionLarga": "Cajonera de pared con 16 cajones numerados para separar y controlar los huevos de cada nido. Lleva el nombre de tu aviario en letras negras en relieve y una silueta de pájaro calada en el respaldo, con dos ranuras para colgarla. Arriba tiene una bandeja abierta para dejar notas o utensilios, y cada cajón sale entero tirando de su asa en media luna.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 60
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "HKzKvepnd9mWnwkcrgov.jpg",
+        "alt": "Cajonera de huevos para aviario personalizada"
+      },
+      {
+        "archivo": "zAtUdgeXbfxLWnyXhimC.jpg",
+        "alt": "Cajonera de huevos para aviario personalizada"
+      },
+      {
+        "archivo": "DS9m446ztu0NzxZEubYk.jpg",
+        "alt": "Cajonera de huevos para aviario personalizada"
+      },
+      {
+        "archivo": "6sEhfgqUFXoaTBIsaGC1.jpg",
+        "alt": "Cajonera de huevos para aviario personalizada"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Verde",
+      "Negro",
+      "Blanco"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Escribe el nombre de tu aviario tal como quieres que salga."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-19"
   },
   {
     "slug": "chirigota-11",
@@ -254,8 +305,8 @@
     "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
     "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -298,8 +349,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -342,8 +393,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -382,8 +433,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
     "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 16
+      "importe": 16,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -549,8 +600,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -595,8 +646,8 @@
     "descripcionCorta": "Mono verde Aston Martin Aramco con casco Cognizant.",
     "descripcionLarga": "Figura de bloques de Fernando Alonso con el mono verde de Aston Martin Aramco y el casco Cognizant. La visera sube y baja. Solo se hace en 30 cm.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 40
+      "importe": 40,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -801,8 +852,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -924,8 +975,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "importe": 45,
-      "tipo": "desde"
+      "tipo": "desde",
+      "importe": 45
     },
     "variantes": [],
     "galeria": [
@@ -1015,8 +1066,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -1061,8 +1112,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1225,8 +1276,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1327,8 +1378,8 @@
     "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
     "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 35
+      "importe": 35,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1392,8 +1443,8 @@
     "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
     "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 35
+      "importe": 35,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1457,8 +1508,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 115
+      "importe": 115,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1507,8 +1558,8 @@
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
     "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "importe": 10,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 10
     },
     "variantes": [],
     "galeria": [
@@ -1552,9 +1603,9 @@
     "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
       "tipo": "fijo",
-      "importe": 2
+      "importe": 2,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -1651,8 +1702,8 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "importe": 2,
       "unidad": "ud.",
+      "importe": 2,
       "tipo": "fijo"
     },
     "variantes": [],
@@ -1742,8 +1793,8 @@
     "descripcionCorta": "Figura articulada de gran tamaño.",
     "descripcionLarga": "Escultura articulada de Rayquaza de gran tamaño: 40 cm de alto y 40 cm de diámetro.",
     "precio": {
-      "importe": 90,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 90
     },
     "variantes": [],
     "galeria": [

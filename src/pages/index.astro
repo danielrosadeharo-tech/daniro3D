@@ -90,7 +90,7 @@ const orgLd = {
               {f && <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
               <div class="cat-tile__txt">
                 <h3><a href={C.urlCategoria(c)}>{c.nombre}</a></h3>
-                <p class="num">{c.enlace ? t('Tu idea, con precio', 'Your idea, with a price', 'Votre idée, avec un prix') : `${n} ${t('piezas', 'items', 'pièces')}${desdeTxt}`}</p>
+                <p class="num">{c.enlace ? t('Tu idea, con precio', 'Your idea, with a price', 'Votre idée, avec un prix') : `${n} ${n === 1 ? t('pieza', 'item', 'pièce') : t('piezas', 'items', 'pièces')}${desdeTxt}`}</p>
               </div>
             </li>
           );

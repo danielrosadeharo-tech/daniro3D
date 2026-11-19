@@ -31,7 +31,7 @@ const desdeTxt = t('desde', 'from', 'dès');
       <Migas items={migas} />
       <h1>{c.titulo}</h1>
       <p class="lead">{c.descripcion}</p>
-      <p class="cat-head__facts"><span class="num">{ps.length}</span> {t('piezas', 'items', 'pièces')}{desde != null && <> · {desdeTxt} <span class="num">{C.euros(desde)}</span></>}</p>
+      <p class="cat-head__facts"><span class="num">{ps.length}</span> {ps.length === 1 ? t('pieza', 'item', 'pièce') : t('piezas', 'items', 'pièces')}{desde != null && <> · {desdeTxt} <span class="num">{C.euros(desde)}</span></>}</p>
     </div>
     <div class="cat-head__media">
       <Picture src={f.src} alt={f.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes="(min-width: 768px) 34vw, 100vw" loading="eager" fetchpriority="high" />
