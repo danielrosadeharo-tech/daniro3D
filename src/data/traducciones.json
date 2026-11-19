@@ -955,6 +955,27 @@
           "Dessin de deux figurines en blocs personnalisées, l’une de 30 cm et l’autre de 15 cm"
         ]
       }
+    },
+    "trophee-des-champions": {
+      "huella": "17qvzp3",
+      "en": {
+        "nombre": "Trophée des Champions",
+        "descripcionCorta": "20 cm replica of the French Super Cup trophy, in silver with a black base.",
+        "descripcionLarga": "Replica of the Trophée des Champions, the French Super Cup trophy, 20 cm tall. The cup is eight-sided and silver, with a ring on the neck, and sits on an octagonal black base with a gold nameplate. For a fan's collection or as a trophy for a tournament among friends.",
+        "alts": [
+          "Trophée des Champions from the front, with the gold plate",
+          "Trophée des Champions, three-quarter view"
+        ]
+      },
+      "fr": {
+        "nombre": "Trophée des Champions",
+        "descripcionCorta": "Réplique de 20 cm du trophée de la Supercoupe de France, en argent avec socle noir.",
+        "descripcionLarga": "Réplique du Trophée des Champions, le trophée de la Supercoupe de France, de 20 cm de haut. La coupe est à huit faces, en argent, avec un anneau au col, et repose sur un socle noir octogonal avec une plaque dorée portant le nom. Pour la collection d’un supporter ou comme trophée d’un tournoi entre amis.",
+        "alts": [
+          "Trophée des Champions de face, avec la plaque dorée",
+          "Trophée des Champions des trois-quarts"
+        ]
+      }
     }
   },
   "categorias": {
