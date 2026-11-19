@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -174,21 +174,21 @@
     "descripcionCorta": "16 cajones numerados para los huevos, con el nombre de tu aviario.",
     "descripcionLarga": "Cajonera de pared con 16 cajones numerados para separar y controlar los huevos de cada nido. Lleva el nombre de tu aviario en letras negras en relieve y una silueta de pájaro calada en el respaldo, con dos ranuras para colgarla. Arriba tiene una bandeja abierta para dejar notas o utensilios, y cada cajón sale entero tirando de su asa en media luna.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 60
+      "importe": 60,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
+      {
+        "archivo": "DS9m446ztu0NzxZEubYk.jpg",
+        "alt": "Cajonera de huevos para aviario personalizada"
+      },
       {
         "archivo": "HKzKvepnd9mWnwkcrgov.jpg",
         "alt": "Cajonera de huevos para aviario personalizada"
       },
       {
         "archivo": "zAtUdgeXbfxLWnyXhimC.jpg",
-        "alt": "Cajonera de huevos para aviario personalizada"
-      },
-      {
-        "archivo": "DS9m446ztu0NzxZEubYk.jpg",
         "alt": "Cajonera de huevos para aviario personalizada"
       },
       {
@@ -224,8 +224,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -305,8 +305,8 @@
     "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
     "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -600,8 +600,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -646,8 +646,8 @@
     "descripcionCorta": "Mono verde Aston Martin Aramco con casco Cognizant.",
     "descripcionLarga": "Figura de bloques de Fernando Alonso con el mono verde de Aston Martin Aramco y el casco Cognizant. La visera sube y baja. Solo se hace en 30 cm.",
     "precio": {
-      "importe": 40,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 40
     },
     "variantes": [
       {
@@ -716,8 +716,8 @@
     "descripcionCorta": "Edición especial con casco blanco de temática japonesa.",
     "descripcionLarga": "La figura de Aston Martin con el casco blanco especial de temática japonesa. Visera móvil y decoración del casco en todo su contorno. Solo se hace en 30 cm.",
     "precio": {
-      "importe": 40,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 40
     },
     "variantes": [
       {
@@ -852,8 +852,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -937,8 +937,8 @@
     "descripcionCorta": "Caja + 2 normales. Dos figuras trajeadas en una caja «Dessert Bar».",
     "descripcionLarga": "Ejemplo de Funko personalizado: dos figuras con traje, una con chaqueta de cuadros rojos y corbata azul y otra con traje verde y corbata rosa, en una caja a medida «Dessert Bar» con el número 11. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1112,8 +1112,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1276,8 +1276,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1378,8 +1378,8 @@
     "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
     "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -1443,8 +1443,8 @@
     "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
     "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -1508,8 +1508,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 115,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 115
     },
     "variantes": [],
     "galeria": [
@@ -1558,8 +1558,8 @@
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
     "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1603,8 +1603,8 @@
     "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
       "importe": 2,
+      "tipo": "fijo",
       "unidad": "ud."
     },
     "variantes": [],
@@ -1649,9 +1649,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
       "tipo": "fijo",
-      "importe": 5
+      "importe": 5,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -1702,9 +1702,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
+      "tipo": "fijo",
       "unidad": "ud.",
-      "importe": 2,
-      "tipo": "fijo"
+      "importe": 2
     },
     "variantes": [],
     "galeria": [
