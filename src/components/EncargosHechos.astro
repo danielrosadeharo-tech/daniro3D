@@ -1,0 +1,110 @@
+---
+// Galería de encargos ya entregados de una categoría (p. ej. los Legos hechos): tarjeta por encargo
+// y un visor a pantalla completa con todas sus fotos. Los Funkos tienen la suya propia en /funkos.
+import { Picture, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { foto, fotosDe, enlaceWhatsApp, type Producto } from '../lib/catalogo';
+import { idiomaDe, traductor } from '../i18n';
+
+interface Props { items: Producto[]; titulo: string; texto: string; id?: string }
+const { items, titulo, texto, id = 'hechos' } = Astro.props;
+const t = traductor(idiomaDe(Astro.url));
+const hechos = await Promise.all(items.map(async (e) => ({
+  e,
+  portada: foto(e),
+  fotos: await Promise.all(fotosDe(e).map(async (f) => ({ src: (await getImage({ src: f.src, width: 1100, format: 'webp', quality: 86 })).src, alt: f.alt }))),
+})));
+---
+{hechos.length > 0 && (
+  <section class="section hechos-sec" id={id} aria-labelledby={`${id}-h`} data-hechos>
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id={`${id}-h`}>{titulo}</h2>
+        <p>{texto}</p>
+      </div>
+      <ul class="grid-productos grid-productos--4">
+        {hechos.map(({ e, portada, fotos }, i) => (
+          <li class="hecho">
+            <button type="button" class="hecho__media" data-visor={i} aria-label={t(`Ver las ${fotos.length} fotos de ${e.nombre}`, `See the ${fotos.length} photos of ${e.nombre}`, `Voir les ${fotos.length} photos de ${e.nombre}`)}>
+              <Picture src={portada.src} alt={portada.alt} formats={['avif', 'webp']} widths={[240, 360, 480, 720]} sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 46vw" loading="lazy" />
+              <span class="card__tag">{t('Encargo hecho', 'Finished order', 'Commande réalisée')}</span>
+              <span class="hecho__n num" aria-hidden="true"><Icon name="zoom" size={16} />{fotos.length}</span>
+            </button>
+            <div class="card__body">
+              <h3 class="card__title">{e.nombre}</h3>
+              {e.dimensiones && <p class="card__cat">{e.dimensiones}</p>}
+            </div>
+            <a class="link hecho__cta" href={enlaceWhatsApp(t(`¡Hola! Me gustaría uno como «${e.nombre}».`, `Hi! I would like one like "${e.nombre}".`, `Bonjour ! J'en voudrais un comme « ${e.nombre} ».`))} target="_blank" rel="noopener">{t('Preguntar por uno así', 'Ask about one like this', 'Demander le même')} <Icon name="flecha" /></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <dialog class="visor" data-visor-dlg aria-label={titulo}>
+      <div class="visor__bar">
+        <p class="visor__t"><span data-vtitulo></span> · <span class="num" data-vpos></span></p>
+        <button type="button" class="icon-btn" data-vcerrar aria-label={t('Cerrar', 'Close', 'Fermer')}><Icon name="cerrar" /></button>
+      </div>
+      <div class="visor__view"><img data-vimg alt="" /></div>
+      <button type="button" class="visor__nav visor__nav--prev icon-btn" data-vprev aria-label={t('Foto anterior', 'Previous photo', 'Photo précédente')}><Icon name="izq" /></button>
+      <button type="button" class="visor__nav visor__nav--next icon-btn" data-vnext aria-label={t('Foto siguiente', 'Next photo', 'Photo suivante')}><Icon name="der" /></button>
+      <script type="application/json" data-vdata set:html={JSON.stringify(hechos.map((h) => ({ nombre: h.e.nombre, fotos: h.fotos })))} />
+    </dialog>
+  </section>
+)}
+
+<style>
+  .hechos-sec { border-top: 1px solid var(--line); }
+  .section-head p { color: var(--muted); max-width: 60ch; }
+  .hecho { display: grid; gap: var(--s-3); align-content: start; }
+  .hecho__media { position: relative; display: block; width: 100%; padding: 0; border: 0; aspect-ratio: 3 / 4; border-radius: var(--r-md); overflow: hidden; background: var(--surface); cursor: zoom-in; transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out); }
+  .hecho__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+  .hecho__n { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r-pill); background: rgb(34 38 31 / 0.88); color: #fff; font-size: 0.8125rem; font-weight: 500; }
+  .hecho__cta { justify-self: start; color: var(--accent); min-height: 44px; font-size: 0.9375rem; }
+  .card__tag { position: absolute; left: 10px; top: 10px; }
+  @media (hover: hover) and (pointer: fine) {
+    .hecho__media:hover { transform: translateY(-2px); box-shadow: var(--shadow-1); }
+    .hecho__media:hover :global(img) { transform: scale(1.03); }
+  }
+
+  .visor { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #151713; color: #f2eee6;
+    opacity: 0; transition: opacity 200ms ease, overlay 200ms allow-discrete, display 200ms allow-discrete; }
+  .visor[open] { opacity: 1; }
+  @starting-style { .visor[open] { opacity: 0; } }
+  .visor::backdrop { background: #151713; }
+  .visor__bar { position: absolute; inset: 0 0 auto; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 8px 8px 8px 20px; }
+  .visor__t { font-weight: 560; }
+  .visor__bar .icon-btn, .visor__nav { color: #f2eee6; background: rgb(255 255 255 / 0.1); }
+  .visor__view { position: absolute; inset: 64px 0 24px; display: grid; place-items: center; }
+  .visor__view img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .visor__nav { position: absolute; top: 50%; translate: 0 -50%; z-index: 2; }
+  .visor__nav--prev { left: 12px; } .visor__nav--next { right: 12px; }
+  .visor :focus-visible { outline-color: #8cc0a8; }
+</style>
+
+<script>
+  // Visor de fotos: uno por galería de la página
+  document.querySelectorAll<HTMLElement>('[data-hechos]').forEach((sec) => {
+    const dlg = sec.querySelector<HTMLDialogElement>('[data-visor-dlg]')!;
+    const datos: { nombre: string; fotos: { src: string; alt: string }[] }[] = JSON.parse(dlg.querySelector('[data-vdata]')!.textContent!);
+    const img = dlg.querySelector<HTMLImageElement>('[data-vimg]')!;
+    let actual = 0, n = 0, origen: HTMLElement | null = null;
+    function ver(i: number) {
+      const fs = datos[actual].fotos;
+      n = (i + fs.length) % fs.length;
+      img.src = fs[n].src; img.alt = fs[n].alt;
+      dlg.querySelector('[data-vtitulo]')!.textContent = datos[actual].nombre;
+      dlg.querySelector('[data-vpos]')!.textContent = `${n + 1} / ${fs.length}`;
+      dlg.querySelectorAll<HTMLElement>('[data-vprev],[data-vnext]').forEach((b) => (b.hidden = fs.length < 2));
+    }
+    sec.querySelectorAll<HTMLButtonElement>('[data-visor]').forEach((b) => b.addEventListener('click', () => {
+      origen = b; actual = Number(b.dataset.visor); ver(0); dlg.showModal(); document.documentElement.style.overflow = 'hidden';
+    }));
+    dlg.querySelector('[data-vprev]')!.addEventListener('click', () => ver(n - 1));
+    dlg.querySelector('[data-vnext]')!.addEventListener('click', () => ver(n + 1));
+    dlg.querySelector('[data-vcerrar]')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') ver(n + 1); if (e.key === 'ArrowLeft') ver(n - 1); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; origen?.focus({ preventScroll: true }); });
+  });
+</script>

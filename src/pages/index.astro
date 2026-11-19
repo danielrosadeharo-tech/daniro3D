@@ -24,6 +24,7 @@ const funkoDetalle = foto(C.producto('perruno-17')!, 3);
 const posavasos = foto(C.producto('posavasos-mascotas')!, 0);
 // Carrusel de la banda de Funkos: los encargos hechos, empezando por la boda (la foto que había antes)
 const funkosHechos = C.ejemplos
+  .filter((e) => e.categoria === 'funkos')
   .toSorted((a, b) => Number(b.slug === 'boda-27') - Number(a.slug === 'boda-27'))
   .map((e) => ({ nombre: e.nombre.replace('Funko ', ''), src: foto(e).src, alt: foto(e).alt, href: C.ruta('/funkos#encargos') }));
 const estanteria = foto(C.producto('estanteria-stranger-things')!, 0);

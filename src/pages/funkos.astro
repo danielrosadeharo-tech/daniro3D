@@ -21,9 +21,11 @@ const cabecera = foto(C.producto('perruno-17')!, 0);
 const miniatura = (await getImage({ src: foto(p).src, width: 144, format: 'webp' })).src;
 const ldImgs = await Promise.all(fotosDe(p).map((f) => getImage({ src: f.src, width: 750, format: 'jpg' }).then((r) => r.src)));
 
+// Solo los encargos hechos de Funkos (los de otras categorías salen en su ficha)
+const hechosFunko = C.ejemplos.filter((e) => e.categoria === 'funkos');
 // Galería de encargos hechos: todas las fotos de cada uno, para el visor.
 // La composición se lee del texto español (el traducido solo se enseña).
-const hechos = await Promise.all(C.ejemplos.map(async (e) => {
+const hechos = await Promise.all(hechosFunko.map(async (e) => {
   const comp = leerComposicion(todosEs.find((x) => x.slug === e.slug)?.composicion);
   const fotos = await Promise.all(fotosDe(e).map(async (f) => ({ src: (await getImage({ src: f.src, width: 750, format: 'webp', quality: 86 })).src, alt: f.alt })));
   return { e, comp, fotos, portada: foto(e) };
@@ -51,14 +53,14 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
       <Migas items={migas} />
       <h1>{t('Funkos personalizados con su caja', 'Custom Funkos with their box', 'Funkos personnalisés avec leur boîte')}</h1>
       <p class="lead">{cat.descripcion.replace(/\s*(Desde|From|À partir de) [^.]*\.$/, '')} {t('Eliges cuántas figuras van dentro y el precio sale solo.', 'Choose how many figures go inside and the price works itself out.', 'Choisissez combien de figurines vont dedans et le prix se calcule tout seul.')}</p>
-      <p class="fk-head__facts">{t('Desde', 'From', 'À partir de')} <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{C.ejemplos.length}</span> {t('encargos hechos para ver', 'finished orders to see', 'commandes réalisées à découvrir')}</p>
+      <p class="fk-head__facts">{t('Desde', 'From', 'À partir de')} <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{hechosFunko.length}</span> {t('encargos hechos para ver', 'finished orders to see', 'commandes réalisées à découvrir')}</p>
     </div>
   </header>
 
   <div class="wrap fk-tabs-wrap">
     <div class="fk-tabs" role="tablist" aria-label="Funkos" data-tabs>
       <button type="button" role="tab" id="tab-personaliza" aria-controls="personaliza" aria-selected="true" data-tab="personaliza">{t('Personaliza tu Funko', 'Customise your Funko', 'Personnalisez votre Funko')}</button>
-      <button type="button" role="tab" id="tab-encargos" aria-controls="encargos" aria-selected="false" tabindex="-1" data-tab="encargos">{t('Encargos hechos', 'Finished orders', 'Commandes réalisées')} <span class="fk-tabs__n num">{C.ejemplos.length}</span></button>
+      <button type="button" role="tab" id="tab-encargos" aria-controls="encargos" aria-selected="false" tabindex="-1" data-tab="encargos">{t('Encargos hechos', 'Finished orders', 'Commandes réalisées')} <span class="fk-tabs__n num">{hechosFunko.length}</span></button>
     </div>
   </div>
 
@@ -175,7 +177,7 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
       <div class="fk-galeria__txt">
         <h2 id="galeria-h">{t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')}</h2>
         <p>{t('Encargos reales de otros clientes, para que veas el acabado. Toca una foto para verla en grande.', 'Real orders from other customers, so you can see the finish. Tap a photo to see it full size.', "De vraies commandes d'autres clients, pour voir la finition. Touchez une photo pour l'agrandir.")}</p>
-        <button type="button" class="btn btn--secondary" data-ir-encargos>{t(`Ver los ${C.ejemplos.length} encargos hechos`, `See all ${C.ejemplos.length} finished orders`, `Voir les ${C.ejemplos.length} commandes réalisées`)}</button>
+        <button type="button" class="btn btn--secondary" data-ir-encargos>{t(`Ver los ${hechosFunko.length} encargos hechos`, `See all ${hechosFunko.length} finished orders`, `Voir les ${hechosFunko.length} commandes réalisées`)}</button>
       </div>
       <CarruselFunkos class="fk-galeria__media" etiqueta={t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')} visor
         sizes="(min-width: 900px) 40vw, 100vw"

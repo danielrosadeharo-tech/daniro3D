@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Galeria from '../../components/Galeria.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import EncargosHechos from '../../components/EncargosHechos.astro';
 import Migas from '../../components/Migas.astro';
 import Icon from '../../components/Icon.astro';
 import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
@@ -21,6 +22,8 @@ const p = C.loc((Astro.props as { p: Producto }).p);
 const cat = C.categoria(p.categoria)!;
 const fotos = fotosDe(p);
 const rel = C.relacionados(p);
+// Las piezas personalizables enseñan los encargos ya hechos de su categoría (los Funkos tienen los suyos en /funkos)
+const hechos = p.personalizacion.disponible && p.categoria !== 'funkos' ? C.ejemplos.filter((e) => e.categoria === p.categoria) : [];
 const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: cat.nombre, url: C.urlCategoria(cat) }, { nombre: p.nombre, url: C.urlProducto(p) }];
 const ldImgs = await Promise.all(fotos.slice(0, 4).map((f) => getImage({ src: f.src, width: 750, format: 'jpg' }).then((r) => r.src)));
 const miniatura = (await getImage({ src: foto(p).src, width: 144, format: 'webp' })).src;
@@ -64,7 +67,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
       <header class="ficha__head">
         <a class="ficha__cat" href={C.urlCategoria(cat)}>{cat.nombre}</a>
         <h1>{p.nombre}</h1>
-        <p class="ficha__precio precio" data-precio-txt aria-live="polite" data-consultar={t('Precio a consultar', 'Price on request', 'Prix sur demande')}>{C.textoPrecio(p)}</p>
+        <p class="ficha__precio precio" data-precio-txt aria-live="polite" data-consultar={t('Precio a consultar', 'Price on request', 'Prix sur demande')} data-desde={p.precio.tipo === 'desde' && !esFunko ? t('Desde', 'From', 'À partir de') : undefined}>{C.textoPrecio(p)}</p>
         <p class="ficha__corta">{p.descripcionCorta}</p>
       </header>
 
@@ -156,6 +159,8 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
       </section>
     </div>
   </article>
+
+  <EncargosHechos items={hechos} titulo={t('Encargos que ya hemos hecho', "Orders we've already made", 'Commandes déjà réalisées')} texto={t('Encargos reales de otros clientes, para que veas el acabado. Toca una foto para ver todas en grande.', 'Real orders from other customers, so you can see the finish. Tap a photo to see them all full size.', "De vraies commandes d'autres clients, pour voir la finition. Touchez une photo pour toutes les agrandir.")} />
 
   {rel.length > 0 && (
     <section class="section" aria-labelledby="rel-h">
@@ -254,7 +259,9 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
 
   function pintar() {
     const { precio } = actual();
-    precioTxt.textContent = precio == null ? precioTxt.dataset.consultar! : euros(precio * cantidad) + (cantidad > 1 ? ` (${cantidad} × ${euros(precio)})` : '');
+    // "Desde" en las piezas cuyo precio final depende de los detalles (p. ej. el Lego personalizado)
+    const desde = precioTxt.dataset.desde ? `${precioTxt.dataset.desde} ` : '';
+    precioTxt.textContent = precio == null ? precioTxt.dataset.consultar! : desde + euros(precio * cantidad) + (cantidad > 1 ? ` (${cantidad} × ${euros(precio)})` : '');
     out.textContent = String(cantidad);
     minus.disabled = cantidad <= 1;
   }

@@ -77,8 +77,8 @@
     "descripcionCorta": "Caja + 1 normal. Veteranos Balonmano de Sevilla, con soporte trasero con chip NFC.",
     "descripcionLarga": "Ejemplo de Funko personalizado: veteranos Balonmano de Sevilla, con soporte trasero con chip NFC. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -393,8 +393,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -433,8 +433,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
     "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
     "precio": {
-      "importe": 16,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 16
     },
     "variantes": [],
     "galeria": [
@@ -600,8 +600,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -716,8 +716,8 @@
     "descripcionCorta": "Edición especial con casco blanco de temática japonesa.",
     "descripcionLarga": "La figura de Aston Martin con el casco blanco especial de temática japonesa. Visera móvil y decoración del casco en todo su contorno. Solo se hace en 30 cm.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 40
+      "importe": 40,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -852,8 +852,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -899,8 +899,8 @@
     "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -937,8 +937,8 @@
     "descripcionCorta": "Caja + 2 normales. Dos figuras trajeadas en una caja «Dessert Bar».",
     "descripcionLarga": "Ejemplo de Funko personalizado: dos figuras con traje, una con chaqueta de cuadros rojos y corbata azul y otra con traje verde y corbata rosa, en una caja a medida «Dessert Bar» con el número 11. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -975,8 +975,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "tipo": "desde",
-      "importe": 45
+      "importe": 45,
+      "tipo": "desde"
     },
     "variantes": [],
     "galeria": [
@@ -1066,8 +1066,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1181,6 +1181,52 @@
     },
     "destacado": false,
     "fechaAlta": "2025-03-28"
+  },
+  {
+    "slug": "lego-personalizado",
+    "nombre": "Lego personalizado",
+    "categoria": "legos",
+    "etiquetas": [
+      "personalizado",
+      "regalo",
+      "pilotos"
+    ],
+    "descripcionCorta": "Tu figura de bloques hecha a partir de tus fotos, en 30 cm o 15 cm.",
+    "descripcionLarga": "Hacemos tu figura de bloques a partir de las fotos que nos mandes: la persona, su ropa, el casco o el uniforme, los colores y los logos que quieras, impresa en 3D a todo color. La de 30 cm sale desde 50 € y la de 15 cm desde 30 €. El precio final depende de los detalles y te lo confirmamos antes de empezar.",
+    "precio": {
+      "importe": 30,
+      "tipo": "desde"
+    },
+    "variantes": [
+      {
+        "nombre": "30 cm",
+        "precio": 50
+      },
+      {
+        "nombre": "15 cm",
+        "precio": 30
+      }
+    ],
+    "galeria": [
+      {
+        "archivo": "D7cypaAEJaZNVtIfk42g.jpg",
+        "alt": "Dibujo de dos figuras de bloques personalizadas, una de 30 cm y otra de 15 cm"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": "30 cm o 15 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Mándanos fotos de frente y de espalda de la persona, la ropa o el uniforme, y dinos los detalles que quieres."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-19"
   },
   {
     "slug": "llavero-lata-baked-beans",
@@ -1363,7 +1409,8 @@
       "notas": null
     },
     "destacado": false,
-    "fechaAlta": "2025-02-01"
+    "fechaAlta": "2025-02-01",
+    "ejemplo": true
   },
   {
     "slug": "marc-marquez-ducati",
@@ -1603,8 +1650,8 @@
     "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
-      "importe": 2,
       "tipo": "fijo",
+      "importe": 2,
       "unidad": "ud."
     },
     "variantes": [],
@@ -1649,9 +1696,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
       "importe": 5,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1703,8 +1750,8 @@
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 2
+      "importe": 2,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -1793,8 +1840,8 @@
     "descripcionCorta": "Figura articulada de gran tamaño.",
     "descripcionLarga": "Escultura articulada de Rayquaza de gran tamaño: 40 cm de alto y 40 cm de diámetro.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 90
+      "importe": 90,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [

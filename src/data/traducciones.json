@@ -936,6 +936,25 @@
           "Tiroirs à œufs personnalisés pour volière"
         ]
       }
+    },
+    "lego-personalizado": {
+      "huella": "jgi9jo",
+      "en": {
+        "nombre": "Custom Lego figure",
+        "descripcionCorta": "Your block figure made from your photos, in 30 cm or 15 cm.",
+        "descripcionLarga": "We make your block figure based on the photos you send us: the person, their clothes, their helmet or uniform, the colours and logos you want, 3D-printed in full colour. The 30 cm figure starts at €50, and the 15 cm figure starts at €30. The final price depends on the details, and we'll confirm it with you before we start.",
+        "alts": [
+          "Drawing of two custom block figures, one 30 cm tall and the other 15 cm tall"
+        ]
+      },
+      "fr": {
+        "nombre": "Lego personnalisé",
+        "descripcionCorta": "Votre figurine en blocs réalisée à partir de vos photos, en 30 cm ou 15 cm.",
+        "descripcionLarga": "Nous fabriquons votre figurine en blocs à partir des photos que vous nous envoyez : la personne, ses vêtements, son casque ou son uniforme, les couleurs et les logos que vous souhaitez, le tout imprimé en 3D en couleurs. La figurine de 30 cm est disponible à partir de 50 € et celle de 15 cm à partir de 30 €. Le prix final dépend des détails et nous vous le confirmerons avant de commencer.",
+        "alts": [
+          "Dessin de deux figurines en blocs personnalisées, l’une de 30 cm et l’autre de 15 cm"
+        ]
+      }
     }
   },
   "categorias": {
@@ -1204,6 +1223,14 @@
     "Escribe el nombre de tu aviario tal como quieres que salga.": {
       "en": "Enter the name of your aviary as you want it to appear.",
       "fr": "Saisissez le nom de votre volière tel que vous souhaitez qu’il apparaisse."
+    },
+    "30 cm o 15 cm de alto": {
+      "en": "30 cm or 15 cm high",
+      "fr": "30 cm ou 15 cm de haut"
+    },
+    "Mándanos fotos de frente y de espalda de la persona, la ropa o el uniforme, y dinos los detalles que quieres.": {
+      "en": "Send us front and back photos of the person, the clothing or the uniform, and tell us the details you want.",
+      "fr": "Envoyez-nous des photos de face et de dos de la personne, des vêtements ou de l’uniforme, et indiquez-nous les détails que vous souhaitez."
     }
   }
 }
