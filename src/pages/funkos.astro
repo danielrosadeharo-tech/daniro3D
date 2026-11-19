@@ -50,7 +50,7 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
     <div class="fk-head__text" data-enter>
       <Migas items={migas} />
       <h1>{t('Funkos personalizados con su caja', 'Custom Funkos with their box', 'Funkos personnalisés avec leur boîte')}</h1>
-      <p class="lead">{cat.descripcion.replace(/\s*(Desde 55 €|From €55|À partir de 55 €)\.$/, '')} {t('Eliges cuántas figuras van dentro y el precio sale solo.', 'Choose how many figures go inside and the price works itself out.', 'Choisissez combien de figurines vont dedans et le prix se calcule tout seul.')}</p>
+      <p class="lead">{cat.descripcion.replace(/\s*(Desde|From|À partir de) [^.]*\.$/, '')} {t('Eliges cuántas figuras van dentro y el precio sale solo.', 'Choose how many figures go inside and the price works itself out.', 'Choisissez combien de figurines vont dedans et le prix se calcule tout seul.')}</p>
       <p class="fk-head__facts">{t('Desde', 'From', 'À partir de')} <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{C.ejemplos.length}</span> {t('encargos hechos para ver', 'finished orders to see', 'commandes réalisées à découvrir')}</p>
     </div>
     <!-- Carrusel con los Funkos ya hechos (la portada de cada encargo); cada foto abre el visor -->

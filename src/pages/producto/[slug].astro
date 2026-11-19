@@ -10,6 +10,7 @@ import { fotosDe, foto, enlaceWhatsApp, sitio, catalogoEn, urlProducto as urlPro
 import { colorHex } from '../../lib/colores';
 import { migasLd, productoLd, descripcionMeta } from '../../lib/seo';
 import { rutasProducto } from '../../lib/rutas';
+import { FUNKO } from '../../lib/funko';
 import { idiomaDe } from '../../i18n';
 
 export const getStaticPaths = rutasProducto;
@@ -79,13 +80,13 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
               </div>
             </fieldset>
             <fieldset class="opcion">
-              <legend>{t('Funkos pequeños', 'Small Funkos', 'Petits Funkos')} <span class="opcion__hint">{t(`mascotas, niños, objetos · +${C.euros(20)} cada uno`, `pets, children, objects · +${C.euros(20)} each`, `animaux, enfants, objets · +${C.euros(20)} chacun`)}</span></legend>
+              <legend>{t('Funkos pequeños', 'Small Funkos', 'Petits Funkos')} <span class="opcion__hint">{t(`mascotas, niños, objetos · +${C.euros(FUNKO.pequeno)} cada uno`, `pets, children, objects · +${C.euros(FUNKO.pequeno)} each`, `animaux, enfants, objets · +${C.euros(FUNKO.pequeno)} chacun`)}</span></legend>
               <div class="chips">
                 {[0, 1, 2, 3].map((n) => <label class="chip"><input type="radio" name="pequenos" value={n} checked={n === 0} /><span>{n}</span></label>)}
               </div>
             </fieldset>
             <p class="funko__resumen" data-funko-resumen></p>
-            <p class="opcion__hint">{t(`Máximo por caja: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. El segundo normal suma ${C.euros(30)}.`, `Maximum per box: 1 regular + 3 small, or 2 regular + 1 small. The second regular adds ${C.euros(30)}.`, `Maximum par boîte : 1 normal + 3 petits, ou 2 normaux + 1 petit. Le deuxième normal ajoute ${C.euros(30)}.`)}</p>
+            <p class="opcion__hint">{t(`Máximo por caja: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. El segundo normal suma ${C.euros(FUNKO.normalExtra)}.`, `Maximum per box: 1 regular + 3 small, or 2 regular + 1 small. The second regular adds ${C.euros(FUNKO.normalExtra)}.`, `Maximum par boîte : 1 normal + 3 petits, ou 2 normaux + 1 petit. Le deuxième normal ajoute ${C.euros(FUNKO.normalExtra)}.`)}</p>
           </div>
         )}
 
@@ -212,7 +213,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
 
 <script>
   import { cesta, avisar, euros } from '../../scripts/cesta';
-  import { resumenFunko } from '../../lib/funko';
+  import { resumenFunko, precioFunko } from '../../lib/funko';
   import { idiomaDocumento, traductor } from '../../i18n';
   const idioma = idiomaDocumento();
   const t = traductor(idioma);
@@ -231,7 +232,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
     pequenos.forEach((r) => (r.disabled = n === 2 && Number(r.value) > 1));
     let s = Number(fd.get('pequenos') ?? 0);
     if (n === 2 && s > 1) { s = 1; pequenos.forEach((r) => (r.checked = Number(r.value) === 1)); }
-    const precio = 55 + (n - 1) * 30 + s * 20;
+    const precio = precioFunko(n, s);
     const resumen = resumenFunko(n, s, idioma);
     form.querySelector('[data-funko-resumen]')!.textContent = `${resumen}: ${euros(precio)}`;
     return { precio, opciones: { [t('Composición', 'Contents', 'Composition')]: resumen } as Record<string, string> };

@@ -2,9 +2,9 @@
 // Se usa en el servidor (Astro) y en el navegador (configurador en vivo).
 
 export const FUNKO = {
-  base: 55, // caja + 1 Funko normal
-  normalExtra: 30, // cada Funko normal añadido
-  pequeno: 20, // cada Funko pequeño
+  base: 45, // caja + 1 Funko normal
+  normalExtra: 20, // cada Funko normal añadido
+  pequeno: 10, // cada Funko pequeño
   /** Máximo de pequeños según los normales: 1 normal + 3 pequeños, o 2 normales + 1 pequeño. */
   maxPequenos: (normales: number) => (normales >= 2 ? 1 : 3),
   maxNormales: 2,

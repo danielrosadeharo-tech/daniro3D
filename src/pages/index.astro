@@ -7,6 +7,7 @@ import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import CarruselFunkos from '../components/CarruselFunkos.astro';
 import { foto, fotoAmbiente, enlaceWhatsApp, sitio, catalogoEn } from '../lib/catalogo';
 import { idiomaDe } from '../i18n';
+import { FUNKO } from '../lib/funko';
 
 const C = catalogoEn(idiomaDe(Astro.url));
 const t = C.t;
@@ -26,7 +27,8 @@ const funkosHechos = C.ejemplos
   .toSorted((a, b) => Number(b.slug === 'boda-27') - Number(a.slug === 'boda-27'))
   .map((e) => ({ nombre: e.nombre.replace('Funko ', ''), src: foto(e).src, alt: foto(e).alt, href: C.ruta('/funkos#encargos') }));
 const estanteria = foto(C.producto('estanteria-stranger-things')!, 0);
-const e55 = C.euros(55), e20 = C.euros(20), e30 = C.euros(30);
+// Precios del Funko personalizado: salen de src/lib/funko.ts (FUNKO)
+const eBase = C.euros(FUNKO.base), ePequeno = C.euros(FUNKO.pequeno), eNormal = C.euros(FUNKO.normalExtra);
 
 const orgLd = {
   '@context': 'https://schema.org',
@@ -40,9 +42,9 @@ const orgLd = {
 <Base
   title={t(`${sitio.marca} · Funkos personalizados, figuras y regalos impresos en 3D`, `${sitio.marca} · Custom Funkos, figures and 3D-printed gifts`, `${sitio.marca} · Funkos personnalisés, figurines et cadeaux imprimés en 3D`)}
   description={t(
-    'Funkos personalizados con su caja desde 55 €, figuras de pilotos de 30 cm, posavasos de tu mascota, llaveros y trofeos impresos en 3D bajo pedido. Pide por WhatsApp.',
-    'Custom Funkos with their box from €55, 30 cm racing driver figures, pet coasters, keyrings and trophies, 3D-printed to order. Order on WhatsApp.',
-    'Funkos personnalisés avec leur boîte dès 55 €, figurines de pilotes de 30 cm, sous-verres de votre animal, porte-clés et trophées imprimés en 3D sur commande. Commandez sur WhatsApp.',
+    `Funkos personalizados con su caja desde ${eBase}, figuras de pilotos de 30 cm, posavasos de tu mascota, llaveros y trofeos impresos en 3D bajo pedido. Pide por WhatsApp.`,
+    `Custom Funkos with their box from ${eBase}, 30 cm racing driver figures, pet coasters, keyrings and trophies, 3D-printed to order. Order on WhatsApp.`,
+    `Funkos personnalisés avec leur boîte dès ${eBase}, figurines de pilotes de 30 cm, sous-verres de votre animal, porte-clés et trophées imprimés en 3D sur commande. Commandez sur WhatsApp.`,
   )}
   image={pilotos}
   jsonLd={orgLd}
@@ -53,9 +55,9 @@ const orgLd = {
       <div class="hero__text" data-enter>
         <h1 id="hero-h">{t('Funkos, figuras y regalos impresos en 3D', 'Funkos, figures and 3D-printed gifts', 'Funkos, figurines et cadeaux imprimés en 3D')}</h1>
         <p class="lead">{t(
-          `Funkos con tu cara y su caja desde ${e55}, pilotos de Fórmula 1 de 30 cm, posavasos de tu mascota y trofeos. Todo se hace bajo pedido.`,
-          `Funkos with your face and their own box from ${e55}, 30 cm Formula 1 drivers, coasters of your pet and trophies. Everything is made to order.`,
-          `Des Funkos à votre image avec leur boîte dès ${e55}, des pilotes de Formule 1 de 30 cm, des sous-verres de votre animal et des trophées. Tout est fabriqué sur commande.`,
+          `Funkos con tu cara y su caja desde ${eBase}, pilotos de Fórmula 1 de 30 cm, posavasos de tu mascota y trofeos. Todo se hace bajo pedido.`,
+          `Funkos with your face and their own box from ${eBase}, 30 cm Formula 1 drivers, coasters of your pet and trophies. Everything is made to order.`,
+          `Des Funkos à votre image avec leur boîte dès ${eBase}, des pilotes de Formule 1 de 30 cm, des sous-verres de votre animal et des trophées. Tout est fabriqué sur commande.`,
         )}</p>
         <div class="btn-row">
           <a class="btn" href={C.ruta('/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a>
@@ -112,16 +114,16 @@ const orgLd = {
   <section class="band" aria-labelledby="funko-h">
     <div class="wrap band__grid">
       <div class="band__text">
-        <h2 id="funko-h">{t(`Tu Funko, con su caja, desde ${e55}`, `Your Funko, with its box, from ${e55}`, `Votre Funko, avec sa boîte, dès ${e55}`)}</h2>
+        <h2 id="funko-h">{t(`Tu Funko, con su caja, desde ${eBase}`, `Your Funko, with its box, from ${eBase}`, `Votre Funko, avec sa boîte, dès ${eBase}`)}</h2>
         <p class="band__lead">{t(
           'Lo hacemos a partir de tus fotos: la persona, su ropa, su mascota y el texto de la caja. El precio sale de lo que metas dentro.',
           'We make it from your photos: the person, their clothes, their pet and the text on the box. The price depends on what goes inside.',
           "Nous le réalisons à partir de vos photos : la personne, ses vêtements, son animal et le texte de la boîte. Le prix dépend de ce que vous mettez dedans.",
         )}</p>
         <dl class="tarifa">
-          <div><dt>{t('Caja a medida + 1 Funko normal', 'Made-to-measure box + 1 regular Funko', 'Boîte sur mesure + 1 Funko normal')}</dt><dd class="num">{e55}</dd></div>
-          <div><dt>{t('Cada Funko pequeño más (mascota, niño, objeto)', 'Each extra small Funko (pet, child, object)', 'Chaque petit Funko en plus (animal, enfant, objet)')}</dt><dd class="num">+{e20}</dd></div>
-          <div><dt>{t('Un segundo Funko normal', 'A second regular Funko', 'Un deuxième Funko normal')}</dt><dd class="num">+{e30}</dd></div>
+          <div><dt>{t('Caja a medida + 1 Funko normal', 'Made-to-measure box + 1 regular Funko', 'Boîte sur mesure + 1 Funko normal')}</dt><dd class="num">{eBase}</dd></div>
+          <div><dt>{t('Cada Funko pequeño más (mascota, niño, objeto)', 'Each extra small Funko (pet, child, object)', 'Chaque petit Funko en plus (animal, enfant, objet)')}</dt><dd class="num">+{ePequeno}</dd></div>
+          <div><dt>{t('Un segundo Funko normal', 'A second regular Funko', 'Un deuxième Funko normal')}</dt><dd class="num">+{eNormal}</dd></div>
         </dl>
         <p class="band__nota">{t('Caben 1 normal + 3 pequeños, o 2 normales + 1 pequeño.', 'A box fits 1 regular + 3 small, or 2 regular + 1 small.', 'Une boîte contient 1 normal + 3 petits, ou 2 normaux + 1 petit.')}</p>
         <div class="btn-row">

@@ -892,6 +892,25 @@
           "Carte « Laissez un avis »"
         ]
       }
+    },
+    "funko-dessert-bar-11": {
+      "huella": "t8qpbs",
+      "en": {
+        "nombre": "Funko Dessert Bar #11",
+        "descripcionCorta": "Box + 2 standard figures. Two figures in suits in a \"Dessert Bar\" box.",
+        "descripcionLarga": "Example of a custom Funko: Two figures in suits, one with a red checkered jacket and a blue tie and the other with a green suit and a pink tie, in a custom \"Dessert Bar\" box with the number 11. Composition: box + 2 standard figures. We'll do the same with your photos and your text on the box.",
+        "alts": [
+          "Funko Dessert Bar #11 with its box"
+        ]
+      },
+      "fr": {
+        "nombre": "Funko Dessert Bar #11",
+        "descripcionCorta": "Boîte + 2 figurines standard. Deux figurines en costume dans une boîte « Dessert Bar ».",
+        "descripcionLarga": "Exemple de Funko personnalisé : deux figurines en costume, l’une avec une veste à carreaux rouges et une cravate bleue et l’autre avec un costume vert et une cravate rose, dans une boîte sur mesure « Dessert Bar » portant le numéro 11. Composition : boîte + 2 figurines normales. Nous faisons de même avec vos photos et votre texte sur la boîte.",
+        "alts": [
+          "Funko Dessert Bar #11 avec sa boîte"
+        ]
+      }
     }
   },
   "categorias": {
@@ -899,12 +918,12 @@
       "en": {
         "nombre": "Funkos",
         "titulo": "Custom Funkos with their box",
-        "descripcion": "Funkos made from your photos, with a made-to-measure box: people, pets and special moments. From €55."
+        "descripcion": "Funkos made from your photos, with a made-to-measure box: people, pets and special moments. From €45."
       },
       "fr": {
         "nombre": "Funkos",
         "titulo": "Funkos personnalisés avec leur boîte",
-        "descripcion": "Des Funkos faits à partir de vos photos, avec leur boîte sur mesure : personnes, animaux et moments spéciaux. À partir de 55 €."
+        "descripcion": "Des Funkos faits à partir de vos photos, avec leur boîte sur mesure : personnes, animaux et moments spéciaux. À partir de 45 €."
       }
     },
     "copas": {

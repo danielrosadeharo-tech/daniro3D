@@ -298,8 +298,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -342,8 +342,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -423,8 +423,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -549,8 +549,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -595,8 +595,8 @@
     "descripcionCorta": "Mono verde Aston Martin Aramco con casco Cognizant.",
     "descripcionLarga": "Figura de bloques de Fernando Alonso con el mono verde de Aston Martin Aramco y el casco Cognizant. La visera sube y baja. Solo se hace en 30 cm.",
     "precio": {
-      "importe": 40,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 40
     },
     "variantes": [
       {
@@ -665,8 +665,8 @@
     "descripcionCorta": "Edición especial con casco blanco de temática japonesa.",
     "descripcionLarga": "La figura de Aston Martin con el casco blanco especial de temática japonesa. Visera móvil y decoración del casco en todo su contorno. Solo se hace en 30 cm.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 40
+      "importe": 40,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -876,6 +876,44 @@
     "ejemplo": true
   },
   {
+    "slug": "funko-dessert-bar-11",
+    "nombre": "Funko Dessert Bar #11",
+    "categoria": "funkos",
+    "etiquetas": [
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Caja + 2 normales. Dos figuras trajeadas en una caja «Dessert Bar».",
+    "descripcionLarga": "Ejemplo de Funko personalizado: dos figuras con traje, una con chaqueta de cuadros rojos y corbata azul y otra con traje verde y corbata rosa, en una caja a medida «Dessert Bar» con el número 11. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 85
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "tLHHNgOaMgHXZNN1mui5.jpg",
+        "alt": "Funko Dessert Bar #11 con su caja"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Se hace a partir de tus fotos: dinos a quién retratamos, la ropa y los detalles, y el texto de la caja."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-19",
+    "composicion": "Caja + 2 normales",
+    "ejemplo": true
+  },
+  {
     "slug": "funko-personalizado",
     "nombre": "Funko personalizado con caja a medida",
     "categoria": "funkos",
@@ -886,7 +924,7 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "importe": 55,
+      "importe": 45,
       "tipo": "desde"
     },
     "variantes": [],
@@ -977,8 +1015,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1023,8 +1061,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1515,8 +1553,8 @@
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
       "unidad": "ud.",
-      "importe": 2,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 2
     },
     "variantes": [],
     "galeria": [
@@ -1560,9 +1598,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
+      "unidad": "ud.",
       "tipo": "fijo",
-      "importe": 5,
-      "unidad": "ud."
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -1613,9 +1651,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
+      "importe": 2,
       "unidad": "ud.",
-      "importe": 2
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1662,9 +1700,9 @@
     "descripcionCorta": "Diseños a medida para ocasiones especiales. Precio por posavasos.",
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
+      "importe": 5,
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 5
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
