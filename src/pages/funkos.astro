@@ -53,10 +53,6 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
       <p class="lead">{cat.descripcion.replace(/\s*(Desde|From|À partir de) [^.]*\.$/, '')} {t('Eliges cuántas figuras van dentro y el precio sale solo.', 'Choose how many figures go inside and the price works itself out.', 'Choisissez combien de figurines vont dedans et le prix se calcule tout seul.')}</p>
       <p class="fk-head__facts">{t('Desde', 'From', 'À partir de')} <span class="num">{euros(FUNKO.base)}</span> · <span class="num">{C.ejemplos.length}</span> {t('encargos hechos para ver', 'finished orders to see', 'commandes réalisées à découvrir')}</p>
     </div>
-    <!-- Carrusel con los Funkos ya hechos (la portada de cada encargo); cada foto abre el visor -->
-    <CarruselFunkos class="fk-head__media" etiqueta={t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')} visor eager
-      sizes="(min-width: 768px) 34vw, 100vw"
-      items={hechos.map(({ e, portada }) => ({ nombre: e.nombre.replace('Funko ', ''), src: portada.src, alt: portada.alt }))} />
   </header>
 
   <div class="wrap fk-tabs-wrap">
@@ -173,6 +169,18 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
         </section>
       </div>
     </div>
+
+    <!-- Galería de Funkos ya hechos, después del configurador: cada foto abre el visor -->
+    <section class="fk-galeria" aria-labelledby="galeria-h">
+      <div class="fk-galeria__txt">
+        <h2 id="galeria-h">{t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')}</h2>
+        <p>{t('Encargos reales de otros clientes, para que veas el acabado. Toca una foto para verla en grande.', 'Real orders from other customers, so you can see the finish. Tap a photo to see it full size.', "De vraies commandes d'autres clients, pour voir la finition. Touchez une photo pour l'agrandir.")}</p>
+        <button type="button" class="btn btn--secondary" data-ir-encargos>{t(`Ver los ${C.ejemplos.length} encargos hechos`, `See all ${C.ejemplos.length} finished orders`, `Voir les ${C.ejemplos.length} commandes réalisées`)}</button>
+      </div>
+      <CarruselFunkos class="fk-galeria__media" etiqueta={t('Funkos que ya hemos hecho', "Funkos we've already made", 'Funkos déjà réalisés')} visor
+        sizes="(min-width: 900px) 40vw, 100vw"
+        items={hechos.map(({ e, portada }) => ({ nombre: e.nombre.replace('Funko ', ''), src: portada.src, alt: portada.alt }))} />
+    </section>
   </section>
 
   <!-- ============ PESTAÑA 2: ENCARGOS HECHOS ============ -->
@@ -231,15 +239,21 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
 </style>
 
 <style>
-  .fk-head { display: grid; gap: var(--s-6); padding-block: var(--s-5) var(--s-6); align-items: end; }
-  .fk-head__text { display: grid; gap: var(--s-4); }
+  .fk-head { padding-block: var(--s-5) var(--s-6); }
+  .fk-head__text { display: grid; gap: var(--s-4); max-width: 760px; }
   .fk-head h1 { font-size: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem); max-width: 13ch; }
   .fk-head__facts { font-weight: 560; }
+
+  /* Galería de Funkos hechos, debajo del configurador */
+  .fk-galeria { display: grid; gap: var(--s-6); align-items: center; margin-top: var(--s-9); padding-top: var(--s-8); border-top: 1px solid var(--line); }
+  .fk-galeria__txt { display: grid; gap: var(--s-4); justify-items: start; }
+  .fk-galeria__txt h2 { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); }
+  .fk-galeria__txt p { color: var(--muted); max-width: 44ch; }
   /* El carrusel es un componente: el tamaño se lo da la página con :global */
-  .fk-head :global(.fk-head__media) { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 4.4; min-width: 0; }
-  @media (min-width: 768px) {
-    .fk-head { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s-7); }
-    .fk-head :global(.fk-head__media) { max-height: 460px; }
+  .fk-galeria :global(.fk-galeria__media) { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 4.4; min-width: 0; width: 100%; }
+  @media (min-width: 900px) {
+    .fk-galeria { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: var(--s-8); }
+    .fk-galeria :global(.fk-galeria__media) { max-height: 560px; }
   }
 
   /* Pestañas */
@@ -443,6 +457,11 @@ const pequeno = t('Funko pequeño', 'Small Funko', 'Petit Funko');
     form.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     avisar(tr('Caja configurada: ', 'Box set to: ', 'Boîte composée : ') + resumenFunko(n, s, idioma));
   }));
+  // "Ver los N encargos hechos" (debajo del configurador): cambia de pestaña y sube hasta ella
+  document.querySelector('[data-ir-encargos]')?.addEventListener('click', () => {
+    mostrar('encargos');
+    document.querySelector('[data-tabs]')!.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const { n, s } = leer();
