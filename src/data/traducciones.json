@@ -120,15 +120,13 @@
       }
     },
     "copa-champions-league": {
-      "huella": "k0a8e5",
+      "huella": "1wu6qv",
       "en": {
         "nombre": "Champions League Trophy",
         "descripcionCorta": "The \"big ears\" cup in silver, 25 cm tall, with the badge and inscription in relief.",
         "descripcionLarga": "Replica of the European Cup, the famous \"big ears\" trophy, 25 cm tall. In silver, with its large handles and the inscription \"Coupe des Clubs Champions Européens\" and the UEFA logo in relief. The perfect gift for a fan of your team or a trophy for a tournament with friends.",
         "alts": [
-          "Champions League Trophy replica, front view",
-          "Champions League Trophy replica, badge detail",
-          "Champions League Trophy replica, view from above"
+          "Champions League Trophy replica, front view"
         ]
       },
       "fr": {
@@ -136,9 +134,7 @@
         "descripcionCorta": "La « coupe aux grandes oreilles » en argent, 25 cm, avec l'écusson et l'inscription en relief.",
         "descripcionLarga": "Réplique de la Coupe d'Europe, la célèbre « coupe aux grandes oreilles », de 25 cm de haut. Couleur argent, avec ses grandes anses, l'inscription « Coupe des Clubs Champions Européens » et le logo de l'UEFA en relief. Le cadeau idéal pour un supporter ou le trophée d'un tournoi entre amis.",
         "alts": [
-          "Réplique de la Coupe de la Ligue des champions, vue de face",
-          "Réplique de la Coupe de la Ligue des champions, détail de l'écusson",
-          "Réplique de la Coupe de la Ligue des champions, vue de dessus"
+          "Réplique de la Coupe de la Ligue des champions, vue de face"
         ]
       }
     },
