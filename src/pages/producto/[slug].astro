@@ -12,6 +12,7 @@ import { colorHex } from '../../lib/colores';
 import { migasLd, productoLd, descripcionMeta } from '../../lib/seo';
 import { rutasProducto } from '../../lib/rutas';
 import { FUNKO } from '../../lib/funko';
+import { svgLegos, figuraDeTalla } from '../../lib/lego';
 import { idiomaDe } from '../../i18n';
 
 export const getStaticPaths = rutasProducto;
@@ -36,6 +37,9 @@ const elegirColor = Boolean(p.colorAElegir) && colores.length > 1;
 const materiales = p.materiales;
 const precioBase = consultar ? null : (p.variantes[0]?.precio ?? p.precio.importe);
 const esFunko = p.configurador === 'funko';
+// El Lego personalizado enseña un dibujo con las dos tallas a escala que resalta la elegida
+const esLego = p.slug === 'lego-personalizado' && variantes.length > 1;
+const figuraInicial = esLego ? figuraDeTalla(variantes[0].nombre) : 'grande';
 
 const specs = [
   [t('Material', 'Material', 'Matière'), materiales.map(C.voc).join(', ')],
@@ -61,7 +65,14 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
   <div class="wrap ficha-top"><Migas items={migas} /></div>
 
   <article class="wrap ficha">
-    <div class="ficha__gal"><Galeria fotos={fotos} nombre={p.nombre} /></div>
+    <div class="ficha__gal">
+      {esLego ? (
+        <figure class="lego-vista" data-lego>
+          <Fragment set:html={svgLegos(figuraInicial, t('Dibujo de las dos tallas a escala: 30 cm y 15 cm', 'Drawing of both sizes to scale: 30 cm and 15 cm', 'Dessin des deux tailles à l’échelle : 30 cm et 15 cm'))} />
+          <figcaption class="sr-only" aria-live="polite" data-lego-txt data-grande={t('Figura de 30 cm', '30 cm figure', 'Figurine de 30 cm')} data-peque={t('Figura de 15 cm', '15 cm figure', 'Figurine de 15 cm')}>{figuraInicial === 'grande' ? t('Figura de 30 cm', '30 cm figure', 'Figurine de 30 cm') : t('Figura de 15 cm', '15 cm figure', 'Figurine de 15 cm')}</figcaption>
+        </figure>
+      ) : <Galeria fotos={fotos} nombre={p.nombre} />}
+    </div>
 
     <div class="ficha__info">
       <header class="ficha__head">
@@ -98,7 +109,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
             <legend>{nombreOpcion.tamano}</legend>
             <div class="chips">
               {variantes.map((v, i) => (
-                <label class="chip"><input type="radio" name={nombreOpcion.tamano} value={C.voc(v.nombre)} data-precio={v.precio ?? ''} checked={i === 0} /><span>{C.voc(v.nombre)} <small>{v.precio != null ? C.euros(v.precio) : t('a consultar', 'on request', 'sur demande')}</small></span></label>
+                <label class="chip"><input type="radio" name={nombreOpcion.tamano} value={C.voc(v.nombre)} data-precio={v.precio ?? ''} data-figura={esLego ? figuraDeTalla(v.nombre) : undefined} checked={i === 0} /><span>{C.voc(v.nombre)} <small>{v.precio != null ? C.euros(v.precio) : t('a consultar', 'on request', 'sur demande')}</small></span></label>
               ))}
             </div>
           </fieldset>
@@ -186,6 +197,24 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
     .ficha { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s-8); align-items: start; }
     .ficha__gal { position: sticky; top: calc(var(--nav-h) + 16px); }
   }
+  /* Dibujo del Lego personalizado: la figura del tamaño elegido en crema, la otra apagada */
+  .lego-vista { position: relative; margin: 0; border-radius: var(--r-lg); overflow: hidden; background: var(--accent); aspect-ratio: 4 / 5; }
+  /* En una columna, más bajo: así el selector de tamaño queda cerca del dibujo */
+  @media (max-width: 899px) { .lego-vista { aspect-ratio: 4 / 3; } }
+  @media (max-width: 767px) { .lego-vista { border-radius: 0; } }
+  .lego-vista :global(svg.lg) { display: block; width: 100%; height: 100%; }
+  .lego-vista :global(.lg-fig) { fill: #f7f3ec; transition: opacity 260ms var(--ease-out); }
+  .lego-vista :global(.lg-hueco) { fill: var(--accent); }
+  .lego-vista :global(.lg-boca) { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; }
+  .lego-vista :global(.lg-torso) { stroke: #f7f3ec; stroke-width: 2; stroke-linejoin: round; }
+  .lego-vista :global(.lg-suelo) { fill: rgb(255 255 255 / 0.1); }
+  .lego-vista :global(.lg-regla) { transition: opacity 260ms var(--ease-out); }
+  .lego-vista :global(.lg-regla path) { fill: none; stroke: #f7f3ec; stroke-width: 3; stroke-linecap: round; }
+  .lego-vista :global(.lg-regla text) { fill: #f7f3ec; stroke: none; font-family: var(--font-text); font-size: 34px; font-weight: 600; }
+  .lego-vista :global(svg[data-sel="grande"] .lg-fig--peque),
+  .lego-vista :global(svg[data-sel="peque"] .lg-fig--grande) { opacity: 0.2; }
+  .lego-vista :global(svg[data-sel="grande"] .lg-fig--peque .lg-regla),
+  .lego-vista :global(svg[data-sel="peque"] .lg-fig--grande .lg-regla) { opacity: 0; }
   .ficha__info { display: grid; gap: var(--s-7); align-content: start; }
   .ficha__head { display: grid; gap: var(--s-3); }
   .ficha__cat { font-weight: 560; color: var(--accent); text-decoration: none; justify-self: start; padding-block: 6px; }
@@ -256,6 +285,17 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
     }
     return { precio, opciones };
   }
+
+  // Lego personalizado: el dibujo resalta la figura del tamaño elegido
+  const lego = document.querySelector<HTMLElement>('[data-lego]');
+  function pintarLego() {
+    const fig = form.querySelector<HTMLInputElement>('input[data-figura]:checked')?.dataset.figura;
+    if (!lego || !fig) return;
+    lego.querySelector('svg')!.dataset.sel = fig;
+    const txt = lego.querySelector<HTMLElement>('[data-lego-txt]')!;
+    txt.textContent = txt.dataset[fig] ?? '';
+  }
+  form.addEventListener('change', pintarLego);
 
   function pintar() {
     const { precio } = actual();
