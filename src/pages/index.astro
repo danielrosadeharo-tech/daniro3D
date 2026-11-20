@@ -176,12 +176,13 @@ const orgLd = {
 
   /* ---- Categorías ---- */
   .cats__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
-  .cat-tile { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 5; isolation: isolate; }
+  .cat-tile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 4 / 5; isolation: isolate; }
   .cat-tile--grande { grid-column: span 2; aspect-ratio: 16 / 10; }
   .cat-tile :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); z-index: -1; }
   .cat-tile::after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(rgb(20 22 18 / 0), rgb(20 22 18 / 0.55) 45%, rgb(20 22 18 / 0.86)); z-index: -1; pointer-events: none; }
   .cat-tile__txt { text-shadow: 0 1px 12px rgb(0 0 0 / 0.35); }
-  .cat-tile__txt { position: absolute; inset: auto 0 0 0; padding: var(--s-4); color: #fff; display: grid; gap: 2px; }
+  /* El texto no va posicionado: así el enlace (h3 a::after) cubre toda la tarjeta y se puede pinchar en cualquier sitio */
+  .cat-tile__txt { padding: var(--s-4); color: #fff; display: grid; gap: 2px; }
   .cat-tile h3 { font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem); }
   .cat-tile h3 a { text-decoration: none; }
   .cat-tile h3 a::after { content: ""; position: absolute; inset: 0; }
