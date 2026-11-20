@@ -10,8 +10,16 @@ import { FUNKO, precioFunko, resumenFunko, svgCaja } from '../lib/funko';
 
 const C = catalogoEn(idiomaDe(Astro.url));
 const t = C.t;
+// Todo lo personalizable, en cuadrícula justo debajo del inicio. Los que no estén en la lista
+// (personalizables nuevos que se añadan desde el panel) salen al final solos.
+const ordenPers = ['funko-personalizado', 'lego-personalizado', 'copa-personalizada', 'tarjeta-nfc-qr-personalizada', 'cajonera-huevos-aviario', 'posavasos-mascotas', 'llavero-mascota', 'posavasos-regalo'];
+const posPers = (slug: string) => (ordenPers.includes(slug) ? ordenPers.indexOf(slug) : 99);
+const personalizados = C.productos
+  .filter((p) => p.personalizacion.disponible)
+  .toSorted((a, b) => posPers(a.slug) - posPers(b.slug) || b.fechaAlta.localeCompare(a.fechaAlta));
 const destacados = C.productos
   .filter((p) => p.slug !== 'estanteria-stranger-things') // ya sale en el cierre
+  .filter((p) => !p.personalizacion.disponible) // ya salen en la cuadrícula de personalizados
   .toSorted((a, b) => Number(b.destacado) - Number(a.destacado) || b.fechaAlta.localeCompare(a.fechaAlta))
   .slice(0, 8);
 const pilotos = fotoAmbiente('coleccion-pilotos.jpg');
@@ -84,6 +92,22 @@ const orgLd = {
         </span>
         <span class="hero__tira-txt">{t(`Mira los ${funkosHechos.length} Funkos que ya hemos hecho`, `See the ${funkosHechos.length} Funkos we've already made`, `Voir les ${funkosHechos.length} Funkos déjà réalisés`)} <Icon name="flecha" /></span>
       </a>
+    </div>
+  </section>
+
+  <!-- Todo lo personalizado: cada tarjeta lleva a su ficha (el Funko, a /funkos) -->
+  <section class="section pers" aria-labelledby="pers-h">
+    <div class="wrap">
+      <div class="section-head section-head--row">
+        <div class="pers__head">
+          <h2 id="pers-h">{t('Todo lo que personalizamos', 'Everything we personalise', 'Tout ce que nous personnalisons')}</h2>
+          <p>{t('Elige uno y lo hacemos con tus fotos, tu nombre o tu logo.', 'Pick one and we make it with your photos, your name or your logo.', 'Choisissez-en un : nous le réalisons avec vos photos, votre nom ou votre logo.')}</p>
+        </div>
+        <a class="link" href={C.ruta('/encargos')}>{t('¿Otra idea? Encargo a medida', 'Another idea? Custom order', 'Une autre idée ? Sur mesure')} <Icon name="flecha" /></a>
+      </div>
+      <ul class="grid-productos grid-productos--4">
+        {personalizados.map((p, i) => <li><ProductCard p={p} mostrarCategoria={false} prioridad={i < 4} /></li>)}
+      </ul>
     </div>
   </section>
 
@@ -258,6 +282,13 @@ const orgLd = {
     .hero__caja { padding: var(--s-8) var(--s-7) var(--s-6); align-self: center; }
     .hero__dibujo { height: 360px; }
   }
+
+  /* ---- Personalizados ---- */
+  .pers { padding-top: var(--s-6); }
+  .pers__head { display: grid; gap: var(--s-2); }
+  .pers__head p { color: var(--muted); }
+  /* Aquí todo es personalizable: la etiqueta de cada tarjeta sobra */
+  .pers :global(.card__tag) { display: none; }
 
   /* ---- Categorías ---- */
   .cats__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
