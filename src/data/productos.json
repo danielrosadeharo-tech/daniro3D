@@ -10,8 +10,8 @@
     "descripcionCorta": "Mono rojo y casco amarillo, verde y azul.",
     "descripcionLarga": "Figura de bloques de Ayrton Senna con el mono rojo de McLaren Honda y su casco amarillo, verde y azul. Visera móvil.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -385,8 +385,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -466,8 +466,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -506,8 +506,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con su gatito.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su gatito. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -844,8 +844,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -967,8 +967,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "tipo": "desde",
-      "importe": 45
+      "importe": 45,
+      "tipo": "desde"
     },
     "variantes": [],
     "galeria": [
@@ -1058,8 +1058,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1547,8 +1547,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 115
+      "importe": 115,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1597,8 +1597,8 @@
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
     "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "importe": 10,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 10
     },
     "variantes": [],
     "galeria": [
@@ -1643,8 +1643,8 @@
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 2
+      "importe": 2,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -1689,8 +1689,8 @@
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
       "importe": 5,
-      "unidad": "ud.",
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -1741,8 +1741,8 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
       "unidad": "ud.",
+      "tipo": "fijo",
       "importe": 2
     },
     "variantes": [],
@@ -1832,8 +1832,8 @@
     "descripcionCorta": "Figura articulada de gran tamaño.",
     "descripcionLarga": "Escultura articulada de Rayquaza de gran tamaño: 40 cm de alto y 40 cm de diámetro.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 90
+      "importe": 90,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1871,16 +1871,130 @@
     "fechaAlta": "2025-10-20"
   },
   {
-    "slug": "tarjetas-nfc-qr",
-    "nombre": "Tarjetas NFC y QR",
-    "categoria": "otros",
+    "slug": "tarjeta-nfc-jacs",
+    "nombre": "Tarjeta NFC · JACS",
+    "categoria": "tarjetas",
+    "etiquetas": [
+      "nfc",
+      "negocios"
+    ],
+    "descripcionCorta": "Tarjeta azul con el logo de JACS y, por detrás, QR y NFC.",
+    "descripcionLarga": "Tarjeta azul con el logo de JACS en blanco por delante y, por detrás, el código QR y el chip NFC que abren su web.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "PX3MfyRHsNHHSCyZOEtL.jpg",
+        "alt": "Tarjeta NFC de JACS"
+      },
+      {
+        "archivo": "PA5ePZtgR4QuEFT0G96w.jpg",
+        "alt": "Reverso de la tarjeta de JACS con QR y NFC"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Azul",
+      "Blanco"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-20",
+    "ejemplo": true
+  },
+  {
+    "slug": "tarjeta-nfc-qr-personalizada",
+    "nombre": "Tarjeta NFC y QR personalizada",
+    "categoria": "tarjetas",
     "etiquetas": [
       "nfc",
       "negocios",
       "personalizado"
     ],
-    "descripcionCorta": "Tarjetas personalizadas impresas en 3D.",
-    "descripcionLarga": "Tarjetas impresas en 3D con tu logo, y en el reverso un código QR y un chip NFC: al acercar el móvil abre tu web, tu carta o la página para dejar una valoración.",
+    "descripcionCorta": "Con tu logo, un código QR y un chip NFC que abre tu web al acercar el móvil.",
+    "descripcionLarga": "Tarjeta impresa en 3D con tu logo y tus colores por delante, y por detrás un código QR y un chip NFC. Al acercar el móvil o escanear el código se abre el enlace que quieras: tu web, la carta de tu restaurante, tus redes o la página para dejar una reseña. Para regalar a tus clientes o dejar en el mostrador. Dinos cuántas necesitas y te damos precio.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "Eha3PHGCoSLY1C99tbf6.jpg",
+        "alt": "Dibujo de una tarjeta personalizada: por delante el logo y por detrás un código QR y el símbolo NFC"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Mándanos tu logo, los colores y el enlace que debe abrir (web, carta, reseñas de Google…)."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-20"
+  },
+  {
+    "slug": "tarjeta-nfc-valoracion",
+    "nombre": "Tarjeta «Deje una valoración»",
+    "categoria": "tarjetas",
+    "etiquetas": [
+      "nfc",
+      "negocios"
+    ],
+    "descripcionCorta": "Tarjeta de mostrador con NFC para dejar una reseña.",
+    "descripcionLarga": "Tarjeta gris con el texto «Deje una valoración» y el símbolo NFC: el cliente acerca el móvil y se abre la página para dejar una reseña del negocio.",
+    "precio": {
+      "tipo": "consultar"
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "nlfxf3GJRDT5fetBJ2Rv.jpg",
+        "alt": "Tarjeta «Deje una valoración» con NFC, en la mano"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Gris",
+      "Blanco"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-20",
+    "ejemplo": true
+  },
+  {
+    "slug": "tarjetas-nfc-qr",
+    "nombre": "Tarjeta NFC · XSABOR",
+    "categoria": "tarjetas",
+    "etiquetas": [
+      "nfc",
+      "negocios",
+      "personalizado"
+    ],
+    "descripcionCorta": "Tarjeta negra con el logo de XSABOR y, por detrás, QR y NFC.",
+    "descripcionLarga": "Tarjeta negra con el logo de XSABOR en blanco por delante y, por detrás, el código QR y el chip NFC que abren la web del restaurante.",
     "precio": {
       "tipo": "consultar"
     },
@@ -1892,19 +2006,7 @@
       },
       {
         "archivo": "02.jpg",
-        "alt": "Reverso de tarjeta con QR y NFC"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Tarjeta NFC de JACS"
-      },
-      {
-        "archivo": "04.jpg",
-        "alt": "Reverso con QR y NFC"
-      },
-      {
-        "archivo": "05.jpg",
-        "alt": "Tarjeta «Deje una valoración»"
+        "alt": "Reverso de la tarjeta de XSABOR con QR y NFC"
       }
     ],
     "materiales": [
@@ -1917,11 +2019,12 @@
     "dimensiones": null,
     "tiempoFabricacion": null,
     "personalizacion": {
-      "disponible": true,
-      "notas": "Logo, colores y el enlace que debe abrir."
+      "disponible": false,
+      "notas": null
     },
     "destacado": false,
-    "fechaAlta": "2025-09-25"
+    "fechaAlta": "2025-09-25",
+    "ejemplo": true
   },
   {
     "slug": "trophee-des-champions",

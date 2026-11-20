@@ -863,29 +863,23 @@
       }
     },
     "tarjetas-nfc-qr": {
-      "huella": "1n14v1h",
+      "huella": "151533h",
       "en": {
-        "nombre": "NFC and QR cards",
-        "descripcionCorta": "Custom 3D-printed cards.",
-        "descripcionLarga": "3D-printed cards with your logo, and a QR code and NFC chip on the back: tap a phone on it and it opens your website, your menu or your review page.",
+        "nombre": "NFC Card · XSABOR",
+        "descripcionCorta": "Black card with the XSABOR logo and, on the back, QR and NFC.",
+        "descripcionLarga": "Black card with the XSABOR logo in white on the front and, on the back, the QR code and NFC chip that open the restaurant's website.",
         "alts": [
-          "XSABOR NFC card",
-          "Back of a card with QR and NFC",
-          "JACS NFC card",
-          "Back with QR and NFC",
-          "\"Leave a review\" card"
+          "XSABOR NFC Card",
+          "Back of the XSABOR card with QR and NFC"
         ]
       },
       "fr": {
-        "nombre": "Cartes NFC et QR",
-        "descripcionCorta": "Cartes personnalisées imprimées en 3D.",
-        "descripcionLarga": "Cartes imprimées en 3D avec votre logo et, au dos, un QR code et une puce NFC : en approchant le téléphone, elles ouvrent votre site, votre carte ou la page pour laisser un avis.",
+        "nombre": "Carte NFC · XSABOR",
+        "descripcionCorta": "Carte noire avec le logo XSABOR et, au verso, QR et NFC.",
+        "descripcionLarga": "Carte noire avec le logo XSABOR en blanc sur le recto et, au verso, le code QR et la puce NFC qui ouvrent le site Web du restaurant.",
         "alts": [
-          "Carte NFC XSABOR",
-          "Dos de carte avec QR et NFC",
-          "Carte NFC JACS",
-          "Dos avec QR et NFC",
-          "Carte « Laissez un avis »"
+          "Carte NFC de XSABOR",
+          "Verso de la carte XSABOR avec QR et NFC"
         ]
       }
     },
@@ -970,6 +964,65 @@
         "alts": [
           "Trophée des Champions de face, avec la plaque dorée",
           "Trophée des Champions des trois-quarts"
+        ]
+      }
+    },
+    "tarjeta-nfc-jacs": {
+      "huella": "ivdxox",
+      "en": {
+        "nombre": "NFC Card · JACS",
+        "descripcionCorta": "Blue card with the JACS logo and, on the back, QR and NFC.",
+        "descripcionLarga": "Blue card with the JACS logo in white on the front and, on the back, the QR code and NFC chip that open its website.",
+        "alts": [
+          "JACS NFC Card",
+          "Back of the JACS card with QR and NFC"
+        ]
+      },
+      "fr": {
+        "nombre": "Carte NFC · JACS",
+        "descripcionCorta": "Carte bleue avec le logo JACS et, au verso, QR et NFC.",
+        "descripcionLarga": "Carte bleue avec le logo JACS en blanc au recto et, au verso, le code QR et la puce NFC qui ouvrent son site Web.",
+        "alts": [
+          "Carte NFC de JACS",
+          "Verso de la carte JACS avec QR et NFC"
+        ]
+      }
+    },
+    "tarjeta-nfc-qr-personalizada": {
+      "huella": "3mz3qi",
+      "en": {
+        "nombre": "Custom NFC and QR card",
+        "descripcionCorta": "With your logo, a QR code, and an NFC chip that opens your website when you hold your phone close to it.",
+        "descripcionLarga": "3D-printed card with your logo and colours on the front, and a QR code and an NFC chip on the back. When you hold your phone close to the card or scan the code, the link you want opens: your website, your restaurant's menu, your social media pages, or the page for leaving a review. To give to your customers or leave at the counter. Tell us how many you need, and we'll give you a price.",
+        "alts": [
+          "Drawing of a custom card: the logo on the front and a QR code and the NFC symbol on the back"
+        ]
+      },
+      "fr": {
+        "nombre": "Carte NFC et QR personnalisée",
+        "descripcionCorta": "Avec votre logo, un code QR et une puce NFC qui ouvre votre site Web lorsque vous approchez votre téléphone portable.",
+        "descripcionLarga": "Carte imprimée en 3D avec votre logo et vos couleurs au recto, et un code QR et une puce NFC au verso. En approchant le téléphone ou en scannant le code, le lien de votre choix s’ouvre : votre site Web, le menu de votre restaurant, vos réseaux sociaux ou la page permettant de laisser un avis. À offrir à vos clients ou à laisser sur le comptoir. Dites-nous combien il vous en faut et nous vous donnerons un prix.",
+        "alts": [
+          "Dessin d’une carte personnalisée : au recto, le logo et, au verso, un code QR et le symbole NFC"
+        ]
+      }
+    },
+    "tarjeta-nfc-valoracion": {
+      "huella": "eq2eo5",
+      "en": {
+        "nombre": "\"Deje una valoración\" card",
+        "descripcionCorta": "Counter card with NFC for leaving a review.",
+        "descripcionLarga": "Grey card with the text “Deje una valoración” (“Leave a review”) and the NFC symbol: the customer holds their phone close, and the page for leaving a review of the business opens.",
+        "alts": [
+          "\"Deje una valoración\" card with NFC, in hand"
+        ]
+      },
+      "fr": {
+        "nombre": "Carte « Deje una valoración »",
+        "descripcionCorta": "Carte de comptoir avec NFC pour laisser un avis.",
+        "descripcionLarga": "Carte grise avec le texte « Laissez un avis » et le symbole NFC : le client approche son téléphone portable et la page s’ouvre pour laisser un avis sur l’entreprise.",
+        "alts": [
+          "Carte « Deje una valoración » avec NFC, dans la main"
         ]
       }
     }
@@ -1069,6 +1122,18 @@
         "nombre": "Tiroirs de volière",
         "titulo": "Tiroirs à œufs pour volière",
         "descripcion": "Meubles muraux à 16 tiroirs numérotés pour ranger les œufs, au nom de votre volière. 60 €."
+      }
+    },
+    "tarjetas": {
+      "en": {
+        "nombre": "NFC and QR cards",
+        "titulo": "Custom NFC and QR cards",
+        "descripcion": "Cards with your logo, a QR code and an NFC chip: tap a phone and they open your website, your menu or your reviews page."
+      },
+      "fr": {
+        "nombre": "Cartes NFC et QR",
+        "titulo": "Cartes NFC et QR personnalisées",
+        "descripcion": "Des cartes avec votre logo, un QR code et une puce NFC : en approchant le téléphone, elles ouvrent votre site, votre carte ou votre page d’avis."
       }
     }
   },
@@ -1248,6 +1313,10 @@
     "Mándanos fotos de frente y de espalda de la persona, la ropa o el uniforme, y dinos los detalles que quieres.": {
       "en": "Send us front and back photos of the person, the clothing or the uniform, and tell us the details you want.",
       "fr": "Envoyez-nous des photos de face et de dos de la personne, des vêtements ou de l’uniforme, et indiquez-nous les détails que vous souhaitez."
+    },
+    "Mándanos tu logo, los colores y el enlace que debe abrir (web, carta, reseñas de Google…).": {
+      "en": "Send us your logo, the colors, and the link that should open (website, menu, Google reviews, etc.).",
+      "fr": "Envoyez-nous votre logo, les couleurs et le lien qu’il doit ouvrir (site Web, carte, avis Google…)."
     }
   }
 }

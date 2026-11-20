@@ -46,6 +46,7 @@ const nav = [
   { href: '/catalogo/copas', txt: t('Copas', 'Trophies', 'Coupes') },
   { href: '/catalogo/legos', txt: t('Legos', 'Block figures', 'Figurines') },
   { href: '/catalogo/cajoneras', txt: t('Aviario', 'Aviary', 'Volière') },
+  { href: '/catalogo/tarjetas', txt: t('Tarjetas NFC', 'NFC cards', 'Cartes NFC') },
   { href: '/encargos', txt: t('Encargos', 'Custom orders', 'Sur mesure') },
   { href: '/makerworld', txt: t('¿No lo encuentras?', "Can't find it?", 'Introuvable ?') },
   { href: '/sobre-nosotros', txt: t('Sobre nosotros', 'About us', 'À propos') },
@@ -271,7 +272,7 @@ const año = new Date().getFullYear();
     };
     toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.hasAttribute('data-open')) { setMenu(false); toggle.focus(); } });
-    matchMedia('(min-width: 1024px)').addEventListener('change', (m) => m.matches && setMenu(false));
+    matchMedia('(min-width: 1200px)').addEventListener('change', (m) => m.matches && setMenu(false));
 
     // Cesta
     const dlg = document.getElementById('cesta') as HTMLDialogElement;

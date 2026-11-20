@@ -149,14 +149,14 @@ html { scrollbar-color: #b9b0a1 var(--bg); }
 }
 .nav__links a[aria-current="page"] { background: var(--surface); }
 .nav__links a { white-space: nowrap; }
-/* Entre 1024 y 1439 px caben los 8 enlaces si van un poco más juntos (en inglés y francés son más largos) */
-@media (min-width: 1024px) and (max-width: 1439px) {
+/* Con 9 enlaces el menú de arriba sale desde 1200 px y un poco más junto (en inglés y francés son más largos); por debajo, el menú desplegable */
+@media (min-width: 1200px) {
   .nav__links { gap: 0; }
   .nav__links a { padding: 0 9px; font-size: 0.9375rem; }
 }
 @media (hover: hover) and (pointer: fine) { .nav__links a:hover { background: rgb(34 38 31 / 0.06); } }
 .nav__actions { display: flex; align-items: center; gap: var(--s-2); margin-left: auto; }
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   /* Logo a la izquierda, menú centrado en la página, cesta a la derecha */
   .nav__bar { display: grid; grid-template-columns: 1fr auto 1fr; }
   .nav__bar > .logo { justify-self: start; }
@@ -192,7 +192,7 @@ html { scrollbar-color: #b9b0a1 var(--bg); }
 .menu li + li { border-top: 1px solid var(--line); }
 .menu a { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; font-family: var(--font-display); font-size: 1.75rem; letter-spacing: -0.03em; text-decoration: none; }
 .menu .menu__small a { font-family: var(--font-text); font-size: 1.0625rem; letter-spacing: 0; padding: 12px 0; }
-@media (min-width: 1024px) { .menu { display: none; } }
+@media (min-width: 1200px) { .menu { display: none; } }
 
 /* ---- Selector de idioma (ES · EN · FR) ---- */
 .idiomas { display: flex; flex-wrap: wrap; gap: 2px; list-style: none; padding: 0; margin: 0; }
@@ -205,7 +205,7 @@ html { scrollbar-color: #b9b0a1 var(--bg); }
 @media (hover: hover) and (pointer: fine) { .idiomas a:not([aria-current]):hover { color: var(--ink); } }
 /* En la cabecera solo cabe con pantalla ancha; si no, está en el menú (móvil) y en el pie */
 .idiomas--nav { display: none; flex-wrap: nowrap; }
-@media (min-width: 1200px) { .idiomas--nav { display: flex; margin-right: var(--s-1); } }
+@media (min-width: 1440px) { .idiomas--nav { display: flex; margin-right: var(--s-1); } }
 .menu .idiomas--menu { display: flex; gap: var(--s-2); }
 .menu .idiomas--menu li + li { border-top: 0; }
 .menu .idiomas--menu a { font-family: var(--font-text); font-size: 1rem; letter-spacing: 0; padding: 0 16px; border: 1px solid var(--line-strong); }
