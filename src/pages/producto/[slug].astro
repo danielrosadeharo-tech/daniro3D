@@ -13,6 +13,7 @@ import { migasLd, productoLd, descripcionMeta } from '../../lib/seo';
 import { rutasProducto } from '../../lib/rutas';
 import { FUNKO } from '../../lib/funko';
 import { svgLegos, figuraDeTalla } from '../../lib/lego';
+import { svgCopas, figuraDeTallaCopa } from '../../lib/copa';
 import { idiomaDe } from '../../i18n';
 
 export const getStaticPaths = rutasProducto;
@@ -38,8 +39,17 @@ const materiales = p.materiales;
 const precioBase = consultar ? null : (p.variantes[0]?.precio ?? p.precio.importe);
 const esFunko = p.configurador === 'funko';
 // El Lego personalizado enseña un dibujo con las dos tallas a escala que resalta la elegida
-const esLego = p.slug === 'lego-personalizado' && variantes.length > 1;
-const figuraInicial = esLego ? figuraDeTalla(variantes[0].nombre) : 'grande';
+const vista = variantes.length > 1 ? (p.slug === 'lego-personalizado' ? 'lego' : p.slug === 'copa-personalizada' ? 'copa' : null) : null;
+const figuraDe = (nombre: string) => (vista === 'copa' ? figuraDeTallaCopa(nombre) : figuraDeTalla(nombre));
+const figuraInicial = vista ? figuraDe(variantes[0].nombre) : 'grande';
+const textoVista = vista === 'copa'
+  ? { titulo: t('Dibujo de las dos copas a escala: 30 cm y 20 cm', 'Drawing of both trophies to scale: 30 cm and 20 cm', 'Dessin des deux coupes à l’échelle : 30 cm et 20 cm'), grande: t('Copa de 30 cm', '30 cm trophy', 'Coupe de 30 cm'), peque: t('Copa de 20 cm', '20 cm trophy', 'Coupe de 20 cm') }
+  : { titulo: t('Dibujo de las dos tallas a escala: 30 cm y 15 cm', 'Drawing of both sizes to scale: 30 cm and 15 cm', 'Dessin des deux tailles à l’échelle : 30 cm et 15 cm'), grande: t('Figura de 30 cm', '30 cm figure', 'Figurine de 30 cm'), peque: t('Figura de 15 cm', '15 cm figure', 'Figurine de 15 cm') };
+// La copa personalizada se concreta por WhatsApp: el botón principal abre el chat con el tamaño y el precio elegidos
+const porWhatsApp = p.slug === 'copa-personalizada';
+const msgDiseno = t('¡Hola! Quiero una copa personalizada de {talla} ({precio}). ¿Concretamos el diseño?', "Hi! I'd like a custom trophy, {talla} ({precio}). Shall we work out the design together?", 'Bonjour ! Je voudrais une coupe personnalisée de {talla} ({precio}). On définit le design ensemble ?');
+const v0 = variantes[0] ?? p.variantes[0];
+const hrefDiseno = enlaceWhatsApp(msgDiseno.replace('{talla}', v0 ? C.voc(v0.nombre) : '').replace('{precio}', v0?.precio != null ? C.euros(v0.precio) : C.textoPrecio(p)));
 
 const specs = [
   [t('Material', 'Material', 'Matière'), materiales.map(C.voc).join(', ')],
@@ -66,10 +76,10 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
 
   <article class="wrap ficha">
     <div class="ficha__gal">
-      {esLego ? (
+      {vista ? (
         <figure class="lego-vista" data-lego>
-          <Fragment set:html={svgLegos(figuraInicial, t('Dibujo de las dos tallas a escala: 30 cm y 15 cm', 'Drawing of both sizes to scale: 30 cm and 15 cm', 'Dessin des deux tailles à l’échelle : 30 cm et 15 cm'))} />
-          <figcaption class="sr-only" aria-live="polite" data-lego-txt data-grande={t('Figura de 30 cm', '30 cm figure', 'Figurine de 30 cm')} data-peque={t('Figura de 15 cm', '15 cm figure', 'Figurine de 15 cm')}>{figuraInicial === 'grande' ? t('Figura de 30 cm', '30 cm figure', 'Figurine de 30 cm') : t('Figura de 15 cm', '15 cm figure', 'Figurine de 15 cm')}</figcaption>
+          <Fragment set:html={vista === 'copa' ? svgCopas(figuraInicial, textoVista.titulo) : svgLegos(figuraInicial, textoVista.titulo)} />
+          <figcaption class="sr-only" aria-live="polite" data-lego-txt data-grande={textoVista.grande} data-peque={textoVista.peque}>{figuraInicial === 'grande' ? textoVista.grande : textoVista.peque}</figcaption>
         </figure>
       ) : <Galeria fotos={fotos} nombre={p.nombre} />}
     </div>
@@ -109,7 +119,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
             <legend>{nombreOpcion.tamano}</legend>
             <div class="chips">
               {variantes.map((v, i) => (
-                <label class="chip"><input type="radio" name={nombreOpcion.tamano} value={C.voc(v.nombre)} data-precio={v.precio ?? ''} data-figura={esLego ? figuraDeTalla(v.nombre) : undefined} checked={i === 0} /><span>{C.voc(v.nombre)} <small>{v.precio != null ? C.euros(v.precio) : t('a consultar', 'on request', 'sur demande')}</small></span></label>
+                <label class="chip"><input type="radio" name={nombreOpcion.tamano} value={C.voc(v.nombre)} data-precio={v.precio ?? ''} data-figura={vista ? figuraDe(v.nombre) : undefined} checked={i === 0} /><span>{C.voc(v.nombre)} <small>{v.precio != null ? C.euros(v.precio) : t('a consultar', 'on request', 'sur demande')}</small></span></label>
               ))}
             </div>
           </fieldset>
@@ -147,13 +157,15 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
             <output data-cantidad aria-live="polite">1</output>
             <button type="button" data-q="1" aria-label={t('Añadir una unidad', 'Add one', 'Ajouter une unité')}><Icon name="mas" size={16} /></button>
           </div>
-          {consultar ? (
+          {porWhatsApp ? (
+            <a class="btn comprar__main" href={hrefDiseno} data-wa-diseno={msgDiseno} target="_blank" rel="noopener"><WhatsAppIcon />{t('Concretar el diseño por WhatsApp', 'Design it with us on WhatsApp', 'Définir le design sur WhatsApp')}</a>
+          ) : consultar ? (
             <a class="btn comprar__main" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />{t('Pedir presupuesto', 'Ask for a quote', 'Demander un devis')}</a>
           ) : (
             <button class="btn comprar__main" type="submit"><Icon name="cesta" />{t('Añadir a la cesta', 'Add to basket', 'Ajouter au panier')}</button>
           )}
         </div>
-        {consultar ? (
+        {consultar || porWhatsApp ? (
           <button class="btn btn--secondary btn--block" type="submit">{t('Añadir a la cesta y pedir junto con más cosas', 'Add to basket and order with other items', "Ajouter au panier et commander avec d'autres articles")}</button>
         ) : (
           <a class="btn btn--secondary btn--block" href={enlaceWhatsApp(msgWa)} target="_blank" rel="noopener"><WhatsAppIcon />{t('Preguntar por WhatsApp', 'Ask on WhatsApp', 'Demander sur WhatsApp')}</a>
@@ -207,6 +219,7 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
   .lego-vista :global(.lg-hueco) { fill: var(--accent); }
   .lego-vista :global(.lg-boca) { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; }
   .lego-vista :global(.lg-torso) { stroke: #f7f3ec; stroke-width: 2; stroke-linejoin: round; }
+  .lego-vista :global(.lg-asa) { fill: none; stroke: #f7f3ec; stroke-width: 4.5; stroke-linecap: round; }
   .lego-vista :global(.lg-suelo) { fill: rgb(255 255 255 / 0.1); }
   .lego-vista :global(.lg-regla) { transition: opacity 260ms var(--ease-out); }
   .lego-vista :global(.lg-regla path) { fill: none; stroke: #f7f3ec; stroke-width: 3; stroke-linecap: round; }
@@ -296,6 +309,18 @@ const nombreOpcion = { tamano: t('Tamaño', 'Size', 'Taille'), color: t('Color',
     txt.textContent = txt.dataset[fig] ?? '';
   }
   form.addEventListener('change', pintarLego);
+
+  // Copa personalizada: el enlace de WhatsApp lleva el tamaño y el precio elegidos
+  const waDiseno = form.querySelector<HTMLAnchorElement>('[data-wa-diseno]');
+  function pintarWa() {
+    if (!waDiseno) return;
+    const el = form.querySelector<HTMLInputElement>('input[data-precio]:checked');
+    const precio = el?.dataset.precio ? euros(Number(el.dataset.precio)) : '';
+    const u = new URL(waDiseno.href);
+    u.searchParams.set('text', waDiseno.dataset.waDiseno!.replace('{talla}', el?.value ?? '').replace('{precio}', precio));
+    waDiseno.href = u.toString();
+  }
+  form.addEventListener('change', pintarWa);
 
   function pintar() {
     const { precio } = actual();

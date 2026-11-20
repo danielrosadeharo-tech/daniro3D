@@ -1025,6 +1025,25 @@
           "Carte « Deje una valoración » avec NFC, dans la main"
         ]
       }
+    },
+    "copa-personalizada": {
+      "huella": "13bmxgg",
+      "en": {
+        "nombre": "Custom trophy",
+        "descripcionCorta": "Your own trophy, 20 or 30 cm tall; we work out the design with you on WhatsApp.",
+        "descripcionLarga": "A trophy designed the way you want and 3D-printed. Choose the size, 20 cm or 30 cm, and we work out the design with you on WhatsApp: the shape, the colours, the text on the plaque and the crest or logo. For tournaments among friends, supporters' clubs, schools, companies or as a gift.",
+        "alts": [
+          "Drawing of two custom trophies, one 30 cm tall and the other 20 cm tall"
+        ]
+      },
+      "fr": {
+        "nombre": "Coupe personnalisée",
+        "descripcionCorta": "Votre propre coupe de 20 ou 30 cm ; nous définissons le design avec vous sur WhatsApp.",
+        "descripcionLarga": "Un trophée conçu selon vos goûts et imprimé en 3D. Choisissez la taille, 20 cm ou 30 cm, et nous définirons avec vous le design par WhatsApp : la forme, les couleurs, le texte de la plaque et le blason ou le logo. Pour les tournois entre amis, les clubs, les écoles, les entreprises ou en cadeau.",
+        "alts": [
+          "Dessin de deux coupes personnalisées, l’une de 30 cm et l’autre de 20 cm"
+        ]
+      }
     }
   },
   "categorias": {
@@ -1317,6 +1336,18 @@
     "Mándanos tu logo, los colores y el enlace que debe abrir (web, carta, reseñas de Google…).": {
       "en": "Send us your logo, the colors, and the link that should open (website, menu, Google reviews, etc.).",
       "fr": "Envoyez-nous votre logo, les couleurs et le lien qu’il doit ouvrir (site Web, carte, avis Google…)."
+    },
+    "20 cm": {
+      "en": "20 cms",
+      "fr": "20cm"
+    },
+    "20 cm o 30 cm de alto": {
+      "en": "20 cm or 30 cm high",
+      "fr": "20 cm ou 30 cm de haut"
+    },
+    "Cuéntanos el nombre del torneo, el texto de la placa, los colores y si lleva escudo o logo.": {
+      "en": "Tell us the name of the tournament, the text on the plaque, the colors, and whether it has a crest or logo.",
+      "fr": "Indiquez-nous le nom du tournoi, le texte de la plaque, les couleurs et si elle comporte un écusson ou un logo."
     }
   }
 }

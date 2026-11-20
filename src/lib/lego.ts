@@ -25,7 +25,7 @@ function figura(cx: number, pie: number, k: number) {
 }
 
 /** Regla vertical con su medida al lado de una figura. */
-function regla(x: number, arriba: number, abajo: number, texto: string) {
+export function regla(x: number, arriba: number, abajo: number, texto: string) {
   return `<g class="lg-regla">
     <path d="M${x} ${arriba} V${abajo} M${x - 12} ${arriba} H${x + 12} M${x - 12} ${abajo} H${x + 12}"/>
     <text x="${x}" y="${arriba - 22}" text-anchor="middle">${texto}</text>

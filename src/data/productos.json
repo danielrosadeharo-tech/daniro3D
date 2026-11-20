@@ -77,8 +77,8 @@
     "descripcionCorta": "Caja + 1 normal. Veteranos Balonmano de Sevilla, con soporte trasero con chip NFC.",
     "descripcionLarga": "Ejemplo de Funko personalizado: veteranos Balonmano de Sevilla, con soporte trasero con chip NFC. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -341,8 +341,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -385,8 +385,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -496,6 +496,52 @@
     "fechaAlta": "2025-06-25"
   },
   {
+    "slug": "copa-personalizada",
+    "nombre": "Copa personalizada",
+    "categoria": "copas",
+    "etiquetas": [
+      "trofeos",
+      "personalizado",
+      "regalo"
+    ],
+    "descripcionCorta": "Tu propia copa en 20 o 30 cm; el diseño lo concretamos contigo por WhatsApp.",
+    "descripcionLarga": "Una copa diseñada a tu gusto e impresa en 3D. Elige el tamaño, 20 cm o 30 cm, y por WhatsApp concretamos contigo el diseño: la forma, los colores, el texto de la placa y el escudo o el logo. Para torneos entre amigos, peñas, colegios, empresas o como regalo.",
+    "precio": {
+      "importe": 25,
+      "tipo": "desde"
+    },
+    "variantes": [
+      {
+        "nombre": "20 cm",
+        "precio": 25
+      },
+      {
+        "nombre": "30 cm",
+        "precio": 30
+      }
+    ],
+    "galeria": [
+      {
+        "archivo": "TPd5WtCoMGPmsjJnN4gh.jpg",
+        "alt": "Dibujo de dos copas personalizadas, una de 30 cm y otra de 20 cm"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "A elegir"
+    ],
+    "dimensiones": "20 cm o 30 cm de alto",
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": true,
+      "notas": "Cuéntanos el nombre del torneo, el texto de la placa, los colores y si lleva escudo o logo."
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-20"
+  },
+  {
     "slug": "edicion-especial-14",
     "nombre": "Funko Edición especial #14",
     "categoria": "funkos",
@@ -506,8 +552,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con su gatito.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su gatito. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -844,8 +890,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -891,8 +937,8 @@
     "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -967,8 +1013,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "importe": 45,
-      "tipo": "desde"
+      "tipo": "desde",
+      "importe": 45
     },
     "variantes": [],
     "galeria": [
@@ -1547,8 +1593,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 115,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 115
     },
     "variantes": [],
     "galeria": [
@@ -1689,8 +1735,8 @@
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
       "importe": 5,
-      "tipo": "fijo",
-      "unidad": "ud."
+      "unidad": "ud.",
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1741,9 +1787,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
+      "importe": 2,
       "unidad": "ud.",
-      "tipo": "fijo",
-      "importe": 2
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1791,8 +1837,8 @@
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
       "unidad": "ud.",
-      "tipo": "fijo",
-      "importe": 5
+      "importe": 5,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
