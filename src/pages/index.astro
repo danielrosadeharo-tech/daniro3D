@@ -95,17 +95,21 @@ const orgLd = {
       </div>
       <ul class="cats__grid">
         {C.categorias.map((c, i) => {
+          // Funkos enseña el dibujo de la caja con un Funko (el modelo del Funko personalizado), no un encargo real
+          const esFunkos = c.slug === 'funkos';
           const pf = C.producto(c.portada);
           const f = pf ? foto(pf) : null;
           const desde = c.enlace ? null : C.desdeCategoria(c.slug);
           const n = c.enlace ? null : C.deCategoria(c.slug).length;
           const desdeTxt = desde != null ? ` · ${t('desde', 'from', 'dès')} ${C.euros(desde)}` : '';
           return (
-            <li class:list={['cat-tile', { 'cat-tile--grande': i < 3 }]}>
-              {f && <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
+            <li class:list={['cat-tile', { 'cat-tile--grande': i < 3, 'cat-tile--dibujo': esFunkos }]}>
+              {esFunkos
+                ? <div class="cat-tile__caja" aria-hidden="true" set:html={svgCaja(1, 0, { l: C.l })} />
+                : f && <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
               <div class="cat-tile__txt">
                 <h3><a href={C.urlCategoria(c)}>{c.nombre}</a></h3>
-                <p class="num">{c.enlace ? t('Tu idea, con precio', 'Your idea, with a price', 'Votre idée, avec un prix') : `${n} ${n === 1 ? t('pieza', 'item', 'pièce') : t('piezas', 'items', 'pièces')}${desdeTxt}`}</p>
+                <p class="num">{esFunkos ? `${t('Desde', 'From', 'À partir de')} ${eBase}` : c.enlace ? t('Tu idea, con precio', 'Your idea, with a price', 'Votre idée, avec un prix') : `${n} ${n === 1 ? t('pieza', 'item', 'pièce') : t('piezas', 'items', 'pièces')}${desdeTxt}`}</p>
               </div>
             </li>
           );
@@ -270,6 +274,20 @@ const orgLd = {
   .cat-tile:has(a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
   .cat-tile a:focus-visible { outline-color: #fff; }
   @media (hover: hover) and (pointer: fine) { .cat-tile:hover :global(img) { transform: scale(1.03); } }
+  /* Funkos: el dibujo de la caja entero, encima del texto, sin el degradado oscuro de las fotos */
+  .cat-tile--dibujo { background: var(--surface); }
+  .cat-tile__caja { position: absolute; inset: var(--s-5) var(--s-5) 92px; display: grid; place-items: center; z-index: -1; transition: transform 500ms var(--ease-out); }
+  .cat-tile__caja :global(svg) { display: block; width: auto; height: 100%; max-width: 100%; }
+  .cat-tile__caja :global(.fk-marco) { fill: var(--accent); }
+  .cat-tile__caja :global(.fk-ventana) { fill: #f7f3ec; }
+  .cat-tile__caja :global(.fk-claro) { fill: #dfe8df; }
+  .cat-tile__caja :global(.fk-fig rect) { fill: var(--ink); }
+  .cat-tile__caja :global(.fk-eye) { fill: #f7f3ec; }
+  @media (hover: hover) and (pointer: fine) { .cat-tile--dibujo:hover .cat-tile__caja { transform: scale(1.03); } }
+  .cat-tile--dibujo::after { display: none; }
+  .cat-tile--dibujo .cat-tile__txt { color: var(--ink); text-shadow: none; }
+  .cat-tile--dibujo p { color: var(--muted); }
+  .cat-tile--dibujo a:focus-visible { outline-color: var(--accent); }
   @media (min-width: 768px) {
     /* 3 grandes arriba + 4 pequeñas debajo */
     .cats__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-4); }
