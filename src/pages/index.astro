@@ -6,11 +6,11 @@ import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import { foto, fotoAmbiente, enlaceWhatsApp, sitio, catalogoEn } from '../lib/catalogo';
 import { idiomaDe } from '../i18n';
-import { FUNKO, precioFunko, resumenFunko, svgCaja } from '../lib/funko';
+import { FUNKO, svgCaja } from '../lib/funko';
 
 const C = catalogoEn(idiomaDe(Astro.url));
 const t = C.t;
-// Todo lo personalizable, en cuadrícula justo debajo del inicio. Los que no estén en la lista
+// Todo lo personalizable, en cuadrícula: es la portada. Los que no estén en la lista
 // (personalizables nuevos que se añadan desde el panel) salen al final solos.
 const ordenPers = ['funko-personalizado', 'lego-personalizado', 'copa-personalizada', 'tarjeta-nfc-qr-personalizada', 'cajonera-huevos-aviario', 'posavasos-mascotas', 'llavero-mascota', 'posavasos-regalo'];
 const posPers = (slug: string) => (ordenPers.includes(slug) ? ordenPers.indexOf(slug) : 99);
@@ -25,14 +25,9 @@ const destacados = C.productos
 const pilotos = fotoAmbiente('coleccion-pilotos.jpg');
 const funkoDetalle = foto(C.producto('perruno-17')!, 3);
 const posavasos = foto(C.producto('posavasos-mascotas')!, 0);
-// Fotos de Funkos ya hechos para la tira del inicio (la boda primero)
-const funkosHechos = C.ejemplos
-  .filter((e) => e.categoria === 'funkos')
-  .toSorted((a, b) => Number(b.slug === 'boda-27') - Number(a.slug === 'boda-27'));
-const tira = funkosHechos.slice(0, 4).map((e) => foto(e));
 const estanteria = foto(C.producto('estanteria-stranger-things')!, 0);
 // Precios del Funko personalizado: salen de src/lib/funko.ts (FUNKO)
-const eBase = C.euros(FUNKO.base), ePequeno = C.euros(FUNKO.pequeno);
+const eBase = C.euros(FUNKO.base);
 
 const orgLd = {
   '@context': 'https://schema.org',
@@ -53,60 +48,18 @@ const orgLd = {
   image={pilotos}
   jsonLd={orgLd}
 >
-  <!-- Inicio: el Funko personalizado manda. El dibujo de la caja cambia al elegir figuras y "Crear mi Funko" lleva a /funkos con esa caja -->
-  <section class="hero" aria-labelledby="hero-h">
-    <div class="wrap hero__grid">
-      <div class="hero__text" data-enter>
-        <p class="hero__eyebrow">{t('Funkos personalizados', 'Custom Funkos', 'Funkos personnalisés')}</p>
-        <h1 id="hero-h">{t('Tu Funko, con tu cara y su caja', 'Your Funko, with your face and its own box', 'Votre Funko, à votre image, avec sa boîte')}</h1>
-        <p class="lead">{t(
-          'Lo hacemos a partir de tus fotos: la persona, su ropa, su mascota y el texto de la caja. Elige qué va dentro y mira el precio.',
-          'We make it from your photos: the person, their clothes, their pet and the text on the box. Choose what goes inside and see the price.',
-          'Nous le réalisons à partir de vos photos : la personne, ses vêtements, son animal et le texte de la boîte. Choisissez le contenu et voyez le prix.',
-        )}</p>
-      </div>
-
-      <figure class="hero__caja" aria-live="polite">
-        <div class="hero__dibujo" data-hcaja set:html={svgCaja(1, 0, { l: C.l })} />
-        <figcaption class="hero__resumen"><span data-hresumen>{resumenFunko(1, 0, C.l)}</span><strong class="precio" data-hprecio>{C.euros(precioFunko(1, 0))}</strong></figcaption>
-      </figure>
-
-      <form class="hero__config" data-hconfig data-url={C.ruta('/funkos')} action={C.ruta('/funkos')}>
-        <fieldset class="hero__opcion">
-          <legend>{t('Funkos normales', 'Regular Funkos', 'Funkos normaux')}</legend>
-          <div class="chips">{[1, 2].map((n) => <label class="chip"><input type="radio" name="n" value={n} checked={n === 1} /><span>{n}</span></label>)}</div>
-        </fieldset>
-        <fieldset class="hero__opcion">
-          <legend>{t('Pequeños', 'Small', 'Petits')} <span class="hero__hint">{t(`mascota, niño · +${ePequeno}`, `pet, child · +${ePequeno}`, `animal, enfant · +${ePequeno}`)}</span></legend>
-          <div class="chips">{[0, 1, 2, 3].map((n) => <label class="chip"><input type="radio" name="s" value={n} checked={n === 0} /><span>{n}</span></label>)}</div>
-        </fieldset>
-        <div class="btn-row">
-          <button class="btn" type="submit">{t('Crear mi Funko', 'Create my Funko', 'Créer mon Funko')}</button>
-          <a class="btn btn--secondary" href={C.ruta('/catalogo')}>{t('Ver el catálogo', 'See the catalogue', 'Voir le catalogue')}</a>
-        </div>
-      </form>
-
-      <a class="hero__tira" href={C.ruta('/funkos#encargos')}>
-        <span class="hero__fotos">
-          {tira.map((f) => <Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[120, 240]} sizes="80px" loading="eager" />)}
-        </span>
-        <span class="hero__tira-txt">{t(`Mira los ${funkosHechos.length} Funkos que ya hemos hecho`, `See the ${funkosHechos.length} Funkos we've already made`, `Voir les ${funkosHechos.length} Funkos déjà réalisés`)} <Icon name="flecha" /></span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Todo lo personalizado: cada tarjeta lleva a su ficha (el Funko, a /funkos) -->
-  <section class="section pers" aria-labelledby="pers-h">
+  <!-- Portada: todo lo personalizable en cuadrícula; cada tarjeta lleva a su ficha (el Funko, a /funkos) -->
+  <section class="portada" aria-labelledby="hero-h">
     <div class="wrap">
-      <div class="section-head section-head--row">
-        <div class="pers__head">
-          <h2 id="pers-h">{t('Todo lo que personalizamos', 'Everything we personalise', 'Tout ce que nous personnalisons')}</h2>
-          <p>{t('Elige uno y lo hacemos con tus fotos, tu nombre o tu logo.', 'Pick one and we make it with your photos, your name or your logo.', 'Choisissez-en un : nous le réalisons avec vos photos, votre nom ou votre logo.')}</p>
+      <div class="portada__head" data-enter>
+        <h1 id="hero-h">{t('Regalos personalizados impresos en 3D', 'Personalised 3D-printed gifts', 'Cadeaux personnalisés imprimés en 3D')}</h1>
+        <div class="portada__txt">
+          <p class="lead">{t('Elige uno y lo hacemos con tus fotos, tu nombre o tu logo. Todo se hace bajo pedido.', 'Pick one and we make it with your photos, your name or your logo. Everything is made to order.', 'Choisissez-en un : nous le réalisons avec vos photos, votre nom ou votre logo. Tout est fabriqué sur commande.')}</p>
+          <a class="link" href={C.ruta('/encargos')}>{t('¿Otra idea? Encargo a medida', 'Another idea? Custom order', 'Une autre idée ? Sur mesure')} <Icon name="flecha" /></a>
         </div>
-        <a class="link" href={C.ruta('/encargos')}>{t('¿Otra idea? Encargo a medida', 'Another idea? Custom order', 'Une autre idée ? Sur mesure')} <Icon name="flecha" /></a>
       </div>
       <ul class="grid-productos grid-productos--4">
-        {personalizados.map((p, i) => <li><ProductCard p={p} mostrarCategoria={false} prioridad={i < 4} /></li>)}
+        {personalizados.map((p, i) => <li><ProductCard p={p} mostrarCategoria={false} prioridad={i < 4} nivel="h2" /></li>)}
       </ul>
     </div>
   </section>
@@ -206,89 +159,18 @@ const orgLd = {
   </Fragment>
 </Base>
 
-<script>
-  import { FUNKO, precioFunko, resumenFunko, svgCaja } from '../lib/funko';
-  import { euros } from '../scripts/cesta';
-  import { idiomaDocumento } from '../i18n';
-  // Mini configurador del inicio: dibuja la caja, enseña el precio y "Crear mi Funko" abre /funkos?n=&s= con esa caja
-  const form = document.querySelector<HTMLFormElement>('[data-hconfig]');
-  if (form) {
-    const l = idiomaDocumento();
-    const caja = document.querySelector<HTMLElement>('[data-hcaja]')!;
-    const resumen = document.querySelector<HTMLElement>('[data-hresumen]')!;
-    const precio = document.querySelector<HTMLElement>('[data-hprecio]')!;
-    const pequenos = [...form.querySelectorAll<HTMLInputElement>('input[name="s"]')];
-    let prevN = 1, prevS = 0;
-    const pintar = () => {
-      const fd = new FormData(form);
-      const n = Number(fd.get('n') ?? 1);
-      let s = Number(fd.get('s') ?? 0);
-      const max = FUNKO.maxPequenos(n);
-      pequenos.forEach((r) => (r.disabled = Number(r.value) > max));
-      if (s > max) { s = max; pequenos.forEach((r) => (r.checked = Number(r.value) === s)); }
-      caja.innerHTML = svgCaja(n, s, { nuevasN: Math.max(0, n - prevN), nuevasS: Math.max(0, s - prevS), l });
-      prevN = n; prevS = s;
-      resumen.textContent = resumenFunko(n, s, l);
-      precio.textContent = euros(precioFunko(n, s));
-    };
-    form.addEventListener('change', pintar);
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      location.href = `${form.dataset.url}?n=${fd.get('n') ?? 1}&s=${fd.get('s') ?? 0}`;
-    });
-  }
-</script>
-
 <style>
-  /* ---- Hero: Funko protagonista ---- */
-  .hero { padding-block: var(--s-6) var(--s-8); }
-  .hero__grid { display: grid; gap: var(--s-5); grid-template-areas: "texto" "caja" "config" "tira"; }
-  .hero__text { grid-area: texto; display: grid; gap: var(--s-4); justify-items: start; }
-  .hero__eyebrow { font-weight: 600; color: var(--accent); }
-  .hero h1 { max-width: 11ch; }
-  .hero__caja { grid-area: caja; margin: 0; display: grid; gap: var(--s-4); padding: var(--s-6) var(--s-5) var(--s-5); border-radius: var(--r-lg); background: var(--surface); }
-  .hero__dibujo { display: grid; place-items: center; height: clamp(170px, 42vw, 340px); }
-  .hero__dibujo :global(svg.fk-svg) { display: block; width: auto; max-width: 100%; height: 100%; overflow: visible; }
-  .hero__dibujo :global(.fk-marco) { fill: var(--accent); }
-  .hero__dibujo :global(.fk-ventana) { fill: #f7f3ec; }
-  .hero__dibujo :global(.fk-claro) { fill: #dfe8df; }
-  .hero__dibujo :global(.fk-fig rect) { fill: var(--ink); }
-  .hero__dibujo :global(.fk-eye) { fill: #f7f3ec; }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__dibujo :global(.fk-new) { animation: entra 380ms var(--ease-out) both; }
-  }
-  @keyframes entra { from { opacity: 0; translate: 0 8px; } }
-  .hero__resumen { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); font-weight: 560; }
-  .hero__resumen strong { font-family: var(--font-display); font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
-  .hero__config { grid-area: config; display: grid; gap: var(--s-4); }
-  .hero__opcion { border: 0; padding: 0; margin: 0; display: grid; gap: var(--s-2); }
-  .hero__opcion legend { font-weight: 560; margin-bottom: var(--s-2); padding: 0; }
-  .hero__hint { font-weight: 400; color: var(--muted); font-size: var(--t-small); }
-  .hero__config .btn-row { margin-top: var(--s-2); }
-  .hero__tira { grid-area: tira; display: flex; align-items: center; gap: var(--s-4); text-decoration: none; justify-self: start; padding-block: 6px; }
-  .hero__fotos { display: flex; flex: none; }
-  .hero__fotos :global(img) { display: block; width: 52px; height: 52px; object-fit: cover; border-radius: 50%; border: 3px solid var(--bg); margin-left: -14px; transition: transform 240ms var(--ease-out); }
-  .hero__fotos :global(picture:first-child img) { margin-left: 0; }
-  .hero__tira-txt { display: inline-flex; align-items: center; gap: 6px; font-weight: 560; font-size: 0.9375rem; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color 200ms ease; }
-  @media (hover: hover) and (pointer: fine) {
-    .hero__tira:hover .hero__tira-txt { text-decoration-color: currentColor; }
-    .hero__tira:hover :global(img) { transform: translateY(-2px); }
-  }
-  @media (min-width: 1024px) {
-    .hero { padding-block: var(--s-7) var(--s-9); }
-    .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); grid-template-areas: "texto caja" "config caja" "tira caja"; column-gap: var(--s-8); row-gap: var(--s-6); align-items: start; }
-    .hero__text { align-self: end; }
-    .hero__caja { padding: var(--s-8) var(--s-7) var(--s-6); align-self: center; }
-    .hero__dibujo { height: 360px; }
-  }
-
-  /* ---- Personalizados ---- */
-  .pers { padding-top: var(--s-6); }
-  .pers__head { display: grid; gap: var(--s-2); }
-  .pers__head p { color: var(--muted); }
+  /* ---- Portada: todo lo personalizado ---- */
+  .portada { padding-block: var(--s-6) var(--s-8); }
+  .portada__head { display: grid; gap: var(--s-4); margin-bottom: var(--s-6); }
+  .portada h1 { font-size: clamp(2.25rem, 1.6rem + 2.8vw, 4rem); max-width: 14ch; }
+  .portada__txt { display: grid; gap: var(--s-3); justify-items: start; }
   /* Aquí todo es personalizable: la etiqueta de cada tarjeta sobra */
-  .pers :global(.card__tag) { display: none; }
+  .portada :global(.card__tag) { display: none; }
+  @media (min-width: 1024px) {
+    .portada { padding-block: var(--s-7) var(--s-9); }
+    .portada__head { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: end; gap: var(--s-8); margin-bottom: var(--s-7); }
+  }
 
   /* ---- Categorías ---- */
   .cats__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); }
