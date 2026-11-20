@@ -1,32 +1,50 @@
 ---
 import { Picture } from 'astro:assets';
-import { foto, fotoAmbiente, catalogoEn, type Producto } from '../lib/catalogo';
+import { foto, catalogoEn, type Producto } from '../lib/catalogo';
 import { idiomaDe } from '../i18n';
+import { svgCaja } from '../lib/funko';
+import { svgLegos } from '../lib/lego';
+import { svgCopas } from '../lib/copa';
 interface Props { p: Producto; prioridad?: boolean; mostrarCategoria?: boolean; nivel?: 'h2' | 'h3' }
 const { prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
 const C = catalogoEn(idiomaDe(Astro.url));
 const p = C.loc(Astro.props.p);
-// El Funko personalizado no enseña un encargo real: enseña lo que incluye el precio base (la caja con un Funko normal)
-const f = p.slug === 'funko-personalizado'
-  ? { src: fotoAmbiente('funko-caja-1.png'), alt: C.t('Dibujo de la caja a medida con un Funko normal', 'Drawing of the made-to-measure box with one regular Funko', 'Dessin de la boîte sur mesure avec un Funko normal') }
-  : foto(p);
+// Los personalizados con varias opciones enseñan un dibujo que, con el cursor encima, va pasando por ellas:
+// el Funko añade normales y pequeños a la caja; el Lego y la copa alternan entre sus dos tamaños.
+const dibujo = p.slug === 'funko-personalizado' ? 'funko' : p.slug === 'lego-personalizado' ? 'lego' : p.slug === 'copa-personalizada' ? 'copa' : null;
+const altDibujo = {
+  funko: C.t('Dibujo de la caja a medida con un Funko normal', 'Drawing of the made-to-measure box with one regular Funko', 'Dessin de la boîte sur mesure avec un Funko normal'),
+  lego: C.t('Dibujo de las dos tallas del Lego personalizado: 30 cm y 15 cm', 'Drawing of both custom Lego sizes: 30 cm and 15 cm', 'Dessin des deux tailles du Lego personnalisé : 30 cm et 15 cm'),
+  copa: C.t('Dibujo de las dos copas personalizadas: 30 cm y 20 cm', 'Drawing of both custom trophies: 30 cm and 20 cm', 'Dessin des deux coupes personnalisées : 30 cm et 20 cm'),
+};
+const f = dibujo ? null : foto(p);
 const Tag = nivel;
 const cat = C.categoria(p.categoria);
 const etiqueta = p.personalizacion.disponible
   ? C.t('Personalizable', 'Customisable', 'Personnalisable')
   : p.etiquetas.includes('edicion-especial') ? C.t('Edición especial', 'Special edition', 'Édition spéciale') : null;
 ---
-<article class="card">
+<article class="card" data-anima={dibujo ?? undefined}>
   <div class="card__media">
-    <Picture
-      src={f.src}
-      alt={f.alt}
-      formats={['avif', 'webp']}
-      widths={[240, 360, 480, 720]}
-      sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 46vw"
-      loading={prioridad ? 'eager' : 'lazy'}
-      fetchpriority={prioridad ? 'high' : undefined}
-    />
+    {dibujo === 'funko' && (
+      <div class="card__dibujo card__dibujo--funko" data-titulo={altDibujo.funko} data-caja set:html={svgCaja(1, 0, { l: C.l, titulo: altDibujo.funko })} />
+    )}
+    {(dibujo === 'lego' || dibujo === 'copa') && (
+      <div class="card__dibujo card__dibujo--panel">
+        <div class="card__panel" set:html={dibujo === 'lego' ? svgLegos('ambas', altDibujo.lego) : svgCopas('ambas', altDibujo.copa)} />
+      </div>
+    )}
+    {f && (
+      <Picture
+        src={f.src}
+        alt={f.alt}
+        formats={['avif', 'webp']}
+        widths={[240, 360, 480, 720]}
+        sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 46vw"
+        loading={prioridad ? 'eager' : 'lazy'}
+        fetchpriority={prioridad ? 'high' : undefined}
+      />
+    )}
     {etiqueta && <span class="card__tag">{etiqueta}</span>}
   </div>
   <div class="card__body">
@@ -35,3 +53,83 @@ const etiqueta = p.personalizacion.disponible
     <span class:list={['card__price precio', { 'card__price--consultar': p.precio.tipo === 'consultar' }]}>{C.textoPrecio(p)}</span>
   </div>
 </article>
+
+<style>
+  /* Dibujos de los personalizados (mismo estilo que las fotos de dibujo que había: verde y crema sobre arena) */
+  .card__dibujo { position: absolute; inset: 0; display: grid; place-items: center; background: #e2d9cb; transition: transform 500ms var(--ease-out); }
+  .card__dibujo--funko { padding: 14%; }
+  .card__dibujo--funko :global(svg) { display: block; width: 100%; height: auto; max-height: 100%; overflow: visible; }
+  .card__dibujo :global(.fk-marco) { fill: var(--accent); }
+  .card__dibujo :global(.fk-ventana) { fill: #f7f3ec; }
+  .card__dibujo :global(.fk-claro) { fill: #dfe8df; }
+  .card__dibujo :global(.fk-fig rect) { fill: var(--ink); }
+  .card__dibujo :global(.fk-eye) { fill: #f7f3ec; }
+  @media (prefers-reduced-motion: no-preference) {
+    .card__dibujo :global(.fk-new) { animation: card-entra 320ms var(--ease-out) both; }
+  }
+  @keyframes card-entra { from { opacity: 0; translate: 0 8px; } }
+
+  .card__dibujo--panel { padding: 10%; }
+  .card__panel { width: 100%; aspect-ratio: 720 / 767; border-radius: 9%/8.5%; background: var(--accent); display: grid; place-items: center; padding: 4%; }
+  .card__panel :global(svg.lg) { display: block; width: 100%; height: 100%; }
+  .card__panel :global(.lg-fig) { fill: #f7f3ec; transition: opacity 260ms var(--ease-out); }
+  .card__panel :global(.lg-hueco) { fill: var(--accent); }
+  .card__panel :global(.lg-boca) { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; }
+  .card__panel :global(.lg-torso) { stroke: #f7f3ec; stroke-width: 2; stroke-linejoin: round; }
+  .card__panel :global(.lg-asa) { fill: none; stroke: #f7f3ec; stroke-width: 4.5; stroke-linecap: round; }
+  .card__panel :global(.lg-suelo) { fill: rgb(255 255 255 / 0.1); }
+  .card__panel :global(.lg-regla) { transition: opacity 260ms var(--ease-out); }
+  .card__panel :global(.lg-regla path) { fill: none; stroke: #f7f3ec; stroke-width: 3; stroke-linecap: round; }
+  .card__panel :global(.lg-regla text) { fill: #f7f3ec; stroke: none; font-family: var(--font-text); font-size: 34px; font-weight: 600; }
+  /* Con el cursor encima se alterna: la talla elegida en crema y la otra apagada */
+  .card__panel :global(svg[data-sel="grande"] .lg-fig--peque),
+  .card__panel :global(svg[data-sel="peque"] .lg-fig--grande) { opacity: 0.2; }
+  .card__panel :global(svg[data-sel="grande"] .lg-fig--peque .lg-regla),
+  .card__panel :global(svg[data-sel="peque"] .lg-fig--grande .lg-regla) { opacity: 0; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover .card__dibujo { transform: scale(1.03); }
+  }
+</style>
+
+<script>
+  import { svgCaja, composiciones } from '../lib/funko';
+  import { idiomaDocumento } from '../i18n';
+
+  // Con el cursor (o el foco del teclado) encima, el dibujo va pasando por las opciones; al salir vuelve al principio
+  const PASO = { funko: 750, lego: 1000, copa: 1000 } as const;
+  const opcionesFunko = composiciones(); // 1+0, 1+1, 1+2, 1+3, 2+0, 2+1
+  const l = idiomaDocumento();
+
+  document.querySelectorAll<HTMLElement>('[data-anima]').forEach((card) => {
+    const tipo = card.dataset.anima as keyof typeof PASO;
+    let reloj: number | undefined, i = 0;
+    const caja = card.querySelector<HTMLElement>('[data-caja]');
+    const svg = card.querySelector<SVGElement>('.card__panel svg');
+    let prev = { n: 1, s: 0 };
+
+    const pintar = (paso: number) => {
+      if (tipo === 'funko' && caja) {
+        const { n, s } = opcionesFunko[paso % opcionesFunko.length];
+        caja.innerHTML = svgCaja(n, s, { l, nuevasN: Math.max(0, n - prev.n), nuevasS: Math.max(0, s - prev.s), titulo: n === 1 && s === 0 ? caja.dataset.titulo : undefined });
+        prev = { n, s };
+      } else if (svg) {
+        svg.dataset.sel = paso % 2 === 0 ? 'grande' : 'peque';
+      }
+    };
+    const empezar = () => {
+      if (reloj) return;
+      i = 1; pintar(i);
+      reloj = window.setInterval(() => pintar(++i), PASO[tipo]);
+    };
+    const parar = () => {
+      window.clearInterval(reloj); reloj = undefined;
+      if (tipo === 'funko') { prev = { n: 1, s: 0 }; pintar(0); }
+      else if (svg) svg.dataset.sel = 'ambas';
+    };
+    card.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') empezar(); });
+    card.addEventListener('pointerleave', parar);
+    card.addEventListener('focusin', empezar);
+    card.addEventListener('focusout', parar);
+  });
+</script>

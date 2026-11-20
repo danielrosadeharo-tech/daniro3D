@@ -30,7 +30,7 @@ function copa(cx: number, pie: number, k: number) {
 }
 
 /** SVG recortado a las dos copas; `sel` marca la que se resalta al principio. */
-export function svgCopas(sel: FiguraLego, titulo: string) {
+export function svgCopas(sel: FiguraLego | 'ambas', titulo: string) {
   const pie = 770, kG = 4.1, kP = kG * (20 / 30);
   return `<svg class="lg" viewBox="40 150 740 700" role="img" aria-label="${titulo}" data-sel="${sel}">
     <rect class="lg-suelo" x="90" y="${pie}" width="620" height="12" rx="6"/>

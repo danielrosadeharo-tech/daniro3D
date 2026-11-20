@@ -33,7 +33,7 @@ export function regla(x: number, arriba: number, abajo: number, texto: string) {
 }
 
 /** SVG recortado a las dos figuras (se centra en su hueco); `sel` marca la que se resalta al principio. */
-export function svgLegos(sel: FiguraLego, titulo: string) {
+export function svgLegos(sel: FiguraLego | 'ambas', titulo: string) {
   const pie = 770, kG = 4.6, kP = 2.3;
   return `<svg class="lg" viewBox="40 150 740 700" role="img" aria-label="${titulo}" data-sel="${sel}">
     <rect class="lg-suelo" x="90" y="${pie}" width="620" height="12" rx="6"/>
