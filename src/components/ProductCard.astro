@@ -5,17 +5,19 @@ import { idiomaDe } from '../i18n';
 import { svgCaja } from '../lib/funko';
 import { svgLegos } from '../lib/lego';
 import { svgCopas } from '../lib/copa';
+import { svgBola } from '../lib/bola';
 interface Props { p: Producto; prioridad?: boolean; mostrarCategoria?: boolean; nivel?: 'h2' | 'h3' }
 const { prioridad = false, mostrarCategoria = true, nivel = 'h3' } = Astro.props;
 const C = catalogoEn(idiomaDe(Astro.url));
 const p = C.loc(Astro.props.p);
 // Los personalizados con varias opciones enseñan un dibujo que, con el cursor encima, va pasando por ellas:
-// el Funko añade normales y pequeños a la caja; el Lego y la copa alternan entre sus dos tamaños.
-const dibujo = p.slug === 'funko-personalizado' ? 'funko' : p.slug === 'lego-personalizado' ? 'lego' : p.slug === 'copa-personalizada' ? 'copa' : null;
+// el Funko añade normales y pequeños a la caja; el Lego y la copa alternan entre sus dos tamaños; la bola de Navidad se apaga y se enciende.
+const dibujo = p.slug === 'funko-personalizado' ? 'funko' : p.slug === 'lego-personalizado' ? 'lego' : p.slug === 'copa-personalizada' ? 'copa' : p.slug === 'bola-navidad-personalizada' ? 'bola' : null;
 const altDibujo = {
   funko: C.t('Dibujo de la caja a medida con un Funko normal', 'Drawing of the made-to-measure box with one regular Funko', 'Dessin de la boîte sur mesure avec un Funko normal'),
   lego: C.t('Dibujo de las dos tallas del Lego personalizado: 30 cm y 15 cm', 'Drawing of both custom Lego sizes: 30 cm and 15 cm', 'Dessin des deux tailles du Lego personnalisé : 30 cm et 15 cm'),
   copa: C.t('Dibujo de las dos copas personalizadas: 30 cm y 20 cm', 'Drawing of both custom trophies: 30 cm and 20 cm', 'Dessin des deux coupes personnalisées : 30 cm et 20 cm'),
+  bola: C.t('Dibujo de una bola de Navidad iluminada con una foto', 'Drawing of a lit Christmas bauble with a photo', 'Dessin d’une boule de Noël lumineuse avec une photo'),
 };
 const f = dibujo ? null : foto(p);
 const Tag = nivel;
@@ -28,6 +30,11 @@ const etiqueta = p.personalizacion.disponible
   <div class="card__media">
     {dibujo === 'funko' && (
       <div class="card__dibujo card__dibujo--funko" data-titulo={altDibujo.funko} data-caja set:html={svgCaja(1, 0, { l: C.l, titulo: altDibujo.funko })} />
+    )}
+    {dibujo === 'bola' && (
+      <div class="card__dibujo card__dibujo--panel">
+        <div class="card__panel" set:html={svgBola(true, altDibujo.bola)} />
+      </div>
     )}
     {(dibujo === 'lego' || dibujo === 'copa') && (
       <div class="card__dibujo card__dibujo--panel">
@@ -71,7 +78,7 @@ const etiqueta = p.personalizacion.disponible
 
   .card__dibujo--panel { padding: 10%; }
   .card__panel { width: 100%; aspect-ratio: 720 / 767; border-radius: 9%/8.5%; background: var(--accent); display: grid; place-items: center; padding: 4%; }
-  .card__panel :global(svg.lg) { display: block; width: 100%; height: 100%; }
+  .card__panel :global(svg.lg), .card__panel :global(svg.bola) { display: block; width: 100%; height: 100%; }
   .card__panel :global(.lg-fig) { fill: #f7f3ec; transition: opacity 260ms var(--ease-out); }
   .card__panel :global(.lg-hueco) { fill: var(--accent); }
   .card__panel :global(.lg-boca) { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; }
@@ -97,7 +104,7 @@ const etiqueta = p.personalizacion.disponible
   import { idiomaDocumento } from '../i18n';
 
   // Con el cursor (o el foco del teclado) encima, el dibujo va pasando por las opciones; al salir vuelve al principio
-  const PASO = { funko: 750, lego: 1000, copa: 1000 } as const;
+  const PASO = { funko: 750, lego: 1000, copa: 1000, bola: 900 } as const;
   const opcionesFunko = composiciones(); // 1+0, 1+1, 1+2, 1+3, 2+0, 2+1
   const l = idiomaDocumento();
 
@@ -106,6 +113,7 @@ const etiqueta = p.personalizacion.disponible
     let reloj: number | undefined, i = 0;
     const caja = card.querySelector<HTMLElement>('[data-caja]');
     const svg = card.querySelector<SVGElement>('.card__panel svg');
+    const bola = tipo === 'bola';
     let prev = { n: 1, s: 0 };
 
     const pintar = (paso: number) => {
@@ -113,6 +121,8 @@ const etiqueta = p.personalizacion.disponible
         const { n, s } = opcionesFunko[paso % opcionesFunko.length];
         caja.innerHTML = svgCaja(n, s, { l, nuevasN: Math.max(0, n - prev.n), nuevasS: Math.max(0, s - prev.s), titulo: n === 1 && s === 0 ? caja.dataset.titulo : undefined });
         prev = { n, s };
+      } else if (svg && bola) {
+        svg.dataset.luz = paso % 2 === 0 ? 'on' : 'off';
       } else if (svg) {
         svg.dataset.sel = paso % 2 === 0 ? 'grande' : 'peque';
       }
@@ -125,6 +135,7 @@ const etiqueta = p.personalizacion.disponible
     const parar = () => {
       window.clearInterval(reloj); reloj = undefined;
       if (tipo === 'funko') { prev = { n: 1, s: 0 }; pintar(0); }
+      else if (svg && bola) svg.dataset.luz = 'on';
       else if (svg) svg.dataset.sel = 'ambas';
     };
     card.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') empezar(); });

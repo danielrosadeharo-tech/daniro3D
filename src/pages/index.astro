@@ -12,7 +12,7 @@ const C = catalogoEn(idiomaDe(Astro.url));
 const t = C.t;
 // Todo lo personalizable, en cuadrícula: es la portada. Los que no estén en la lista
 // (personalizables nuevos que se añadan desde el panel) salen al final solos.
-const ordenPers = ['funko-personalizado', 'lego-personalizado', 'copa-personalizada', 'tarjeta-nfc-qr-personalizada', 'cajonera-huevos-aviario', 'posavasos-mascotas', 'llavero-mascota'];
+const ordenPers = ['funko-personalizado', 'lego-personalizado', 'copa-personalizada', 'bola-navidad-personalizada', 'tarjeta-nfc-qr-personalizada', 'cajonera-huevos-aviario', 'posavasos-mascotas', 'llavero-mascota'];
 // Personalizables que no salen en la portada (siguen en el catálogo)
 const fueraDePortada = ['posavasos-regalo'];
 const posPers = (slug: string) => (ordenPers.includes(slug) ? ordenPers.indexOf(slug) : 99);

@@ -1034,6 +1034,52 @@
           "Dessin de deux coupes personnalisées, l’une de 30 cm et l’autre de 20 cm"
         ]
       }
+    },
+    "bola-navidad-conejo": {
+      "huella": "1763mtt",
+      "en": {
+        "nombre": "Christmas bauble with a photo of a rabbit",
+        "descripcionCorta": "Light-up bauble with a photo of a rabbit, a Christmas tree and snowflakes.",
+        "descripcionLarga": "Christmas bauble with a photo of a rabbit in relief and its name underneath. On the other sides it has a tree with “Feliz Navidad” and a snowflake. With the light on you can see every detail; switched off it stays white.",
+        "alts": [
+          "Lit Christmas bauble with a photo of a rabbit",
+          "Lit bauble with the rabbit photo and its name underneath",
+          "Other side of the bauble: a tree with “Feliz Navidad”",
+          "Side of the bauble with a snowflake",
+          "The bauble switched off, with the photo in relief"
+        ]
+      },
+      "fr": {
+        "nombre": "Boule de Noël avec la photo d’un lapin",
+        "descripcionCorta": "Boule lumineuse avec la photo d’un lapin, d’un sapin de Noël et de flocons de neige.",
+        "descripcionLarga": "Boule de Noël avec la photo d’un lapin en relief et son nom en dessous. Sur les autres côtés, elle présente un sapin avec l’inscription « Joyeux Noël » et un flocon de neige. Lorsque la lumière est allumée, tous les détails sont visibles ; lorsqu’elle est éteinte, elle reste blanche.",
+        "alts": [
+          "Boule de Noël lumineuse avec la photo d’un lapin",
+          "Boule lumineuse avec la photo du lapin et son nom en dessous",
+          "Autre côté de la boule : sapin avec « Feliz Navidad »",
+          "Côté de la boule avec un flocon de neige",
+          "La boule éteinte, avec la photo en relief"
+        ]
+      }
+    },
+    "bola-navidad-personalizada": {
+      "huella": "1vuhp6t",
+      "en": {
+        "nombre": "Personalised light-up Christmas bauble",
+        "descripcionCorta": "Your photo in relief, lit up from inside. €5 each.",
+        "descripcionLarga": "3D-printed Christmas bauble with the photo you send us in relief: switched off it looks white, with the photo in relief, and when the light inside is on the picture appears in full detail. Around it there are stars, dots and snowflakes, on the other side a tree with “Feliz Navidad” (“Merry Christmas”), and a name can go under the photo. It has a ring to hang it on the tree. A gift for the holidays with your pet, your family or anyone you like.",
+        "alts": [
+          "Drawing of a lit Christmas bauble with a photo"
+        ]
+      },
+      "fr": {
+        "nombre": "Boule de Noël personnalisée et lumineuse",
+        "descripcionCorta": "Votre photo en relief qui s’illumine de l’intérieur. 5 € l’unité.",
+        "descripcionLarga": "Boule de Noël imprimée en 3D avec la photo que vous nous envoyez en relief : éteinte, elle apparaît blanche, avec le relief de la photo, et lorsque vous allumez la lumière à l’intérieur, l’image apparaît avec tous ses détails. Elle est ornée d’étoiles, de pois et de flocons de neige ; de l’autre côté, il y a un sapin avec l’inscription « Joyeux Noël », et un nom peut être inscrit sous la photo. Elle est munie d’un anneau pour l’accrocher au sapin. Un cadeau pour ces fêtes avec votre animal de compagnie, votre famille ou qui vous voulez.",
+        "alts": [
+          "Dessin d’une boule de Noël illuminée avec une photo"
+        ]
+      }
     }
   },
   "categorias": {
@@ -1143,6 +1189,18 @@
         "nombre": "Cartes NFC et QR",
         "titulo": "Cartes NFC et QR personnalisées",
         "descripcion": "Des cartes avec votre logo, un QR code et une puce NFC : en approchant le téléphone, elles ouvrent votre site, votre carte ou votre page d’avis."
+      }
+    },
+    "bolas": {
+      "en": {
+        "nombre": "Christmas baubles",
+        "titulo": "Custom light-up Christmas baubles",
+        "descripcion": "Christmas baubles with your photo in relief that lights up from inside, with stars and snowflakes. €5 each."
+      },
+      "fr": {
+        "nombre": "Boules de Noël",
+        "titulo": "Boules de Noël personnalisées et lumineuses",
+        "descripcion": "Des boules de Noël avec votre photo en relief qui s’illumine de l’intérieur, avec étoiles et flocons de neige. 5 € pièce."
       }
     }
   },
@@ -1338,6 +1396,10 @@
     "Cuéntanos el nombre del torneo, el texto de la placa, los colores y si lleva escudo o logo.": {
       "en": "Tell us the name of the tournament, the text on the plaque, the colors, and whether it has a crest or logo.",
       "fr": "Indiquez-nous le nom du tournoi, le texte de la plaque, les couleurs et si elle comporte un écusson ou un logo."
+    },
+    "Mándanos la foto (de frente y con buena luz) y el nombre o texto que quieres debajo.": {
+      "en": "Send us the photo (front-facing and well lit) and the name or text you want underneath.",
+      "fr": "Envoyez-nous la photo (de face et bien éclairée) et le nom ou le texte que vous souhaitez voir apparaître en dessous."
     }
   }
 }
