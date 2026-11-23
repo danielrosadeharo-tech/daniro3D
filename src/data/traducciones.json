@@ -1080,6 +1080,156 @@
           "Dessin d’une boule de Noël illuminée avec une photo"
         ]
       }
+    },
+    "caja-azucar-hosteleria": {
+      "huella": "81yzlt",
+      "en": {
+        "nombre": "Custom sugar box for bars and restaurants",
+        "descripcionCorta": "Dispenser for sugar or saccharin packets with your business logo.",
+        "descripcionLarga": "Dispenser box for sugar or saccharin packets for bars, cafés and restaurants. The front features your business logo and a plate indicating the contents (sugar, sweetener…), with decorative grilles on the sides. The packets are loaded from the top and slide down to the bottom tray, from where they are taken. We make it with your logo and your venue’s colours.",
+        "alts": [
+          "Front view of a sugar box with the XSABOR logo and the label \"Saccharin\"",
+          "Three-quarter sugar box, with tray and side grid",
+          "Side of the box with the decorative grille",
+          "The box seen from above, inside"
+        ]
+      },
+      "fr": {
+        "nombre": "Boîte à sucre personnalisée pour bars et restaurants",
+        "descripcionCorta": "Distributeur de sachets de sucre ou de saccharine avec le logo de votre entreprise.",
+        "descripcionLarga": "Boîte distributrice de sachets de sucre ou de saccharine pour les bars, les cafés et les restaurants. Sur le devant figurent le logo de votre entreprise et une plaque indiquant le contenu (sucre, saccharine...), et sur les côtés, des grilles décoratives. Les sachets sont chargés par le haut et descendent jusqu’au bac inférieur, d’où ils sont prélevés. Nous la fabriquons avec votre logo et les couleurs de votre établissement.",
+        "alts": [
+          "Boîte de sucre avec le logo XSABOR et la plaque « Saccharine », de face",
+          "Boîte à sucre de trois quarts, avec le plateau et la grille latérale",
+          "Côté du boîtier avec grille décorative",
+          "La boîte vue de dessus, de l’intérieur"
+        ]
+      }
+    },
+    "casco-ayrton-senna-mclaren": {
+      "huella": "1d3o08p",
+      "en": {
+        "nombre": "Ayrton Senna helmet · McLaren Honda",
+        "descripcionCorta": "10 cm Ayrton Senna helmet, yellow with green and blue stripes.",
+        "descripcionLarga": "10 cm replica of Ayrton Senna's helmet from his time at McLaren Honda. Yellow with green and blue stripes, Marlboro on the front, Nacional on the sides and back, and a black visor with Honda.",
+        "alts": [
+          "Front view of Ayrton Senna's helmet, with Marlboro and the Honda visor",
+          "Ayrton Senna's helmet from the side",
+          "Ayrton Senna's helmet from behind, with the stripes",
+          "Ayrton Senna's helmet seen from above"
+        ]
+      },
+      "fr": {
+        "nombre": "Casque Ayrton Senna · McLaren Honda",
+        "descripcionCorta": "Casque de 10 cm d’Ayrton Senna, jaune avec des bandes vertes et bleues.",
+        "descripcionLarga": "Réplique de 10 cm du casque d’Ayrton Senna chez McLaren Honda. Jaune avec ses bandes vertes et bleues, Marlboro à l’avant, Nacional sur les côtés et à l’arrière, et la visière noire avec Honda.",
+        "alts": [
+          "Casque d’Ayrton Senna de face, avec Marlboro et la visière Honda",
+          "Casque d’Ayrton Senna de côté",
+          "Casque d’Ayrton Senna vu de derrière, avec les bandes",
+          "Casque d’Ayrton Senna vu d’en haut"
+        ]
+      }
+    },
+    "casco-fernando-alonso-aston-martin": {
+      "huella": "1pcylu4",
+      "en": {
+        "nombre": "Fernando Alonso helmet · Aston Martin",
+        "descripcionCorta": "Fernando Alonso's 10 cm helmet, blue and gold with Citi and Cognizant.",
+        "descripcionLarga": "10 cm replica of Fernando Alonso's Aston Martin helmet. Blue and gold with Citi Private Bank on top, Cognizant, the number 14 and the red and gold stripes, and the black visor with Aston Martin and Peroni.",
+        "alts": [
+          "Front view of Fernando Alonso's Aston Martin helmet",
+          "Fernando Alonso's Aston Martin helmet seen from above, with Citi and the number 14"
+        ]
+      },
+      "fr": {
+        "nombre": "Casque Fernando Alonso · Aston Martin",
+        "descripcionCorta": "Casque de 10 cm de Fernando Alonso, bleu et doré avec Citi et Cognizant.",
+        "descripcionLarga": "Réplique de 10 cm du casque de Fernando Alonso chez Aston Martin. Bleu et or avec Citi Private Bank en haut, Cognizant, le 14 et les bandes rouges et dorées, et la visière noire avec Aston Martin et Peroni.",
+        "alts": [
+          "Casque de Fernando Alonso Aston Martin, vue de face",
+          "Casque de Fernando Alonso Aston Martin vu d’en haut, avec Citi et le 14"
+        ]
+      }
+    },
+    "casco-fernando-alonso-japon": {
+      "huella": "4lxf8l",
+      "en": {
+        "nombre": "Fernando Alonso helmet · Aston Martin · Japan",
+        "descripcionCorta": "Fernando Alonso's 10 cm helmet with a special Japan design.",
+        "descripcionLarga": "10 cm replica of Fernando Alonso's special helmet for Japan with Aston Martin. White with pagodas, a torii gate and a samurai in black, the red sun with the number 14 on each side, Aramco, Cognizant and Citi. The visor features Aston Martin and Peroni 0.0, and on the back, his name and Bell.",
+        "alts": [
+          "Front view of Fernando Alonso's Japan helmet, with the Aston Martin visor",
+          "Japanese helmet on its side, with the red sun and the number 14",
+          "Japan helmet – Back view",
+          "Detail of the back of the Japan helmet",
+          "Japan's Casco District seen from above, with Citi"
+        ]
+      },
+      "fr": {
+        "nombre": "Casque Fernando Alonso · Aston Martin · Japon",
+        "descripcionCorta": "Casque de 10 cm de Fernando Alonso avec le design spécial du Japon.",
+        "descripcionLarga": "Réplique de 10 cm du casque spécial de Fernando Alonso pour le Japon avec Aston Martin. Blanc avec des pagodes, un torii et un samouraï en noir, le soleil rouge avec le 14 de chaque côté, Aramco, Cognizant et Citi. La visière porte les logos Aston Martin et Peroni 0.0, et à l’arrière, son nom et Bell.",
+        "alts": [
+          "Casque Japon de Fernando Alonso de face, avec la visière Aston Martin",
+          "Casque Japon de côté, avec le soleil rouge et le 14",
+          "Casque Japon, vue de derrière",
+          "Détail de l’arrière du casque Japon",
+          "Casque Japon vu d’en haut, avec Citi"
+        ]
+      }
+    },
+    "casco-marc-marquez-ducati": {
+      "huella": "zthq7i",
+      "en": {
+        "nombre": "Marc Márquez helmet · Ducati MotoGP",
+        "descripcionCorta": "10 cm Marc Márquez helmet, red with the orange spider and his number 93.",
+        "descripcionLarga": "10 cm replica of Marc Márquez's helmet on the Ducati MotoGP bike. Red with the orange spider on top, Ducati and Lenovo on the front, Shoei and Estrella Galicia on the sides, and his name and the number 93 on the back.",
+        "alts": [
+          "Front view of Marc Márquez's helmet, with Ducati and Lenovo",
+          "Side view of Marc Márquez's helmet, with Estrella Galicia",
+          "Marc Márquez's helmet from behind, with the number 93",
+          "The helmet spider seen from above"
+        ]
+      },
+      "fr": {
+        "nombre": "Casque Marc Márquez · Ducati MotoGP",
+        "descripcionCorta": "Casque de 10 cm de Marc Márquez, rouge avec l’araignée orange et son 93.",
+        "descripcionLarga": "Réplique de 10 cm du casque de Marc Márquez sur la Ducati de MotoGP. Rouge avec l’araignée orange sur le dessus, Ducati et Lenovo à l’avant, Shoei, Estrella Galicia sur les côtés et, à l’arrière, son nom et le 93.",
+        "alts": [
+          "Casque de Marc Márquez vu de face, avec Ducati et Lenovo",
+          "Casque de Marc Márquez de côté, avec Estrella Galicia",
+          "Casque de Marc Márquez vu de derrière, avec le numéro 93",
+          "L’araignée du casque vue d’en haut"
+        ]
+      }
+    },
+    "casco-max-verstappen-red-bull": {
+      "huella": "1ulqmmq",
+      "en": {
+        "nombre": "Max Verstappen helmet · Red Bull Racing",
+        "descripcionCorta": "10 cm Max Verstappen helmet, white with red lion and Oracle visor.",
+        "descripcionLarga": "10 cm replica of Max Verstappen's Red Bull Racing helmet. White with the red lion on top, the Red Bull logo on the front and sides, Heineken 0.0, Ford Racing, and his name on the side. The black visor features Oracle and Mobil 1, and the back has four stars and verstappen.com.",
+        "alts": [
+          "Front view of Max Verstappen's helmet, with the Oracle visor",
+          "Side view of Max Verstappen's helmet",
+          "Back of Max Verstappen's helmet, with the four stars",
+          "The lion on the helmet seen from above",
+          "Top part of Max Verstappen's helmet"
+        ]
+      },
+      "fr": {
+        "nombre": "Casque Max Verstappen · Red Bull Racing",
+        "descripcionCorta": "Casque de 10 cm de Max Verstappen, blanc avec le lion rouge et la visière Oracle.",
+        "descripcionLarga": "Réplique de 10 cm du casque de Max Verstappen de l’écurie Red Bull Racing. Blanc avec le lion rouge sur le dessus, le logo Red Bull à l’avant et sur les côtés, Heineken 0.0, Ford Racing et son nom sur le côté. La visière noire porte les logos Oracle et Mobil 1, et à l’arrière, elle arbore quatre étoiles et l’inscription verstappen.com.",
+        "alts": [
+          "Casque de Max Verstappen de face, avec la visière Oracle",
+          "Casque de Max Verstappen de côté",
+          "Casque de Max Verstappen vu de derrière, avec les quatre étoiles",
+          "Le lion du casque vu d’en haut",
+          "Partie supérieure du casque de Max Verstappen"
+        ]
+      }
     }
   },
   "categorias": {
@@ -1400,6 +1550,14 @@
     "Mándanos la foto (de frente y con buena luz) y el nombre o texto que quieres debajo.": {
       "en": "Send us the photo (front-facing and well lit) and the name or text you want underneath.",
       "fr": "Envoyez-nous la photo (de face et bien éclairée) et le nom ou le texte que vous souhaitez voir apparaître en dessous."
+    },
+    "Mándanos tu logo, los colores y el texto de la placa (azúcar, sacarina…).": {
+      "en": "Send us your logo, colors, and the text for the sign (sugar, saccharin, etc.).",
+      "fr": "Envoyez-nous votre logo, les couleurs et le texte de la plaque (sucre, saccharine…)."
+    },
+    "10 cm": {
+      "en": "10 cm",
+      "fr": "10 cm"
     }
   }
 }
