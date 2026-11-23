@@ -10,8 +10,8 @@
     "descripcionCorta": "Mono rojo y casco amarillo, verde y azul.",
     "descripcionLarga": "Figura de bloques de Ayrton Senna con el mono rojo de McLaren Honda y su casco amarillo, verde y azul. Visera móvil.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -172,9 +172,9 @@
     "descripcionCorta": "Bola iluminada con la foto de un conejo, un árbol de Navidad y copos de nieve.",
     "descripcionLarga": "Bola de Navidad con la foto de un conejo en relieve y su nombre debajo. Por los otros lados lleva un árbol con «Feliz Navidad» y un copo de nieve. Con la luz encendida se ven todos los detalles; apagada queda blanca.",
     "precio": {
+      "importe": 5,
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 5
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -229,8 +229,8 @@
     "descripcionLarga": "Bola de Navidad impresa en 3D con la foto que nos mandes en relieve: apagada se ve blanca, con el relieve de la foto, y al encender la luz de dentro la imagen aparece con todos sus detalles. Alrededor lleva estrellas, lunares y copos de nieve, en el otro lado un árbol con «Feliz Navidad», y debajo de la foto puede ir un nombre. Tiene anilla para colgarla del árbol. Un regalo para estas fiestas con tu mascota, tu familia o quien tú quieras.",
     "precio": {
       "tipo": "fijo",
-      "importe": 5,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -266,8 +266,8 @@
     "descripcionCorta": "Dispensador de sobres de azúcar o sacarina con el logo de tu negocio.",
     "descripcionLarga": "Caja dispensadora de sobres de azúcar o sacarina para bares, cafeterías y restaurantes. Por delante lleva el logo de tu negocio y una placa con el contenido (azúcar, sacarina…), y a los lados unas rejillas decorativas. Los sobres se cargan por arriba y bajan hasta la bandeja de abajo, de donde se cogen. La hacemos con tu logo y los colores de tu local.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -315,8 +315,8 @@
     "descripcionCorta": "16 cajones numerados para los huevos, con el nombre de tu aviario.",
     "descripcionLarga": "Cajonera de pared con 16 cajones numerados para separar y controlar los huevos de cada nido. Lleva el nombre de tu aviario en letras negras en relieve y una silueta de pájaro calada en el respaldo, con dos ranuras para colgarla. Arriba tiene una bandeja abierta para dejar notas o utensilios, y cada cajón sale entero tirando de su asa en media luna.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 60
+      "importe": 60,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -365,8 +365,8 @@
     "descripcionCorta": "Casco de 10 cm de Ayrton Senna, amarillo con las franjas verde y azul.",
     "descripcionLarga": "Réplica de 10 cm del casco de Ayrton Senna en McLaren Honda. Amarillo con sus franjas verde y azul, Marlboro delante, Nacional en los lados y detrás, y la visera negra con Honda.",
     "precio": {
-      "importe": 10,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 10
     },
     "variantes": [],
     "galeria": [
@@ -565,8 +565,8 @@
     "descripcionCorta": "Casco de 10 cm de Max Verstappen, blanco con el león rojo y la visera Oracle.",
     "descripcionLarga": "Réplica de 10 cm del casco de Max Verstappen en Red Bull Racing. Blanco con el león rojo en la parte de arriba, el logo de Red Bull delante y a los lados, Heineken 0.0, Ford Racing y su nombre en el lateral. La visera negra lleva Oracle y Mobil 1, y por detrás tiene cuatro estrellas y verstappen.com.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -700,8 +700,8 @@
     "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
     "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -902,8 +902,8 @@
     "descripcionCorta": "Tu propia copa en 20 o 30 cm; el diseño lo concretamos contigo por WhatsApp.",
     "descripcionLarga": "Una copa diseñada a tu gusto e impresa en 3D. Elige el tamaño, 20 cm o 30 cm, y por WhatsApp concretamos contigo el diseño: la forma, los colores, el texto de la placa y el escudo o el logo. Para torneos entre amigos, peñas, colegios, empresas o como regalo.",
     "precio": {
-      "tipo": "desde",
-      "importe": 25
+      "importe": 25,
+      "tipo": "desde"
     },
     "variantes": [
       {
@@ -1207,8 +1207,8 @@
     "descripcionCorta": "Mono azul Renault con casco Hanjin / Team Spirit.",
     "descripcionLarga": "Figura de bloques de gran tamaño de Fernando Alonso con el mono azul de Renault de 2005 y el casco Hanjin / Team Spirit. La visera se levanta y el casco lleva la bandera de España.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 30
+      "importe": 30,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1316,8 +1316,8 @@
     "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -1392,8 +1392,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "importe": 45,
-      "tipo": "desde"
+      "tipo": "desde",
+      "importe": 45
     },
     "variantes": [],
     "galeria": [
@@ -1520,7 +1520,7 @@
   },
   {
     "slug": "horse-33",
-    "nombre": "Funko Horse #33",
+    "nombre": "Funko Detective #33",
     "categoria": "funkos",
     "etiquetas": [
       "personalizado",
@@ -1529,18 +1529,18 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
       {
         "archivo": "01.jpg",
-        "alt": "Funko Horse #33: con su caja"
+        "alt": "Funko Detective #33: con su caja"
       },
       {
         "archivo": "02.jpg",
-        "alt": "Funko Horse #33: detalle"
+        "alt": "Funko Detective #33: detalle"
       }
     ],
     "materiales": [
@@ -1611,8 +1611,8 @@
     "descripcionCorta": "Tu figura de bloques hecha a partir de tus fotos, en 30 cm o 15 cm.",
     "descripcionLarga": "Hacemos tu figura de bloques a partir de las fotos que nos mandes: la persona, su ropa, el casco o el uniforme, los colores y los logos que quieras, impresa en 3D a todo color. La de 30 cm sale desde 50 € y la de 15 cm desde 30 €. El precio final depende de los detalles y te lo confirmamos antes de empezar.",
     "precio": {
-      "tipo": "desde",
-      "importe": 30
+      "importe": 30,
+      "tipo": "desde"
     },
     "variantes": [
       {
@@ -1842,8 +1842,8 @@
     "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
     "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 35
+      "importe": 35,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1907,8 +1907,8 @@
     "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
     "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 35
+      "importe": 35,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -2109,8 +2109,8 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "importe": 5,
       "tipo": "fijo",
+      "importe": 5,
       "unidad": "ud."
     },
     "variantes": [],
@@ -2162,8 +2162,8 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
       "unidad": "ud.",
+      "tipo": "fijo",
       "importe": 2
     },
     "variantes": [],
@@ -2211,8 +2211,8 @@
     "descripcionCorta": "Diseños a medida para ocasiones especiales. Precio por posavasos.",
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
       "importe": 5,
+      "tipo": "fijo",
       "unidad": "ud."
     },
     "variantes": [],
