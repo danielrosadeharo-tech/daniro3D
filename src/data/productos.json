@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -305,8 +305,8 @@
     "descripcionCorta": "La «orejona» en plata, de 25 cm, con el escudo y la inscripción en relieve.",
     "descripcionLarga": "Réplica de la Copa de Europa, la «orejona», de 25 cm de alto. En plata, con sus asas grandes y la inscripción «Coupe des Clubs Champions Européens» y el logo de la UEFA en relieve. El regalo para el aficionado de tu equipo o el trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -385,8 +385,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -507,8 +507,8 @@
     "descripcionCorta": "Tu propia copa en 20 o 30 cm; el diseño lo concretamos contigo por WhatsApp.",
     "descripcionLarga": "Una copa diseñada a tu gusto e impresa en 3D. Elige el tamaño, 20 cm o 30 cm, y por WhatsApp concretamos contigo el diseño: la forma, los colores, el texto de la placa y el escudo o el logo. Para torneos entre amigos, peñas, colegios, empresas o como regalo.",
     "precio": {
-      "importe": 25,
-      "tipo": "desde"
+      "tipo": "desde",
+      "importe": 25
     },
     "variantes": [
       {
@@ -552,8 +552,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con su gatito.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su gatito. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -765,28 +765,24 @@
     ],
     "galeria": [
       {
-        "archivo": "01.jpg",
+        "archivo": "yqPGiEg6DSEIcZG6Hri4.jpg",
         "alt": "Figura Aston Martin con casco Japón, vista frontal"
       },
       {
-        "archivo": "02.jpg",
-        "alt": "Casco Japón con la visera levantada"
+        "archivo": "l5EgGPcUBhitnkxJ98Zn.jpg",
+        "alt": "Figura con casco Japón y la visera levantada"
       },
       {
-        "archivo": "03.jpg",
-        "alt": "Figura con casco Japón, vista de tres cuartos"
+        "archivo": "3L36U1kZI6aWtk4BKqYU.jpg",
+        "alt": "Figura con casco Japón, vista de lado"
       },
       {
-        "archivo": "04.jpg",
-        "alt": "Detalle lateral del casco Japón"
+        "archivo": "KNvXKayxCCOCefkd7WRY.jpg",
+        "alt": "Casco Japón visto de tres cuartos por detrás"
       },
       {
-        "archivo": "05.jpg",
+        "archivo": "9wXE8EzfCMFzfeGFvzAR.jpg",
         "alt": "Casco Japón visto por detrás"
-      },
-      {
-        "archivo": "06.jpg",
-        "alt": "Vista superior del casco Japón"
       }
     ],
     "materiales": [
@@ -816,8 +812,8 @@
     "descripcionCorta": "Mono azul Renault con casco Hanjin / Team Spirit.",
     "descripcionLarga": "Figura de bloques de gran tamaño de Fernando Alonso con el mono azul de Renault de 2005 y el casco Hanjin / Team Spirit. La visera se levanta y el casco lleva la bandera de España.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 30
+      "importe": 30,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -831,36 +827,24 @@
     ],
     "galeria": [
       {
-        "archivo": "01.jpg",
+        "archivo": "mo0hrtKEruswN2Ec3fRa.jpg",
         "alt": "Figura de Fernando Alonso con mono Renault, vista frontal"
       },
       {
-        "archivo": "02.jpg",
+        "archivo": "CpYJpKKbNF8iamzJvPvv.jpg",
         "alt": "Figura de Fernando Alonso Renault con la visera levantada"
       },
       {
-        "archivo": "03.jpg",
-        "alt": "Figura de Fernando Alonso Renault, vista de tres cuartos"
+        "archivo": "8L9otN7n0y43NzTq2Tfh.jpg",
+        "alt": "Figura de Fernando Alonso Renault de perfil"
       },
       {
-        "archivo": "04.jpg",
-        "alt": "Figura de Fernando Alonso Renault, vista frontal elevada"
+        "archivo": "eJL4Vzxc6v8OdQNWgx2X.jpg",
+        "alt": "Casco con la bandera de España, visto de lado por detrás"
       },
       {
-        "archivo": "05.jpg",
-        "alt": "Detalle del mono Telefónica de la figura Renault"
-      },
-      {
-        "archivo": "06.jpg",
-        "alt": "Detalle del casco Hanjin de Fernando Alonso"
-      },
-      {
-        "archivo": "07.jpg",
-        "alt": "Casco con la bandera de España"
-      },
-      {
-        "archivo": "08.jpg",
-        "alt": "Detalle del casco y el hombro de la figura Renault"
+        "archivo": "4somp74XxTcNLCchVpBo.jpg",
+        "alt": "Casco Mode / Team Spirit visto desde arriba"
       }
     ],
     "materiales": [
@@ -937,8 +921,8 @@
     "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -1104,8 +1088,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -1150,8 +1134,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1360,8 +1344,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1463,8 +1447,8 @@
     "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
     "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 35
+      "importe": 35,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1641,7 +1625,7 @@
       "peliculas"
     ],
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
-    "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. En la tercera foto lo ves junto a una cinta métrica para hacerte una idea del tamaño. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
+    "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
       "tipo": "fijo",
       "importe": 10
@@ -1649,16 +1633,12 @@
     "variantes": [],
     "galeria": [
       {
-        "archivo": "01.jpg",
+        "archivo": "8Hrxkq9huoARqnFy5J8A.jpg",
         "alt": "Trofeo Piston Cup dorado, vista frontal"
       },
       {
-        "archivo": "02.jpg",
+        "archivo": "vBrv3RrmMvMy4hVx3mND.jpg",
         "alt": "Trofeo Piston Cup, vista trasera"
-      },
-      {
-        "archivo": "03.jpg",
-        "alt": "Trofeo Piston Cup junto a una regla"
       }
     ],
     "materiales": [
@@ -1688,9 +1668,9 @@
     "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
+      "unidad": "ud.",
       "importe": 2,
-      "unidad": "ud."
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1734,8 +1714,8 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "importe": 5,
       "unidad": "ud.",
+      "importe": 5,
       "tipo": "fijo"
     },
     "variantes": [],
@@ -1787,9 +1767,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "importe": 2,
+      "tipo": "fijo",
       "unidad": "ud.",
-      "tipo": "fijo"
+      "importe": 2
     },
     "variantes": [],
     "galeria": [
@@ -1836,8 +1816,8 @@
     "descripcionCorta": "Diseños a medida para ocasiones especiales. Precio por posavasos.",
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
       "importe": 5,
+      "unidad": "ud.",
       "tipo": "fijo"
     },
     "variantes": [],

@@ -325,18 +325,17 @@
       }
     },
     "fernando-alonso-aston-martin-casco-japon": {
-      "huella": "1u5tnfp",
+      "huella": "12pvpx3",
       "en": {
         "nombre": "Fernando Alonso · Aston Martin · Japan helmet",
         "descripcionCorta": "Special edition with a white Japanese-themed helmet.",
         "descripcionLarga": "The Aston Martin figure with the special white Japanese-themed helmet. Movable visor and decoration all the way around the helmet. Only made in 30 cm.",
         "alts": [
-          "Aston Martin figure with Japan helmet, front view",
-          "Japan helmet with the visor up",
-          "Figure with Japan helmet, three-quarter view",
-          "Side detail of the Japan helmet",
-          "Japan helmet seen from behind",
-          "Top view of the Japan helmet"
+          "Aston Martin figure with the Japan helmet, front view",
+          "Figure with the Japan helmet and the visor up",
+          "Figure with the Japan helmet, side view",
+          "Japan helmet seen from behind, three-quarter view",
+          "Japan helmet seen from behind"
         ]
       },
       "fr": {
@@ -344,30 +343,26 @@
         "descripcionCorta": "Édition spéciale avec un casque blanc au thème japonais.",
         "descripcionLarga": "La figurine Aston Martin avec le casque blanc spécial au thème japonais. Visière mobile et décoration sur tout le tour du casque. Disponible uniquement en 30 cm.",
         "alts": [
-          "Figurine Aston Martin avec casque Japon, vue de face",
-          "Casque Japon avec la visière relevée",
-          "Figurine avec casque Japon, vue de trois quarts",
-          "Détail latéral du casque Japon",
-          "Casque Japon vu de dos",
-          "Vue de dessus du casque Japon"
+          "Figurine Aston Martin avec le casque Japon, vue de face",
+          "Figurine avec le casque Japon et la visière relevée",
+          "Figurine avec le casque Japon, vue de profil",
+          "Casque Japon vu de trois quarts arrière",
+          "Casque Japon vu de dos"
         ]
       }
     },
     "fernando-alonso-renault-2005": {
-      "huella": "1txwgf0",
+      "huella": "d6iwy2",
       "en": {
         "nombre": "Fernando Alonso · Renault 2005",
         "descripcionCorta": "Blue Renault race suit with Hanjin / Team Spirit helmet.",
         "descripcionLarga": "Large block figure of Fernando Alonso in the blue 2005 Renault race suit and the Hanjin / Team Spirit helmet. The visor lifts up and the helmet carries the Spanish flag.",
         "alts": [
-          "Fernando Alonso figure in Renault suit, front view",
+          "Fernando Alonso figure in the Renault suit, front view",
           "Fernando Alonso Renault figure with the visor up",
-          "Fernando Alonso Renault figure, three-quarter view",
-          "Fernando Alonso Renault figure, raised front view",
-          "Detail of the Telefónica race suit on the Renault figure",
-          "Detail of Fernando Alonso's Hanjin helmet",
-          "Helmet with the Spanish flag",
-          "Detail of the helmet and shoulder of the Renault figure"
+          "Fernando Alonso Renault figure, side view",
+          "Helmet with the Spanish flag, seen from the side and behind",
+          "Mode / Team Spirit helmet seen from above"
         ]
       },
       "fr": {
@@ -377,12 +372,9 @@
         "alts": [
           "Figurine de Fernando Alonso en combinaison Renault, vue de face",
           "Figurine Fernando Alonso Renault avec la visière relevée",
-          "Figurine Fernando Alonso Renault, vue de trois quarts",
-          "Figurine Fernando Alonso Renault, vue de face en plongée",
-          "Détail de la combinaison Telefónica de la figurine Renault",
-          "Détail du casque Hanjin de Fernando Alonso",
-          "Casque avec le drapeau espagnol",
-          "Détail du casque et de l'épaule de la figurine Renault"
+          "Figurine Fernando Alonso Renault de profil",
+          "Casque au drapeau espagnol, vu de côté et de dos",
+          "Casque Mode / Team Spirit vu de dessus"
         ]
       }
     },
@@ -719,25 +711,23 @@
       }
     },
     "piston-cup": {
-      "huella": "id72zf",
+      "huella": "746umo",
       "en": {
         "nombre": "Piston Cup trophy",
         "descripcionCorta": "The Cars trophy in gold, with its wings and black base.",
-        "descripcionLarga": "Replica of the Piston Cup trophy from the film Cars: a gold cup with the name in relief, the wings on the sides, a piston-shaped stem and a black base. The third photo shows it next to a tape measure so you can see the size. A perfect gift for Lightning McQueen fans, young and old.",
+        "descripcionLarga": "Replica of the Piston Cup trophy from the film Cars: a gold cup with the name in relief, the wings on the sides, a piston-shaped stem and a black base. A perfect gift for Lightning McQueen fans, young and old.",
         "alts": [
           "Gold Piston Cup trophy, front view",
-          "Piston Cup trophy, back view",
-          "Piston Cup trophy next to a ruler"
+          "Piston Cup trophy, back view"
         ]
       },
       "fr": {
         "nombre": "Trophée Piston Cup",
         "descripcionCorta": "Le trophée de Cars en doré, avec ses ailes et son socle noir.",
-        "descripcionLarga": "Réplique du trophée Piston Cup du film Cars : une coupe dorée avec le nom en relief, les ailes sur les côtés, un pied en forme de piston et un socle noir. Sur la troisième photo, il est à côté d'un mètre ruban pour se faire une idée de la taille. Le cadeau parfait pour les fans de Flash McQueen, petits et grands.",
+        "descripcionLarga": "Réplique du trophée Piston Cup du film Cars : une coupe dorée avec le nom en relief, les ailes sur les côtés, un pied en forme de piston et un socle noir. Le cadeau parfait pour les fans de Flash McQueen, petits et grands.",
         "alts": [
           "Trophée Piston Cup doré, vue de face",
-          "Trophée Piston Cup, vue de dos",
-          "Trophée Piston Cup à côté d'une règle"
+          "Trophée Piston Cup, vue de dos"
         ]
       }
     },
