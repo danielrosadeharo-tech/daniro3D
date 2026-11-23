@@ -1,5 +1,5 @@
 ---
-// Carrusel automático de encargos ya hechos (todas las categorías). Cada tarjeta lleva a la ficha del
+// Carrusel automático de encargos ya hechos (todas las categorías), un paso cada 2 s. Cada tarjeta lleva a la ficha del
 // personalizado de su categoría, para pedir uno así. Pasa solo cada pocos segundos, se para con el ratón,
 // el foco o el dedo encima, y tiene botones de anterior, pausa y siguiente.
 import { Picture } from 'astro:assets';
@@ -81,7 +81,7 @@ const cta = t('Pide el tuyo', 'Order yours', 'Commandez le vôtre');
 
 <script>
   const reducido = matchMedia('(prefers-reduced-motion: reduce)');
-  const INTERVALO = 3500;
+  const INTERVALO = 2000;
 
   document.querySelectorAll<HTMLElement>('[data-enc]').forEach((track) => {
     const sec = track.closest('section')!;
