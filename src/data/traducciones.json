@@ -1132,22 +1132,24 @@
       }
     },
     "casco-fernando-alonso-aston-martin": {
-      "huella": "1pcylu4",
+      "huella": "ebp8di",
       "en": {
         "nombre": "Fernando Alonso helmet · Aston Martin",
         "descripcionCorta": "Fernando Alonso's 10 cm helmet, blue and gold with Citi and Cognizant.",
-        "descripcionLarga": "10 cm replica of Fernando Alonso's Aston Martin helmet. Blue and gold with Citi Private Bank on top, Cognizant, the number 14 and the red and gold stripes, and the black visor with Aston Martin and Peroni.",
+        "descripcionLarga": "10 cm replica of Fernando Alonso's Aston Martin helmet. Blue and gold with Citi Private Bank on top, Cognizant, the number 14, and the red and gold stripes, plus the black visor with Aston Martin and Peroni.",
         "alts": [
           "Front view of Fernando Alonso's Aston Martin helmet",
+          "Fernando Alonso's Aston Martin helmet seen from above, front view",
           "Fernando Alonso's Aston Martin helmet seen from above, with Citi and the number 14"
         ]
       },
       "fr": {
         "nombre": "Casque Fernando Alonso · Aston Martin",
         "descripcionCorta": "Casque de 10 cm de Fernando Alonso, bleu et doré avec Citi et Cognizant.",
-        "descripcionLarga": "Réplique de 10 cm du casque de Fernando Alonso chez Aston Martin. Bleu et or avec Citi Private Bank en haut, Cognizant, le 14 et les bandes rouges et dorées, et la visière noire avec Aston Martin et Peroni.",
+        "descripcionLarga": "Réplique de 10 cm du casque de Fernando Alonso chez Aston Martin. Bleu et doré avec Citi Private Bank en haut, Cognizant, le 14 et les bandes rouges et dorées, et la visière noire avec Aston Martin et Peroni.",
         "alts": [
           "Casque de Fernando Alonso Aston Martin, vue de face",
+          "Casque de Fernando Alonso Aston Martin vu d’en haut de face",
           "Casque de Fernando Alonso Aston Martin vu d’en haut, avec Citi et le 14"
         ]
       }

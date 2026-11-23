@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -173,8 +173,8 @@
     "descripcionLarga": "Bola de Navidad con la foto de un conejo en relieve y su nombre debajo. Por los otros lados lleva un árbol con «Feliz Navidad» y un copo de nieve. Con la luz encendida se ven todos los detalles; apagada queda blanca.",
     "precio": {
       "tipo": "fijo",
-      "importe": 5,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -228,9 +228,9 @@
     "descripcionCorta": "Tu foto en relieve que se ilumina por dentro. 5 € la unidad.",
     "descripcionLarga": "Bola de Navidad impresa en 3D con la foto que nos mandes en relieve: apagada se ve blanca, con el relieve de la foto, y al encender la luz de dentro la imagen aparece con todos sus detalles. Alrededor lleva estrellas, lunares y copos de nieve, en el otro lado un árbol con «Feliz Navidad», y debajo de la foto puede ir un nombre. Tiene anilla para colgarla del árbol. Un regalo para estas fiestas con tu mascota, tu familia o quien tú quieras.",
     "precio": {
-      "unidad": "ud.",
+      "tipo": "fijo",
       "importe": 5,
-      "tipo": "fijo"
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -421,8 +421,12 @@
     "variantes": [],
     "galeria": [
       {
-        "archivo": "13NufrDFF3Olpc7V4Xj5.jpg",
+        "archivo": "s4Jah7Wwrse1FWACvxuf.jpg",
         "alt": "Casco de Fernando Alonso Aston Martin de frente"
+      },
+      {
+        "archivo": "13NufrDFF3Olpc7V4Xj5.jpg",
+        "alt": "Casco de Fernando Alonso Aston Martin visto desde arriba por delante"
       },
       {
         "archivo": "0c3HCAS5dZpkULCcnAFg.jpg",
@@ -457,8 +461,8 @@
     "descripcionCorta": "Casco de 10 cm de Fernando Alonso con el diseño especial de Japón.",
     "descripcionLarga": "Réplica de 10 cm del casco especial de Fernando Alonso para Japón con Aston Martin. Blanco con pagodas, un torii y un samurái en negro, el sol rojo con el 14 a cada lado, Aramco, Cognizant y Citi. La visera lleva Aston Martin y Peroni 0.0, y por detrás su nombre y Bell.",
     "precio": {
-      "importe": 10,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 10
     },
     "variantes": [],
     "galeria": [
@@ -615,8 +619,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -816,8 +820,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
     "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
     "precio": {
-      "importe": 16,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 16
     },
     "variantes": [],
     "galeria": [
@@ -857,8 +861,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1029,8 +1033,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -1145,8 +1149,8 @@
     "descripcionCorta": "Edición especial con casco blanco de temática japonesa.",
     "descripcionLarga": "La figura de Aston Martin con el casco blanco especial de temática japonesa. Visera móvil y decoración del casco en todo su contorno. Solo se hace en 30 cm.",
     "precio": {
-      "importe": 40,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 40
     },
     "variantes": [
       {
@@ -1312,8 +1316,8 @@
     "descripcionCorta": "Caja + 1 normal. Piloto con uniforme, gorra de galones y maletín, en caja de aviación edición limitada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: un piloto con su uniforme azul marino, la gorra con galones dorados y el emblema, y el maletín en la mano. Caja a medida de temática «Aviación», con el número 82 y el texto «Edición limitada». Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1350,8 +1354,8 @@
     "descripcionCorta": "Caja + 2 normales. Dos figuras trajeadas en una caja «Dessert Bar».",
     "descripcionLarga": "Ejemplo de Funko personalizado: dos figuras con traje, una con chaqueta de cuadros rojos y corbata azul y otra con traje verde y corbata rosa, en una caja a medida «Dessert Bar» con el número 11. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -1388,8 +1392,8 @@
     "descripcionCorta": "Tu Funko con caja a medida. Elige cuántas figuras van dentro.",
     "descripcionLarga": "Un Funko hecho a partir de tus fotos, con su caja personalizada. El precio base incluye la caja y un Funko de tamaño normal; puedes añadir más figuras normales o pequeñas (mascotas, niños, objetos). La caja crece según las figuras que lleve.",
     "precio": {
-      "tipo": "desde",
-      "importe": 45
+      "importe": 45,
+      "tipo": "desde"
     },
     "variantes": [],
     "galeria": [
@@ -1479,8 +1483,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -1903,8 +1907,8 @@
     "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
     "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -2018,8 +2022,8 @@
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
     "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2105,9 +2109,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
       "importe": 5,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -2158,9 +2162,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "importe": 2,
+      "tipo": "fijo",
       "unidad": "ud.",
-      "tipo": "fijo"
+      "importe": 2
     },
     "variantes": [],
     "galeria": [
@@ -2208,8 +2212,8 @@
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 5
+      "importe": 5,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
