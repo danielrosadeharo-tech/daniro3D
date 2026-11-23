@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProductCard from '../components/ProductCard.astro';
+import CarruselEncargos from '../components/CarruselEncargos.astro';
 import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import { foto, fotoAmbiente, enlaceWhatsApp, sitio, catalogoEn } from '../lib/catalogo';
@@ -19,6 +20,17 @@ const posPers = (slug: string) => (ordenPers.includes(slug) ? ordenPers.indexOf(
 const personalizados = C.productos
   .filter((p) => p.personalizacion.disponible && !fueraDePortada.includes(p.slug))
   .toSorted((a, b) => posPers(a.slug) - posPers(b.slug) || b.fechaAlta.localeCompare(a.fechaAlta));
+// Carrusel de encargos hechos: todos, alternando categorías para que no salgan solo Funkos seguidos.
+// Cada uno lleva a la ficha del personalizado de su categoría (el Funko, a /funkos).
+const porCategoria = new Map<string, typeof C.ejemplos>();
+for (const e of C.ejemplos) porCategoria.set(e.categoria, [...(porCategoria.get(e.categoria) ?? []), e]);
+const grupos = [...porCategoria.values()];
+const encargos = Array.from({ length: Math.max(0, ...grupos.map((g) => g.length)) }, (_, i) => grupos.map((g) => g[i]).filter(Boolean)).flat()
+  .map((e) => {
+    const destino = personalizados.find((p) => p.categoria === e.categoria) ?? C.productos.find((p) => p.categoria === e.categoria && p.personalizacion.disponible);
+    const cat = C.categoria(e.categoria);
+    return { nombre: e.nombre, tipo: cat?.nombre ?? '', src: foto(e).src, href: destino ? C.urlProducto(destino) : cat ? C.urlCategoria(cat) : C.ruta('/encargos') };
+  });
 const destacados = C.productos
   .filter((p) => p.slug !== 'estanteria-stranger-things') // ya sale en el cierre
   .filter((p) => !p.personalizacion.disponible) // ya salen en la cuadrícula de personalizados
@@ -65,6 +77,12 @@ const orgLd = {
       </ul>
     </div>
   </section>
+
+  <CarruselEncargos
+    items={encargos}
+    titulo={t('Encargos que ya hemos hecho', "Orders we've already made", 'Commandes déjà réalisées')}
+    texto={t('Pincha en uno y pide el tuyo, personalizado a tu gusto.', 'Tap one and order your own, personalised the way you like.', 'Touchez-en une et commandez la vôtre, personnalisée à votre goût.')}
+  />
 
   <section class="section cats" aria-labelledby="cats-h">
     <div class="wrap">

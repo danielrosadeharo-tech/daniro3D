@@ -1558,6 +1558,10 @@
     "10 cm": {
       "en": "10 cm",
       "fr": "10 cm"
+    },
+    "16 × 16 cm de base y 20 cm de alto": {
+      "en": "16 × 16 cm base, 20 cm tall",
+      "fr": "16 × 16 cm de base et 20 cm de hauteur"
     }
   }
 }
