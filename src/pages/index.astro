@@ -9,6 +9,7 @@ import { foto, fotoAmbiente, enlaceWhatsApp, sitio, catalogoEn } from '../lib/ca
 import { idiomaDe } from '../i18n';
 import { FUNKO, svgCaja } from '../lib/funko';
 import { svgLegos } from '../lib/lego';
+import { svgCopas } from '../lib/copa';
 
 const C = catalogoEn(idiomaDe(Astro.url));
 const t = C.t;
@@ -93,20 +94,20 @@ const orgLd = {
       </div>
       <ul class="cats__grid">
         {C.categorias.map((c, i) => {
-          // Funkos y Legos enseñan el dibujo de su personalizado (la caja con un Funko; las dos tallas de Lego), no un encargo real
+          // Funkos, Legos y Copas enseñan el dibujo de su personalizado (la caja con un Funko; las dos tallas), no un encargo real
           const esFunkos = c.slug === 'funkos';
-          const esLegos = c.slug === 'legos';
+          const panel = c.slug === 'legos' ? svgLegos('ambas', '') : c.slug === 'copas' ? svgCopas('ambas', '') : null;
           const pf = C.producto(c.portada);
           const f = pf ? foto(pf) : null;
           const desde = c.enlace ? null : C.desdeCategoria(c.slug);
           const n = c.enlace ? null : C.deCategoria(c.slug).length;
           const desdeTxt = desde != null ? ` · ${t('desde', 'from', 'dès')} ${C.euros(desde)}` : '';
           return (
-            <li class:list={['cat-tile', { 'cat-tile--grande': i < 3, 'cat-tile--dibujo': esFunkos || esLegos }]}>
+            <li class:list={['cat-tile', { 'cat-tile--grande': i < 3, 'cat-tile--dibujo': esFunkos || panel }]}>
               {esFunkos
                 ? <div class="cat-tile__caja" aria-hidden="true" set:html={svgCaja(1, 0, { l: C.l })} />
-                : esLegos
-                ? <div class="cat-tile__caja" aria-hidden="true"><div class="cat-tile__panel" set:html={svgLegos('ambas', '')} /></div>
+                : panel
+                ? <div class="cat-tile__caja" aria-hidden="true"><div class="cat-tile__panel" set:html={panel} /></div>
                 : f &&<Picture src={f.src} alt="" formats={['avif', 'webp']} widths={[320, 480, 720]} sizes={i < 2 ? '(min-width: 768px) 46vw, 92vw' : '(min-width: 768px) 30vw, 46vw'} loading="lazy" />}
               <div class="cat-tile__txt">
                 <h3><a href={C.urlCategoria(c)}>{c.nombre}</a></h3>
@@ -229,6 +230,7 @@ const orgLd = {
   .cat-tile__panel :global(.lg-hueco) { fill: var(--accent); }
   .cat-tile__panel :global(.lg-boca) { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; }
   .cat-tile__panel :global(.lg-torso) { stroke: #f7f3ec; stroke-width: 2; stroke-linejoin: round; }
+  .cat-tile__panel :global(.lg-asa) { fill: none; stroke: #f7f3ec; stroke-width: 4.5; stroke-linecap: round; }
   .cat-tile__panel :global(.lg-suelo) { fill: rgb(255 255 255 / 0.1); }
   .cat-tile__panel :global(.lg-regla path) { fill: none; stroke: #f7f3ec; stroke-width: 3; stroke-linecap: round; }
   .cat-tile__panel :global(.lg-regla text) { fill: #f7f3ec; stroke: none; font-family: var(--font-text); font-size: 34px; font-weight: 600; }
