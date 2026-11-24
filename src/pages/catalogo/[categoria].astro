@@ -1,5 +1,4 @@
 ---
-import { Picture } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Catalogo from '../../components/Catalogo.astro';
 import Migas from '../../components/Migas.astro';
@@ -15,9 +14,8 @@ const t = C.t;
 const c = C.categoria((Astro.props as { c: Categoria }).c.slug)!;
 const ps = C.deCategoria(c.slug);
 const portada = C.producto(c.portada) ?? ps[0];
+// La cabecera va sin foto (solo el texto); la portada se usa como imagen al compartir el enlace
 const f = foto(portada);
-// «Más piezas» va sin foto en la cabecera (solo el texto); el resto enseña la de su portada
-const conFoto = c.slug !== 'otros';
 const desde = C.desdeCategoria(c.slug);
 const migas = [{ nombre: t('Inicio', 'Home', 'Accueil'), url: C.ruta('/') }, { nombre: t('Catálogo', 'Catalogue', 'Catalogue'), url: C.ruta('/catalogo') }, { nombre: c.nombre, url: C.urlCategoria(c) }];
 const desdeTxt = t('desde', 'from', 'dès');
@@ -30,18 +28,13 @@ const hechos = C.ejemplos.filter((e) => e.categoria === c.slug);
   activo={`/catalogo/${c.slug}`}
   jsonLd={[migasLd(migas), listaLd(c.titulo, ps, C.urlProducto)]}
 >
-  <header class:list={['wrap cat-head', { 'cat-head--solo': !conFoto }]}>
+  <header class="wrap cat-head">
     <div class="cat-head__text" data-enter>
       <Migas items={migas} />
       <h1>{c.titulo}</h1>
       <p class="lead">{c.descripcion}</p>
       <p class="cat-head__facts"><span class="num">{ps.length}</span> {ps.length === 1 ? t('pieza', 'item', 'pièce') : t('piezas', 'items', 'pièces')}{desde != null && <> · {desdeTxt} <span class="num">{C.euros(desde)}</span></>}</p>
     </div>
-    {conFoto && (
-      <div class="cat-head__media">
-        <Picture src={f.src} alt={f.alt} formats={['avif', 'webp']} widths={[360, 540, 750]} sizes="(min-width: 768px) 34vw, 100vw" loading="eager" fetchpriority="high" />
-      </div>
-    )}
   </header>
   <div class="wrap" style="padding-bottom: var(--s-9)">
     <Catalogo productos={ps} categoriaFija={c.slug} />
@@ -53,11 +46,4 @@ const hechos = C.ejemplos.filter((e) => e.categoria === c.slug);
   .cat-head__text { display: grid; gap: var(--s-4); }
   .cat-head h1 { font-size: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem); max-width: 14ch; }
   .cat-head__facts { font-weight: 560; }
-  .cat-head__media { border-radius: var(--r-lg); overflow: hidden; background: var(--surface); aspect-ratio: 16 / 10; }
-  .cat-head__media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
-  @media (min-width: 768px) {
-    .cat-head { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s-7); }
-    .cat-head__media { aspect-ratio: 4 / 5; max-height: 460px; justify-self: end; width: 100%; }
-    .cat-head--solo { grid-template-columns: minmax(0, 1fr); }
-  }
 </style>
