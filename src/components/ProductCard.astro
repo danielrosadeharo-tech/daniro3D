@@ -103,14 +103,22 @@ const etiqueta = p.personalizacion.disponible
   import { svgCaja, composiciones } from '../lib/funko';
   import { idiomaDocumento } from '../i18n';
 
-  // Con el cursor (o el foco del teclado) encima, el dibujo va pasando por las opciones; al salir vuelve al principio
+  // Con el cursor (o el foco del teclado) encima, el dibujo va pasando por las opciones; al salir vuelve al principio.
+  // En móvil no hay cursor: va solo mientras la tarjeta se ve en pantalla.
   const PASO = { funko: 750, lego: 1000, copa: 1000, bola: 900 } as const;
   const opcionesFunko = composiciones(); // 1+0, 1+1, 1+2, 1+3, 2+0, 2+1
   const l = idiomaDocumento();
+  const sinCursor = matchMedia('(hover: none)');
+  const reducido = matchMedia('(prefers-reduced-motion: reduce)');
+  const enVista = new WeakMap<Element, (visible: boolean) => void>();
+  // Arranca cuando la tarjeta se ve casi entera y para al salir de pantalla
+  const visibles = new IntersectionObserver((entradas) => {
+    for (const e of entradas) enVista.get(e.target)?.(e.isIntersecting);
+  }, { threshold: 0.6 });
 
   document.querySelectorAll<HTMLElement>('[data-anima]').forEach((card) => {
     const tipo = card.dataset.anima as keyof typeof PASO;
-    let reloj: number | undefined, i = 0;
+    let reloj: number | undefined, i = 0, visible = false;
     const caja = card.querySelector<HTMLElement>('[data-caja]');
     const svg = card.querySelector<SVGElement>('.card__panel svg');
     const bola = tipo === 'bola';
@@ -128,19 +136,29 @@ const etiqueta = p.personalizacion.disponible
       }
     };
     const empezar = () => {
-      if (reloj) return;
+      if (reloj || document.hidden) return;
       i = 1; pintar(i);
       reloj = window.setInterval(() => pintar(++i), PASO[tipo]);
     };
     const parar = () => {
+      if (!reloj) return;
       window.clearInterval(reloj); reloj = undefined;
       if (tipo === 'funko') { prev = { n: 1, s: 0 }; pintar(0); }
       else if (svg && bola) svg.dataset.luz = 'on';
       else if (svg) svg.dataset.sel = 'ambas';
     };
+    // En móvil manda la visibilidad: tocar la tarjeta (foco) no la para mientras siga en pantalla
+    const pararSiNoSeVe = () => { if (!visible) parar(); };
+
     card.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') empezar(); });
-    card.addEventListener('pointerleave', parar);
+    card.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') pararSiNoSeVe(); });
     card.addEventListener('focusin', empezar);
-    card.addEventListener('focusout', parar);
+    card.addEventListener('focusout', pararSiNoSeVe);
+    if (sinCursor.matches && !reducido.matches) {
+      enVista.set(card, (v) => { visible = v; if (v) empezar(); else parar(); });
+      visibles.observe(card);
+      // Al cambiar de pestaña se para; al volver sigue si la tarjeta está a la vista
+      document.addEventListener('visibilitychange', () => { if (document.hidden) parar(); else if (visible) empezar(); });
+    }
   });
 </script>
