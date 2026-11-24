@@ -109,6 +109,8 @@ const etiqueta = p.personalizacion.disponible
   const opcionesFunko = composiciones(); // 1+0, 1+1, 1+2, 1+3, 2+0, 2+1
   const l = idiomaDocumento();
   const sinCursor = matchMedia('(hover: none)');
+  // En móvil van solas y se ven varias a la vez: el doble de lentas que con el ratón
+  const LENTO = sinCursor.matches ? 2 : 1;
   const reducido = matchMedia('(prefers-reduced-motion: reduce)');
   const enVista = new WeakMap<Element, (visible: boolean) => void>();
   // Arranca cuando la tarjeta se ve casi entera y para al salir de pantalla
@@ -138,7 +140,7 @@ const etiqueta = p.personalizacion.disponible
     const empezar = () => {
       if (reloj || document.hidden) return;
       i = 1; pintar(i);
-      reloj = window.setInterval(() => pintar(++i), PASO[tipo]);
+      reloj = window.setInterval(() => pintar(++i), PASO[tipo] * LENTO);
     };
     const parar = () => {
       if (!reloj) return;
