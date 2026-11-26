@@ -1232,6 +1232,48 @@
           "Partie supérieure du casque de Max Verstappen"
         ]
       }
+    },
+    "copa-intercontinental": {
+      "huella": "q0o22v",
+      "en": {
+        "nombre": "Intercontinental Cup",
+        "descripcionCorta": "20 cm replica of the Intercontinental Cup, in gold.",
+        "descripcionLarga": "Replica of the Intercontinental Cup, 20 cm tall, in gold. The ball with the embossed world map rests on rods that curve down to a conical base with the inscription FIFA Club World Cup. For a fan's collection or as a trophy for a tournament among friends.",
+        "alts": [
+          "Intercontinental Cup from the front, with the inscription on the base",
+          "Intercontinental Cup from behind"
+        ]
+      },
+      "fr": {
+        "nombre": "Coupe Intercontinentale",
+        "descripcionCorta": "Réplique de 20 cm de la Coupe Intercontinentale, en doré.",
+        "descripcionLarga": "Réplique de la Coupe Intercontinentale de 20 cm de haut, en doré. Le ballon avec la carte du monde en relief repose sur des tiges qui descendent en se courbant jusqu’à un socle conique portant l’inscription FIFA Club World Cup. Pour la collection d’un supporter ou comme trophée d’un tournoi entre amis.",
+        "alts": [
+          "Coupe Intercontinentale de face, avec l’inscription sur le socle",
+          "Coupe Intercontinentale de dos"
+        ]
+      }
+    },
+    "coupe-des-coupes": {
+      "huella": "h875wf",
+      "en": {
+        "nombre": "Coupe des Coupes",
+        "descripcionCorta": "20 cm replica of the Coupe des Coupes (European Cup Winners' Cup), in silver with a brown base.",
+        "descripcionLarga": "Replica of the Coupe des Coupes, the trophy of the former European Cup Winners' Cup, 20 cm tall. The cup is silver, with a ribbed rim and two curved handles, and sits on a brown base with a black nameplate. For a fan's collection or as a trophy for a tournament among friends.",
+        "alts": [
+          "Coupe des Coupes from the front, with the nameplate",
+          "Coupe des Coupes from behind"
+        ]
+      },
+      "fr": {
+        "nombre": "Coupe des Coupes",
+        "descripcionCorta": "Réplique de 20 cm de la Coupe des Coupes (Coupe des vainqueurs de coupe), argentée avec socle marron.",
+        "descripcionLarga": "Réplique de la Coupe des Coupes, le trophée de l’ancienne Coupe d’Europe des vainqueurs de coupe, de 20 cm de haut. La coupe est argentée, avec un bord cannelé et deux anses incurvées, et repose sur un socle marron avec une plaque noire portant le nom. Pour la collection d’un passionné ou comme trophée d’un tournoi entre amis.",
+        "alts": [
+          "Coupe des Coupes de face, avec la plaque du nom",
+          "Coupe des Coupes de dos"
+        ]
+      }
     }
   },
   "categorias": {
