@@ -1274,6 +1274,27 @@
           "Coupe des Coupes de dos"
         ]
       }
+    },
+    "coupe-de-france": {
+      "huella": "iqh3sq",
+      "en": {
+        "nombre": "Coupe de France",
+        "descripcionCorta": "20 cm replica of the Coupe de France, in silver.",
+        "descripcionLarga": "Replica of the Coupe de France, the trophy of the French Cup, 20 cm tall, in silver. It has a lid with an angel figurine on top, a band of reliefs, an engraved dedication on the front, and two long handles. For a fan's collection or as a trophy for a tournament among friends.",
+        "alts": [
+          "Coupe de France from the front, with the engraved dedication",
+          "Coupe de France from behind"
+        ]
+      },
+      "fr": {
+        "nombre": "Coupe de France",
+        "descripcionCorta": "Réplique de 20 cm de la Coupe de France, argentée.",
+        "descripcionLarga": "Réplique de 20 cm de haut du trophée de la Coupe de France, argentée. Elle a un couvercle surmonté d’une figurine d’ange, une frise en relief, la dédicace gravée sur le devant et deux longues anses. Pour la collection d’un passionné ou comme trophée d’un tournoi entre amis.",
+        "alts": [
+          "Coupe de France de face, avec la dédicace gravée",
+          "Coupe de France de dos"
+        ]
+      }
     }
   },
   "categorias": {
