@@ -117,6 +117,13 @@ const año = new Date().getFullYear();
   <link rel="sitemap" href="/sitemap-index.xml" />
   {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
   <slot name="head" />
+  {import.meta.env.PROD && (
+    <>
+      <!-- Estadísticas de visitas de Vercel (Web Analytics): sin cookies; se ven en el panel de Vercel → Analytics -->
+      <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+      <script is:inline defer src="/_vercel/insights/script.js"></script>
+    </>
+  )}
 </head>
 <body>
   <a class="skip-link" href="#contenido">{t('Saltar al contenido', 'Skip to content', 'Aller au contenu')}</a>
