@@ -58,6 +58,7 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
         <button type="button" role="tab" aria-selected="true" data-tab="pedidos">Pedidos <span class="n" data-n-pedidos></span></button>
         <button type="button" role="tab" aria-selected="false" data-tab="encargos" tabindex="-1">Encargos <span class="n" data-n-encargos></span></button>
         <button type="button" role="tab" aria-selected="false" data-tab="productos" tabindex="-1">Productos <span class="n" data-n-productos></span></button>
+        <button type="button" role="tab" aria-selected="false" data-tab="estadisticas" tabindex="-1">Estadísticas</button>
         <button type="button" role="tab" aria-selected="false" data-tab="publicar" tabindex="-1">Publicar</button>
       </div>
 
@@ -100,6 +101,42 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
         </div>
         <p class="nota">Los cambios se guardan al momento, pero la web pública se actualiza cuando pulsas <strong>Publicar</strong>.</p>
         <ul class="productos" data-lista-productos></ul>
+      </section>
+
+      <section role="tabpanel" data-panel="estadisticas" aria-label="Estadísticas" hidden data-est>
+        <div class="barra">
+          <label class="field-inline">Periodo
+            <select class="select" data-est-dias>
+              <option value="1">Hoy</option>
+              <option value="7" selected>Últimos 7 días</option>
+              <option value="30">Últimos 30 días</option>
+              <option value="90">Últimos 90 días</option>
+            </select>
+          </label>
+          <span class="est-online" data-est-online hidden><span class="est-punto" aria-hidden="true"></span><span data-est-online-txt></span></span>
+          <span class="meta" data-est-meta>Se actualiza sola cada 30 segundos.</span>
+        </div>
+        <p class="aviso" data-est-error hidden></p>
+        <div class="est-kpis">
+          <div class="est-kpi"><span class="est-kpi__label">Visitantes</span><span class="est-kpi__num" data-est-visitantes>–</span></div>
+          <div class="est-kpi"><span class="est-kpi__label">Páginas vistas</span><span class="est-kpi__num" data-est-vistas>–</span></div>
+          <div class="est-kpi"><span class="est-kpi__label">Páginas por visitante</span><span class="est-kpi__num" data-est-ppv>–</span></div>
+          <div class="est-kpi"><span class="est-kpi__label">Rebote</span><span class="est-kpi__num" data-est-rebote>–</span><span class="est-kpi__nota">Vieron solo una página</span></div>
+        </div>
+        <figure class="tarjeta est-grafica">
+          <figcaption>Visitantes por día</figcaption>
+          <div class="est-grafica__plot" data-est-grafica></div>
+          <div class="est-tip" data-est-tip hidden></div>
+        </figure>
+        <div class="est-listas">
+          <section class="tarjeta est-lista"><h3>Páginas más vistas</h3><p class="est-lista__col">Vistas</p><ol data-est-l="paginas"></ol></section>
+          <section class="tarjeta est-lista"><h3>De dónde llegan</h3><p class="est-lista__col">Visitantes</p><ol data-est-l="origenes"></ol></section>
+          <section class="tarjeta est-lista"><h3>Países</h3><p class="est-lista__col">Visitantes</p><ol data-est-l="paises"></ol></section>
+          <section class="tarjeta est-lista"><h3>Dispositivos</h3><p class="est-lista__col">Visitantes</p><ol data-est-l="dispositivos"></ol></section>
+          <section class="tarjeta est-lista"><h3>Navegadores</h3><p class="est-lista__col">Visitantes</p><ol data-est-l="navegadores"></ol></section>
+          <section class="tarjeta est-lista"><h3>Sistemas</h3><p class="est-lista__col">Visitantes</p><ol data-est-l="sistemas"></ol></section>
+        </div>
+        <p class="nota">Sin cookies: cada persona se cuenta una vez al día con una huella anónima que cambia cada día; no se guarda su IP. No cuentan el panel ni los dispositivos donde has entrado al panel.</p>
       </section>
 
       <section role="tabpanel" data-panel="publicar" aria-label="Publicar" hidden>
@@ -252,6 +289,37 @@ const cats = categorias.filter((c) => c.slug !== 'encargos').map((c) => ({ slug:
   .fotos__lista :global(.acciones) { display: flex; gap: 2px; }
   .fotos__lista :global(.acciones button) { width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--card); }
   .subir { justify-self: start; cursor: pointer; }
+
+  /* ---- Estadísticas ---- */
+  .est-online { display: inline-flex; align-items: center; gap: 8px; font-weight: 560; font-size: 0.9375rem; }
+  .est-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .est-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin-bottom: var(--s-4); }
+  @media (min-width: 768px) { .est-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .est-kpi { display: grid; gap: 2px; align-content: start; padding: var(--s-4); border-radius: var(--r-md); background: var(--card); }
+  .est-kpi__label { color: var(--muted); font-size: var(--t-small); font-weight: 560; }
+  .est-kpi__num { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .est-kpi__nota { color: var(--muted); font-size: 0.75rem; }
+  .tarjeta.est-grafica { position: relative; max-width: none; margin: 0 0 var(--s-4); }
+  .est-grafica figcaption { font-weight: 600; margin-bottom: var(--s-3); }
+  .est-grafica__plot :global(svg) { display: block; width: 100%; height: 220px; overflow: visible; }
+  .est-grafica__plot :global(.eje) { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .est-grafica__plot :global(.reja) { stroke: var(--line); stroke-width: 1; }
+  .est-grafica__plot :global(.barra-d) { fill: var(--accent); }
+  .est-grafica__plot :global(.zona) { fill: transparent; cursor: default; }
+  .est-grafica__plot :global(.zona:hover + .barra-d), .est-grafica__plot :global(.barra-d.activa) { fill: color-mix(in srgb, var(--accent) 80%, var(--ink)); }
+  .est-tip { position: absolute; pointer-events: none; padding: 6px 10px; border-radius: var(--r-sm); background: var(--ink); color: var(--bg); font-size: 0.8125rem; line-height: 1.35; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); }
+  .est-listas { display: grid; gap: var(--s-3); margin-bottom: var(--s-4); }
+  @media (min-width: 768px) { .est-listas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .est-listas { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .tarjeta.est-lista { max-width: none; display: grid; grid-template-columns: 1fr auto; align-content: start; gap: var(--s-2) var(--s-3); }
+  .est-lista h3 { font-size: 1rem; }
+  .est-lista__col { color: var(--muted); font-size: 0.75rem; font-weight: 560; text-align: right; align-self: end; }
+  .est-lista ol { grid-column: 1 / -1; list-style: none; padding: 0; display: grid; gap: 4px; }
+  .est-lista :global(li) { position: relative; display: flex; justify-content: space-between; gap: var(--s-3); padding: 5px 8px; border-radius: var(--r-sm); font-size: 0.9375rem; isolation: isolate; }
+  .est-lista :global(li .fondo) { position: absolute; inset: 0 auto 0 0; border-radius: var(--r-sm); background: var(--accent-soft); z-index: -1; }
+  .est-lista :global(li .nombre) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .est-lista :global(li .valor) { font-variant-numeric: tabular-nums; font-weight: 560; }
+  .est-lista :global(.vacio) { color: var(--muted); font-size: var(--t-small); }
 </style>
 
 <script>

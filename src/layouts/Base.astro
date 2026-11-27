@@ -122,6 +122,19 @@ const año = new Date().getFullYear();
       <!-- Estadísticas de visitas de Vercel (Web Analytics): sin cookies; se ven en el panel de Vercel → Analytics -->
       <script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
       <script is:inline defer src="/_vercel/insights/script.js"></script>
+      <!-- Estadísticas propias para el panel (/api/estadisticas): sin cookies. No cuentan el panel ni los
+           dispositivos donde el administrador ha entrado al panel. -->
+      <script is:inline>
+        (function () {
+          try {
+            var p = location.pathname;
+            if (/^\/(admin|api)(\/|$|\.)/.test(p) || navigator.webdriver) return;
+            try { if (localStorage.getItem('daniro-no-contar')) return; } catch (e) {}
+            var d = JSON.stringify({ p: p, r: document.referrer });
+            if (!(navigator.sendBeacon && navigator.sendBeacon('/api/estadisticas', d))) fetch('/api/estadisticas', { method: 'POST', body: d, keepalive: true }).catch(function () {});
+          } catch (e) {}
+        })();
+      </script>
     </>
   )}
 </head>

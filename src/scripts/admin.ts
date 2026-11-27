@@ -59,6 +59,8 @@ function iniciar() {
     try { admin = (await getDoc(doc(db(), 'admins', u.uid))).exists(); } catch { admin = false; }
     if (!admin) { $('[data-uid]').textContent = u.uid; mostrar('[data-no-admin]', true); return; }
     mostrar('[data-app]', true);
+    // Las visitas del administrador a la web no cuentan en las estadísticas (en este dispositivo)
+    try { localStorage.setItem('daniro-no-contar', '1'); } catch {}
     pintarAvisos();
     escucharPedidos();
     cargarTodo();
@@ -69,7 +71,9 @@ function iniciar() {
   tabs.forEach((t) => t.addEventListener('click', () => {
     tabs.forEach((x) => { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
     root.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== t.dataset.tab));
+    if (t.dataset.tab === 'estadisticas') cargarEstadisticas();
   }));
+  conectarEstadisticas();
   root.querySelectorAll('[data-recargar]').forEach((b) => b.addEventListener('click', cargarTodo));
   $('[data-filtro-pedidos]').addEventListener('change', pintarPedidos);
   $('[data-tipo-pedidos]').addEventListener('change', pintarPedidos);
@@ -489,4 +493,118 @@ function conectarPublicar() {
       $('[data-cambios-txt]').textContent = 'Publicación lanzada. En 1–3 minutos los cambios estarán en la web.';
     } catch (err) { estado.textContent = mensajeError(err); }
   }));
+}
+
+// ---- Estadísticas de visitas (las guarda y resume la función /api/estadisticas) ----
+type Lista = [string, number][];
+type Est = { online: number; dias: { fecha: string; vistas: number; visitantes: number; repiten: number }[] } & Record<'paginas' | 'origenes' | 'paises' | 'dispositivos' | 'navegadores' | 'sistemas', Lista>;
+const ESTADISTICAS_CADA = 30000;
+const num = new Intl.NumberFormat('es-ES');
+const nombrePais = (() => { try { const d = new Intl.DisplayNames(['es'], { type: 'region' }); return (c: string) => (c === '??' ? 'Desconocido' : d.of(c) ?? c); } catch { return (c: string) => c; } })();
+const diaCorto = (f: string) => new Date(`${f}T12:00:00`).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+const diaLargo = (f: string) => new Date(`${f}T12:00:00`).toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+const nombrePagina = (p: string) => (p === '/' ? 'Inicio' : p);
+let ultimaEst: Est | null = null;
+
+function conectarEstadisticas() {
+  $('[data-est-dias]').addEventListener('change', () => cargarEstadisticas());
+  // Se actualiza sola mientras la pestaña está abierta y a la vista
+  window.setInterval(() => { if (!document.hidden && !$('[data-est]').hidden) cargarEstadisticas(); }, ESTADISTICAS_CADA);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && !$('[data-est]').hidden) cargarEstadisticas(); });
+  let ancho = 0;
+  new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== ancho) { ancho = w; if (ultimaEst) pintarGrafica(ultimaEst); } }).observe($('[data-est-grafica]'));
+}
+
+let cargandoEst = false;
+async function cargarEstadisticas() {
+  if (cargandoEst) return;
+  cargandoEst = true;
+  const err = $('[data-est-error]');
+  try {
+    const token = await auth().currentUser?.getIdToken();
+    const r = await fetch(`/api/estadisticas?dias=${$<HTMLSelectElement>('[data-est-dias]').value}`, { headers: { Authorization: `Bearer ${token}` }, cache: 'no-store' });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || `Error ${r.status}`);
+    ultimaEst = j as Est;
+    err.hidden = true;
+    pintarEstadisticas(ultimaEst);
+    $('[data-est-meta]').textContent = `Actualizado a las ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}. Se actualiza sola cada 30 segundos.`;
+  } catch (e) {
+    err.textContent = `No se pudieron cargar las estadísticas: ${(e as Error).message}`;
+    err.hidden = false;
+  } finally { cargandoEst = false; }
+}
+
+function pintarEstadisticas(d: Est) {
+  const visitantes = d.dias.reduce((n, x) => n + x.visitantes, 0);
+  const vistas = d.dias.reduce((n, x) => n + x.vistas, 0);
+  const repiten = d.dias.reduce((n, x) => n + x.repiten, 0);
+  $('[data-est-visitantes]').textContent = num.format(visitantes);
+  $('[data-est-vistas]').textContent = num.format(vistas);
+  $('[data-est-ppv]').textContent = visitantes ? (vistas / visitantes).toLocaleString('es-ES', { maximumFractionDigits: 1 }) : '–';
+  $('[data-est-rebote]').textContent = visitantes ? `${Math.round(((visitantes - repiten) / visitantes) * 100)} %` : '–';
+  mostrar('[data-est-online]', true);
+  $('[data-est-online-txt]').textContent = d.online === 1 ? '1 persona en la web ahora' : `${num.format(d.online)} personas en la web ahora`;
+  pintarGrafica(d);
+  const nombres: Record<string, (s: string) => string> = { paginas: nombrePagina, paises: nombrePais };
+  root.querySelectorAll<HTMLElement>('[data-est-l]').forEach((ol) => {
+    const campo = ol.dataset.estL as keyof Est;
+    const lista = (d[campo] as Lista).slice(0, 10);
+    const max = lista[0]?.[1] ?? 0;
+    const nombre = nombres[campo] ?? ((s: string) => s);
+    ol.innerHTML = lista.length
+      ? lista.map(([k, v]) => `<li><span class="fondo" style="width:${Math.max(2, (v / max) * 100).toFixed(1)}%"></span><span class="nombre" title="${esc(nombre(k))}">${esc(nombre(k))}</span><span class="valor">${num.format(v)}</span></li>`).join('')
+      : '<li class="vacio">Todavía no hay datos.</li>';
+  });
+}
+
+/** Barras de visitantes por día: una serie, eje Y con líneas suaves y una etiqueta al pasar el ratón o tocar. */
+function pintarGrafica(d: Est) {
+  const caja = $('[data-est-grafica]');
+  const tip = $('[data-est-tip]');
+  const W = Math.max(280, caja.clientWidth), H = 220, izq = 34, abajo = 24, arriba = 8;
+  const n = d.dias.length, plotW = W - izq, plotH = H - abajo - arriba;
+  const maxV = Math.max(...d.dias.map((x) => x.visitantes), 0);
+  const mag = Math.pow(10, Math.floor(Math.log10(Math.max(1, maxV / 3))));
+  const paso = maxV <= 3 ? 1 : Math.ceil(maxV / 3 / mag) * mag;
+  const tope = paso * 3;
+  const y = (v: number) => arriba + plotH - (v / tope) * plotH;
+  const ancho = plotW / n, hueco = Math.min(8, Math.max(2, ancho * 0.25)), bw = Math.max(2, Math.min(64, ancho - hueco));
+  const r = Math.min(4, bw / 2);
+  const cadaEtiqueta = Math.max(1, Math.ceil(n / Math.max(2, Math.floor(plotW / 64))));
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visitantes por día">`;
+  for (let i = 0; i <= 3; i++) {
+    const v = paso * i, yy = y(v);
+    s += `<line class="reja" x1="${izq}" x2="${W}" y1="${yy}" y2="${yy}"/><text class="eje" x="${izq - 8}" y="${yy + 4}" text-anchor="end">${num.format(v)}</text>`;
+  }
+  d.dias.forEach((x, i) => {
+    const x0 = izq + i * ancho + (ancho - bw) / 2, alto = (x.visitantes / tope) * plotH, top = arriba + plotH - alto;
+    s += `<rect class="zona" data-i="${i}" x="${izq + i * ancho}" y="${arriba}" width="${ancho}" height="${plotH}"/>`;
+    s += alto > 0
+      ? `<path class="barra-d" data-b="${i}" d="M${x0} ${arriba + plotH}V${top + Math.min(r, alto)}q0 ${-Math.min(r, alto)} ${r} ${-Math.min(r, alto)}h${bw - 2 * r}q${r} 0 ${r} ${Math.min(r, alto)}V${arriba + plotH}Z"/>`
+      : `<rect class="barra-d" data-b="${i}" x="${x0}" y="${arriba + plotH - 1}" width="${bw}" height="1" opacity="0.35"/>`;
+    if (i % cadaEtiqueta === 0) s += `<text class="eje" x="${x0 + bw / 2}" y="${H - 6}" text-anchor="middle">${diaCorto(x.fecha)}</text>`;
+  });
+  caja.innerHTML = `${s}</svg>`;
+
+  const mostrarTip = (i: number) => {
+    const x = d.dias[i];
+    caja.querySelectorAll('.barra-d.activa').forEach((b) => b.classList.remove('activa'));
+    caja.querySelector(`[data-b="${i}"]`)?.classList.add('activa');
+    tip.innerHTML = `<strong>${diaLargo(x.fecha)}</strong><br>${num.format(x.visitantes)} ${x.visitantes === 1 ? 'visitante' : 'visitantes'} · ${num.format(x.vistas)} ${x.vistas === 1 ? 'página' : 'páginas'}`;
+    tip.hidden = false;
+    const fig = caja.parentElement!.getBoundingClientRect(), svg = caja.getBoundingClientRect();
+    const cx = svg.left - fig.left + izq + (i + 0.5) * ancho;
+    tip.style.left = `${Math.min(Math.max(cx, 90), fig.width - 90)}px`;
+    tip.style.top = `${svg.top - fig.top + y(x.visitantes)}px`;
+  };
+  caja.querySelectorAll<SVGRectElement>('.zona').forEach((z) => {
+    z.addEventListener('pointerenter', () => mostrarTip(Number(z.dataset.i)));
+    z.addEventListener('pointerdown', () => mostrarTip(Number(z.dataset.i)));
+  });
+  caja.querySelector('svg')!.addEventListener('pointerleave', (e) => {
+    if ((e as PointerEvent).pointerType !== 'mouse') return;
+    tip.hidden = true;
+    caja.querySelectorAll('.barra-d.activa').forEach((b) => b.classList.remove('activa'));
+  });
 }
