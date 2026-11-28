@@ -77,8 +77,8 @@
     "descripcionCorta": "Caja + 1 normal. Veteranos Balonmano de Sevilla, con soporte trasero con chip NFC.",
     "descripcionLarga": "Ejemplo de Funko personalizado: veteranos Balonmano de Sevilla, con soporte trasero con chip NFC. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 55,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 55
     },
     "variantes": [],
     "galeria": [
@@ -172,8 +172,8 @@
     "descripcionCorta": "Bola iluminada con la foto de un conejo, un árbol de Navidad y copos de nieve.",
     "descripcionLarga": "Bola de Navidad con la foto de un conejo en relieve y su nombre debajo. Por los otros lados lleva un árbol con «Feliz Navidad» y un copo de nieve. Con la luz encendida se ven todos los detalles; apagada queda blanca.",
     "precio": {
-      "importe": 5,
       "unidad": "ud.",
+      "importe": 5,
       "tipo": "fijo"
     },
     "variantes": [],
@@ -228,9 +228,9 @@
     "descripcionCorta": "Tu foto en relieve que se ilumina por dentro. 5 € la unidad.",
     "descripcionLarga": "Bola de Navidad impresa en 3D con la foto que nos mandes en relieve: apagada se ve blanca, con el relieve de la foto, y al encender la luz de dentro la imagen aparece con todos sus detalles. Alrededor lleva estrellas, lunares y copos de nieve, en el otro lado un árbol con «Feliz Navidad», y debajo de la foto puede ir un nombre. Tiene anilla para colgarla del árbol. Un regalo para estas fiestas con tu mascota, tu familia o quien tú quieras.",
     "precio": {
-      "importe": 5,
+      "unidad": "ud.",
       "tipo": "fijo",
-      "unidad": "ud."
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -266,8 +266,8 @@
     "descripcionCorta": "Dispensador de sobres de azúcar o sacarina con el logo de tu negocio.",
     "descripcionLarga": "Caja dispensadora de sobres de azúcar o sacarina para bares, cafeterías y restaurantes. Por delante lleva el logo de tu negocio y una placa con el contenido (azúcar, sacarina…), y a los lados unas rejillas decorativas. Los sobres se cargan por arriba y bajan hasta la bandeja de abajo, de donde se cogen. La hacemos con tu logo y los colores de tu local.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -315,8 +315,8 @@
     "descripcionCorta": "16 cajones numerados para los huevos, con el nombre de tu aviario.",
     "descripcionLarga": "Cajonera de pared con 16 cajones numerados para separar y controlar los huevos de cada nido. Lleva el nombre de tu aviario en letras negras en relieve y una silueta de pájaro calada en el respaldo, con dos ranuras para colgarla. Arriba tiene una bandeja abierta para dejar notas o utensilios, y cada cajón sale entero tirando de su asa en media luna.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 60
+      "importe": 60,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -365,8 +365,8 @@
     "descripcionCorta": "Casco de 10 cm de Ayrton Senna, amarillo con las franjas verde y azul.",
     "descripcionLarga": "Réplica de 10 cm del casco de Ayrton Senna en McLaren Honda. Amarillo con sus franjas verde y azul, Marlboro delante, Nacional en los lados y detrás, y la visera negra con Honda.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -461,8 +461,8 @@
     "descripcionCorta": "Casco de 10 cm de Fernando Alonso con el diseño especial de Japón.",
     "descripcionLarga": "Réplica de 10 cm del casco especial de Fernando Alonso para Japón con Aston Martin. Blanco con pagodas, un torii y un samurái en negro, el sol rojo con el 14 a cada lado, Aramco, Cognizant y Citi. La visera lleva Aston Martin y Peroni 0.0, y por detrás su nombre y Bell.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -515,8 +515,8 @@
     "descripcionCorta": "Casco de 10 cm de Marc Márquez, rojo con la araña naranja y su 93.",
     "descripcionLarga": "Réplica de 10 cm del casco de Marc Márquez en el Ducati de MotoGP. Rojo con la araña naranja en la parte de arriba, Ducati y Lenovo delante, Shoei, Estrella Galicia a los lados y, por detrás, su nombre y el 93.",
     "precio": {
-      "importe": 10,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 10
     },
     "variantes": [],
     "galeria": [
@@ -619,8 +619,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -736,8 +736,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -780,8 +780,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Eurocopa, en plata.",
     "descripcionLarga": "Réplica del trofeo de la Eurocopa de 25 cm de alto, en plata, con las asas trenzadas, el plato de arriba y el escudo de la UEFA y la inscripción en relieve. Para recordar un título de la selección o como trofeo de un campeonato entre amigos.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -861,8 +861,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Copa Intercontinental, en dorado.",
     "descripcionLarga": "Réplica de la Copa Intercontinental de 20 cm de alto, en dorado. El balón con el mapa del mundo en relieve descansa sobre varillas que bajan curvándose hasta una base cónica con la inscripción FIFA Club World Cup. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -901,8 +901,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
-      "importe": 20,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 20
     },
     "variantes": [],
     "galeria": [
@@ -942,8 +942,8 @@
     "descripcionCorta": "Tu propia copa en 20 o 30 cm; el diseño lo concretamos contigo por WhatsApp.",
     "descripcionLarga": "Una copa diseñada a tu gusto e impresa en 3D. Elige el tamaño, 20 cm o 30 cm, y por WhatsApp concretamos contigo el diseño: la forma, los colores, el texto de la placa y el escudo o el logo. Para torneos entre amigos, peñas, colegios, empresas o como regalo.",
     "precio": {
-      "tipo": "desde",
-      "importe": 25
+      "importe": 25,
+      "tipo": "desde"
     },
     "variantes": [
       {
@@ -1155,8 +1155,8 @@
     "descripcionCorta": "Caja + 2 normales. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1391,8 +1391,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko con mascota y caja personalizada.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con mascota y caja personalizada. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1476,8 +1476,8 @@
     "descripcionCorta": "Caja + 2 normales. Dos figuras trajeadas en una caja «Dessert Bar».",
     "descripcionLarga": "Ejemplo de Funko personalizado: dos figuras con traje, una con chaqueta de cuadros rojos y corbata azul y otra con traje verde y corbata rosa, en una caja a medida «Dessert Bar» con el número 11. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 85
+      "importe": 85,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2063,8 +2063,8 @@
     "descripcionCorta": "Mono azul marino con casco Oracle y Heineken.",
     "descripcionLarga": "Figura de bloques de Max Verstappen con el mono azul marino de Red Bull Racing y el casco Oracle y Heineken. Visera móvil.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -2120,7 +2120,7 @@
   {
     "slug": "pack-bolas-navidad-pokemon",
     "nombre": "Pack de 8 bolas de Navidad Pokémon",
-    "categoria": "bolas",
+    "categoria": "otros",
     "etiquetas": [
       "navidad",
       "pokemon",
@@ -2177,8 +2177,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 115,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 115
     },
     "variantes": [],
     "galeria": [
@@ -2227,8 +2227,8 @@
     "descripcionCorta": "El trofeo de Cars en dorado, con sus alas y la peana negra.",
     "descripcionLarga": "Réplica del trofeo Piston Cup de la película Cars: copa dorada con el nombre en relieve, las alas a los lados, el pie con forma de pistón y la peana negra. Un regalo perfecto para fans de Rayo McQueen, pequeños y mayores.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2268,8 +2268,8 @@
     "descripcionCorta": "Pilotos y monoplazas míticos. Precio por posavasos.",
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
-      "importe": 2,
       "tipo": "fijo",
+      "importe": 2,
       "unidad": "ud."
     },
     "variantes": [],
@@ -2314,9 +2314,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
+      "tipo": "fijo",
       "importe": 5,
-      "tipo": "fijo"
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -2367,9 +2367,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "unidad": "ud.",
       "importe": 2,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -2417,8 +2417,8 @@
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
       "tipo": "fijo",
-      "unidad": "ud.",
-      "importe": 5
+      "importe": 5,
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -2663,8 +2663,8 @@
     "descripcionCorta": "Réplica de 20 cm del trofeo de la Supercopa de Francia, en plata con peana negra.",
     "descripcionLarga": "Réplica del Trophée des Champions, el trofeo de la Supercopa de Francia, de 20 cm de alto. La copa es de ocho caras, en plata, con un anillo en el cuello, y va sobre una peana negra octogonal con la placa dorada del nombre. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
