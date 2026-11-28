@@ -1295,6 +1295,25 @@
           "Coupe de France de dos"
         ]
       }
+    },
+    "funko-edicion-especial-23": {
+      "huella": "bhnzt6",
+      "en": {
+        "nombre": "Funko Special Edition #23",
+        "descripcionCorta": "Box + 1 regular + 2 small. Funko with her two Yorkshire terriers.",
+        "descripcionLarga": "Example of a custom Funko: A blonde girl wearing a vest and blue pants with a shoulder bag, accompanied by her two Yorkshire terriers, one with long hair and a gray sweater and the other, black and white, sitting down. Custom box with the number 23 and the text \"Special Edition\". Composition: box + 1 regular + 2 small. We'll do the same with your photos and your text on the box.",
+        "alts": [
+          "Funko Special Edition #23 with her two puppies in the box"
+        ]
+      },
+      "fr": {
+        "nombre": "Funko Édition spéciale #23",
+        "descripcionCorta": "Boîte + 1 normal + 2 petits. Funko avec ses deux chiots yorkshire.",
+        "descripcionLarga": "Exemple de Funko personnalisé : une jeune femme blonde portant un gilet et un pantalon bleu, avec un sac à l’épaule, accompagnée de ses deux yorkshires, l’un à poils longs portant un pull gris et l’autre noir et blanc, assis. Boîte personnalisée avec le numéro 23 et le texte « Édition spéciale ». Composition : boîte + 1 figurine normale + 2 petites figurines. Nous faisons de même avec vos photos et votre texte sur la boîte.",
+        "alts": [
+          "Funko Édition spéciale #23 avec ses deux chiens dans la boîte"
+        ]
+      }
     }
   },
   "categorias": {
