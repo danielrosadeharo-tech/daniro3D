@@ -628,31 +628,29 @@
       }
     },
     "marc-marquez-ducati": {
-      "huella": "wszb78",
+      "huella": "2fzxwn",
       "en": {
         "nombre": "Marc Márquez · Ducati MotoGP",
-        "descripcionCorta": "Red Ducati race suit with 93 helmet and movable visor.",
-        "descripcionLarga": "Block figure of Marc Márquez in the red race suit of the Ducati MotoGP team. The helmet carries the 93 and the ant on top, and the black visor lifts up to show his face.",
+        "descripcionCorta": "Ducati red racing suit with helmet 93 and movable visor.",
+        "descripcionLarga": "Block figure of Marc Márquez in the red suit of the Ducati MotoGP team. The helmet has the number 93 and the spider on top, and the black visor lifts up to reveal the face.",
         "alts": [
-          "Marc Márquez figure in Ducati suit, front view",
-          "Marc Márquez figure with the visor up",
-          "Detail of Márquez's helmet with the Ducati and Shoei logos",
-          "Face of the Márquez figure under the visor",
-          "Márquez's helmet from behind with the 93",
-          "Márquez's helmet from above with the ant"
+          "Figure of Marc Márquez in Ducati leathers, front view",
+          "Figure of Marc Márquez with his visor up",
+          "Detail of Márquez's helmet with the Ducati, Lenovo, and Shoei logos",
+          "Side view of Marc Márquez, with Estrella Galicia on his helmet",
+          "Márquez's helmet from behind with his name and the number 93"
         ]
       },
       "fr": {
         "nombre": "Marc Márquez · Ducati MotoGP",
-        "descripcionCorta": "Combinaison rouge Ducati, casque 93 et visière mobile.",
-        "descripcionLarga": "Figurine en blocs de Marc Márquez avec la combinaison rouge de l'équipe Ducati en MotoGP. Le casque porte le 93 et la fourmi sur le dessus, et la visière noire se relève pour voir le visage.",
+        "descripcionCorta": "Combinaison rouge Ducati avec casque 93 et visière mobile.",
+        "descripcionLarga": "Figurine en blocs de Marc Márquez portant la combinaison rouge de l’équipe Ducati de MotoGP. Le casque porte le numéro 93 et l’araignée sur le dessus, et la visière noire se soulève pour voir le visage.",
         "alts": [
           "Figurine de Marc Márquez en combinaison Ducati, vue de face",
           "Figurine de Marc Márquez avec la visière relevée",
-          "Détail du casque de Márquez avec les logos Ducati et Shoei",
-          "Visage de la figurine de Márquez sous la visière",
-          "Casque de Márquez vu de dos avec le 93",
-          "Casque de Márquez vu de dessus avec la fourmi"
+          "Détail du casque de Márquez avec les logos Ducati, Lenovo et Shoei",
+          "Figurine de Marc Márquez de profil, avec Estrella Galicia sur le casque",
+          "Casque de Márquez vu de derrière avec son nom et le numéro 93"
         ]
       }
     },
@@ -1312,6 +1310,31 @@
         "descripcionLarga": "Exemple de Funko personnalisé : une jeune femme blonde portant un gilet et un pantalon bleu, avec un sac à l’épaule, accompagnée de ses deux yorkshires, l’un à poils longs portant un pull gris et l’autre noir et blanc, assis. Boîte personnalisée avec le numéro 23 et le texte « Édition spéciale ». Composition : boîte + 1 figurine normale + 2 petites figurines. Nous faisons de même avec vos photos et votre texte sur la boîte.",
         "alts": [
           "Funko Édition spéciale #23 avec ses deux chiens dans la boîte"
+        ]
+      }
+    },
+    "pack-bolas-navidad-pokemon": {
+      "huella": "1exdzzg",
+      "en": {
+        "nombre": "Pack of 8 Pokémon Christmas baubles",
+        "descripcionCorta": "Eight baubles for the tree, each with the face of a Pokémon.",
+        "descripcionLarga": "Pack of 8 3D-printed Christmas baubles, each with the embossed face of a Pokémon: Pikachu, Charmander, Charizard, Squirtle, Bulbasaur, Gengar, Umbreon, and Mewtwo. Each bauble is in the color of its Pokémon and has a ring to hang it on the tree.",
+        "alts": [
+          "Charizard, Charmander and Pikachu Christmas baubles",
+          "Gengar and Squirtle Christmas baubles",
+          "Umbreon and Bulbasaur Christmas baubles",
+          "Mewtwo Christmas bauble"
+        ]
+      },
+      "fr": {
+        "nombre": "Lot de 8 boules de Noël Pokémon",
+        "descripcionCorta": "Huit boules pour le sapin, chacune avec le visage d’un Pokémon.",
+        "descripcionLarga": "Lot de 8 boules de Noël imprimées en 3D, chacune avec le visage d’un Pokémon en relief : Pikachu, Salamèche, Dracaufeu, Carapuce, Bulbizarre, Ectoplasma, Noctali et Mewtwo. Chaque boule est de la couleur de son Pokémon et est munie d’un anneau pour l’accrocher au sapin.",
+        "alts": [
+          "Boules de Noël Dracaufeu, Salamèche et Pikachu",
+          "Boules de Noël Ectoplasma et Carapuce",
+          "Boules de Noël Noctali et Bulbizarre",
+          "Boule de Noël Mewtwo"
         ]
       }
     }

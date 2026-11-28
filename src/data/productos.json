@@ -127,8 +127,8 @@
     "descripcionCorta": "Caja + 2 normales. Edición especial de boda.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición especial de boda. Composición: caja + 2 normales. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 85,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 85
     },
     "variantes": [],
     "galeria": [
@@ -172,9 +172,9 @@
     "descripcionCorta": "Bola iluminada con la foto de un conejo, un árbol de Navidad y copos de nieve.",
     "descripcionLarga": "Bola de Navidad con la foto de un conejo en relieve y su nombre debajo. Por los otros lados lleva un árbol con «Feliz Navidad» y un copo de nieve. Con la luz encendida se ven todos los detalles; apagada queda blanca.",
     "precio": {
-      "tipo": "fijo",
       "importe": 5,
-      "unidad": "ud."
+      "unidad": "ud.",
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -229,8 +229,8 @@
     "descripcionLarga": "Bola de Navidad impresa en 3D con la foto que nos mandes en relieve: apagada se ve blanca, con el relieve de la foto, y al encender la luz de dentro la imagen aparece con todos sus detalles. Alrededor lleva estrellas, lunares y copos de nieve, en el otro lado un árbol con «Feliz Navidad», y debajo de la foto puede ir un nombre. Tiene anilla para colgarla del árbol. Un regalo para estas fiestas con tu mascota, tu familia o quien tú quieras.",
     "precio": {
       "importe": 5,
-      "unidad": "ud.",
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -515,8 +515,8 @@
     "descripcionCorta": "Casco de 10 cm de Marc Márquez, rojo con la araña naranja y su 93.",
     "descripcionLarga": "Réplica de 10 cm del casco de Marc Márquez en el Ducati de MotoGP. Rojo con la araña naranja en la parte de arriba, Ducati y Lenovo delante, Shoei, Estrella Galicia a los lados y, por detrás, su nombre y el 93.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 10
+      "importe": 10,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -619,8 +619,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño (batería). Funko con su batería.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con su batería. Composición: caja + 1 normal + 1 pequeño (batería). Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 75
+      "importe": 75,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -736,8 +736,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Conference League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Conference League de 25 cm de alto, en plata. Las varillas suben girando desde la base hasta la boca de la copa, con el logo de la UEFA en relieve y la inscripción en la base. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -820,8 +820,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Europa League, en plata con la base dorada.",
     "descripcionLarga": "Réplica de la Copa de la Europa League de 20 cm de alto. El cuerpo es plateado, con el logo de la UEFA en relieve y la base calada con un anillo dorado. Para la estantería de un aficionado o para premiar al ganador de un torneo entre amigos.",
     "precio": {
-      "importe": 16,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 16
     },
     "variantes": [],
     "galeria": [
@@ -901,8 +901,8 @@
     "descripcionCorta": "Réplica de 25 cm del trofeo de la Nations League, en plata.",
     "descripcionLarga": "Réplica del trofeo de la UEFA Nations League de 25 cm de alto, en plata, con sus láminas superpuestas y el logo de la UEFA en relieve. Para la colección de un aficionado a la selección o como premio de un torneo.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 20
+      "importe": 20,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -942,8 +942,8 @@
     "descripcionCorta": "Tu propia copa en 20 o 30 cm; el diseño lo concretamos contigo por WhatsApp.",
     "descripcionLarga": "Una copa diseñada a tu gusto e impresa en 3D. Elige el tamaño, 20 cm o 30 cm, y por WhatsApp concretamos contigo el diseño: la forma, los colores, el texto de la placa y el escudo o el logo. Para torneos entre amigos, peñas, colegios, empresas o como regalo.",
     "precio": {
-      "importe": 25,
-      "tipo": "desde"
+      "tipo": "desde",
+      "importe": 25
     },
     "variantes": [
       {
@@ -987,8 +987,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Coupe de France, en plata.",
     "descripcionLarga": "Réplica de la Coupe de France, el trofeo de la Copa de Francia, de 20 cm de alto, en plata. Lleva tapa con una figurita de ángel arriba, una franja de relieves, la dedicatoria grabada en el frente y dos asas largas. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 15
+      "importe": 15,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1027,8 +1027,8 @@
     "descripcionCorta": "Réplica de 20 cm de la Coupe des Coupes (Recopa de Europa), en plata con peana marrón.",
     "descripcionLarga": "Réplica de la Coupe des Coupes, el trofeo de la antigua Recopa de Europa, de 20 cm de alto. La copa es de plata, con la boca acanalada y dos asas curvas, y va sobre una peana marrón con la placa negra del nombre. Para la colección de un aficionado o como trofeo de un torneo entre amigos.",
     "precio": {
-      "importe": 15,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 15
     },
     "variantes": [],
     "galeria": [
@@ -1271,8 +1271,8 @@
     "descripcionCorta": "Edición especial con casco blanco de temática japonesa.",
     "descripcionLarga": "La figura de Aston Martin con el casco blanco especial de temática japonesa. Visera móvil y decoración del casco en todo su contorno. Solo se hace en 30 cm.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 40
+      "importe": 40,
+      "tipo": "fijo"
     },
     "variantes": [
       {
@@ -1643,8 +1643,8 @@
     "descripcionCorta": "Caja + 1 normal. Funko con gorro de Papá Noel y NFC en la parte trasera.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko con gorro de Papá Noel y NFC en la parte trasera. Composición: caja + 1 normal. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 55
+      "importe": 55,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -1689,8 +1689,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Funko personalizado con caja a medida.",
     "descripcionLarga": "Ejemplo de Funko personalizado: funko personalizado con caja a medida. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -1899,8 +1899,8 @@
     "descripcionCorta": "Caja + 1 normal + 1 pequeño. Limited Edition.",
     "descripcionLarga": "Ejemplo de Funko personalizado: limited Edition. Composición: caja + 1 normal + 1 pequeño. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "importe": 75,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 75
     },
     "variantes": [],
     "galeria": [
@@ -2002,8 +2002,8 @@
     "descripcionCorta": "Mono rojo de Ducati con casco 93 y visera móvil.",
     "descripcionLarga": "Figura de bloques de Marc Márquez con el mono rojo del equipo Ducati de MotoGP. El casco lleva el 93 y la araña en la parte de arriba, y la visera negra se levanta para ver la cara.",
     "precio": {
-      "importe": 35,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 35
     },
     "variantes": [
       {
@@ -2017,28 +2017,24 @@
     ],
     "galeria": [
       {
-        "archivo": "01.jpg",
+        "archivo": "ULqHS6yYhXHAcxA0OfkD.jpg",
         "alt": "Figura de Marc Márquez con el mono de Ducati, vista frontal"
       },
       {
-        "archivo": "02.jpg",
+        "archivo": "5Kixh0oHte8OWP5XSet4.jpg",
         "alt": "Figura de Marc Márquez con la visera levantada"
       },
       {
-        "archivo": "03.jpg",
-        "alt": "Detalle del casco de Márquez con los logos de Ducati y Shoei"
+        "archivo": "tSvtzlQimI00nObxW8Oi.jpg",
+        "alt": "Detalle del casco de Márquez con los logos de Ducati, Lenovo y Shoei"
       },
       {
-        "archivo": "04.jpg",
-        "alt": "Cara de la figura de Márquez bajo la visera"
+        "archivo": "r9nOVTfLcUgUXBWLPiWB.jpg",
+        "alt": "Figura de Marc Márquez de lado, con Estrella Galicia en el casco"
       },
       {
-        "archivo": "05.jpg",
-        "alt": "Casco de Márquez por detrás con el 93"
-      },
-      {
-        "archivo": "06.jpg",
-        "alt": "Casco de Márquez visto desde arriba con la araña"
+        "archivo": "bkpN10T5ulJanaFGDhtT.jpg",
+        "alt": "Casco de Márquez por detrás con su nombre y el 93"
       }
     ],
     "materiales": [
@@ -2122,6 +2118,55 @@
     "fechaAlta": "2025-05-02"
   },
   {
+    "slug": "pack-bolas-navidad-pokemon",
+    "nombre": "Pack de 8 bolas de Navidad Pokémon",
+    "categoria": "bolas",
+    "etiquetas": [
+      "navidad",
+      "pokemon",
+      "regalo"
+    ],
+    "descripcionCorta": "Ocho bolas para el árbol con la cara de un Pokémon cada una.",
+    "descripcionLarga": "Pack de 8 bolas de Navidad impresas en 3D, cada una con la cara de un Pokémon en relieve: Pikachu, Charmander, Charizard, Squirtle, Bulbasaur, Gengar, Umbreon y Mewtwo. Cada bola va en el color de su Pokémon y lleva anilla para colgarla del árbol.",
+    "precio": {
+      "tipo": "fijo",
+      "importe": 24
+    },
+    "variantes": [],
+    "galeria": [
+      {
+        "archivo": "NlmIHWRODOMoAxwL2nnV.jpg",
+        "alt": "Bolas de Navidad de Charizard, Charmander y Pikachu"
+      },
+      {
+        "archivo": "npTwA01JIy5hdrn6BD38.jpg",
+        "alt": "Bolas de Navidad de Gengar y Squirtle"
+      },
+      {
+        "archivo": "MvqUyNaJqc1ldyiAUPhW.jpg",
+        "alt": "Bolas de Navidad de Umbreon y Bulbasaur"
+      },
+      {
+        "archivo": "bE6MMxDszymcsDfmGQcJ.jpg",
+        "alt": "Bola de Navidad de Mewtwo"
+      }
+    ],
+    "materiales": [
+      "PLA"
+    ],
+    "colores": [
+      "Multicolor"
+    ],
+    "dimensiones": null,
+    "tiempoFabricacion": null,
+    "personalizacion": {
+      "disponible": false,
+      "notas": null
+    },
+    "destacado": false,
+    "fechaAlta": "2026-11-28"
+  },
+  {
     "slug": "perruno-17",
     "nombre": "Funko Perruno #17",
     "categoria": "funkos",
@@ -2132,8 +2177,8 @@
     "descripcionCorta": "Caja + 1 normal + 3 pequeños. Edición limitada con tres perritos.",
     "descripcionLarga": "Ejemplo de Funko personalizado: edición limitada con tres perritos. Composición: caja + 1 normal + 3 pequeños. Lo hacemos igual con tus fotos y tu texto en la caja.",
     "precio": {
-      "tipo": "fijo",
-      "importe": 115
+      "importe": 115,
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2224,8 +2269,8 @@
     "descripcionLarga": "Posavasos de pilotos y monoplazas míticos: El Nano, Senna con el McLaren Marlboro y M. Antoine. Precio por unidad.",
     "precio": {
       "importe": 2,
-      "unidad": "ud.",
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "unidad": "ud."
     },
     "variantes": [],
     "galeria": [
@@ -2269,9 +2314,9 @@
     "descripcionCorta": "Un recuerdo único de cada compañero peludo. Precio por posavasos.",
     "descripcionLarga": "Posavasos con la ilustración a color de tu mascota y su nombre, con acabado brillante. Mándanos una foto y el nombre. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
+      "unidad": "ud.",
       "importe": 5,
-      "unidad": "ud."
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2322,9 +2367,9 @@
     "descripcionCorta": "Con soporte inspirado en una Poké Ball. Precio por posavasos.",
     "descripcionLarga": "Posavasos con diseño estilo vidriera de Gengar y Rayquaza, con un soporte inspirado en una Poké Ball. Precio por unidad.",
     "precio": {
-      "tipo": "fijo",
+      "unidad": "ud.",
       "importe": 2,
-      "unidad": "ud."
+      "tipo": "fijo"
     },
     "variantes": [],
     "galeria": [
@@ -2371,9 +2416,9 @@
     "descripcionCorta": "Diseños a medida para ocasiones especiales. Precio por posavasos.",
     "descripcionLarga": "Posavasos con un diseño a medida para cumpleaños, el día del padre o cualquier ocasión: un texto, un nombre o un dibujo. Precio por unidad.",
     "precio": {
-      "importe": 5,
+      "tipo": "fijo",
       "unidad": "ud.",
-      "tipo": "fijo"
+      "importe": 5
     },
     "variantes": [],
     "galeria": [
@@ -2413,8 +2458,8 @@
     "descripcionCorta": "Figura articulada de gran tamaño.",
     "descripcionLarga": "Escultura articulada de Rayquaza de gran tamaño: 40 cm de alto y 40 cm de diámetro.",
     "precio": {
-      "importe": 90,
-      "tipo": "fijo"
+      "tipo": "fijo",
+      "importe": 90
     },
     "variantes": [],
     "galeria": [
